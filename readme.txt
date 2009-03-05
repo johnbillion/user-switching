@@ -1,4 +1,4 @@
-=== Plugin Info ===
+=== User Switching ===
 Contributors: johnbillion
 Tags: user, users, switching
 Requires at least: 2.7
