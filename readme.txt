@@ -7,7 +7,7 @@ Stable tag: trunk
 
 Instant switching between user accounts in WordPress and WordPress MU.
 
-= Description =
+== Description ==
 
 This plugin allows you to quickly swap between users in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for test environments where you regularly log out and in between different accounts, or for adminstrators of blogs with multiple accounts who need to switch between them.
 
