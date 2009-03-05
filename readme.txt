@@ -13,9 +13,9 @@ This plugin allows you to quickly swap between users in WordPress at the click o
 
 = Features =
 
- * WordPress and WordPress MU compatible (watch out for a bbPress version soon).
- * It's completely secure (see the "Security" section below).
  * Instant switching and redirection to the WordPress Dashboard.
+ * It's completely secure (see the "Security" section below).
+ * WordPress and WordPress MU compatible (watch out for a bbPress version soon).
 
 = Security =
 
