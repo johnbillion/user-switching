@@ -34,6 +34,16 @@ This plugin only works with WordPress 2.7 or later.
 
 As an added bonus, anyone using a development version of WordPress (version 2.8-bleeding-edge r10629 or higher) will see a 'Switch To' link right from the 'Users' menu. This feature will appear in the 2.8 release.
 
+== FAQ ==
+
+= Does this plugin work in WordPress MU? =
+
+Yes.
+
+= Does this plugin work as a mu-plugin in WordPress MU? =
+
+Yes, except you'll need to install the 'user-switching.php' file into the root of your mu-plugins directory, not in the 'user-switching' subdirectory. This is a current limitation of WordPress MU, not this plugin.
+
 == Screenshots ==
 
 1. The 'Switch To' link
