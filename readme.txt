@@ -34,7 +34,7 @@ This plugin only works with WordPress 2.7 or later.
 
 As an added bonus, anyone using a development version of WordPress (version 2.8-bleeding-edge r10629 or higher) will see a 'Switch To' link right from the 'Users' menu. This feature will appear in the 2.8 release.
 
-== FAQ ==
+== Frequently Asked Questions ==
 
 = Does this plugin work in WordPress MU? =
 
