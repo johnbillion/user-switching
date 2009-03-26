@@ -14,9 +14,9 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
 = Features =
 
  * Instant switching and redirection to the WordPress Dashboard.
+ * Instant switching back to the originating account.
  * It's completely secure (see the "Security" section below).
  * WordPress and WordPress MU compatible (watch out for a bbPress version soon).
- * Instant switching back to the originating account.
 
 = Security =
 
