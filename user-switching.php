@@ -2,12 +2,12 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.2
+Version:      0.2.1
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
 Requires:     2.7
-Tested up to: 2.7.1
+Tested up to: 2.8
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,6 +20,9 @@ Tested up to: 2.7.1
     GNU General Public License for more details.
 
 Changelog:
+
+0.2.1   2009/06/08
+Small edge case bugfix to prevent 'Switch back to...' message appearing when it shouldn't.
 
 0.2     2009/03/25
 Functionality for switching back to user you switched from.
@@ -39,6 +42,7 @@ class user_switching {
 		add_action( 'user_row_actions',    array( &$this, 'user_row' ), 10, 2 ); # 2.8-bleeding-edge > r10629 only
 		add_action( 'personal_options',    array( &$this, 'personal_options' ) );
 		add_action( 'wp_logout',           'wp_clear_olduser_cookie' );
+		add_action( 'wp_login',            'wp_clear_olduser_cookie' );
 	}
 
 	function personal_options( $user ) {
