@@ -22,7 +22,7 @@ Tested up to: 2.8
 Changelog:
 
 0.2.1   2009/06/08
-Small edge case bugfix to prevent 'Switch back to...' message appearing when it shouldn't.
+Edge case bugfix to prevent 'Switch back to...' message appearing when it shouldn't.
 
 0.2     2009/03/25
 Functionality for switching back to user you switched from.
