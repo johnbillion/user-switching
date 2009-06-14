@@ -51,7 +51,7 @@ class user_switching {
 			return;
 		?>
 		<th scope="row"><?php _e( 'User Switching', 'user_switching' ); ?></th>
-		<td style="padding-top:10px"><a href="<?php echo wp_nonce_url("users.php?action=switch_to_user&amp;user_id={$user->ID}", "switch_to_user_{$user->ID}"); ?>"><?php _e( 'Switch To', 'user_switching' ); ?></a></td>
+		<td style="padding-top:10px"><a href="<?php echo wp_nonce_url("users.php?action=switch_to_user&amp;user_id={$user->ID}", "switch_to_user_{$user->ID}"); ?>"><?php _e( 'Switch&nbsp;To', 'user_switching' ); ?></a></td>
 		<?php
 	}
 
@@ -116,7 +116,7 @@ class user_switching {
 		$current_user = wp_get_current_user();
 
 		if ( $current_user->ID != $user->ID )
-			$actions[] = '<a href="' . wp_nonce_url("users.php?action=switch_to_user&amp;user_id={$user->ID}", "switch_to_user_{$user->ID}") . '">' . __( 'Switch To', 'user_switching' ) . '</a>';
+			$actions[] = '<a href="' . wp_nonce_url("users.php?action=switch_to_user&amp;user_id={$user->ID}", "switch_to_user_{$user->ID}") . '">' . __( 'Switch&nbsp;To', 'user_switching' ) . '</a>';
 
 		return $actions;
 	}
