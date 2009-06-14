@@ -39,7 +39,7 @@ class user_switching {
 	function user_switching() {
 		add_action( 'admin_init',          array( &$this, 'admin_init' ) );
 		add_action( 'admin_notices',       array( &$this, 'admin_notice' ) );
-		add_action( 'user_row_actions',    array( &$this, 'user_row' ), 10, 2 ); # 2.8-bleeding-edge > r10629 only
+		add_action( 'user_row_actions',    array( &$this, 'user_row' ), 10, 2 ); # 2.8 and above only
 		add_action( 'personal_options',    array( &$this, 'personal_options' ) );
 		add_action( 'wp_logout',           'wp_clear_olduser_cookie' );
 		add_action( 'wp_login',            'wp_clear_olduser_cookie' );
