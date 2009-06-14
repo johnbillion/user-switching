@@ -33,7 +33,7 @@ If you're installing this in WordPress MU as a mu-plugin then see the FAQ for sl
 2. Activate the plugin through the 'Plugins' menu.
 3. Visit the 'Users' menu and click 'edit' next to a user. From there you'll see a link to 'Switch To' that user.
 
-As an added bonus, anyone using a development version of WordPress (version 2.8-bleeding-edge r10629 or higher) will see a 'Switch To' link right from the 'Users' menu. This feature will appear in the 2.8 release.
+For those using WordPress 2.8 or higher, you'll also see a 'Switch To' link right next to each user in the 'Users' menu.
 
 == Frequently Asked Questions ==
 
