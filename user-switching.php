@@ -19,17 +19,6 @@ Tested up to: 2.8
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
-Changelog:
-
-0.2.1   2009/06/08
-Edge case bugfix to prevent 'Switch back to...' message appearing when it shouldn't.
-
-0.2     2009/03/25
-Functionality for switching back to user you switched from.
-
-0.1     2009/03/03
-Initial release.
-
 */
 
 define( 'OLDUSER_COOKIE', 'wordpress_olduser_' . COOKIEHASH );

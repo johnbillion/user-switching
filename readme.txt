@@ -49,3 +49,14 @@ Yes, except you'll need to install the 'user-switching.php' file into the root o
 
 1. The 'Switch To' link
 2. The 'Switch To' link in WordPress 2.8
+
+== Changelog ==
+
+= 0.2.1 =
+* Edge case bugfix to prevent 'Switch back to...' message appearing when it shouldn't.
+
+= 0.2 =
+* Functionality for switching back to user you switched from.
+
+= 0.1 =
+* Initial release.
