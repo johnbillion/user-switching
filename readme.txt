@@ -1,8 +1,9 @@
 === User Switching ===
 Contributors: johnbillion
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7338829
 Tags: user, users, switching
 Requires at least: 2.7
-Tested up to: 2.8
+Tested up to: 2.8.4
 Stable tag: trunk
 
 Instant switching between user accounts in WordPress and WordPress MU.
