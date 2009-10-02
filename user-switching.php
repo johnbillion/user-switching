@@ -146,15 +146,6 @@ function switch_to_user( $user_id = 0, $remember = false, $old_user_id = 0 ) {
 	return true;
 }
 
-if ( !function_exists('rofl') ) {
-function rofl( $var ) {
-	if ( is_object( $var ) or is_array( $var ) )
-		echo '<pre>' . print_r( $var, true ) . '</pre>';
-	else
-		var_dump( $var );
-}
-}
-
 load_plugin_textdomain( 'user_switching', PLUGINDIR . '/' . dirname( plugin_basename( __FILE__ ) ), dirname( plugin_basename( __FILE__ ) ) ); # eugh
 
 $user_switching = new user_switching();
