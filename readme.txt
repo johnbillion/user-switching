@@ -61,8 +61,3 @@ Yes, except you'll need to install the 'user-switching.php' file into the root o
 
 = 0.1 =
 * Initial release.
-
-== Upgrade Notice ==
-
-= 0.2.1 =
-Test upgrade notice.
