@@ -3,7 +3,7 @@ Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
 Tags: user, users, switching
 Requires at least: 2.7
-Tested up to: 2.8.4
+Tested up to: 2.9.9
 Stable tag: trunk
 
 Instant switching between user accounts in WordPress and WordPress MU.
