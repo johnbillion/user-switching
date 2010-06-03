@@ -2,12 +2,10 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.2.1
+Version:      0.2.2
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
-Requires:     2.7
-Tested up to: 2.8
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -44,34 +42,50 @@ class user_switching {
 		<?php
 	}
 
+	function remember() {
+
+		$current_user = wp_get_current_user();
+		$current      = wp_parse_auth_cookie( '', 'logged_in' );
+		$cookie_life  = apply_filters( 'auth_cookie_expiration', 172800, $current_user->ID, false );
+
+		return ( ( $current['expiration'] - time() ) > $cookie_life );
+
+	}
+
 	function admin_init() {
-		if ( isset( $_REQUEST['action'] ) ) {
-			switch ( $_REQUEST['action'] ) {
-				case 'switch_to_user':
-					$user_id = (int) $_REQUEST['user_id'];
-					check_admin_referer( "switch_to_user_$user_id" );
+		if ( !isset( $_REQUEST['action'] ) )
+			return;
 
-					if ( switch_to_user( $user_id ) ) {
+		switch ( $_REQUEST['action'] ) {
+			case 'switch_to_user':
+				$user_id = (int) $_REQUEST['user_id'];
+				check_admin_referer( "switch_to_user_$user_id" );
+
+				if ( switch_to_user( $user_id, $this->remember() ) ) {
+
+					if ( !current_user_can( 'read' ) )
+						wp_redirect( add_query_arg( array( 'user_switched' => 'true' ), get_bloginfo('home') ) );
+					else
 						wp_redirect( add_query_arg( array( 'user_switched' => 'true' ), admin_url() ) );
-						die();
-					} else {
-						wp_die( __( 'Could not switch users.', 'user_switching' ) );
-					}
-					break;
-				case 'switch_to_olduser':
-					check_admin_referer( 'switch_to_olduser' );
+					die();
 
-					if ( !$old_user_id = wp_validate_auth_cookie( $_COOKIE[OLDUSER_COOKIE], 'old_user' ) )
-						wp_die( __( 'Could not switch users.', 'user_switching' ) );
+				} else {
+					wp_die( __( 'Could not switch users.', 'user_switching' ) );
+				}
+				break;
+			case 'switch_to_olduser':
+				check_admin_referer( 'switch_to_olduser' );
 
-					if ( switch_to_user( $old_user_id, false, false ) ) {
-						wp_redirect( add_query_arg( array( 'user_switched' => 'true', 'back' => 'true' ), admin_url('users.php') ) );
-						die();
-					} else {
-						wp_die( __( 'Could not switch users.', 'user_switching' ) );
-					}
-					break;
-			}
+				if ( !$old_user_id = wp_validate_auth_cookie( $_COOKIE[OLDUSER_COOKIE], 'old_user' ) )
+					wp_die( __( 'Could not switch users.', 'user_switching' ) );
+
+				if ( switch_to_user( $old_user_id, $this->remember(), false ) ) {
+					wp_redirect( add_query_arg( array( 'user_switched' => 'true', 'back' => 'true' ), admin_url('users.php') ) );
+					die();
+				} else {
+					wp_die( __( 'Could not switch users.', 'user_switching' ) );
+				}
+				break;
 		}
 	}
 
@@ -142,6 +156,7 @@ function switch_to_user( $user_id = 0, $remember = false, $old_user_id = 0 ) {
 
 	wp_clear_auth_cookie();
 	wp_set_auth_cookie( $user_id, $remember );
+	wp_set_current_user( $user_id );
 
 	return true;
 }

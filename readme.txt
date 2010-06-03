@@ -3,7 +3,7 @@ Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
 Tags: user, users, switching
 Requires at least: 2.7
-Tested up to: 2.9.9
+Tested up to: 3.0
 Stable tag: trunk
 
 Instant switching between user accounts in WordPress and WordPress MU.
@@ -32,9 +32,7 @@ If you're installing this in WordPress MU as a mu-plugin then see the FAQ for sl
 
 1. Unzip the ZIP file and drop the folder straight into your 'wp-content/plugins' directory.
 2. Activate the plugin through the 'Plugins' menu.
-3. Visit the 'Users' menu and click 'edit' next to a user. From there you'll see a link to 'Switch To' that user.
-
-For those using WordPress 2.8 or higher, you'll also see a 'Switch To' link right next to each user in the 'Users' menu.
+3. Visit the 'Users' menu and you'll see a 'Switch To' link right next to each user.
 
 == Frequently Asked Questions ==
 
@@ -44,14 +42,18 @@ Yes.
 
 = Does this plugin work as a mu-plugin in WordPress MU? =
 
-Yes, except you'll need to install the 'user-switching.php' file into the root of your mu-plugins directory, not in the 'user-switching' subdirectory. This is a current limitation of WordPress MU, not this plugin.
+Yes, except you'll need to install the 'user-switching.php' file into the root of your mu-plugins directory, not in the 'user-switching' subdirectory. This is a limitation of WordPress MU, not this plugin.
 
 == Screenshots ==
 
-1. The 'Switch To' link
-2. The 'Switch To' link in WordPress 2.8
+1. The 'Switch To' link on a user's profile
+2. The 'Switch To' link on the Users screen
 
 == Changelog ==
+
+= 0.2.2 =
+* Respect the current 'Remember me' setting when switching users.
+* Redirect to home page instead of admin screen if the user you're switching to has no privileges.
 
 = 0.2.1 =
 * Edge case bugfix to prevent 'Switch back to...' message appearing when it shouldn't.
