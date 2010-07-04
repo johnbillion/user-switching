@@ -1,12 +1,12 @@
 === User Switching ===
 Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
-Tags: user, users, switching
+Tags: user, users, profiles, switching, wpmu, multisite
 Requires at least: 2.7
 Tested up to: 3.0
 Stable tag: trunk
 
-Instant switching between user accounts in WordPress and WordPress MU.
+Instant switching between user accounts in WordPress, WordPress Multisite, and WordPress MU.
 
 == Description ==
 
@@ -17,7 +17,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Instant switching and redirection to the WordPress Dashboard.
  * Instant switching back to the originating account.
  * It's completely secure (see the "Security" section below).
- * WordPress and WordPress MU compatible (watch out for a bbPress version soon).
+ * Compatible with WordPress, WordPress Multisite, and WordPress MU.
 
 = Security =
 
@@ -35,6 +35,10 @@ If you're installing this in WordPress MU as a mu-plugin then see the FAQ for sl
 3. Visit the 'Users' menu and you'll see a 'Switch To' link right next to each user.
 
 == Frequently Asked Questions ==
+
+= Does this plugin work with WordPress Multisite? =
+
+Yes.
 
 = Does this plugin work in WordPress MU? =
 
