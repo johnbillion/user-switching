@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.2.2
+Version:      0.3
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
@@ -19,17 +19,19 @@ Author URI:   http://johnblackbourn.com/
 
 */
 
-define( 'OLDUSER_COOKIE', 'wordpress_olduser_' . COOKIEHASH );
+if ( !defined( 'OLDUSER_COOKIE' ) )
+	define( 'OLDUSER_COOKIE', 'wordpress_olduser_' . COOKIEHASH );
 
 class user_switching {
 
 	function user_switching() {
-		add_action( 'admin_init',          array( &$this, 'admin_init' ) );
-		add_action( 'admin_notices',       array( &$this, 'admin_notice' ) );
-		add_action( 'user_row_actions',    array( &$this, 'user_row' ), 10, 2 ); # 2.8 and above only
-		add_action( 'personal_options',    array( &$this, 'personal_options' ) );
-		add_action( 'wp_logout',           'wp_clear_olduser_cookie' );
-		add_action( 'wp_login',            'wp_clear_olduser_cookie' );
+		add_action( 'admin_init',       array( $this, 'admin_init' ) );
+		add_action( 'admin_notices',    array( $this, 'admin_notice' ) );
+		add_action( 'user_row_actions', array( $this, 'user_row' ), 10, 2 );
+		add_action( 'personal_options', array( $this, 'personal_options' ) );
+		add_action( 'admin_bar_menu',   array( $this, 'admin_bar_menu' ), 21 );
+		add_action( 'wp_logout',        'wp_clear_olduser_cookie' );
+		add_action( 'wp_login',         'wp_clear_olduser_cookie' );
 	}
 
 	function personal_options( $user ) {
@@ -76,7 +78,7 @@ class user_switching {
 			case 'switch_to_olduser':
 				check_admin_referer( 'switch_to_olduser' );
 
-				if ( !$old_user_id = wp_validate_auth_cookie( $_COOKIE[OLDUSER_COOKIE], 'old_user' ) )
+				if ( !$old_user_id = $this->get_old_user() )
 					wp_die( __( 'Could not switch users.', 'user_switching' ) );
 
 				if ( switch_to_user( $old_user_id, $this->remember(), false ) ) {
@@ -90,7 +92,7 @@ class user_switching {
 	}
 
 	function admin_notice() {
-		if ( isset( $_COOKIE[OLDUSER_COOKIE] ) and ( $old_user_id = wp_validate_auth_cookie( $_COOKIE[OLDUSER_COOKIE], 'old_user' ) ) ) {
+		if ( $old_user_id = $this->get_old_user() ) {
 
 			$old_user = get_userdata( $old_user_id );
 			$link = wp_nonce_url('index.php?action=switch_to_olduser', 'switch_to_olduser');
@@ -112,6 +114,32 @@ class user_switching {
 			}
 			?></p></div><?php
 
+		}
+	}
+
+	function get_old_user() {
+		if ( isset( $_COOKIE[OLDUSER_COOKIE] ) )
+			return wp_validate_auth_cookie( $_COOKIE[OLDUSER_COOKIE], 'old_user' );
+		return false;
+	}
+
+	function admin_bar_menu() {
+		global $wp_admin_bar;
+
+		if ( !function_exists( 'is_admin_bar_showing' ) )
+			return;
+		if ( !is_admin_bar_showing() )
+			return;
+
+		if ( $old_user_id = $this->get_old_user() ) {
+
+			$old_user = get_userdata( $old_user_id );
+
+			$wp_admin_bar->add_menu( array(
+				'parent' => 'my-account',
+				'title'  => sprintf( __( 'Switch back to %s (%s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ),
+				'href'   => wp_nonce_url( admin_url( '/index.php?action=switch_to_olduser' ), 'switch_to_olduser' )
+			) );
 		}
 	}
 
@@ -161,7 +189,7 @@ function switch_to_user( $user_id = 0, $remember = false, $old_user_id = 0 ) {
 	return true;
 }
 
-load_plugin_textdomain( 'user_switching', PLUGINDIR . '/' . dirname( plugin_basename( __FILE__ ) ), dirname( plugin_basename( __FILE__ ) ) ); # eugh
+load_plugin_textdomain( 'user_switching', false, dirname( plugin_basename( __FILE__ ) ) );
 
 $user_switching = new user_switching();
 

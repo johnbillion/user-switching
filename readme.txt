@@ -3,7 +3,7 @@ Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
 Tags: user, users, profiles, switching, wpmu, multisite
 Requires at least: 2.7
-Tested up to: 3.0
+Tested up to: 3.1 beta
 Stable tag: trunk
 
 Instant switching between user accounts in WordPress, WordPress Multisite, and WordPress MU.
@@ -54,6 +54,9 @@ Yes, except you'll need to install the 'user-switching.php' file into the root o
 2. The 'Switch To' link on the Users screen
 
 == Changelog ==
+
+= 0.3 =
+* Adds an admin bar menu item (WordPress 3.1+) for switching back to user you switched from.
 
 = 0.2.2 =
 * Respect the current 'Remember me' setting when switching users.
