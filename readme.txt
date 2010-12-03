@@ -55,6 +55,9 @@ Yes, except you'll need to install the 'user-switching.php' file into the root o
 
 == Changelog ==
 
+= 0.3.1 =
+* Prevent admins switching to multisite super admin accounts.
+
 = 0.3 =
 * Adds an admin bar menu item (WordPress 3.1+) for switching back to user you switched from.
 

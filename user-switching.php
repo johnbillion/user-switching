@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.3
+Version:      0.3.1
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
@@ -146,7 +146,7 @@ class user_switching {
 	function user_row( $actions, $user ) {
 		$current_user = wp_get_current_user();
 
-		if ( $current_user->ID != $user->ID )
+		if ( current_user_can( 'edit_user', $user->ID ) and ( $current_user->ID != $user->ID ) )
 			$actions[] = '<a href="' . wp_nonce_url("users.php?action=switch_to_user&amp;user_id={$user->ID}", "switch_to_user_{$user->ID}") . '">' . __( 'Switch&nbsp;To', 'user_switching' ) . '</a>';
 
 		return $actions;
