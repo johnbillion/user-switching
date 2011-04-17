@@ -28,11 +28,11 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
 
 == Installation ==
 
-If you're installing this in WordPress MU as a mu-plugin then see the FAQ for slightly different instructions.
-
 1. Unzip the ZIP file and drop the folder straight into your 'wp-content/plugins' directory.
 2. Activate the plugin through the 'Plugins' menu.
 3. Visit the 'Users' menu and you'll see a 'Switch To' link right next to each user.
+
+If you're installing this as a mu-plugin then see the FAQ for slightly different instructions.
 
 == Frequently Asked Questions ==
 
