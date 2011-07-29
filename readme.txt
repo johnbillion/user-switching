@@ -1,12 +1,12 @@
 === User Switching ===
 Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
-Tags: user, users, profiles, switching, wpmu, multisite
+Tags: user, users, profiles, switching, wpmu, multisite, buddypress
 Requires at least: 2.7
-Tested up to: 3.1.1
+Tested up to: 3.2.1
 Stable tag: trunk
 
-Instant switching between user accounts in WordPress, WordPress Multisite, and WordPress MU.
+Instant switching between user accounts in WordPress, WordPress Multisite, WordPress MU and BuddyPress.
 
 == Description ==
 
@@ -17,7 +17,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Instant switching and redirection to the WordPress Dashboard.
  * Instant switching back to the originating account.
  * It's completely secure (see the "Security" section below).
- * Compatible with WordPress, WordPress Multisite, and WordPress MU.
+ * Compatible with WordPress, WordPress Multisite, WordPress MU and BuddyPress.
 
 = Security =
 
@@ -38,15 +38,19 @@ If you're installing this as a mu-plugin then see the FAQ for slightly different
 
 = Does this plugin work with WordPress Multisite? =
 
-Yes.
+Yes, and you'll also be able to switch users from the Network Admin -> Users menu.
 
 = Does this plugin work in WordPress MU? =
 
 Yes.
 
-= Does this plugin work as a mu-plugin? =
+= Does this plugin work in BuddyPress? =
 
-Yes, except you'll need to install the 'user-switching.php' file into the root of your mu-plugins directory, not in the 'user-switching' subdirectory. This is a restriction of WordPress, not this plugin.
+Yes, and you'll also be able to switch users from the Members screens.
+
+= Does this work as a mu-plugin? =
+
+Yes, except you'll need to install 'user-switching.php' into the root of your mu-plugins directory, not in the 'user-switching' subdirectory. This is a restriction of WordPress, not this plugin.
 
 == Screenshots ==
 
@@ -54,6 +58,12 @@ Yes, except you'll need to install the 'user-switching.php' file into the root o
 2. The 'Switch To' link on the Users screen
 
 == Changelog ==
+
+= 0.4 =
+* Add some extended support for BuddyPress.
+* Add some extended support for Multisite.
+* Fix a permissions problem for users with no privileges.
+* Fix a PHP warning when used as a mu-plugin (thanks Scribu).
 
 = 0.3.2 =
 * Fix the 'Switch back to' menu item in the WordPress admin bar (WordPress 3.1+).
