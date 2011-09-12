@@ -6,7 +6,7 @@ Requires at least: 2.7
 Tested up to: 3.2.1
 Stable tag: trunk
 
-Instant switching between user accounts in WordPress, WordPress Multisite, WordPress MU and BuddyPress.
+Instant switching between user accounts in WordPress, WordPress Multisite, BuddyPress and WordPress MU.
 
 == Description ==
 
@@ -17,7 +17,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Instant switching and redirection to the WordPress Dashboard.
  * Instant switching back to the originating account.
  * It's completely secure (see the "Security" section below).
- * Compatible with WordPress, WordPress Multisite, WordPress MU and BuddyPress.
+ * Compatible with WordPress, WordPress Multisite, BuddyPress and WordPress MU.
 
 = Security =
 
@@ -38,15 +38,15 @@ If you're installing this as a mu-plugin then see the FAQ for slightly different
 
 = Does this plugin work with WordPress Multisite? =
 
-Yes, and you'll also be able to switch users from the Network Admin -> Users menu.
+Yes, and you'll also be able to switch users from the Users menu within Network Admin.
 
-= Does this plugin work in WordPress MU? =
-
-Yes.
-
-= Does this plugin work in BuddyPress? =
+= Does this plugin work with BuddyPress? =
 
 Yes, and you'll also be able to switch users from the Members screens.
+
+= Does this plugin work with WordPress MU? =
+
+Yes.
 
 = Does this work as a mu-plugin? =
 
@@ -54,8 +54,8 @@ Yes, except you'll need to install 'user-switching.php' into the root of your mu
 
 == Screenshots ==
 
-1. The 'Switch To' link on a user's profile
-2. The 'Switch To' link on the Users screen
+1. The 'Switch To' link on the Users screen
+2. The 'Switch To' link on a user's profile
 
 == Changelog ==
 
@@ -87,3 +87,8 @@ Yes, except you'll need to install 'user-switching.php' into the root of your mu
 
 = 0.1 =
 * Initial release.
+
+== Upgrade Notice ==
+
+= 0.4 =
+User switching links on Network Admin screens and BuddyPress user screens.
