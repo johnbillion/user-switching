@@ -3,7 +3,7 @@ Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
 Tags: user, users, profiles, switching, wpmu, multisite, buddypress
 Requires at least: 2.7
-Tested up to: 3.2.1
+Tested up to: 3.3
 Stable tag: trunk
 
 Instant switching between user accounts in WordPress, WordPress Multisite, BuddyPress and WordPress MU.
@@ -59,6 +59,9 @@ Yes, except you'll need to install 'user-switching.php' into the root of your mu
 
 == Changelog ==
 
+= 0.4.1 =
+* Support for upcoming changes to the admin bar in WordPress 3.3.
+
 = 0.4 =
 * Add some extended support for BuddyPress.
 * Add some extended support for Multisite.
@@ -89,6 +92,9 @@ Yes, except you'll need to install 'user-switching.php' into the root of your mu
 * Initial release.
 
 == Upgrade Notice ==
+
+= 0.4.1 =
+* Support for upcoming changes to the admin bar in WordPress 3.3.
 
 = 0.4 =
 User switching links on Network Admin screens and BuddyPress user screens.

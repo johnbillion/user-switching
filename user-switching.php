@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.4
+Version:      0.4.1
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
@@ -150,13 +150,14 @@ class user_switching {
 
 		if ( $old_user = $this->get_old_user() ) {
 
-			$parent = get_option( 'show_avatars' ) ? 'my-account-with-avatar' : 'my-account';
+			foreach ( array( 'my-account-with-avatar', 'my-account' ) as $parent ) {
+				$wp_admin_bar->add_menu( array(
+					'parent' => $parent,
+					'title'  => sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ),
+					'href'   => $this->switch_back_url()
+				) );
+			}
 
-			$wp_admin_bar->add_menu( array(
-				'parent' => $parent,
-				'title'  => sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ),
-				'href'   => $this->switch_back_url()
-			) );
 		}
 
 	}
