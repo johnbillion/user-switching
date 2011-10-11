@@ -1,7 +1,7 @@
 === User Switching ===
 Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
-Tags: user, users, profiles, switching, wpmu, multisite, buddypress
+Tags: user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access
 Requires at least: 2.7
 Tested up to: 3.3
 Stable tag: trunk
