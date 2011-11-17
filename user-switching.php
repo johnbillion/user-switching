@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.4.1
+Version:      0.5
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
@@ -27,20 +27,26 @@ class user_switching {
 	 * @return null
 	 */
 	function __construct() {
+
+		# Required functionality:
 		add_filter( 'user_has_cap',                 array( $this, 'user_cap_filter' ), 10, 3 );
 		add_filter( 'map_meta_cap',                 array( $this, 'map_meta_cap' ), 10, 4 );
 		add_action( 'plugins_loaded',               array( $this, 'set_old_cookie' ) );
 		add_action( 'init',                         array( $this, 'init' ) );
 		add_action( 'admin_notices',                array( $this, 'admin_notice' ) );
 		add_action( 'user_row_actions',             array( $this, 'user_row' ), 10, 2 );
+		add_action( 'wp_logout',                    'wp_clear_olduser_cookie' );
+		add_action( 'wp_login',                     'wp_clear_olduser_cookie' );
+
+		# Nice-to-haves:
+		add_action( 'wp_footer',                    array( $this, 'switch_on' ) );
 		add_action( 'ms_user_row_actions',          array( $this, 'user_row' ), 10, 2 );
 		add_action( 'personal_options',             array( $this, 'personal_options' ) );
 		add_action( 'admin_bar_menu',               array( $this, 'admin_bar_menu' ), 11 );
 		add_action( 'bp_adminbar_menus',            array( $this, 'bp_menu' ), 9 );
 		add_action( 'bp_member_header_actions',     array( $this, 'bp_button' ), 11 );
 		add_action( 'bp_directory_members_actions', array( $this, 'bp_button' ), 11 );
-		add_action( 'wp_logout',                    'wp_clear_olduser_cookie' );
-		add_action( 'wp_login',                     'wp_clear_olduser_cookie' );
+
 	}
 
 	/**
@@ -139,6 +145,20 @@ class user_switching {
 				}
 				break;
 
+			# We're attempting to switch off the current user:
+			case 'switch_off':
+
+				check_admin_referer( 'switch_off' );
+
+				# Switch off:
+				if ( switch_off_user() ) {
+					wp_redirect( add_query_arg( array( 'switched_off' => 'true' ), home_url() ) );
+					die();
+				} else {
+					wp_die( __( 'Could not switch off.', 'user_switching' ) );
+				}
+				break;
+
 		}
 
 	}
@@ -215,6 +235,32 @@ class user_switching {
 				) );
 			}
 
+		}
+
+		if ( current_user_can( 'switch_off' ) ) {
+
+			foreach ( array( 'my-account-with-avatar', 'my-account' ) as $parent ) {
+				$wp_admin_bar->add_menu( array(
+					'parent' => $parent,
+					'title'  => __( 'Switch Off', 'user_switching' ),
+					'href'   => $this->switch_off_url()
+				) );
+			}
+
+		}
+
+	}
+
+	/**
+	 * Adds a 'Switch back to {user}' link to the WordPress footer if a user is switched off.
+	 *
+	 * @return null
+	 */
+	function switch_on() {
+
+		if ( !is_user_logged_in() and $old_user = $this->get_old_user() ) {
+			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login );
+			echo '<p id="user_switching_switch_on"><a href="' . $this->switch_back_url() . '">' . $link . '</a></p>';
 		}
 
 	}
@@ -296,10 +342,22 @@ class user_switching {
 	}
 
 	/**
+	 * Returns the nonce-secured URL needed to "switch off" the current user.
+	 *
+	 * @return string The required URL
+	 */
+	function switch_off_url() {
+		return wp_nonce_url( add_query_arg( array(
+			'action'  => 'switch_off'
+		), site_url( 'wp-login.php', 'login' ) ), 'switch_off' );
+	}
+
+	/**
 	 * Filter the user's capabilities so they can be added/removed on the fly.
 	 *
 	 * This is used to grant the 'switch_to_user' capability to a user if they have the ability to edit the user
-	 * they're trying to switch to, and that user is not themselves.
+	 * they're trying to switch to (and that user is not themselves), and to grant the 'switch_off' capability to
+	 * a user if they can edit users.
 	 *
 	 * Important: This does not get called for Super Admins. See map_meta_cap() below.
 	 *
@@ -314,6 +372,8 @@ class user_switching {
 	function user_cap_filter( $user_caps, $required_caps, $args ) {
 		if ( 'switch_to_user' == $args[0] )
 			$user_caps['switch_to_user'] = ( current_user_can( 'edit_user', $args[2] ) and ( $args[2] != $args[1] ) );
+		else if ( 'switch_off' == $args[0] )
+			$user_caps['switch_off'] = current_user_can( 'edit_users' );
 		return $user_caps;
 	}
 
@@ -323,16 +383,16 @@ class user_switching {
 	 * This is used to add the 'do_not_allow' capability to the list of required capabilities when a super admin
 	 * is trying to switch to themselves. It affects nothing else as super admins can do everything by default.
 	 *
-	 * @param array $caps Actual required capabilities for the requested action
+	 * @param array $required_caps Actual required capabilities for the requested action
 	 * @param string $cap Capability or meta capability being checked
 	 * @param string $user_id Current user ID
 	 * @param array $args Arguments that accompany this capability check
 	 * @return array Required capabilities for the requested action
 	 */
-	function map_meta_cap( $caps, $cap, $user_id, $args ) {
+	function map_meta_cap( $required_caps, $cap, $user_id, $args ) {
 		if ( ( 'switch_to_user' == $cap ) and ( $args[0] == $user_id ) )
-			$caps[] = 'do_not_allow';
-		return $caps;
+			$required_caps[] = 'do_not_allow';
+		return $required_caps;
 	}
 
 }
@@ -344,7 +404,7 @@ class user_switching {
  * @return null
  */
 if ( !function_exists( 'wp_set_olduser_cookie' ) ) {
-function wp_set_olduser_cookie( $old_user_id = 0 ) {
+function wp_set_olduser_cookie( $old_user_id ) {
 	$expiration = time() + 172800; # 48 hours
 	$cookie = wp_generate_auth_cookie( $old_user_id, $expiration, 'old_user' );
 	setcookie( OLDUSER_COOKIE, $cookie, $expiration, COOKIEPATH, COOKIE_DOMAIN, false );
@@ -367,11 +427,11 @@ function wp_clear_olduser_cookie() {
  *
  * @param int $user_id The ID of the user to switch to.
  * @param bool $remember Whether to 'remember' the user in the form of a persistent browser cookie. Optional.
- * @param int $old_user_id The ID of the originating user. Defaults to the current user.
+ * @param int|bool $old_user_id The ID of the originating user, or false to not set the old user cookie. Defaults to the current user.
  * @return bool True on success, false on failure.
  */
 if ( !function_exists( 'switch_to_user' ) ) {
-function switch_to_user( $user_id = 0, $remember = false, $old_user_id = 0 ) {
+function switch_to_user( $user_id, $remember = false, $old_user_id = 0 ) {
 	if ( !function_exists( 'wp_set_auth_cookie' ) )
 		return false;
 	if ( !$user_id )
@@ -392,6 +452,26 @@ function switch_to_user( $user_id = 0, $remember = false, $old_user_id = 0 ) {
 	wp_clear_auth_cookie();
 	wp_set_auth_cookie( $user_id, $remember );
 	wp_set_current_user( $user_id );
+
+	return true;
+}
+}
+
+/**
+ * Switches off the current logged in user. This logs the current user out while retaining a cookie allowing them to log straight
+ * back in using the 'Switch back to {user}' system.
+ *
+ * @return bool True on success, false on failure.
+ */
+if ( !function_exists( 'switch_off_user' ) ) {
+function switch_off_user() {
+	if ( $current_user = wp_get_current_user() )
+		$old_user_id = $current_user->ID;
+	else
+		return false;
+
+	wp_set_olduser_cookie( $old_user_id );
+	wp_clear_auth_cookie();
 
 	return true;
 }
