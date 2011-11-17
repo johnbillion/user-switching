@@ -323,13 +323,13 @@ class user_switching {
 	 * This is used to add the 'do_not_allow' capability to the list of required capabilities when a super admin
 	 * is trying to switch to themselves. It affects nothing else as super admins can do everything by default.
 	 *
-	 * @param array $required_caps Actual required capabilities for the requested action
+	 * @param array $caps Actual required capabilities for the requested action
 	 * @param string $cap Capability or meta capability being checked
 	 * @param string $user_id Current user ID
 	 * @param array $args Arguments that accompany this capability check
 	 * @return array Required capabilities for the requested action
 	 */
-	function map_meta_cap( $required_caps, $cap, $user_id, $args ) {
+	function map_meta_cap( $caps, $cap, $user_id, $args ) {
 		if ( ( 'switch_to_user' == $cap ) and ( $args[0] == $user_id ) )
 			$caps[] = 'do_not_allow';
 		return $caps;
