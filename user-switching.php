@@ -230,6 +230,7 @@ class user_switching {
 			foreach ( array( 'my-account-with-avatar', 'my-account' ) as $parent ) {
 				$wp_admin_bar->add_menu( array(
 					'parent' => $parent,
+					'id'     => 'wp-admin-bar-switch-back',
 					'title'  => sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ),
 					'href'   => $this->switch_back_url()
 				) );
@@ -242,6 +243,7 @@ class user_switching {
 			foreach ( array( 'my-account-with-avatar', 'my-account' ) as $parent ) {
 				$wp_admin_bar->add_menu( array(
 					'parent' => $parent,
+					'id'     => 'wp-admin-bar-switch-off',
 					'title'  => __( 'Switch Off', 'user_switching' ),
 					'href'   => $this->switch_off_url()
 				) );
