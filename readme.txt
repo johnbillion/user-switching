@@ -37,6 +37,12 @@ If you're installing this as a mu-plugin then see the FAQ for slightly different
 
 == Frequently Asked Questions ==
 
+= What does "Switch off" mean? =
+
+Switching off logs you out retains your current user ID in a cookie so you can switch straight back (ie. log straight back in) without having to log back in with your username and password. It's akin to switching to no user, and being able to switch back.
+
+While you're logged in and you have the 'edit_users' capability, you'll see a 'Switch Off' link in your profile menu in the admin bar. Once you've switched off you'll see a 'Switch back to {user}' link in the footer of your site.
+
 = Does this plugin work with WordPress Multisite? =
 
 Yes, and you'll also be able to switch users from the Users menu within Network Admin.
@@ -53,12 +59,6 @@ Yes.
 
 Yes, except you'll need to install 'user-switching.php' into the root of your mu-plugins directory, not in the 'user-switching' subdirectory. This is a restriction of WordPress, not this plugin.
 
-= What does "Switch off" mean? =
-
-Switching off simply logs you out, but retains your current user ID in a cookie so you can switch straight back (ie. log straight back in) without having to log back in with your username and password. It's akin to switching to no user, and being able to switch back.
-
-While you're logged in and you have the 'edit_users' capability, you'll see a 'Switch Off' link in your profile menu in the admin bar. Once you've switched off you'll see a 'Switch back to {user}' link in the footer of your site.
-
 == Screenshots ==
 
 1. The 'Switch To' link on the Users screen
@@ -67,7 +67,7 @@ While you're logged in and you have the 'edit_users' capability, you'll see a 'S
 == Changelog ==
 
 = 0.5 =
-* New "Switch off" feature: Log out and log instantly back in again when needed (see the FAQ).
+* New "Switch off" function: Log out and log instantly back in again when needed (see the FAQ).
 
 = 0.4.1 =
 * Support for upcoming changes to the admin bar in WordPress 3.3.
@@ -104,7 +104,7 @@ While you're logged in and you have the 'edit_users' capability, you'll see a 'S
 == Upgrade Notice ==
 
 = 0.5 =
-* Introduces the "Switch off" feature: Log out and log instantly back in again when needed (see the FAQ).
+* Introduces the "Switch off" function: Log out and log instantly back in again when needed (see the FAQ).
 
 = 0.4.1 =
 * Support for upcoming changes to the admin bar in WordPress 3.3.
