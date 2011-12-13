@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.5
+Version:      0.5.1
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
@@ -31,16 +31,16 @@ class user_switching {
 		# Required functionality:
 		add_filter( 'user_has_cap',                 array( $this, 'user_cap_filter' ), 10, 3 );
 		add_filter( 'map_meta_cap',                 array( $this, 'map_meta_cap' ), 10, 4 );
+		add_filter( 'user_row_actions',             array( $this, 'user_row' ), 10, 2 );
 		add_action( 'plugins_loaded',               array( $this, 'set_old_cookie' ) );
 		add_action( 'init',                         array( $this, 'init' ) );
 		add_action( 'admin_notices',                array( $this, 'admin_notice' ) );
-		add_action( 'user_row_actions',             array( $this, 'user_row' ), 10, 2 );
 		add_action( 'wp_logout',                    'wp_clear_olduser_cookie' );
 		add_action( 'wp_login',                     'wp_clear_olduser_cookie' );
 
 		# Nice-to-haves:
+		add_filter( 'ms_user_row_actions',          array( $this, 'user_row' ), 10, 2 );
 		add_action( 'wp_footer',                    array( $this, 'switch_on' ) );
-		add_action( 'ms_user_row_actions',          array( $this, 'user_row' ), 10, 2 );
 		add_action( 'personal_options',             array( $this, 'personal_options' ) );
 		add_action( 'admin_bar_menu',               array( $this, 'admin_bar_menu' ), 11 );
 		add_action( 'bp_adminbar_menus',            array( $this, 'bp_menu' ), 9 );
@@ -217,37 +217,39 @@ class user_switching {
 	 *
 	 * @return null
 	 */
-	function admin_bar_menu() {
-		global $wp_admin_bar;
+	function admin_bar_menu( $wp_admin_bar ) {
 
 		if ( !function_exists( 'is_admin_bar_showing' ) )
 			return;
 		if ( !is_admin_bar_showing() )
 			return;
 
+		if ( method_exists( $wp_admin_bar, 'get_node' ) and $wp_admin_bar->get_node( 'user-actions' ) )
+			$parent = 'user-actions';
+		else if ( get_option( 'show_avatars' ) )
+			$parent = 'my-account-with-avatar';
+		else
+			$parent = 'my-account';
+
 		if ( $old_user = $this->get_old_user() ) {
 
-			foreach ( array( 'my-account-with-avatar', 'my-account' ) as $parent ) {
-				$wp_admin_bar->add_menu( array(
-					'parent' => $parent,
-					'id'     => 'wp-admin-bar-switch-back',
-					'title'  => sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ),
-					'href'   => $this->switch_back_url()
-				) );
-			}
+			$wp_admin_bar->add_menu( array(
+				'parent' => $parent,
+				'id'     => 'wp-admin-bar-switch-back',
+				'title'  => sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ),
+				'href'   => $this->switch_back_url()
+			) );
 
 		}
 
 		if ( current_user_can( 'switch_off' ) ) {
 
-			foreach ( array( 'my-account-with-avatar', 'my-account' ) as $parent ) {
-				$wp_admin_bar->add_menu( array(
-					'parent' => $parent,
-					'id'     => 'wp-admin-bar-switch-off',
-					'title'  => __( 'Switch Off', 'user_switching' ),
-					'href'   => $this->switch_off_url()
-				) );
-			}
+			$wp_admin_bar->add_menu( array(
+				'parent' => $parent,
+				'id'     => 'wp-admin-bar-switch-off',
+				'title'  => __( 'Switch Off', 'user_switching' ),
+				'href'   => $this->switch_off_url()
+			) );
 
 		}
 
