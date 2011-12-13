@@ -117,3 +117,4 @@ Yes, but you'll need to install 'user-switching.php' into the root of your mu-pl
 
 = 0.4 =
 User switching links on Network Admin screens and BuddyPress user screens.
+
