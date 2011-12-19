@@ -481,8 +481,8 @@ function switch_off_user() {
 }
 }
 
-load_plugin_textdomain( 'user_switching', false, $e=dirname( plugin_basename( __FILE__ ) ) );
-rofl($e);
+load_plugin_textdomain( 'user_switching', false, dirname( plugin_basename( __FILE__ ) ) );
+
 $user_switching = new user_switching;
 
 ?>
