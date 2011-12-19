@@ -1,12 +1,12 @@
 === User Switching ===
 Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
-Tags: user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access
+Tags: user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer
 Requires at least: 2.7
 Tested up to: 3.3
 Stable tag: trunk
 
-Instant switching between user accounts in WordPress, WordPress Multisite, BuddyPress and WordPress MU.
+Instant switching between user accounts in WordPress.
 
 == Description ==
 
@@ -27,6 +27,10 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Full support for administration over SSL (if applicable).
  * Passwords are not (and cannot be) revealed.
 
+*Translations Included:*
+
+ * Chinese Simplified by Sparanoid
+
 == Installation ==
 
 1. Unzip the ZIP file and drop the folder straight into your 'wp-content/plugins' directory.
@@ -41,7 +45,9 @@ If you're installing this as a mu-plugin then see the FAQ for slightly different
 
 Switching off logs you out of your account but retains your current user ID in a cookie so you can switch straight back (ie. log straight back in) without having to log in with your username and password. It's akin to switching to no user, and being able to switch back.
 
-While you're logged in and you have the 'edit_users' capability, you'll see a 'Switch Off' link in your profile menu in the toolbar. Once you've switched off you'll see a 'Switch back to {user}' link in the footer of your site.
+While you're logged in and you have the 'edit_users' capability, you'll see a 'Switch Off' link in your profile menu in the toolbar.
+
+Once you've switched off you'll see a 'Switch back to {user}' link in the footer of your site.
 
 = Does this plugin work with WordPress Multisite? =
 
@@ -65,6 +71,9 @@ Yes, but you'll need to install 'user-switching.php' into the root of your mu-pl
 2. The 'Switch To' link on a user's profile
 
 == Changelog ==
+
+= 0.5.1.1 =
+* Chinese Simplified translation by Sparanoid.
 
 = 0.5.1 =
 * Toolbar tweaks for WordPress 3.3.
@@ -106,6 +115,9 @@ Yes, but you'll need to install 'user-switching.php' into the root of your mu-pl
 
 == Upgrade Notice ==
 
+= 0.5.1.1 =
+* Chinese Simplified translation by Sparanoid.
+
 = 0.5.1 =
 * Toolbar tweaks for WordPress 3.3.
 
@@ -117,4 +129,3 @@ Yes, but you'll need to install 'user-switching.php' into the root of your mu-pl
 
 = 0.4 =
 User switching links on Network Admin screens and BuddyPress user screens.
-
