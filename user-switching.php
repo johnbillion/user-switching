@@ -481,7 +481,7 @@ function switch_off_user() {
 }
 }
 
-load_plugin_textdomain( 'user_switching', false, dirname( plugin_basename( __FILE__ ) ) );
+load_plugin_textdomain( 'user_switching', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 $user_switching = new user_switching;
 

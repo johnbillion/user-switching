@@ -29,7 +29,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
 
 *Translations Included:*
 
- * Chinese Simplified by Sparanoid
+ * Chinese Simplified by Tunghsiao Liu (Sparanoid)
 
 == Installation ==
 
