@@ -7,6 +7,7 @@ Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
 Text Domain:  user_switching
+Domain Path:  /languages/
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
