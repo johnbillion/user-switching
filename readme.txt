@@ -3,41 +3,51 @@ Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
 Tags: user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer
 Requires at least: 2.7
-Tested up to: 3.3
+Tested up to: 3.4
 Stable tag: trunk
 
 Instant switching between user accounts in WordPress.
 
 == Description ==
 
-This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for test environments where you regularly log out and in between different accounts, or for adminstrators of blogs with multiple accounts who need to switch between them.
+This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for test environments where you regularly log out and in between different accounts, or for adminstrators of sites who need to switch between multiple accounts.
 
 = Features =
 
- * Switch users: Instantly switch to any user from the Users screen.
+ * Switch users: Instantly switch to any user account from the *Users* screen.
  * Switch back: Instantly switch back to your originating account.
  * Switch off: Log out of your account but retain the ability to instantly switch back in again.
- * It's completely secure (see the "Security" section below).
+ * It's completely secure (see the *Security* section below).
  * Compatible with WordPress, WordPress Multisite, BuddyPress and WordPress MU.
 
 = Security =
 
- * Only administrators can switch to another user. Lower level users cannot switch between accounts.
+ * Only users with the ability to edit other users can switch user accounts (by default this is only Administrators). Lower level users cannot switch accounts.
  * User switching is protected with the WordPress nonce security system, meaning only those who are allowed to switch users can switch.
  * Full support for administration over SSL (if applicable).
  * Passwords are not (and cannot be) revealed.
 
-*Translations Included:*
+= Translations Included =
 
  * Chinese Simplified by Tunghsiao Liu (Sparanoid)
+ * German by Ralph Stenzel
 
 == Installation ==
 
-1. Unzip the ZIP file and drop the folder straight into your 'wp-content/plugins' directory.
-2. Activate the plugin through the 'Plugins' menu.
-3. Visit the 'Users' menu and you'll see a 'Switch To' link right next to each user.
+You can install this plugin directly from your WordPress dashboard:
 
-If you're installing this as a mu-plugin then see the FAQ for slightly different instructions.
+ 1. Go to the *Plugins* menu and click *Add New*.
+ 2. Search for *User Switching*.
+ 3. Click *Install Now* next to the User Switching plugin.
+ 4. Activate the plugin.
+
+Alternatively, see the guide to [Manually Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
+
+= Usage =
+
+Visit the *Users* menu in WordPress and you'll see a *Switch To* link next to each user. Clicking this will switch you into that user account. Once switched, you can switch back to your originating account via the *Switch back* link on each dashboard screen.
+
+See the FAQ for information about the *Switch Off* feature.
 
 == Frequently Asked Questions ==
 
@@ -45,13 +55,11 @@ If you're installing this as a mu-plugin then see the FAQ for slightly different
 
 Switching off logs you out of your account but retains your current user ID in a cookie so you can switch straight back (ie. log straight back in) without having to log in with your username and password. It's akin to switching to no user, and being able to switch back.
 
-While you're logged in and you have the 'edit_users' capability, you'll see a 'Switch Off' link in your profile menu in the toolbar.
-
-Once you've switched off you'll see a 'Switch back to {user}' link in the footer of your site.
+The *Switch Off* link can be found in your profile menu in the WordPress toolbar. Once you've switched off you'll see a *Switch back* link in the footer of your site.
 
 = Does this plugin work with WordPress Multisite? =
 
-Yes, and you'll also be able to switch users from the Users menu in Network Admin.
+Yes, and you'll also be able to switch users from the Users screen in Network Admin.
 
 = Does this plugin work with BuddyPress? =
 
@@ -63,14 +71,21 @@ Yes, but you should really update to Multisite.
 
 = Does this work as a mu-plugin? =
 
-Yes, but you'll need to install 'user-switching.php' into the root of your mu-plugins directory, not in the 'user-switching' subdirectory. This is a restriction of WordPress.
+Yes, but you'll need to install `user-switching.php` into the root of your `mu-plugins` directory, not in the `user-switching` subdirectory. This is a restriction of WordPress.
+
+= What capability does a user need in order to switch accounts? =
+
+A user needs the `edit_users` capability in order to switch user accounts. By default only Administrators have this capability, and with Multisite enabled only Super Admins have this capability.
 
 == Screenshots ==
 
-1. The 'Switch To' link on the Users screen
-2. The 'Switch To' link on a user's profile
+1. The *Switch To* link on the Users screen
+2. The *Switch To* link on a user's profile
 
 == Changelog ==
+
+= 0.5.1.2 =
+* German translation by Ralph Stenzel.
 
 = 0.5.1.1 =
 * Chinese Simplified translation by Sparanoid.
@@ -114,6 +129,9 @@ Yes, but you'll need to install 'user-switching.php' into the root of your mu-pl
 * Initial release.
 
 == Upgrade Notice ==
+
+= 0.5.1.2 =
+* German translation by Ralph Stenzel.
 
 = 0.5.1.1 =
 * Chinese Simplified translation by Sparanoid.

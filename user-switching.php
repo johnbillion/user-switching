@@ -2,10 +2,11 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.5.1.1
+Version:      0.5.1.2
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
+Text Domain:  user_switching
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -94,12 +95,14 @@ class user_switching {
 	}
 
 	/**
-	 * Routing function which performs different actions depending on the 'action' query var. Actions are secured
+	 * Load localisation files and route actions depending on the 'action' query var. Actions are secured
 	 * with WordPress' nonce system.
 	 *
 	 * @return null
 	 */
 	function init() {
+
+		load_plugin_textdomain( 'user_switching', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 		if ( !isset( $_REQUEST['action'] ) )
 			return;
@@ -178,7 +181,7 @@ class user_switching {
 				<p><?php
 					if ( isset( $_GET['user_switched'] ) )
 						printf( __( 'Switched to %1$s (%2$s).', 'user_switching' ), $user_identity, $user_login );
-					printf( __( ' <a href="%1$s">Switch back to %2$s (%3$s)</a>.', 'user_switching' ), $this->switch_back_url(), $old_user->display_name, $old_user->user_login );
+					printf( ' <a href="%s">%s</a>.', $this->switch_back_url(), sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ) );
 				?></p>
 			</div>
 			<?php
@@ -480,8 +483,6 @@ function switch_off_user() {
 	return true;
 }
 }
-
-load_plugin_textdomain( 'user_switching', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 $user_switching = new user_switching;
 
