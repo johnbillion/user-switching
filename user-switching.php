@@ -71,7 +71,7 @@ class user_switching {
 			return;
 		?>
 		<tr>
-			<th scope="row"><?php _e( 'User Switching', 'user_switching' ); ?></th>
+			<th scope="row"><?php _ex( 'User Switching', 'User Switching title on user profile screen', 'user_switching' ); ?></th>
 			<td><a href="<?php echo $this->switch_to_url( $user->ID ); ?>"><?php _e( 'Switch&nbsp;To', 'user_switching' ); ?></a></td>
 		</tr>
 		<?php
