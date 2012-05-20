@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.5.1.2
+Version:      0.5.2
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
@@ -31,23 +31,24 @@ class user_switching {
 	function __construct() {
 
 		# Required functionality:
-		add_filter( 'user_has_cap',                 array( $this, 'user_cap_filter' ), 10, 3 );
-		add_filter( 'map_meta_cap',                 array( $this, 'map_meta_cap' ), 10, 4 );
-		add_filter( 'user_row_actions',             array( $this, 'user_row' ), 10, 2 );
-		add_action( 'plugins_loaded',               array( $this, 'set_old_cookie' ) );
-		add_action( 'init',                         array( $this, 'init' ) );
-		add_action( 'admin_notices',                array( $this, 'admin_notice' ) );
-		add_action( 'wp_logout',                    'wp_clear_olduser_cookie' );
-		add_action( 'wp_login',                     'wp_clear_olduser_cookie' );
+		add_filter( 'user_has_cap',             array( $this, 'user_cap_filter' ), 10, 3 );
+		add_filter( 'map_meta_cap',             array( $this, 'map_meta_cap' ), 10, 4 );
+		add_filter( 'user_row_actions',         array( $this, 'user_row' ), 10, 2 );
+		add_action( 'plugins_loaded',           array( $this, 'set_old_cookie' ) );
+		add_action( 'init',                     array( $this, 'init' ) );
+		add_action( 'admin_notices',            array( $this, 'admin_notice' ), 1 );
+		add_action( 'wp_logout',                'wp_clear_olduser_cookie' );
+		add_action( 'wp_login',                 'wp_clear_olduser_cookie' );
 
 		# Nice-to-haves:
-		add_filter( 'ms_user_row_actions',          array( $this, 'user_row' ), 10, 2 );
-		add_action( 'wp_footer',                    array( $this, 'switch_on' ) );
-		add_action( 'personal_options',             array( $this, 'personal_options' ) );
-		add_action( 'admin_bar_menu',               array( $this, 'admin_bar_menu' ), 11 );
-		add_action( 'bp_adminbar_menus',            array( $this, 'bp_menu' ), 9 );
-		add_action( 'bp_member_header_actions',     array( $this, 'bp_button' ), 11 );
-		add_action( 'bp_directory_members_actions', array( $this, 'bp_button' ), 11 );
+		add_filter( 'ms_user_row_actions',      array( $this, 'user_row' ), 10, 2 );
+		add_action( 'wp_footer',                array( $this, 'switch_on' ) );
+		add_action( 'personal_options',         array( $this, 'personal_options' ) );
+		add_action( 'admin_bar_menu',           array( $this, 'admin_bar_menu' ), 11 );
+		add_action( 'bp_adminbar_menus',        array( $this, 'bp_menu' ), 9 );
+		add_action( 'bp_member_header_actions', array( $this, 'bp_button' ), 11 );
+		add_action( 'network_admin_notices',    array( $this, 'admin_notice' ), 1 );
+		add_action( 'login_message',            array( $this, 'login_message' ), 1 );
 
 	}
 
@@ -274,6 +275,22 @@ class user_switching {
 	}
 
 	/**
+	 * Adds a 'Switch back to {user}' link to the WordPress login screen if a user is switched off.
+	 *
+	 * @return null
+	 */
+	function login_message( $message ) {
+
+		if ( !is_user_logged_in() and $old_user = $this->get_old_user() ) {
+			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login );
+			$message .= '<p class="message"><a href="' . $this->switch_back_url() . '">' . $link . '</a></p>';
+		}
+
+		return $message;
+
+	}
+
+	/**
 	 * Adds a 'Switch To' link to each list of user actions on the Users screen.
 	 *
 	 * @return null
@@ -318,6 +335,7 @@ class user_switching {
 		if ( current_user_can( 'switch_to_user', $id ) ) {
 			echo bp_get_button( array(
 				'id'         => 'user_switching',
+				'component'  => 'members', # https://buddypress.trac.wordpress.org/ticket/4212
 				'link_href'  => $this->switch_to_url( $id ),
 				'link_text'  => __( 'Switch&nbsp;To', 'user_switching' )
 			) );
@@ -381,7 +399,7 @@ class user_switching {
 		if ( 'switch_to_user' == $args[0] )
 			$user_caps['switch_to_user'] = ( current_user_can( 'edit_user', $args[2] ) and ( $args[2] != $args[1] ) );
 		else if ( 'switch_off' == $args[0] )
-			$user_caps['switch_off'] = current_user_can( 'edit_users' );
+			$user_caps['switch_off'] = ( current_user_can( 'edit_users' ) and !$this->get_old_user() );
 		return $user_caps;
 	}
 
@@ -399,6 +417,8 @@ class user_switching {
 	 */
 	function map_meta_cap( $required_caps, $cap, $user_id, $args ) {
 		if ( ( 'switch_to_user' == $cap ) and ( $args[0] == $user_id ) )
+			$required_caps[] = 'do_not_allow';
+		else if ( ( 'switch_off' == $cap ) and ( $this->get_old_user() ) )
 			$required_caps[] = 'do_not_allow';
 		return $required_caps;
 	}

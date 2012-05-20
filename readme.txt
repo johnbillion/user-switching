@@ -31,6 +31,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
 
  * Chinese Simplified by Tunghsiao Liu (Sparanoid)
  * German by Ralph Stenzel
+ * Farsi (Persian) by Amin Ab
 
 == Installation ==
 
@@ -84,6 +85,11 @@ A user needs the `edit_users` capability in order to switch user accounts. By de
 
 == Changelog ==
 
+= 0.5.2 =
+* Farsi (Persian) translation by Amin Ab.
+* Display switch back links in Network Admin and login screen
+* Avoid a BuddyPress bug preventing Switch To buttons from appearing
+
 = 0.5.1.2 =
 * German translation by Ralph Stenzel.
 
@@ -129,6 +135,9 @@ A user needs the `edit_users` capability in order to switch user accounts. By de
 * Initial release.
 
 == Upgrade Notice ==
+
+= 0.5.1.3 =
+* Farsi (Persian) translation by Amin Ab, and Network Admin and BuddyPress bugfixes.
 
 = 0.5.1.2 =
 * German translation by Ralph Stenzel.
