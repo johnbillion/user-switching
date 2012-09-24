@@ -3,7 +3,7 @@ Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
 Tags: user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer
 Requires at least: 2.7
-Tested up to: 3.4
+Tested up to: 3.4.2
 Stable tag: trunk
 
 Instant switching between user accounts in WordPress.
@@ -32,6 +32,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Chinese Simplified by Tunghsiao Liu (Sparanoid)
  * German by Ralph Stenzel
  * Farsi (Persian) by Amin Ab
+ * Slovak by Max Samael
 
 == Installation ==
 
@@ -93,10 +94,16 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 == Upgrade Notice ==
 
+= 0.6.1 =
+* Slovak translation by Max Samael.
+
 = 0.6 =
 * More intuitive redirecting after switching, a BuddyPress bugfix and some hooks added.
 
 == Changelog ==
+
+= 0.6.1 =
+* Slovak translation by Max Samael.
 
 = 0.6 =
 * More intuitive redirecting after switching.
