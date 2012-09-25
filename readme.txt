@@ -33,6 +33,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * German by Ralph Stenzel
  * Farsi (Persian) by Amin Ab
  * Slovak by Max Samael
+ * Polish by Bartosz Arendt
 
 == Installation ==
 
@@ -94,6 +95,9 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 == Upgrade Notice ==
 
+= 0.6.2 =
+* Polish translation by Bartosz Arendt.
+
 = 0.6.1 =
 * Slovak translation by Max Samael.
 
@@ -101,6 +105,9 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 * More intuitive redirecting after switching, a BuddyPress bugfix and some hooks added.
 
 == Changelog ==
+
+= 0.6.2 =
+* Polish translation by Bartosz Arendt.
 
 = 0.6.1 =
 * Slovak translation by Max Samael.
