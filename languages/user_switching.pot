@@ -1,0 +1,51 @@
+# Copyright (C) 2012 John Blackbourn
+# This file is distributed under the same license as the User Switching package.
+msgid ""
+msgstr ""
+"Project-Id-Version: User Switching 0.5.1.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/user-switching\n"
+"POT-Creation-Date: 2012-03-29 12:56:16+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2012-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: user-switching.php:74
+msgctxt "User Switching title on user profile screen"
+msgid "User Switching"
+msgstr ""
+
+#: user-switching.php:75 user-switching.php:282 user-switching.php:321
+msgid "Switch&nbsp;To"
+msgstr ""
+
+#: user-switching.php:129 user-switching.php:140 user-switching.php:147
+msgid "Could not switch users."
+msgstr ""
+
+#: user-switching.php:161
+msgid "Could not switch off."
+msgstr ""
+
+#: user-switching.php:183 user-switching.php:197
+msgid "Switched to %1$s (%2$s)."
+msgstr ""
+
+#: user-switching.php:184 user-switching.php:242 user-switching.php:269
+#: user-switching.php:296
+msgid "Switch back to %1$s (%2$s)"
+msgstr ""
+
+#: user-switching.php:195
+msgid "Switched back to %1$s (%2$s)."
+msgstr ""
+
+#: user-switching.php:253
+msgid "Switch Off"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Instant switching between user accounts in WordPress"
+msgstr ""
