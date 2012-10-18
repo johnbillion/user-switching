@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.6.3
+Version:      0.7
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
@@ -114,7 +114,7 @@ class user_switching {
 			return;
 
 		if ( isset( $_REQUEST['redirect_to'] ) and !empty( $_REQUEST['redirect_to'] ) )
-			$redirect_to = remove_query_arg( array( 'user_switched', 'switched_off', 'switched_back' ), $_REQUEST['redirect_to'] );
+			$redirect_to = remove_query_arg( array( 'user_switched', 'switched_off', 'switched_back', 'message', 'updated', 'settings-updated' ), $_REQUEST['redirect_to'] );
 		else
 			$redirect_to = false;
 
@@ -200,7 +200,10 @@ class user_switching {
 				<p><?php
 					if ( isset( $_GET['user_switched'] ) )
 						printf( __( 'Switched to %1$s (%2$s).', 'user_switching' ), $user_identity, $user_login );
-					printf( ' <a href="%s">%s</a>.', $this->switch_back_url(), sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ) );
+					$url = add_query_arg( array(
+						'redirect_to' => urlencode( $this->current_url() )
+					), $this->switch_back_url() );
+					printf( ' <a href="%s">%s</a>.', $url, sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ) );
 				?></p>
 			</div>
 			<?php
@@ -259,7 +262,9 @@ class user_switching {
 				'parent' => $parent,
 				'id'     => 'wp-admin-bar-switch-back',
 				'title'  => sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ),
-				'href'   => $this->switch_back_url()
+				'href'   => add_query_arg( array(
+					'redirect_to' => urlencode( $this->current_url() )
+				), $this->switch_back_url() )
 			) );
 
 		}
@@ -269,7 +274,7 @@ class user_switching {
 			$url = $this->switch_off_url();
 			if ( !is_admin() ) {
 				$url = add_query_arg( array(
-					'redirect_to' => $_SERVER['REQUEST_URI']
+					'redirect_to' => urlencode( $this->current_url() )
 				), $url );
 			}
 
@@ -285,16 +290,16 @@ class user_switching {
 	}
 
 	/**
-	 * Adds a 'Switch back to {user}' link to the WordPress footer if a user is switched off.
+	 * Adds a 'Switch back to {user}' link to the WordPress footer if the admin toolbar isn't showing.
 	 *
 	 * @return null
 	 */
 	function switch_on() {
 
-		if ( !is_user_logged_in() and $old_user = $this->get_old_user() ) {
+		if ( !is_admin_bar_showing() and $old_user = $this->get_old_user() ) {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
-				'redirect_to' => $_SERVER['REQUEST_URI']
+				'redirect_to' => urlencode( $this->current_url() )
 			), $this->switch_back_url() );
 			echo '<p id="user_switching_switch_on"><a href="' . $url . '">' . $link . '</a></p>';
 		}
@@ -302,13 +307,13 @@ class user_switching {
 	}
 
 	/**
-	 * Adds a 'Switch back to {user}' link to the WordPress login screen if a user is switched off.
+	 * Adds a 'Switch back to {user}' link to the WordPress login screen.
 	 *
 	 * @return null
 	 */
 	function login_message( $message ) {
 
-		if ( !is_user_logged_in() and $old_user = $this->get_old_user() ) {
+		if ( $old_user = $this->get_old_user() ) {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login );
 			$url = $this->switch_back_url();
 			if ( isset( $_REQUEST['redirect_to'] ) and !empty( $_REQUEST['redirect_to'] ) ) {
@@ -417,6 +422,15 @@ class user_switching {
 		return wp_nonce_url( add_query_arg( array(
 			'action' => 'switch_off'
 		), site_url( 'wp-login.php', 'login' ) ), 'switch_off' );
+	}
+
+	/**
+	 * Returns the current URL.
+	 *
+	 * @return string The current URL
+	 */
+	function current_url() {
+		return ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	}
 
 	/**
