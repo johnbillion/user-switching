@@ -34,6 +34,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Farsi (Persian) by Amin Ab
  * Slovak by Max Samael
  * Polish by Bartosz Arendt
+ * Lithuanian by Tommixoft
 
 == Installation ==
 
