@@ -5,6 +5,7 @@ Tags: user, users, profiles, switching, wpmu, multisite, buddypress, become, use
 Requires at least: 3.1
 Tested up to: 3.5
 Stable tag: trunk
+License: GPL v2 or later
 
 Instant switching between user accounts in WordPress.
 
@@ -76,6 +77,10 @@ Yes, but you'll need to install `user-switching.php` into the root of your `mu-p
 = What capability does a user need in order to switch accounts? =
 
 A user needs the `edit_users` capability in order to switch user accounts. By default only Administrators have this capability, and with Multisite enabled only Super Admins have this capability.
+
+= Can regular admins on Multisite installs switch accounts? =
+
+No. This can be enabled though by installing the [User Switching for Regular Admins](https://github.com/johnbillion/user-switching-for-regular-admins) plugin.
 
 = Are any hooks called when users switch accounts? =
 
