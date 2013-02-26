@@ -36,6 +36,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Slovak by Max Samael
  * Polish by Bartosz Arendt
  * Lithuanian by Tommixoft
+ * Arabic by Hassan Hisham
 
 == Installation ==
 
@@ -97,10 +98,17 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 == Upgrade Notice ==
 
+= 0.7.1 =
+* Arabic translation by Hassan Hisham. Minor code tweaks.
+
 = 0.7 =
 * More intuitive redirecting after switching. Always show a 'Switch back' link in the footer when the admin toolbar isn't showing.
 
 == Changelog ==
+
+= 0.7.1 =
+* Arabic translation by Hassan Hisham.
+* Minor code tweaks.
 
 = 0.7 =
 * Always show a 'Switch back' link in the footer when the admin toolbar isn't showing.

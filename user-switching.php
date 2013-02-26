@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.7
+Version:      0.7.1
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
@@ -10,7 +10,7 @@ Text Domain:  user_switching
 Domain Path:  /languages/
 License:      GPL v2 or later
 
-Copyright © 2012 John Blackbourn
+Copyright © 2013 John Blackbourn
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -122,7 +122,7 @@ class user_switching {
 
 			# We're attempting to switch to another user:
 			case 'switch_to_user':
-				$user_id = intval( $_REQUEST['user_id'] );
+				$user_id = absint( $_REQUEST['user_id'] );
 
 				check_admin_referer( "switch_to_user_{$user_id}" );
 
@@ -335,7 +335,7 @@ class user_switching {
 	 */
 	function user_row( $actions, $user ) {
 		if ( current_user_can( 'switch_to_user', $user->ID ) )
-			$actions[] = '<a href="' . $this->switch_to_url( $user->ID ) . '">' . __( 'Switch&nbsp;To', 'user_switching' ) . '</a>';
+			$actions['switch_to_user'] = '<a href="' . $this->switch_to_url( $user->ID ) . '">' . __( 'Switch&nbsp;To', 'user_switching' ) . '</a>';
 		return $actions;
 	}
 
@@ -366,9 +366,9 @@ class user_switching {
 		global $bp, $members_template;
 
 		if ( !empty( $members_template ) )
-			$id = intval( $members_template->member->id );
+			$id = absint( $members_template->member->id );
 		else
-			$id = intval( $bp->displayed_user->id );
+			$id = absint( $bp->displayed_user->id );
 
 		if ( current_user_can( 'switch_to_user', $id ) ) {
 
@@ -399,7 +399,7 @@ class user_switching {
 		return wp_nonce_url( add_query_arg( array(
 			'action'  => 'switch_to_user',
 			'user_id' => $user_id
-		), site_url( 'wp-login.php', 'login' ) ), "switch_to_user_{$user_id}" );
+		), wp_login_url() ), "switch_to_user_{$user_id}" );
 	}
 
 	/**
@@ -410,7 +410,7 @@ class user_switching {
 	function switch_back_url() {
 		return wp_nonce_url( add_query_arg( array(
 			'action' => 'switch_to_olduser'
-		), site_url( 'wp-login.php', 'login' ) ), 'switch_to_olduser' );
+		), wp_login_url() ), 'switch_to_olduser' );
 	}
 
 	/**
@@ -421,7 +421,7 @@ class user_switching {
 	function switch_off_url() {
 		return wp_nonce_url( add_query_arg( array(
 			'action' => 'switch_off'
-		), site_url( 'wp-login.php', 'login' ) ), 'switch_off' );
+		), wp_login_url() ), 'switch_off' );
 	}
 
 	/**
@@ -452,9 +452,9 @@ class user_switching {
 	 */
 	function user_cap_filter( $user_caps, $required_caps, $args ) {
 		if ( 'switch_to_user' == $args[0] )
-			$user_caps['switch_to_user'] = ( current_user_can( 'edit_user', $args[2] ) and ( $args[2] != $args[1] ) );
+			$user_caps['switch_to_user'] = ( user_can( $args[1], 'edit_user', $args[2] ) and ( $args[2] != $args[1] ) );
 		else if ( 'switch_off' == $args[0] )
-			$user_caps['switch_off'] = ( current_user_can( 'edit_users' ) and !$this->get_old_user() );
+			$user_caps['switch_off'] = ( user_can( $args[1], 'edit_users' ) and !$this->get_old_user() );
 		return $user_caps;
 	}
 
@@ -588,5 +588,3 @@ function current_user_switched() {
 global $user_switching;
 
 $user_switching = new user_switching;
-
-?>
