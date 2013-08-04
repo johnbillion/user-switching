@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.8
+Version:      0.8.1
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
@@ -96,10 +96,11 @@ class user_switching {
 	 */
 	public static function remember() {
 
-		$current_user = wp_get_current_user();
-		$current      = wp_parse_auth_cookie( '', 'logged_in' );
-		$cookie_life  = apply_filters( 'auth_cookie_expiration', 172800, $current_user->ID, false );
+		$current     = wp_parse_auth_cookie( '', 'logged_in' );
+		$cookie_life = apply_filters( 'auth_cookie_expiration', 172800, get_current_user_id(), false );
 
+		# Here we calculate the expiration length of the current auth cookie and compare it to the default expiration.
+		# If it's greater than this, then we know the user checked 'Remember Me' when they logged in.
 		return ( ( $current['expiration'] - time() ) > $cookie_life );
 
 	}
@@ -546,10 +547,10 @@ function wp_set_olduser_cookie( $old_user_id ) {
 if ( !function_exists( 'wp_clear_olduser_cookie' ) ) {
 function wp_clear_olduser_cookie( $clear_all = true ) {
 	$cookie = wp_get_olduser_cookie();
-	array_pop( $cookie );
 	if ( $clear_all or empty( $cookie ) ) {
 		setcookie( OLDUSER_COOKIE, ' ', time() - 31536000, COOKIEPATH, COOKIE_DOMAIN );
 	} else {
+		array_pop( $cookie );
 		$expiration = time() + 172800; # 48 hours
 		setcookie( OLDUSER_COOKIE, serialize( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, false );
 	}
