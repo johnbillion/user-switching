@@ -27,7 +27,6 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * User switching is protected with WordPress' nonce security system, meaning only those who intend to switch users can switch.
  * Full support for administration over SSL (if applicable).
  * Passwords are not (and cannot be) revealed.
- * Originating user information is stored in the same secure manner as authentication cookies.
 
 = Translations Included =
 
@@ -188,3 +187,4 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 = 0.1 =
 * Initial release.
+
