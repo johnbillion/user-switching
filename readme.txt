@@ -3,7 +3,7 @@ Contributors: johnbillion
 Donate link: http://lud.icro.us/donations/
 Tags: user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer
 Requires at least: 3.1
-Tested up to: 3.5
+Tested up to: 3.6
 Stable tag: trunk
 License: GPL v2 or later
 
@@ -23,10 +23,11 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
 
 = Security =
 
- * Only users with the ability to edit other users can switch user accounts (by default this is only Administrators). Lower level users cannot switch accounts.
- * User switching is protected with the WordPress nonce security system, meaning only those who are allowed to switch users can switch.
+ * Only users with the ability to edit other users can switch user accounts (by default this is only Administrators on single site installs, and Super Admins on Multisite installs). Lower level users cannot switch accounts.
+ * User switching is protected with WordPress' nonce security system, meaning only those who intend to switch users can switch.
  * Full support for administration over SSL (if applicable).
  * Passwords are not (and cannot be) revealed.
+ * Originating user information is stored in the same secure manner as authentication cookies.
 
 = Translations Included =
 
@@ -69,7 +70,7 @@ Yes, and you'll also be able to switch users from the Users screen in Network Ad
 
 = Does this plugin work with BuddyPress? =
 
-Yes, and you'll also be able to switch users from the Members screens.
+Yes, and you'll also be able to switch users from member profile screens and the member listing screen.
 
 = Does this work as a mu-plugin? =
 
@@ -98,13 +99,16 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 == Upgrade Notice ==
 
-= 0.7.1 =
-* Arabic translation by Hassan Hisham. Minor code tweaks.
-
-= 0.7 =
-* More intuitive redirecting after switching. Always show a 'Switch back' link in the footer when the admin toolbar isn't showing.
+= 0.8 =
+* Nested switching and switching back is now supported (capability permitting). Switch, switch again, switch back, switch back!
 
 == Changelog ==
+
+= 0.8 =
+* Nested switching and switching back is now supported (capability permitting). Switch, switch again, switch back, switch back!
+* Fix for BuddyPress 1.7 member profile pages. Props nat0n.
+* Updated Arabic translation by Hassan Hisham.
+* A little code refactoring and improving, completed inline docs.
 
 = 0.7.1 =
 * Arabic translation by Hassan Hisham.
