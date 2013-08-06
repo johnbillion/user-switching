@@ -194,3 +194,4 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 = 0.1 =
 * Initial release.
+
