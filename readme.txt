@@ -37,6 +37,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Japanese by Yusuke Hayasaki
  * Lithuanian by Tommixoft
  * Polish by Bartosz Arendt
+ * Russian by R J
  * Slovak by Max Samael
 
 == Installation ==
@@ -99,6 +100,9 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 == Upgrade Notice ==
 
+= 0.8.2 =
+* Russian translation by R J
+
 = 0.8.1 =
 * Japanese translation by Yusuke Hayasaki
 
@@ -106,6 +110,9 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 * Nested switching and switching back is now supported (capability permitting). Switch, switch again, switch back, switch back!
 
 == Changelog ==
+
+= 0.8.2 =
+* Russian translation by R J
 
 = 0.8.1 =
 * Japanese translation by Yusuke Hayasaki
@@ -187,4 +194,3 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 = 0.1 =
 * Initial release.
-
