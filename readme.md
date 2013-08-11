@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/johnbillion/user-switching.png)](http://travis-ci.org/johnbillion/user-switching)
+
 # User Switching #
 
 **Contributors:** johnbillion  
