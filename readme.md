@@ -1,12 +1,12 @@
 # User Switching #
 
-**Contributors:** johnbillion
-**Donate link:** http://lud.icro.us/donations/
-**Tags:** user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer
-**Requires at least:** 3.1
-**Tested up to:** 3.6
-**Stable tag:** trunk
-**License:** GPL v2 or later
+**Contributors:** johnbillion  
+**Donate link:** http://lud.icro.us/donations/  
+**Tags:** user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer  
+**Requires at least:** 3.1  
+**Tested up to:** 3.6  
+**Stable tag:** trunk  
+**License:** GPL v2 or later  
 
 Instant switching between user accounts in WordPress.
 
