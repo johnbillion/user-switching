@@ -3,7 +3,6 @@
 # User Switching #
 
 **Contributors:** johnbillion  
-**Donate link:** http://lud.icro.us/donations/  
 **Tags:** user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer  
 **Requires at least:** 3.1  
 **Tested up to:** 3.6  
@@ -14,7 +13,7 @@ Instant switching between user accounts in WordPress.
 
 ## Description ##
 
-This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for test environments where you regularly log out and in between different accounts, or for adminstrators of sites who need to switch between multiple accounts.
+This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for test environments where you regularly log out and in between different accounts, or for site adminstrators who need to switch between multiple accounts.
 
 ### Features ###
 
@@ -52,7 +51,9 @@ You can install this plugin directly from your WordPress dashboard:
  3. Click *Install Now* next to the User Switching plugin.
  4. Activate the plugin.
 
-Alternatively, see the guide to [Manually Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
+Alternatively, if you have the [Developer plugin](http://wordpress.org/plugins/developer/) installed then User Switching is a one-click install from the Tools -> Developer screen.
+
+Failing that, see the guide to [Manually Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
 
 ### Usage ###
 
