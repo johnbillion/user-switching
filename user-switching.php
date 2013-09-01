@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.8.2
+Version:      0.8.3
 Plugin URI:   http://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   http://johnblackbourn.com/
@@ -39,7 +39,7 @@ class user_switching {
 		add_filter( 'user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
 		add_action( 'plugins_loaded',               array( $this, 'action_plugins_loaded' ) );
 		add_action( 'init',                         array( $this, 'action_init' ) );
-		add_action( 'admin_notices',                array( $this, 'action_admin_notices' ), 1 );
+		add_action( 'all_admin_notices',            array( $this, 'action_admin_notices' ), 1 );
 		add_action( 'wp_logout',                    'wp_clear_olduser_cookie' );
 		add_action( 'wp_login',                     'wp_clear_olduser_cookie' );
     
@@ -50,7 +50,6 @@ class user_switching {
 		add_action( 'admin_bar_menu',               array( $this, 'action_admin_bar_menu' ), 11 );
 		add_action( 'bp_adminbar_menus',            array( $this, 'action_bp_menus' ), 9 );
 		add_action( 'bp_member_header_actions',     array( $this, 'action_bp_button' ), 11 );
-		add_action( 'network_admin_notices',        array( $this, 'action_admin_notices' ), 1 );
 		add_filter( 'login_message',                array( $this, 'filter_login_message' ), 1 );
 		add_action( 'bp_directory_members_actions', array( $this, 'action_bp_button' ), 11 );
 
@@ -194,7 +193,7 @@ class user_switching {
 	/**
 	 * Display the 'Switched to {user}' and 'Switch back to {user}' messages in the admin area.
 	 *
-	 * @action admin_notices
+	 * @action all_admin_notices
 	 * @return null
 	 */
 	public function action_admin_notices() {
