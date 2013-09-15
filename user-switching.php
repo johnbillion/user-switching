@@ -39,6 +39,7 @@ class user_switching {
 		add_filter( 'user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
 		add_action( 'plugins_loaded',               array( $this, 'action_plugins_loaded' ) );
 		add_action( 'init',                         array( $this, 'action_init' ) );
+		add_action( 'login_init',                   array( $this, 'action_login_init' ) );
 		add_action( 'all_admin_notices',            array( $this, 'action_admin_notices' ), 1 );
 		add_action( 'wp_logout',                    'wp_clear_olduser_cookie' );
 		add_action( 'wp_login',                     'wp_clear_olduser_cookie' );
@@ -105,15 +106,24 @@ class user_switching {
 	}
 
 	/**
-	 * Load localisation files and route actions depending on the 'action' query var. Actions are secured
-	 * with WordPress' nonce system.
-	 *
+	 * Load localisation files.
+	 * 
 	 * @action init
 	 * @return null
 	 */
 	public function action_init() {
 
 		load_plugin_textdomain( 'user_switching', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
+	}
+
+	/**
+	 * Route actions depending on the 'action' query var. Actions are secured with WordPress' nonce system.
+	 *
+	 * @action login_init
+	 * @return null
+	 */
+	public function action_login_init() {
 
 		if ( !isset( $_REQUEST['action'] ) )
 			return;
