@@ -406,6 +406,10 @@ class user_switching {
 		if ( ! $link = self::maybe_switch_url( $id ) )
 			return;
 
+		$link = add_query_arg( array(
+			'redirect_to' => urlencode( bp_core_get_user_domain( $id ) )
+		), $link );
+
 		# Workaround for https://buddypress.trac.wordpress.org/ticket/4212
 		$components = array_keys( $bp->active_components );
 		if ( !empty( $components ) )
