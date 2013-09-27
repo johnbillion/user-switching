@@ -561,7 +561,7 @@ function wp_set_olduser_cookie( $old_user_id ) {
 	$expiration = time() + 172800; # 48 hours
 	$cookie = wp_get_olduser_cookie();
 	$cookie[] = wp_generate_auth_cookie( $old_user_id, $expiration, 'old_user' );
-	setcookie( OLDUSER_COOKIE, serialize( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, false );
+	setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, false );
 }
 }
 
@@ -579,7 +579,7 @@ function wp_clear_olduser_cookie( $clear_all = true ) {
 	} else {
 		array_pop( $cookie );
 		$expiration = time() + 172800; # 48 hours
-		setcookie( OLDUSER_COOKIE, serialize( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, false );
+		setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, false );
 	}
 }
 }
@@ -592,7 +592,7 @@ function wp_clear_olduser_cookie( $clear_all = true ) {
 if ( !function_exists( 'wp_get_olduser_cookie' ) ) {
 function wp_get_olduser_cookie() {
 	if ( isset( $_COOKIE[OLDUSER_COOKIE] ) )
-		$cookie = maybe_unserialize( stripslashes( $_COOKIE[OLDUSER_COOKIE] ) );
+		$cookie = json_decode( stripslashes( $_COOKIE[OLDUSER_COOKIE] ) );
 	if ( !isset( $cookie ) or !is_array( $cookie ) )
 		$cookie = array();
 	return $cookie;
