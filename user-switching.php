@@ -602,38 +602,32 @@ function wp_get_olduser_cookie() {
 /**
  * Switches the current logged in user to the specified user.
  *
- * @param int      $user_id     The ID of the user to switch to.
- * @param bool     $remember    Whether to 'remember' the user in the form of a persistent browser cookie. Optional.
- * @param int|bool $old_user_id The ID of the originating user, or false to not set the old user cookie. Defaults to the current user.
+ * @param int  $user_id      The ID of the user to switch to.
+ * @param bool $remember     Whether to 'remember' the user in the form of a persistent browser cookie. Optional.
+ * @param bool $set_old_user Whether to set the old user cookie. Optional.
  * @return bool True on success, false on failure.
  */
 if ( !function_exists( 'switch_to_user' ) ) {
-function switch_to_user( $user_id, $remember = false, $old_user_id = 0 ) {
-	if ( !function_exists( 'wp_set_auth_cookie' ) )
-		return false;
-	if ( !$user_id )
-		return false;
+function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
 	if ( !$user = get_userdata( $user_id ) )
 		return false;
 
-	$old_user = wp_get_current_user();
-
-	if ( ( 0 === $old_user_id ) and $old_user )
-		$old_user_id = $old_user->ID;
-
-	if ( $old_user_id )
+	if ( $set_old_user and is_user_logged_in() ) {
+		$old_user_id = get_current_user_id();
 		wp_set_olduser_cookie( $old_user_id );
-	else
+	} else {
+		$old_user_id = false;
 		wp_clear_olduser_cookie( false );
+	}
 
 	wp_clear_auth_cookie();
 	wp_set_auth_cookie( $user_id, $remember );
 	wp_set_current_user( $user_id );
 
-	if ( false === $old_user_id )
-		do_action( 'switch_back_user', $user_id, $old_user_id );
-	else
+	if ( $set_old_user )
 		do_action( 'switch_to_user', $user_id, $old_user_id );
+	else
+		do_action( 'switch_back_user', $user_id, $old_user_id );
 
 	return true;
 }
@@ -647,9 +641,7 @@ function switch_to_user( $user_id, $remember = false, $old_user_id = 0 ) {
  */
 if ( !function_exists( 'switch_off_user' ) ) {
 function switch_off_user() {
-	if ( $old_user = wp_get_current_user() )
-		$old_user_id = $old_user->ID;
-	else
+	if ( !$old_user_id = get_current_user_id() )
 		return false;
 
 	wp_set_olduser_cookie( $old_user_id );
