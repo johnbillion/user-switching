@@ -129,7 +129,7 @@ class user_switching {
 			return;
 
 		if ( isset( $_REQUEST['redirect_to'] ) and !empty( $_REQUEST['redirect_to'] ) )
-			$redirect_to = remove_query_arg( array( 'user_switched', 'switched_off', 'switched_back', 'message', 'updated', 'settings-updated' ), $_REQUEST['redirect_to'] );
+			$redirect_to = remove_query_arg( self::remove_query_args(), $_REQUEST['redirect_to'] );
 		else
 			$redirect_to = false;
 
@@ -487,6 +487,20 @@ class user_switching {
 	 */
 	public static function current_url() {
 		return ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	}
+
+	/**
+	 * Helper function. Returns an array of query args to remove from the query string when doing a redirect.
+	 * 
+	 * @return array Query args to remove from query string.
+	 */
+	public static function remove_query_args() {
+		return array(
+			'user_switched', 'switched_off', 'switched_back',
+			'message', 'updated', 'settings-updated', 'saved',
+			'activated', 'activate', 'deactivate',
+			'locked', 'skipped', 'deleted', 'trashed', 'untrashed'
+		);
 	}
 
 	/**
