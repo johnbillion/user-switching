@@ -6,7 +6,7 @@ Version:      0.8.3-beta1
 Plugin URI:   https://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   https://johnblackbourn.com/
-Text Domain:  user_switching
+Text Domain:  user-switching
 Domain Path:  /languages/
 License:      GPL v2 or later
 
@@ -77,8 +77,8 @@ class user_switching {
 
 		?>
 		<tr>
-			<th scope="row"><?php _ex( 'User Switching', 'User Switching title on user profile screen', 'user_switching' ); ?></th>
-			<td><a href="<?php echo $link; ?>"><?php _e( 'Switch&nbsp;To', 'user_switching' ); ?></a></td>
+			<th scope="row"><?php _ex( 'User Switching', 'User Switching title on user profile screen', 'user-switching' ); ?></th>
+			<td><a href="<?php echo $link; ?>"><?php _e( 'Switch&nbsp;To', 'user-switching' ); ?></a></td>
 		</tr>
 		<?php
 	}
@@ -108,7 +108,7 @@ class user_switching {
 	 */
 	public function action_init() {
 
-		load_plugin_textdomain( 'user_switching', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'user-switching', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 	}
 
@@ -148,7 +148,7 @@ class user_switching {
 					die();
 
 				} else {
-					wp_die( __( 'Could not switch users.', 'user_switching' ) );
+					wp_die( __( 'Could not switch users.', 'user-switching' ) );
 				}
 				break;
 
@@ -159,7 +159,7 @@ class user_switching {
 
 				# Fetch the originating user data:
 				if ( !$old_user = self::get_old_user() )
-					wp_die( __( 'Could not switch users.', 'user_switching' ) );
+					wp_die( __( 'Could not switch users.', 'user-switching' ) );
 
 				# Switch user:
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
@@ -169,7 +169,7 @@ class user_switching {
 						wp_redirect( add_query_arg( array( 'user_switched' => 'true', 'switched_back' => 'true' ), admin_url( 'users.php' ) ) );
 					die();
 				} else {
-					wp_die( __( 'Could not switch users.', 'user_switching' ) );
+					wp_die( __( 'Could not switch users.', 'user-switching' ) );
 				}
 				break;
 
@@ -186,7 +186,7 @@ class user_switching {
 						wp_redirect( add_query_arg( array( 'switched_off' => 'true' ), home_url() ) );
 					die();
 				} else {
-					wp_die( __( 'Could not switch off.', 'user_switching' ) );
+					wp_die( __( 'Could not switch off.', 'user-switching' ) );
 				}
 				break;
 
@@ -208,11 +208,11 @@ class user_switching {
 			<div id="user_switching" class="updated">
 				<p><?php
 					if ( isset( $_GET['user_switched'] ) )
-						printf( __( 'Switched to %1$s (%2$s).', 'user_switching' ), $user->display_name, $user->user_login );
+						printf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
 					$url = add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() )
 					), self::switch_back_url() );
-					printf( ' <a href="%s">%s</a>.', $url, sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ) );
+					printf( ' <a href="%s">%s</a>.', $url, sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) );
 				?></p>
 			</div>
 			<?php
@@ -223,9 +223,9 @@ class user_switching {
 			<div id="user_switching" class="updated">
 				<p><?php
 					if ( isset( $_GET['switched_back'] ) )
-						printf( __( 'Switched back to %1$s (%2$s).', 'user_switching' ), $user->display_name, $user->user_login );
+						printf( __( 'Switched back to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
 					else
-						printf( __( 'Switched to %1$s (%2$s).', 'user_switching' ), $user->display_name, $user->user_login );
+						printf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
 				?></p>
 			</div>
 			<?php
@@ -272,7 +272,7 @@ class user_switching {
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
 				'id'     => 'switch-back',
-				'title'  => sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login ),
+				'title'  => sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ),
 				'href'   => add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() )
 				), self::switch_back_url() )
@@ -292,7 +292,7 @@ class user_switching {
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
 				'id'     => 'switch-off',
-				'title'  => __( 'Switch Off', 'user_switching' ),
+				'title'  => __( 'Switch Off', 'user-switching' ),
 				'href'   => $url
 			) );
 
@@ -308,7 +308,7 @@ class user_switching {
 	public function action_wp_footer() {
 
 		if ( !is_admin_bar_showing() and $old_user = self::get_old_user() ) {
-			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login );
+			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() )
 			), self::switch_back_url() );
@@ -326,7 +326,7 @@ class user_switching {
 	public function filter_login_message( $message ) {
 
 		if ( $old_user = self::get_old_user() ) {
-			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login );
+			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = self::switch_back_url();
 			if ( isset( $_REQUEST['redirect_to'] ) and !empty( $_REQUEST['redirect_to'] ) ) {
 				$url = add_query_arg( array(
@@ -352,7 +352,7 @@ class user_switching {
 		if ( ! $link = self::maybe_switch_url( $user->ID ) )
 			return $actions;
 
-		$actions['switch_to_user'] = '<a href="' . $link . '">' . __( 'Switch&nbsp;To', 'user_switching' ) . '</a>';
+		$actions['switch_to_user'] = '<a href="' . $link . '">' . __( 'Switch&nbsp;To', 'user-switching' ) . '</a>';
 
 		return $actions;
 	}
@@ -367,7 +367,7 @@ class user_switching {
 		if ( !is_admin() and $old_user = self::get_old_user() ) {
 
 			echo '<li id="bp-adminbar-userswitching-menu" style="background-image:none"><a href="' . self::switch_back_url() . '">';
-			printf( __( 'Switch back to %1$s (%2$s)', 'user_switching' ), $old_user->display_name, $old_user->user_login );
+			printf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			echo '</a></li>';
 
 		}
@@ -406,7 +406,7 @@ class user_switching {
 			'id'         => 'user_switching',
 			'component'  => $component, 
 			'link_href'  => $link,
-			'link_text'  => __( 'Switch&nbsp;To', 'user_switching' )
+			'link_text'  => __( 'Switch&nbsp;To', 'user-switching' )
 		) );
 
 	}
