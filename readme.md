@@ -5,7 +5,7 @@
 **Contributors:** johnbillion  
 **Tags:** user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer  
 **Requires at least:** 3.1  
-**Tested up to:** 3.6  
+**Tested up to:** 3.7  
 **Stable tag:** trunk  
 **License:** GPL v2 or later  
 
@@ -51,7 +51,7 @@ You can install this plugin directly from your WordPress dashboard:
  3. Click *Install Now* next to the User Switching plugin.
  4. Activate the plugin.
 
-Alternatively, if you have the [Developer plugin](http://wordpress.org/plugins/developer/) installed then User Switching is a one-click install from the Tools -> Developer screen.
+Alternatively, if you have the [WordPress Developer plugin](http://wordpress.org/plugins/developer/) installed then User Switching is a one-click install from the Tools -> Developer screen.
 
 Failing that, see the guide to [Manually Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
 
@@ -93,7 +93,7 @@ No. This can be enabled though by installing the [User Switching for Regular Adm
 
 Yes. When a user switches to another account, the `switch_to_user` hook is called with the new and old user IDs passed as parameters.
 
-When a user switches back to their original account, the `switch_back_user` hook is called with the new (original) and old user IDs passed as parameters.
+When a user switches back to their original account, the `switch_back_user` hook is called with the new (original) and old user IDs passed as parameters. Note that the old user ID can be boolean false if the user is switching back after they've been switched off.
 
 When a user switches off, the `switch_off_user` hook is called with the old user ID as a parameter.
 
