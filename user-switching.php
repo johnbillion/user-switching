@@ -28,8 +28,6 @@ class user_switching {
 
 	/**
 	 * Class constructor. Set up some filters and actions.
-	 *
-	 * @return null
 	 */
 	public function __construct() {
 
@@ -59,7 +57,6 @@ class user_switching {
 	/**
 	 * Define the name of the old user cookie. Uses WordPress' cookie hash for increased security.
 	 *
-	 * @action plugins_loaded
 	 * @return null
 	 */
 	public function action_plugins_loaded() {
@@ -70,7 +67,6 @@ class user_switching {
 	/**
 	 * Output the 'Switch To' link on the user editing screen if we have permission to switch to this user.
 	 *
-	 * @action personal_options
 	 * @param WP_User $user User object for this screen
 	 * @return null
 	 */
@@ -108,7 +104,6 @@ class user_switching {
 	/**
 	 * Load localisation files.
 	 * 
-	 * @action init
 	 * @return null
 	 */
 	public function action_init() {
@@ -120,7 +115,6 @@ class user_switching {
 	/**
 	 * Route actions depending on the 'action' query var. Actions are secured with WordPress' nonce system.
 	 *
-	 * @action login_init
 	 * @return null
 	 */
 	public function action_login_init() {
@@ -203,7 +197,6 @@ class user_switching {
 	/**
 	 * Display the 'Switched to {user}' and 'Switch back to {user}' messages in the admin area.
 	 *
-	 * @action all_admin_notices
 	 * @return null
 	 */
 	public function action_admin_notices() {
@@ -257,7 +250,6 @@ class user_switching {
 	/**
 	 * Adds a 'Switch back to {user}' link to the account menu in WordPress' admin bar.
 	 *
-	 * @action admin_bar_menu
 	 * @param WP_Admin_Bar $wp_admin_bar The admin bar object
 	 * @return null
 	 */
@@ -311,7 +303,6 @@ class user_switching {
 	/**
 	 * Adds a 'Switch back to {user}' link to the WordPress footer if the admin toolbar isn't showing.
 	 *
-	 * @action wp_footer
 	 * @return null
 	 */
 	public function action_wp_footer() {
@@ -329,7 +320,6 @@ class user_switching {
 	/**
 	 * Adds a 'Switch back to {user}' link to the WordPress login screen.
 	 *
-	 * @filter login_message
 	 * @param string $message The login screen message
 	 * @return string The login screen message
 	 */
@@ -353,8 +343,6 @@ class user_switching {
 	/**
 	 * Adds a 'Switch To' link to each list of user actions on the Users screen.
 	 *
-	 * @filter user_row_actions
-	 * @filter ms_user_row_actions
 	 * @param array   $actions The actions to display for this user row
 	 * @param WP_User $user    The user object displayed in this row
 	 * @return array The actions to display for this user row
@@ -372,7 +360,6 @@ class user_switching {
 	/**
 	 * Adds a 'Switch back to {user}' link to the BuddyPress admin bar.
 	 *
-	 * @action bp_adminbar_menus
 	 * @return null
 	 */
 	public function action_bp_menus() {
@@ -390,8 +377,6 @@ class user_switching {
 	/**
 	 * Adds a 'Switch To' link to each member's profile page and profile listings in BuddyPress.
 	 *
-	 * @action bp_member_header_actions
-	 * @action bp_directory_members_actions
 	 * @return null
 	 */
 	public function action_bp_button() {
@@ -512,7 +497,6 @@ class user_switching {
 	 *
 	 * Important: This does not get called for Super Admins. See filter_map_meta_cap() below.
 	 *
-	 * @filter user_has_cap
 	 * @param array $user_caps     User's capabilities
 	 * @param array $required_caps Actual required capabilities for the requested capability
 	 * @param array $args          Arguments that accompany the requested capability check:
@@ -535,7 +519,6 @@ class user_switching {
 	 * This is used to add the 'do_not_allow' capability to the list of required capabilities when a super admin
 	 * is trying to switch to themselves. It affects nothing else as super admins can do everything by default.
 	 *
-	 * @filter map_meta_cap
 	 * @param array  $required_caps Actual required capabilities for the requested action
 	 * @param string $cap           Capability or meta capability being checked
 	 * @param string $user_id       Current user ID
@@ -587,7 +570,7 @@ function wp_clear_olduser_cookie( $clear_all = true ) {
 /**
  * Gets the value of the cookie containing the list of originating users.
  *
- * @return array Array of originating user IDs. @ TODO correct doc, mention auth whatever
+ * @return array Array of originating user authentication cookies. @see wp_generate_auth_cookie()
  */
 if ( !function_exists( 'wp_get_olduser_cookie' ) ) {
 function wp_get_olduser_cookie() {
