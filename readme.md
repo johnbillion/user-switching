@@ -6,7 +6,7 @@
 **Tags:** user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer  
 **Requires at least:** 3.1  
 **Tested up to:** 3.7  
-**Stable tag:** trunk  
+**Stable tag:** 0.8.3  
 **License:** GPL v2 or later  
 
 Instant switching between user accounts in WordPress.
@@ -104,16 +104,18 @@ When a user switches off, the `switch_off_user` hook is called with the old user
 
 ## Upgrade Notice ##
 
-### 0.8.2 ###
-* Russian translation by R J
-
-### 0.8.1 ###
-* Japanese translation by Yusuke Hayasaki
-
-### 0.8 ###
-* Nested switching and switching back is now supported (capability permitting). Switch, switch again, switch back, switch back!
+### 0.8.3 ###
+* Switch to storing data in cookies as JSON instead of PHP-serialized.
+* Show admin notices on all possible admin screens.
+* Tweak the redirect location for BuddyPress user profiles.
 
 ## Changelog ##
+
+### 0.8.3 ###
+* Switch to storing data in cookies as JSON instead of PHP-serialized.
+* Show admin notices on all possible admin screens.
+* Tweak the redirect location for BuddyPress user profiles.
+* Change the textdomain in the plugin to match the plugin slug (required for language packs in WordPress core).
 
 ### 0.8.2 ###
 * Russian translation by R J
