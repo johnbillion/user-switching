@@ -6,7 +6,7 @@
 **Tags:** user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer  
 **Requires at least:** 3.1  
 **Tested up to:** 3.7  
-**Stable tag:** 0.8.3  
+**Stable tag:** 0.8.4  
 **License:** GPL v2 or later  
 
 Instant switching between user accounts in WordPress.
