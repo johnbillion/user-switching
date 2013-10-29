@@ -2,7 +2,7 @@
 /*
 Plugin Name:  User Switching
 Description:  Instant switching between user accounts in WordPress
-Version:      0.8.3
+Version:      0.8.4-beta1
 Plugin URI:   https://lud.icro.us/wordpress-plugin-user-switching/
 Author:       John Blackbourn
 Author URI:   https://johnblackbourn.com/
@@ -37,7 +37,6 @@ class user_switching {
 		add_filter( 'user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
 		add_action( 'plugins_loaded',               array( $this, 'action_plugins_loaded' ) );
 		add_action( 'init',                         array( $this, 'action_init' ) );
-		add_action( 'login_init',                   array( $this, 'action_login_init' ) );
 		add_action( 'all_admin_notices',            array( $this, 'action_admin_notices' ), 1 );
 		add_action( 'wp_logout',                    'wp_clear_olduser_cookie' );
 		add_action( 'wp_login',                     'wp_clear_olduser_cookie' );
@@ -102,22 +101,13 @@ class user_switching {
 	}
 
 	/**
-	 * Load localisation files.
+	 * Load localisation files and route actions depending on the 'action' query var.
 	 * 
 	 * @return null
 	 */
 	public function action_init() {
 
 		load_plugin_textdomain( 'user-switching', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-
-	}
-
-	/**
-	 * Route actions depending on the 'action' query var. Actions are secured with WordPress' nonce system.
-	 *
-	 * @return null
-	 */
-	public function action_login_init() {
 
 		if ( !isset( $_REQUEST['action'] ) )
 			return;
