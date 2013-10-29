@@ -50,6 +50,11 @@ See the [FAQ](http://wordpress.org/plugins/user-switching/faq/) for information 
  * Russian by R J
  * Slovak by Max Samael
 
+## Screenshots ##
+
+1. ![The *Switch To* link on the Users screen](https://raw.github.com/johnbillion/user-switching/master/assets-wp-repo/screenshot-1.png)
+2. ![The *Switch To* link on a user's profile](https://raw.github.com/johnbillion/user-switching/master/assets-wp-repo/screenshot-2.png)
+
 ## Installation ##
 
 You can install this plugin directly from your WordPress dashboard:
@@ -62,11 +67,6 @@ You can install this plugin directly from your WordPress dashboard:
 Alternatively, if you have the [WordPress Developer plugin](http://wordpress.org/plugins/developer/) installed then User Switching is a one-click install from the Tools -> Developer screen.
 
 Failing that, see the guide to [Manually Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
-
-## Screenshots ##
-
-1. ![The *Switch To* link on the Users screen](https://raw.github.com/johnbillion/user-switching/master/assets-wp-repo/screenshot-1.png)
-2. ![The *Switch To* link on a user's profile](https://raw.github.com/johnbillion/user-switching/master/assets-wp-repo/screenshot-2.png)
 
 ## Frequently Asked Questions ##
 
