@@ -63,6 +63,11 @@ Alternatively, if you have the [WordPress Developer plugin](http://wordpress.org
 
 Failing that, see the guide to [Manually Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
 
+## Screenshots ##
+
+1. ![The *Switch To* link on the Users screen](https://raw.github.com/johnbillion/user-switching/master/assets-wp-repo/screenshot-1.png)
+2. ![The *Switch To* link on a user's profile](https://raw.github.com/johnbillion/user-switching/master/assets-wp-repo/screenshot-2.png)
+
 ## Frequently Asked Questions ##
 
 ### What does "Switch off" mean? ###
@@ -98,11 +103,6 @@ Yes. When a user switches to another account, the `switch_to_user` hook is calle
 When a user switches back to their original account, the `switch_back_user` hook is called with the new (original) and old user IDs passed as parameters. Note that the old user ID can be boolean false if the user is switching back after they've been switched off.
 
 When a user switches off, the `switch_off_user` hook is called with the old user ID as a parameter.
-
-## Screenshots ##
-
-1. The *Switch To* link on the Users screen
-2. The *Switch To* link on a user's profile
 
 ## Upgrade Notice ##
 
