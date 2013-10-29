@@ -1,5 +1,14 @@
 
+## Upgrade Notice ##
+
+### 0.8.4 ###
+* Show admin notices on all possible admin screens.
+* Tweak the redirect location for BuddyPress user profiles.
+
 ## Changelog ##
+
+### 0.8.4 ###
+* Revert a change in 0.8.3 which switched to using the `login_init` hook. This hook is fired too late.
 
 ### 0.8.3 ###
 * Switch to storing data in cookies as JSON instead of PHP-serialized.
