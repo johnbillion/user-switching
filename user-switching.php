@@ -112,7 +112,7 @@ class user_switching {
 			return;
 
 		if ( isset( $_REQUEST['redirect_to'] ) and !empty( $_REQUEST['redirect_to'] ) )
-			$redirect_to = remove_query_arg( self::remove_query_args(), $_REQUEST['redirect_to'] );
+			$redirect_to = self::remove_query_args( $_REQUEST['redirect_to'] );
 		else
 			$redirect_to = false;
 
@@ -447,17 +447,18 @@ class user_switching {
 	}
 
 	/**
-	 * Helper function. Returns an array of query args to remove from the query string when doing a redirect.
+	 * Helper function. Removes a list of common confirmation-style query args from a URL.
 	 * 
-	 * @return array Query args to remove from query string.
+	 * @param string $url A URL
+	 * @return string The URL with the listed query args removed
 	 */
-	public static function remove_query_args() {
-		return array(
+	public static function remove_query_args( $url ) {
+		return remove_query_arg( array(
 			'user_switched', 'switched_off', 'switched_back',
 			'message', 'updated', 'settings-updated', 'saved',
 			'activated', 'activate', 'deactivate',
 			'locked', 'skipped', 'deleted', 'trashed', 'untrashed'
-		);
+		), $url );
 	}
 
 	/**
