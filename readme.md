@@ -3,9 +3,9 @@
 # User Switching #
 
 **Contributors:** johnbillion  
-**Tags:** user, users, profiles, switching, wpmu, multisite, buddypress, become, user control, user management, user access, developer  
+**Tags:** user, users, profiles, switching, wpmu, multisite, buddypress, bbpress, become, user control, user management, user access, developer  
 **Requires at least:** 3.1  
-**Tested up to:** 3.7  
+**Tested up to:** 3.8  
 **Stable tag:** 0.8.4  
 **License:** GPL v2 or later  
 
@@ -21,7 +21,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Switch back: Instantly switch back to your originating account.
  * Switch off: Log out of your account but retain the ability to instantly switch back in again.
  * It's completely secure (see the *Security* section below).
- * Compatible with WordPress, WordPress Multisite and BuddyPress.
+ * Compatible with WordPress, WordPress Multisite, BuddyPress and bbPress.
 
 ### Security ###
 
@@ -81,6 +81,10 @@ Yes, and you'll also be able to switch users from the Users screen in Network Ad
 ### Does this plugin work with BuddyPress? ###
 
 Yes, and you'll also be able to switch users from member profile screens and the member listing screen.
+
+### Does this plugin work with bbPress? ###
+
+Yes, and you'll also be able to switch users from member profile screens.
 
 ### Does this work as a mu-plugin? ###
 
