@@ -46,7 +46,6 @@ class user_switching {
 		add_action( 'wp_footer',                    array( $this, 'action_wp_footer' ) );
 		add_action( 'personal_options',             array( $this, 'action_personal_options' ) );
 		add_action( 'admin_bar_menu',               array( $this, 'action_admin_bar_menu' ), 11 );
-		add_action( 'bp_adminbar_menus',            array( $this, 'action_bp_menus' ), 9 );
 		add_action( 'bp_member_header_actions',     array( $this, 'action_bp_button' ), 11 );
 		add_filter( 'login_message',                array( $this, 'filter_login_message' ), 1 );
 		add_action( 'bp_directory_members_actions', array( $this, 'action_bp_button' ), 11 );
@@ -345,23 +344,6 @@ class user_switching {
 		$actions['switch_to_user'] = '<a href="' . $link . '">' . __( 'Switch&nbsp;To', 'user-switching' ) . '</a>';
 
 		return $actions;
-	}
-
-	/**
-	 * Adds a 'Switch back to {user}' link to the BuddyPress admin bar.
-	 *
-	 * @return null
-	 */
-	public function action_bp_menus() {
-
-		if ( !is_admin() and $old_user = self::get_old_user() ) {
-
-			echo '<li id="bp-adminbar-userswitching-menu" style="background-image:none"><a href="' . self::switch_back_url() . '">';
-			printf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
-			echo '</a></li>';
-
-		}
-
 	}
 
 	/**
