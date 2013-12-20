@@ -1,14 +1,14 @@
 <?php
 /*
-Plugin Name:  User Switching
-Description:  Instant switching between user accounts in WordPress
-Version:      0.8.4
-Plugin URI:   https://lud.icro.us/wordpress-plugin-user-switching/
-Author:       John Blackbourn
-Author URI:   https://johnblackbourn.com/
-Text Domain:  user-switching
-Domain Path:  /languages/
-License:      GPL v2 or later
+Plugin Name: User Switching
+Description: Instant switching between user accounts in WordPress
+Version:     0.8.4
+Plugin URI:  https://lud.icro.us/wordpress-plugin-user-switching/
+Author:      John Blackbourn
+Author URI:  https://johnblackbourn.com/
+Text Domain: user-switching
+Domain Path: /languages/
+License:     GPL v2 or later
 
 Copyright © 2013 John Blackbourn
 
@@ -32,24 +32,24 @@ class user_switching {
 	public function __construct() {
 
 		# Required functionality:
-		add_filter( 'user_has_cap',                 array( $this, 'filter_user_has_cap' ), 10, 3 );
-		add_filter( 'map_meta_cap',                 array( $this, 'filter_map_meta_cap' ), 10, 4 );
-		add_filter( 'user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
-		add_action( 'plugins_loaded',               array( $this, 'action_plugins_loaded' ) );
-		add_action( 'init',                         array( $this, 'action_init' ) );
-		add_action( 'all_admin_notices',            array( $this, 'action_admin_notices' ), 1 );
-		add_action( 'wp_logout',                    'wp_clear_olduser_cookie' );
-		add_action( 'wp_login',                     'wp_clear_olduser_cookie' );
-    
+		add_filter( 'user_has_cap',                    array( $this, 'filter_user_has_cap' ), 10, 3 );
+		add_filter( 'map_meta_cap',                    array( $this, 'filter_map_meta_cap' ), 10, 4 );
+		add_filter( 'user_row_actions',                array( $this, 'filter_user_row_actions' ), 10, 2 );
+		add_action( 'plugins_loaded',                  array( $this, 'action_plugins_loaded' ) );
+		add_action( 'init',                            array( $this, 'action_init' ) );
+		add_action( 'all_admin_notices',               array( $this, 'action_admin_notices' ), 1 );
+		add_action( 'wp_logout',                       'wp_clear_olduser_cookie' );
+		add_action( 'wp_login',                        'wp_clear_olduser_cookie' );
+
 		# Nice-to-haves:
-		add_filter( 'ms_user_row_actions',          array( $this, 'filter_user_row_actions' ), 10, 2 );
-		add_action( 'wp_footer',                    array( $this, 'action_wp_footer' ) );
-		add_action( 'personal_options',             array( $this, 'action_personal_options' ) );
-		add_action( 'admin_bar_menu',               array( $this, 'action_admin_bar_menu' ), 11 );
-		add_action( 'bp_member_header_actions',     array( $this, 'action_bp_button' ), 11 );
-		add_filter( 'login_message',                array( $this, 'filter_login_message' ), 1 );
-		add_action( 'bp_directory_members_actions', array( $this, 'action_bp_button' ), 11 );
-		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ), 11 );
+		add_filter( 'ms_user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
+		add_filter( 'login_message',                   array( $this, 'filter_login_message' ), 1 );
+		add_action( 'wp_footer',                       array( $this, 'action_wp_footer' ) );
+		add_action( 'personal_options',                array( $this, 'action_personal_options' ) );
+		add_action( 'admin_bar_menu',                  array( $this, 'action_admin_bar_menu' ), 11 );
+		add_action( 'bp_member_header_actions',        array( $this, 'action_bp_button' ), 11 );
+		add_action( 'bp_directory_members_actions',    array( $this, 'action_bp_button' ), 11 );
+		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ) );
 
 	}
 
@@ -102,7 +102,7 @@ class user_switching {
 
 	/**
 	 * Load localisation files and route actions depending on the 'action' query var.
-	 * 
+	 *
 	 * @return null
 	 */
 	public function action_init() {
@@ -377,7 +377,7 @@ class user_switching {
 
 		echo bp_get_button( array(
 			'id'         => 'user_switching',
-			'component'  => $component, 
+			'component'  => $component,
 			'link_href'  => $link,
 			'link_text'  => __( 'Switch&nbsp;To', 'user-switching' )
 		) );
@@ -473,7 +473,7 @@ class user_switching {
 
 	/**
 	 * Helper function. Removes a list of common confirmation-style query args from a URL.
-	 * 
+	 *
 	 * @param string $url A URL
 	 * @return string The URL with the listed query args removed
 	 */
