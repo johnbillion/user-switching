@@ -49,6 +49,7 @@ class user_switching {
 		add_action( 'bp_member_header_actions',     array( $this, 'action_bp_button' ), 11 );
 		add_filter( 'login_message',                array( $this, 'filter_login_message' ), 1 );
 		add_action( 'bp_directory_members_actions', array( $this, 'action_bp_button' ), 11 );
+		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ), 11 );
 
 	}
 
@@ -380,6 +381,30 @@ class user_switching {
 			'link_href'  => $link,
 			'link_text'  => __( 'Switch&nbsp;To', 'user-switching' )
 		) );
+
+	}
+
+	/**
+	 * Adds a 'Switch To' link to each member's profile page in bbPress.
+	 *
+	 * @return null
+	 */
+	public function action_bbpress_button() {
+
+		$id = bbp_get_user_id();
+
+		if ( ! $link = self::maybe_switch_url( $id ) )
+			return;
+
+		$link = add_query_arg( array(
+			'redirect_to' => urlencode( bbp_get_user_profile_url( $id ) )
+		), $link );
+
+		?>
+		<ul>
+			<li><a href="<?php echo $link; ?>"><?php _e( 'Switch&nbsp;To', 'user-switching' ); ?></a></li>
+		</ul>
+		<?php
 
 	}
 
