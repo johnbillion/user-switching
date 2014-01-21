@@ -320,7 +320,7 @@ class user_switching {
 			$url = self::switch_back_url();
 			if ( isset( $_REQUEST['redirect_to'] ) and !empty( $_REQUEST['redirect_to'] ) ) {
 				$url = add_query_arg( array(
-					'redirect_to' => $_REQUEST['redirect_to']
+					'redirect_to' => urlencode( $_REQUEST['redirect_to'] )
 				), $url );
 			}
 			$message .= '<p class="message"><a href="' . $url . '">' . $link . '</a></p>';
