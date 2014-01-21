@@ -2,7 +2,7 @@
 /*
 Plugin Name: User Switching
 Description: Instant switching between user accounts in WordPress
-Version:     0.8.5
+Version:     0.8.6
 Plugin URI:  https://lud.icro.us/wordpress-plugin-user-switching/
 Author:      John Blackbourn
 Author URI:  https://johnblackbourn.com/
@@ -10,7 +10,7 @@ Text Domain: user-switching
 Domain Path: /languages/
 License:     GPL v2 or later
 
-Copyright © 2013 John Blackbourn
+Copyright © 2014 John Blackbourn
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
