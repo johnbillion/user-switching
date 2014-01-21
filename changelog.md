@@ -1,10 +1,13 @@
 
 ## Upgrade Notice ##
 
-### 0.8.5 ###
-* Add a 'Switch To' link to bbPress profile screens.
+### 0.8.6 ###
+* Correctly encode the `redirect_to` parameter in the login screen message.
 
 ## Changelog ##
+
+### 0.8.6 ###
+* Correctly encode the `redirect_to` parameter in the login screen message.
 
 ### 0.8.5 ###
 * Add a 'Switch To' link to bbPress profile screens.
