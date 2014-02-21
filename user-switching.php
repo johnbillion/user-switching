@@ -112,11 +112,6 @@ class user_switching {
 		if ( !isset( $_REQUEST['action'] ) )
 			return;
 
-		if ( isset( $_REQUEST['redirect_to'] ) and !empty( $_REQUEST['redirect_to'] ) )
-			$redirect_to = self::remove_query_args( $_REQUEST['redirect_to'] );
-		else
-			$redirect_to = false;
-
 		switch ( $_REQUEST['action'] ) {
 
 			# We're attempting to switch to another user:
@@ -126,7 +121,10 @@ class user_switching {
 				check_admin_referer( "switch_to_user_{$user_id}" );
 
 				# Switch user:
-				if ( switch_to_user( $user_id, self::remember() ) ) {
+				$user = switch_to_user( $user_id, self::remember() );
+				if ( $user ) {
+
+					$redirect_to = self::get_redirect( $user );
 
 					# Redirect to the dashboard or the home URL depending on capabilities:
 					if ( $redirect_to )
@@ -153,6 +151,9 @@ class user_switching {
 
 				# Switch user:
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
+
+					$redirect_to = self::get_redirect();
+
 					if ( $redirect_to )
 						wp_safe_redirect( add_query_arg( array( 'user_switched' => 'true', 'switched_back' => 'true' ), $redirect_to ) );
 					else
@@ -170,6 +171,7 @@ class user_switching {
 
 				# Switch off:
 				if ( switch_off_user() ) {
+					$redirect_to = self::get_redirect();
 					if ( $redirect_to )
 						wp_safe_redirect( add_query_arg( array( 'switched_off' => 'true' ), $redirect_to ) );
 					else
@@ -181,6 +183,28 @@ class user_switching {
 				break;
 
 		}
+
+	}
+
+	/**
+	 * Fetch the URL to redirect to for a given user (used after switching).
+	 *
+	 * @param WP_User|null A WP_User object (optional).
+	 * @return string      The URL to redirect to.
+	 */
+	protected static function get_redirect( WP_User $user = null ) {
+
+		if ( isset( $_REQUEST['redirect_to'] ) and !empty( $_REQUEST['redirect_to'] ) ) {
+			$redirect_to = self::remove_query_args( $_REQUEST['redirect_to'] );
+		} else {
+			$redirect_to = '';
+		}
+
+		if ( $user ) {
+			$redirect_to = apply_filters( 'login_redirect', $redirect_to, $redirect_to, $user );
+		}
+
+		return $redirect_to;
 
 	}
 
@@ -588,7 +612,7 @@ function wp_get_olduser_cookie() {
  * @param int  $user_id      The ID of the user to switch to.
  * @param bool $remember     Whether to 'remember' the user in the form of a persistent browser cookie. Optional.
  * @param bool $set_old_user Whether to set the old user cookie. Optional.
- * @return bool True on success, false on failure.
+ * @return bool|WP_User      WP_User object on success, false on failure.
  */
 if ( !function_exists( 'switch_to_user' ) ) {
 function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
@@ -612,7 +636,7 @@ function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
 	else
 		do_action( 'switch_back_user', $user_id, $old_user_id );
 
-	return true;
+	return $user;
 }
 }
 
