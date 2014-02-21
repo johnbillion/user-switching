@@ -542,7 +542,8 @@ function wp_set_olduser_cookie( $old_user_id ) {
 	$expiration = time() + 172800; # 48 hours
 	$cookie = wp_get_olduser_cookie();
 	$cookie[] = wp_generate_auth_cookie( $old_user_id, $expiration, 'old_user' );
-	setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, false );
+	$secure = apply_filters( 'secure_logged_in_cookie', false, $old_user_id, is_ssl() );
+	setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
 }
 }
 
@@ -560,7 +561,8 @@ function wp_clear_olduser_cookie( $clear_all = true ) {
 	} else {
 		array_pop( $cookie );
 		$expiration = time() + 172800; # 48 hours
-		setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, false );
+		$secure = apply_filters( 'secure_logged_in_cookie', false, get_current_user_id(), is_ssl() );
+		setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
 	}
 }
 }
