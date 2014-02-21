@@ -1,10 +1,13 @@
 
 ## Upgrade Notice ##
 
-### 0.8.6 ###
-* Correctly encode the `redirect_to` parameter in the login screen message.
+### 0.8.7 ###
+* Respect the `secure_logged_in_cookie` and `login_redirect` filters.
 
 ## Changelog ##
+
+### 0.8.7 ###
+* Respect the `secure_logged_in_cookie` and `login_redirect` filters.
 
 ### 0.8.6 ###
 * Correctly encode the `redirect_to` parameter in the login screen message.

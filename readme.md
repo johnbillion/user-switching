@@ -1,12 +1,10 @@
-[![Build Status](https://secure.travis-ci.org/johnbillion/user-switching.png)](http://travis-ci.org/johnbillion/user-switching)
-
 # User Switching #
 
 **Contributors:** johnbillion  
 **Tags:** user, users, profiles, switching, wpmu, multisite, buddypress, bbpress, become, user control, user management, user access, developer  
 **Requires at least:** 3.1  
-**Tested up to:** 3.8  
-**Stable tag:** 0.8.6  
+**Tested up to:** 3.9  
+**Stable tag:** 0.8.7  
 **License:** GPL v2 or later  
 
 Instant switching between user accounts in WordPress.
