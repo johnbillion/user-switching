@@ -585,9 +585,9 @@ class user_switching {
 if ( !function_exists( 'wp_set_olduser_cookie' ) ) {
 function wp_set_olduser_cookie( $old_user_id ) {
 	$expiration = time() + 172800; # 48 hours
-	$cookie = wp_get_olduser_cookie();
-	$cookie[] = wp_generate_auth_cookie( $old_user_id, $expiration, 'old_user' );
-	$secure = apply_filters( 'secure_logged_in_cookie', false, $old_user_id, is_ssl() );
+	$cookie     = wp_get_olduser_cookie();
+	$cookie[]   = wp_generate_auth_cookie( $old_user_id, $expiration, 'old_user' );
+	$secure     = apply_filters( 'secure_logged_in_cookie', false, $old_user_id, is_ssl() );
 	setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
 }
 }
