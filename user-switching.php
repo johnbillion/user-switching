@@ -9,6 +9,7 @@ Author URI:  https://johnblackbourn.com/
 Text Domain: user-switching
 Domain Path: /languages/
 License:     GPL v2 or later
+Network:     true
 
 Copyright © 2014 John Blackbourn
 
