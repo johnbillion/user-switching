@@ -38,16 +38,16 @@ See the [FAQ](http://wordpress.org/plugins/user-switching/faq/) for information 
 
 ### Translations Included ###
 
- * Arabic by Hassan Hisham
- * Chinese Simplified by Tunghsiao Liu
- * Farsi (Persian) by Amin Ab
- * German by Ralph Stenzel
- * Japanese by Yusuke Hayasaki
- * Lithuanian by Tommixoft
- * Polish by Bartosz Arendt
- * Russian by R J
- * Slovak by Max Samael
- * Spanish by Marcelo Pedra
+ * العربية / Arabic by Hassan Hisham
+ * 中文 / Chinese Simplified by Tunghsiao Liu
+ * Deutsch / German by Ralph Stenzel
+ * 日本語 / Japanese by Yusuke Hayasaki
+ * Lietuvių kalba / Lithuanian by Tommixoft
+ * فارسی / Persian by Amin Ab
+ * Polski / Polish by Bartosz Arendt
+ * Русский / Russian by R J
+ * Slovenčina / Slovak by Max Samael
+ * Español / Spanish by Marcelo Pedra
 
 ## Screenshots ##
 
