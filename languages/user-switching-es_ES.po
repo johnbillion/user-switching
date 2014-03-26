@@ -1,0 +1,102 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: User Switching v0.8.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2014-03-23 11:57-0300\n"
+"Last-Translator: Marcelo Pedra <marcelo@marcelopedra.com.ar>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ../\n"
+"X-Textdomain-Support: yes\n"
+"Language: es_ES\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#  user-switching
+#. translators: plugin header field 'Name'
+#: user-switching.php:0
+msgid "User Switching"
+msgstr ""
+
+# @ user-switching
+#. translators: plugin header field 'PluginURI'
+#: user-switching.php:0
+msgid "https://johnblackbourn.com/wordpress-plugin-user-switching/"
+msgstr ""
+
+# @ user-switching
+#. translators: plugin header field 'Description'
+#: user-switching.php:0
+msgid "Instant switching between user accounts in WordPress"
+msgstr ""
+
+# @ user-switching
+#. translators: plugin header field 'Author'
+#: user-switching.php:0
+msgid "John Blackbourn"
+msgstr ""
+
+# @ user-switching
+#. translators: plugin header field 'AuthorURI'
+#: user-switching.php:0
+msgid "https://johnblackbourn.com/"
+msgstr ""
+
+# @ user-switching
+#. translators: plugin header field 'Version'
+#: user-switching.php:0
+msgid "0.8.7"
+msgstr ""
+
+# @ user-switching
+#: user-switching.php:79
+msgctxt "User Switching title on user profile screen"
+msgid "User Switching"
+msgstr ""
+
+# @ user-switching
+#: user-switching.php:80 user-switching.php:369 user-switching.php:406
+#: user-switching.php:429
+msgid "Switch&nbsp;To"
+msgstr "Cambiarse&nbsp;a&nbsp;este&nbsp;usuario"
+
+# @ user-switching
+#: user-switching.php:139 user-switching.php:150 user-switching.php:163
+msgid "Could not switch users."
+msgstr "No se pudo iniciar ese usuario."
+
+# @ user-switching
+#: user-switching.php:181
+msgid "Could not switch off."
+msgstr "No se pudo regresar."
+
+# @ user-switching
+#: user-switching.php:225 user-switching.php:242
+#, php-format
+msgid "Switched to %1$s (%2$s)."
+msgstr "Iniciado como %1$s (%2$s)."
+
+#  user-switching
+#: user-switching.php:229 user-switching.php:289 user-switching.php:325
+#: user-switching.php:343
+#, php-format
+msgid "Switch back to %1$s (%2$s)"
+msgstr "Volver a %1$s (%2$s)"
+
+# @ user-switching
+#: user-switching.php:240
+#, php-format
+msgid "Switched back to %1$s (%2$s)."
+msgstr "De vuelta como %1$s (%2$s)."
+
+# @ user-switching
+#: user-switching.php:309
+msgid "Switch Off"
+msgstr "Volver a mi usuario"

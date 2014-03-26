@@ -47,6 +47,7 @@ See the [FAQ](http://wordpress.org/plugins/user-switching/faq/) for information 
  * Polish by Bartosz Arendt
  * Russian by R J
  * Slovak by Max Samael
+ * Spanish by Marcelo Pedra
 
 ## Screenshots ##
 
