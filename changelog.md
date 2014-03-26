@@ -1,10 +1,15 @@
 
 ## Upgrade Notice ##
 
-### 0.8.7 ###
-* Respect the `secure_logged_in_cookie` and `login_redirect` filters.
+### 0.8.8 ###
+* Spanish Translation by Marcelo Pedra.
+* User Switching is now a network-only plugin.
 
 ## Changelog ##
+
+### 0.8.8 ###
+* Spanish Translation by Marcelo Pedra.
+* User Switching is now a network-only plugin.
 
 ### 0.8.7 ###
 * Respect the `secure_logged_in_cookie` and `login_redirect` filters.
