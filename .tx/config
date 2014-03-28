@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[user-switching.user-switching]
+file_filter = languages/user-switching-<lang>.po
+source_file = languages/user-switching.pot
+source_lang = en_US
+type = PO
+minimum_perc = 1
