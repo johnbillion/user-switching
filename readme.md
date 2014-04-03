@@ -43,6 +43,7 @@ See the [FAQ](http://wordpress.org/plugins/user-switching/faq/) for information 
  * Français (French)
  * Deutsch (German)
  * עִבְרִית (Hebrew)
+ * Bahasa Indonesia (Indonesian)
  * 日本語 (Japanese)
  * Lietuvių kalba (Lithuanian)
  * فارسی (Persian)
@@ -52,7 +53,7 @@ See the [FAQ](http://wordpress.org/plugins/user-switching/faq/) for information 
  * Slovenčina (Slovak)
  * Español (Spanish)
 
-Thanks to translations by Hassan Hisham, Tunghsiao Liu, Fx Bénard, Ralph Stenzel, Rami Y, Yusuke Hayasaki, Tommixoft, Amin Ab, Bartosz Arendt, Raphael Mendonça, R J, Max Samael, and Marcelo Pedra!
+Thanks to translations by Hassan Hisham, Tunghsiao Liu, Fx Bénard, Ralph Stenzel, Rami Y, Yusuke Hayasaki, Tommixoft, Amin Ab, Bartosz Arendt, Raphael Mendonça, R J, Max Samael, Eko Ikhyar, and Marcelo Pedra!
 
 ## Screenshots ##
 
