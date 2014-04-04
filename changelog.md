@@ -1,11 +1,16 @@
 
 ## Upgrade Notice ##
 
-### 0.8.8 ###
-* Spanish Translation by Marcelo Pedra.
-* User Switching is now a network-only plugin when used on Multisite.
+### 0.8.9 ###
+* Translations for French, Hebrew, Indonesian, and Portuguese.
 
 ## Changelog ##
+
+### 0.8.9 ###
+* French translation by Fx Bénard
+* Hebrew translation by Rami Y
+* Indonesian translation by Eko Ikhyar
+* Portuguese translation by Raphael Mendonça
 
 ### 0.8.8 ###
 * Spanish Translation by Marcelo Pedra.
