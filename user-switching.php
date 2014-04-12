@@ -73,7 +73,7 @@ class user_switching {
 	 */
 	public function action_personal_options( WP_User $user ) {
 
-		if ( ! $link = self::maybe_switch_url( $user->ID ) ) {
+		if ( ! $link = self::maybe_switch_url( $user ) ) {
 			return;
 		}
 
@@ -148,12 +148,12 @@ class user_switching {
 			# We're attempting to switch back to the originating user:
 			case 'switch_to_olduser':
 
-				check_admin_referer( 'switch_to_olduser' );
-
 				# Fetch the originating user data:
 				if ( !$old_user = self::get_old_user() ) {
 					wp_die( __( 'Could not switch users.', 'user-switching' ) );
 				}
+
+				check_admin_referer( "switch_to_olduser_{$old_user->ID}" );
 
 				# Switch user:
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
@@ -174,7 +174,9 @@ class user_switching {
 			# We're attempting to switch off the current user:
 			case 'switch_off':
 
-				check_admin_referer( 'switch_off' );
+				$user = wp_get_current_user();
+
+				check_admin_referer( "switch_off_{$user->ID}" );
 
 				# Switch off:
 				if ( switch_off_user() ) {
@@ -234,7 +236,7 @@ class user_switching {
 					}
 					$url = add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() )
-					), self::switch_back_url() );
+					), self::switch_back_url( $old_user ) );
 					printf( ' <a href="%s">%s</a>.', $url, sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) );
 				?></p>
 			</div>
@@ -303,14 +305,14 @@ class user_switching {
 				'title'  => sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ),
 				'href'   => add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() )
-				), self::switch_back_url() )
+				), self::switch_back_url( $old_user ) )
 			) );
 
 		}
 
 		if ( current_user_can( 'switch_off' ) ) {
 
-			$url = self::switch_off_url();
+			$url = self::switch_off_url( wp_get_current_user() );
 			if ( !is_admin() ) {
 				$url = add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() )
@@ -339,7 +341,7 @@ class user_switching {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() )
-			), self::switch_back_url() );
+			), self::switch_back_url( $old_user ) );
 			echo '<p id="user_switching_switch_on"><a href="' . $url . '">' . $link . '</a></p>';
 		}
 
@@ -355,7 +357,7 @@ class user_switching {
 
 		if ( $old_user = self::get_old_user() ) {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
-			$url = self::switch_back_url();
+			$url = self::switch_back_url( $old_user );
 			if ( isset( $_REQUEST['redirect_to'] ) and !empty( $_REQUEST['redirect_to'] ) ) {
 				$url = add_query_arg( array(
 					'redirect_to' => urlencode( $_REQUEST['redirect_to'] )
@@ -377,7 +379,7 @@ class user_switching {
 	 */
 	public function filter_user_row_actions( array $actions, WP_User $user ) {
 
-		if ( ! $link = self::maybe_switch_url( $user->ID ) ) {
+		if ( ! $link = self::maybe_switch_url( $user ) ) {
 			return $actions;
 		}
 
@@ -396,17 +398,20 @@ class user_switching {
 		global $bp, $members_template;
 
 		if ( !empty( $members_template ) and empty( $bp->displayed_user->id ) ) {
-			$id = absint( $members_template->member->id );
+			$user = get_userdata( $members_template->member->id );
 		} else {
-			$id = absint( $bp->displayed_user->id );
+			$user = get_userdata( $bp->displayed_user->id );
 		}
 
-		if ( ! $link = self::maybe_switch_url( $id ) ) {
+		if ( ! $user ) {
+			return;
+		}
+		if ( ! $link = self::maybe_switch_url( $user ) ) {
 			return;
 		}
 
 		$link = add_query_arg( array(
-			'redirect_to' => urlencode( bp_core_get_user_domain( $id ) )
+			'redirect_to' => urlencode( bp_core_get_user_domain( $user->ID ) )
 		), $link );
 
 		# Workaround for https://buddypress.trac.wordpress.org/ticket/4212
@@ -433,14 +438,15 @@ class user_switching {
 	 */
 	public function action_bbpress_button() {
 
-		$id = bbp_get_user_id();
-
-		if ( ! $link = self::maybe_switch_url( $id ) ) {
+		if ( ! $user = get_userdata( bbp_get_user_id() ) ) {
+			return;
+		}
+		if ( ! $link = self::maybe_switch_url( $user ) ) {
 			return;
 		}
 
 		$link = add_query_arg( array(
-			'redirect_to' => urlencode( bbp_get_user_profile_url( $id ) )
+			'redirect_to' => urlencode( bbp_get_user_profile_url( $user->ID ) )
 		), $link );
 
 		?>
@@ -452,19 +458,19 @@ class user_switching {
 	}
 
 	/**
-	 * Helper function. Returns the switch to or switch back URL for a given user ID.
+	 * Helper function. Returns the switch to or switch back URL for a given user.
 	 *
-	 * @param int $user_id The user ID to be switched to.
+	 * @param WP_User $user The user to be switched to.
 	 * @return string|bool The required URL, or false if there's no old user or the user doesn't have the required capability.
 	 */
-	public static function maybe_switch_url( $user_id ) {
+	public static function maybe_switch_url( WP_User $user ) {
 
 		$old_user = self::get_old_user();
 
-		if ( $old_user and ( $old_user->ID == $user_id ) ) {
-			return self::switch_back_url();
-		} else if ( current_user_can( 'switch_to_user', $user_id ) ) { 
-			return self::switch_to_url( $user_id );
+		if ( $old_user and ( $old_user->ID == $user->ID ) ) {
+			return self::switch_back_url( $old_user );
+		} else if ( current_user_can( 'switch_to_user', $user->ID ) ) { 
+			return self::switch_to_url( $user );
 		} else {
 			return false;
 		}
@@ -474,36 +480,38 @@ class user_switching {
 	/**
 	 * Helper function. Returns the nonce-secured URL needed to switch to a given user ID.
 	 *
-	 * @param int $user_id The user ID to be switched to.
+	 * @param WP_User $user The user to be switched to.
 	 * @return string The required URL
 	 */
-	public static function switch_to_url( $user_id ) {
+	public static function switch_to_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
 			'action'  => 'switch_to_user',
-			'user_id' => $user_id
-		), wp_login_url() ), "switch_to_user_{$user_id}" );
+			'user_id' => $user->ID
+		), wp_login_url() ), "switch_to_user_{$user->ID}" );
 	}
 
 	/**
 	 * Helper function. Returns the nonce-secured URL needed to switch back to the originating user.
 	 *
+	 * @param  WP_User $user The old user.
 	 * @return string The required URL
 	 */
-	public static function switch_back_url() {
+	public static function switch_back_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
 			'action' => 'switch_to_olduser'
-		), wp_login_url() ), 'switch_to_olduser' );
+		), wp_login_url() ), "switch_to_olduser_{$user->ID}" );
 	}
 
 	/**
 	 * Helper function. Returns the nonce-secured URL needed to switch off the current user.
 	 *
+	 * @param WP_User $user The user to be switched off.
 	 * @return string The required URL
 	 */
-	public static function switch_off_url() {
+	public static function switch_off_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
 			'action' => 'switch_off'
-		), wp_login_url() ), 'switch_off' );
+		), wp_login_url() ), "switch_off_{$user->ID}" );
 	}
 
 	/**
