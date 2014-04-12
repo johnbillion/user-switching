@@ -45,6 +45,9 @@ class User_Switching_Test extends WP_UnitTestCase {
 			# Super Admins cannot switch to themselves:
 			$this->assertFalse( user_can( $this->super->ID, 'switch_to_user', $this->super->ID ) );
 
+			# Super Admins can switch off:
+			$this->assertTrue( user_can( $this->super->ID, 'switch_off' ) );
+
 			# Admins cannot switch to other users:
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->super->ID ) );
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->editor->ID ) );
@@ -54,6 +57,9 @@ class User_Switching_Test extends WP_UnitTestCase {
 
 			# Admins cannot switch to themselves:
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->admin->ID ) );
+
+			# Admins cannot switch off:
+			$this->assertFalse( user_can( $this->admin->ID, 'switch_off' ) );
 
 		} else {
 
@@ -65,6 +71,9 @@ class User_Switching_Test extends WP_UnitTestCase {
 
 			# Admins cannot switch to themselves:
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->admin->ID ) );
+
+			# Admins can switch off:
+			$this->assertTrue( user_can( $this->admin->ID, 'switch_off' ) );
 
 		}
 
@@ -85,6 +94,9 @@ class User_Switching_Test extends WP_UnitTestCase {
 		# Editors cannot switch to themselves:
 		$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->editor->ID ) );
 
+		# Editors cannot switch off:
+		$this->assertFalse( user_can( $this->editor->ID, 'switch_off' ) );
+
 	}
 
 	function testAuthorCaps() {
@@ -101,6 +113,9 @@ class User_Switching_Test extends WP_UnitTestCase {
 
 		# Authors cannot switch to themselves:
 		$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->author->ID ) );
+
+		# Authors cannot switch off:
+		$this->assertFalse( user_can( $this->author->ID, 'switch_off' ) );
 
 	}
 
@@ -119,6 +134,9 @@ class User_Switching_Test extends WP_UnitTestCase {
 		# Contributors cannot switch to themselves:
 		$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->contributor->ID ) );
 
+		# Contributors cannot switch off:
+		$this->assertFalse( user_can( $this->contributor->ID, 'switch_off' ) );
+
 	}
 
 	function testSubscriberCaps() {
@@ -135,6 +153,9 @@ class User_Switching_Test extends WP_UnitTestCase {
 
 		# Subscribers cannot switch to themselves:
 		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->subscriber->ID ) );
+
+		# Subscribers cannot switch off:
+		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_off' ) );
 
 	}
 
