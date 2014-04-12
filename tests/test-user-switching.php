@@ -70,4 +70,72 @@ class User_Switching_Test extends WP_UnitTestCase {
 
 	}
 
+	function testEditorCaps() {
+
+		# Editors cannot switch to other users:
+		$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->admin->ID ) );
+		$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->author->ID ) );
+		$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->contributor->ID ) );
+		$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->subscriber->ID ) );
+
+		if ( is_multisite() ) {
+			$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->super->ID ) );
+		}
+
+		# Editors cannot switch to themselves:
+		$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->editor->ID ) );
+
+	}
+
+	function testAuthorCaps() {
+
+		# Authors cannot switch to other users:
+		$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->admin->ID ) );
+		$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->editor->ID ) );
+		$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->contributor->ID ) );
+		$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->subscriber->ID ) );
+
+		if ( is_multisite() ) {
+			$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->super->ID ) );
+		}
+
+		# Authors cannot switch to themselves:
+		$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->author->ID ) );
+
+	}
+
+	function testContributorCaps() {
+
+		# Contributors cannot switch to other users:
+		$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->admin->ID ) );
+		$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->editor->ID ) );
+		$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->author->ID ) );
+		$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->subscriber->ID ) );
+
+		if ( is_multisite() ) {
+			$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->super->ID ) );
+		}
+
+		# Contributors cannot switch to themselves:
+		$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->contributor->ID ) );
+
+	}
+
+	function testSubscriberCaps() {
+
+		# Subscribers cannot switch to other users:
+		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->admin->ID ) );
+		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->editor->ID ) );
+		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->author->ID ) );
+		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->contributor->ID ) );
+
+		if ( is_multisite() ) {
+			$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->super->ID ) );
+		}
+
+		# Subscribers cannot switch to themselves:
+		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->subscriber->ID ) );
+
+	}
+
 }
