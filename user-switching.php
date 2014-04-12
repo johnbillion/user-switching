@@ -158,7 +158,7 @@ class user_switching {
 				# Switch user:
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
 
-					$redirect_to = self::get_redirect();
+					$redirect_to = self::get_redirect( $old_user );
 
 					if ( $redirect_to ) {
 						wp_safe_redirect( add_query_arg( array( 'user_switched' => 'true', 'switched_back' => 'true' ), $redirect_to ) );
