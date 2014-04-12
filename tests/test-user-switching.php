@@ -12,6 +12,15 @@ class User_Switching_Test extends WP_UnitTestCase {
 		$this->editor = $this->factory->user->create_and_get( array(
 			'role' => 'editor'
 		) );
+		$this->author = $this->factory->user->create_and_get( array(
+			'role' => 'author'
+		) );
+		$this->contributor = $this->factory->user->create_and_get( array(
+			'role' => 'contributor'
+		) );
+		$this->subscriber = $this->factory->user->create_and_get( array(
+			'role' => 'subscriber'
+		) );
 
 		if ( is_multisite() ) {
 			$this->super = $this->factory->user->create_and_get( array(
@@ -22,34 +31,39 @@ class User_Switching_Test extends WP_UnitTestCase {
 
 	}
 
-	function testCaps() {
+	function testAdminCaps() {
 
 		if ( is_multisite() ) {
 
-			# Can super admins switch to admins?
+			# Super Admins can switch to all users:
 			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->admin->ID ) );
+			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->editor->ID ) );
+			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->author->ID ) );
+			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->contributor->ID ) );
+			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->subscriber->ID ) );
 
-			# Can admins switch to editors?
-			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->editor->ID ) );
-
-			# Can editors switch to admins?
-			$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->admin->ID ) );
-
-			# Can admins switch to super admins?
-			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->super->ID ) );
-
-			# Can a super admin switch to themselves?
+			# Super Admins cannot switch to themselves:
 			$this->assertFalse( user_can( $this->super->ID, 'switch_to_user', $this->super->ID ) );
+
+			# Admins cannot switch to other users:
+			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->super->ID ) );
+			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->editor->ID ) );
+			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->author->ID ) );
+			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->contributor->ID ) );
+			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->subscriber->ID ) );
+
+			# Admins cannot switch to themselves:
+			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->admin->ID ) );
 
 		} else {
 
-			# Can admins switch to editors?
+			# Admins can switch to all users:
 			$this->assertTrue( user_can( $this->admin->ID, 'switch_to_user', $this->editor->ID ) );
+			$this->assertTrue( user_can( $this->admin->ID, 'switch_to_user', $this->author->ID ) );
+			$this->assertTrue( user_can( $this->admin->ID, 'switch_to_user', $this->contributor->ID ) );
+			$this->assertTrue( user_can( $this->admin->ID, 'switch_to_user', $this->subscriber->ID ) );
 
-			# Can editors switch to admins?
-			$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->admin->ID ) );
-
-			# Can an admin switch to themselves?
+			# Admins cannot switch to themselves:
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->admin->ID ) );
 
 		}
