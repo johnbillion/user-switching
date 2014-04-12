@@ -1,7 +1,7 @@
 # User Switching #
 
 **Contributors:** johnbillion  
-**Tags:** user, users, profiles, switching, wpmu, multisite, buddypress, bbpress, become, user control, user management, user access, developer  
+**Tags:** users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 **Requires at least:** 3.1  
 **Tested up to:** 3.9  
 **Stable tag:** 0.8.9  
