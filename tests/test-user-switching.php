@@ -21,6 +21,10 @@ class User_Switching_Test extends WP_UnitTestCase {
 		$this->subscriber = $this->factory->user->create_and_get( array(
 			'role' => 'subscriber'
 		) );
+		$this->no_role = $this->factory->user->create_and_get( array(
+			'role' => 'administrator'
+		) );
+		$this->no_role->remove_role( 'administrator' );
 
 		if ( is_multisite() ) {
 			$this->super = $this->factory->user->create_and_get( array(
@@ -41,6 +45,7 @@ class User_Switching_Test extends WP_UnitTestCase {
 			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->author->ID ) );
 			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->contributor->ID ) );
 			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->subscriber->ID ) );
+			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->no_role->ID ) );
 
 			# Super Admins cannot switch to themselves:
 			$this->assertFalse( user_can( $this->super->ID, 'switch_to_user', $this->super->ID ) );
@@ -62,6 +67,7 @@ class User_Switching_Test extends WP_UnitTestCase {
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->author->ID ) );
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->contributor->ID ) );
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->subscriber->ID ) );
+			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->no_role->ID ) );
 
 			# Admins cannot switch to themselves:
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->admin->ID ) );
@@ -76,6 +82,7 @@ class User_Switching_Test extends WP_UnitTestCase {
 			$this->assertTrue( user_can( $this->admin->ID, 'switch_to_user', $this->author->ID ) );
 			$this->assertTrue( user_can( $this->admin->ID, 'switch_to_user', $this->contributor->ID ) );
 			$this->assertTrue( user_can( $this->admin->ID, 'switch_to_user', $this->subscriber->ID ) );
+			$this->assertTrue( user_can( $this->admin->ID, 'switch_to_user', $this->no_role->ID ) );
 
 			# Admins cannot switch to themselves:
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->admin->ID ) );
@@ -94,6 +101,7 @@ class User_Switching_Test extends WP_UnitTestCase {
 		$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->author->ID ) );
 		$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->contributor->ID ) );
 		$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->subscriber->ID ) );
+		$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->no_role->ID ) );
 
 		if ( is_multisite() ) {
 			$this->assertFalse( user_can( $this->editor->ID, 'switch_to_user', $this->super->ID ) );
@@ -114,6 +122,7 @@ class User_Switching_Test extends WP_UnitTestCase {
 		$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->editor->ID ) );
 		$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->contributor->ID ) );
 		$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->subscriber->ID ) );
+		$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->no_role->ID ) );
 
 		if ( is_multisite() ) {
 			$this->assertFalse( user_can( $this->author->ID, 'switch_to_user', $this->super->ID ) );
@@ -134,6 +143,7 @@ class User_Switching_Test extends WP_UnitTestCase {
 		$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->editor->ID ) );
 		$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->author->ID ) );
 		$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->subscriber->ID ) );
+		$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->no_role->ID ) );
 
 		if ( is_multisite() ) {
 			$this->assertFalse( user_can( $this->contributor->ID, 'switch_to_user', $this->super->ID ) );
@@ -154,6 +164,7 @@ class User_Switching_Test extends WP_UnitTestCase {
 		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->editor->ID ) );
 		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->author->ID ) );
 		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->contributor->ID ) );
+		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->no_role->ID ) );
 
 		if ( is_multisite() ) {
 			$this->assertFalse( user_can( $this->subscriber->ID, 'switch_to_user', $this->super->ID ) );
@@ -164,6 +175,27 @@ class User_Switching_Test extends WP_UnitTestCase {
 
 		# Subscribers cannot switch off:
 		$this->assertFalse( user_can( $this->subscriber->ID, 'switch_off' ) );
+
+	}
+
+	function testNoRoleCaps() {
+
+		# Users with no role cannot switch to other users:
+		$this->assertFalse( user_can( $this->no_role->ID, 'switch_to_user', $this->admin->ID ) );
+		$this->assertFalse( user_can( $this->no_role->ID, 'switch_to_user', $this->editor->ID ) );
+		$this->assertFalse( user_can( $this->no_role->ID, 'switch_to_user', $this->author->ID ) );
+		$this->assertFalse( user_can( $this->no_role->ID, 'switch_to_user', $this->contributor->ID ) );
+		$this->assertFalse( user_can( $this->no_role->ID, 'switch_to_user', $this->subscriber->ID ) );
+
+		if ( is_multisite() ) {
+			$this->assertFalse( user_can( $this->no_role->ID, 'switch_to_user', $this->super->ID ) );
+		}
+
+		# Users with no role cannot switch to themselves:
+		$this->assertFalse( user_can( $this->no_role->ID, 'switch_to_user', $this->no_role->ID ) );
+
+		# Users with no role cannot switch off:
+		$this->assertFalse( user_can( $this->no_role->ID, 'switch_off' ) );
 
 	}
 
