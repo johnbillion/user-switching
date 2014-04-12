@@ -31,7 +31,7 @@ class User_Switching_Test extends WP_UnitTestCase {
 
 	}
 
-	function testAdminCaps() {
+	function testSuperAdminCaps() {
 
 		if ( is_multisite() ) {
 
@@ -47,6 +47,14 @@ class User_Switching_Test extends WP_UnitTestCase {
 
 			# Super Admins can switch off:
 			$this->assertTrue( user_can( $this->super->ID, 'switch_off' ) );
+
+		}
+
+	}
+
+	function testAdminCaps() {
+
+		if ( is_multisite() ) {
 
 			# Admins cannot switch to other users:
 			$this->assertFalse( user_can( $this->admin->ID, 'switch_to_user', $this->super->ID ) );
