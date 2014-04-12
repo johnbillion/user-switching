@@ -532,8 +532,8 @@ class user_switching {
 	public static function remove_query_args( $url ) {
 		return remove_query_arg( array(
 			'user_switched', 'switched_off', 'switched_back',
-			'message', 'updated', 'settings-updated', 'saved',
-			'activated', 'activate', 'deactivate',
+			'message', 'update', 'updated', 'settings-updated', 'saved',
+			'activated', 'activate', 'deactivate', 'enabled', 'disabled',
 			'locked', 'skipped', 'deleted', 'trashed', 'untrashed'
 		), $url );
 	}
