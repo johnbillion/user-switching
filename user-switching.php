@@ -211,7 +211,8 @@ class user_switching {
 		}
 
 		if ( $user ) {
-			$redirect_to = apply_filters( 'login_redirect', $redirect_to, $redirect_to, $user );
+			$requested_redirect_to = isset( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '';
+			$redirect_to = apply_filters( 'login_redirect', $redirect_to, $requested_redirect_to, $user );
 		}
 
 		return $redirect_to;
