@@ -57,7 +57,6 @@ class user_switching {
 	/**
 	 * Define the name of the old user cookie. Uses WordPress' cookie hash for increased security.
 	 *
-	 * @return null
 	 */
 	public function action_plugins_loaded() {
 		if ( !defined( 'OLDUSER_COOKIE' ) ) {
@@ -69,7 +68,6 @@ class user_switching {
 	 * Output the 'Switch To' link on the user editing screen if we have permission to switch to this user.
 	 *
 	 * @param WP_User $user User object for this screen
-	 * @return null
 	 */
 	public function action_personal_options( WP_User $user ) {
 
@@ -106,7 +104,6 @@ class user_switching {
 	/**
 	 * Load localisation files and route actions depending on the 'action' query var.
 	 *
-	 * @return null
 	 */
 	public function action_init() {
 
@@ -222,7 +219,6 @@ class user_switching {
 	/**
 	 * Display the 'Switched to {user}' and 'Switch back to {user}' messages in the admin area.
 	 *
-	 * @return null
 	 */
 	public function action_admin_notices() {
 		$user = wp_get_current_user();
@@ -279,7 +275,6 @@ class user_switching {
 	 * Adds a 'Switch back to {user}' link to the account menu in WordPress' admin bar.
 	 *
 	 * @param WP_Admin_Bar $wp_admin_bar The admin bar object
-	 * @return null
 	 */
 	public function action_admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 
@@ -334,7 +329,6 @@ class user_switching {
 	/**
 	 * Adds a 'Switch back to {user}' link to the WordPress footer if the admin toolbar isn't showing.
 	 *
-	 * @return null
 	 */
 	public function action_wp_footer() {
 
@@ -392,7 +386,6 @@ class user_switching {
 	/**
 	 * Adds a 'Switch To' link to each member's profile page and profile listings in BuddyPress.
 	 *
-	 * @return null
 	 */
 	public function action_bp_button() {
 
@@ -435,7 +428,6 @@ class user_switching {
 	/**
 	 * Adds a 'Switch To' link to each member's profile page in bbPress.
 	 *
-	 * @return null
 	 */
 	public function action_bbpress_button() {
 
@@ -590,7 +582,6 @@ class user_switching {
  * Sets an authorisation cookie containing the originating user, or appends it if there's more than one.
  *
  * @param int $old_user_id The ID of the originating user, usually the current logged in user.
- * @return null
  */
 if ( !function_exists( 'wp_set_olduser_cookie' ) ) {
 function wp_set_olduser_cookie( $old_user_id ) {
@@ -606,7 +597,6 @@ function wp_set_olduser_cookie( $old_user_id ) {
  * Clears the cookie containing the originating user, or pops the latest item off the end if there's more than one.
  *
  * @param bool $clear_all Whether to clear the cookie or just pop the last user information off the end.
- * @return null
  */
 if ( !function_exists( 'wp_clear_olduser_cookie' ) ) {
 function wp_clear_olduser_cookie( $clear_all = true ) {
