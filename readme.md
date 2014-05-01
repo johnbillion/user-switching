@@ -4,7 +4,7 @@
 **Tags:** users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 **Requires at least:** 3.1  
 **Tested up to:** 3.9  
-**Stable tag:** 0.8.9  
+**Stable tag:** 0.9  
 **License:** GPL v2 or later  
 
 Instant switching between user accounts in WordPress.
