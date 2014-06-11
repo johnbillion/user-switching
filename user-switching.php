@@ -613,10 +613,12 @@ function wp_set_olduser_cookie( $old_user_id ) {
 if ( !function_exists( 'wp_clear_olduser_cookie' ) ) {
 function wp_clear_olduser_cookie( $clear_all = true ) {
 	$cookie = wp_get_olduser_cookie();
+	if ( !empty( $cookie ) ) {
+		array_pop( $cookie );
+	}
 	if ( $clear_all or empty( $cookie ) ) {
 		setcookie( OLDUSER_COOKIE, ' ', time() - 31536000, COOKIEPATH, COOKIE_DOMAIN );
 	} else {
-		array_pop( $cookie );
 		$expiration = time() + 172800; # 48 hours
 		$secure = apply_filters( 'secure_logged_in_cookie', user_switching::is_site_ssl(), get_current_user_id(), is_ssl() );
 		setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
