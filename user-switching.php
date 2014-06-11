@@ -532,6 +532,18 @@ class user_switching {
 	}
 
 	/**
+	 * Helper function. Is the site using SSL?
+	 *
+	 * This is used to set the 'secure' flag on the 'old_user' cookie, for enhanced security.
+	 * Related: https://core.trac.wordpress.org/ticket/15330
+	 * 
+	 * @return boolean Whether the site is using SSL.
+	 */
+	public static function is_site_ssl() {
+		return ( is_ssl() and 'https' === parse_url( get_option( 'home' ), PHP_URL_SCHEME ) );
+	}
+
+	/**
 	 * Filter the user's capabilities so they can be added/removed on the fly.
 	 *
 	 * This is used to grant the 'switch_to_user' capability to a user if they have the ability to edit the user
@@ -588,7 +600,7 @@ function wp_set_olduser_cookie( $old_user_id ) {
 	$expiration = time() + 172800; # 48 hours
 	$cookie     = wp_get_olduser_cookie();
 	$cookie[]   = wp_generate_auth_cookie( $old_user_id, $expiration, 'old_user' );
-	$secure     = apply_filters( 'secure_logged_in_cookie', false, $old_user_id, is_ssl() );
+	$secure     = apply_filters( 'secure_logged_in_cookie', user_switching::is_site_ssl(), $old_user_id, is_ssl() );
 	setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
 }
 }
@@ -606,7 +618,7 @@ function wp_clear_olduser_cookie( $clear_all = true ) {
 	} else {
 		array_pop( $cookie );
 		$expiration = time() + 172800; # 48 hours
-		$secure = apply_filters( 'secure_logged_in_cookie', false, get_current_user_id(), is_ssl() );
+		$secure = apply_filters( 'secure_logged_in_cookie', user_switching::is_site_ssl(), get_current_user_id(), is_ssl() );
 		setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
 	}
 }
