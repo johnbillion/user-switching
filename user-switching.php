@@ -119,6 +119,12 @@ class user_switching {
 			case 'switch_to_user':
 				$user_id = absint( $_REQUEST['user_id'] );
 
+				# Check authentication:
+				if ( !current_user_can( 'switch_to_user', $user_id ) ) {
+					wp_die( __( 'Could not switch users.', 'user-switching' ) );
+				}
+
+				# Check intent:
 				check_admin_referer( "switch_to_user_{$user_id}" );
 
 				# Switch user:
@@ -173,6 +179,12 @@ class user_switching {
 
 				$user = wp_get_current_user();
 
+				# Check authentication:
+				if ( !current_user_can( 'switch_off' ) ) {
+					wp_die( __( 'Could not switch off.', 'user-switching' ) );
+				}
+
+				# Check intent:
 				check_admin_referer( "switch_off_{$user->ID}" );
 
 				# Switch off:
