@@ -704,7 +704,7 @@ function switch_off_user() {
 /**
  * Helper function. Did the current user switch into their account?
  *
- * @return bool|object False if the user isn't logged in or they didn't switch in; old user object (which evalutes to true) if the user switched into the current user account.
+ * @return bool|WP_User False if the user isn't logged in or they didn't switch in; old user object (which evalutes to true) if the user switched into the current user account.
  */
 if ( !function_exists( 'current_user_switched' ) ) {
 function current_user_switched() {
