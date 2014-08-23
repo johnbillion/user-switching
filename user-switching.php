@@ -227,7 +227,8 @@ class user_switching {
 
 			?>
 			<div id="user_switching" class="updated">
-				<p><?php
+				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
+				<?php
 					if ( isset( $_GET['user_switched'] ) ) {
 						printf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
 					}
@@ -358,7 +359,7 @@ class user_switching {
 					'redirect_to' => urlencode( $_REQUEST['redirect_to'] )
 				), $url );
 			}
-			$message .= '<p class="message"><a href="' . $url . '">' . $link . '</a></p>';
+			$message .= '<p class="message"><span class="dashicons dashicons-admin-users" style="color:#56c234"></span> <a href="' . $url . '">' . $link . '</a></p>';
 		}
 
 		return $message;
