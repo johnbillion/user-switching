@@ -55,8 +55,7 @@ class user_switching {
 	}
 
 	/**
-	 * Define the name of the old user cookie. Uses WordPress' cookie hash for increased security.
-	 *
+	 * Define the names of our cookies. Uses WordPress' cookie hash for increased security.
 	 */
 	public function action_plugins_loaded() {
 
@@ -78,7 +77,7 @@ class user_switching {
 	/**
 	 * Output the 'Switch To' link on the user editing screen if we have permission to switch to this user.
 	 *
-	 * @param WP_User $user User object for this screen
+	 * @param WP_User $user User object for this screen.
 	 */
 	public function action_personal_options( WP_User $user ) {
 
@@ -95,9 +94,9 @@ class user_switching {
 	}
 
 	/**
-	 * Return whether or not the current logged in user is being remembered in the form of a persistent browser
-	 * cookie (ie. they checked the 'Remember Me' check box when they logged in). This is used to persist the
-	 * 'remember me' value when the user switches to another user.
+	 * Return whether or not the current logged in user is being remembered in the form of a persistent browser cookie
+	 * (ie. they checked the 'Remember Me' check box when they logged in). This is used to persist the 'remember me'
+	 * value when the user switches to another user.
 	 *
 	 * @return bool Whether the current user is being 'remembered' or not.
 	 */
@@ -114,7 +113,6 @@ class user_switching {
 
 	/**
 	 * Load localisation files and route actions depending on the 'action' query var.
-	 *
 	 */
 	public function action_init() {
 
@@ -225,8 +223,8 @@ class user_switching {
 	/**
 	 * Fetch the URL to redirect to for a given user (used after switching).
 	 *
-	 * @param WP_User|null A WP_User object (optional).
-	 * @return string      The URL to redirect to.
+	 * @param  WP_User|null A WP_User object (optional).
+	 * @return string The URL to redirect to.
 	 */
 	protected static function get_redirect( WP_User $user = null ) {
 
@@ -247,7 +245,6 @@ class user_switching {
 
 	/**
 	 * Display the 'Switched to {user}' and 'Switch back to {user}' messages in the admin area.
-	 *
 	 */
 	public function action_admin_notices() {
 		$user = wp_get_current_user();
@@ -380,7 +377,6 @@ class user_switching {
 
 	/**
 	 * Adds a 'Switch back to {user}' link to the WordPress footer if the admin toolbar isn't showing.
-	 *
 	 */
 	public function action_wp_footer() {
 
@@ -397,8 +393,8 @@ class user_switching {
 	/**
 	 * Adds a 'Switch back to {user}' link to the WordPress login screen.
 	 *
-	 * @param string $message The login screen message
-	 * @return string The login screen message
+	 * @param  string $message The login screen message.
+	 * @return string The login screen message.
 	 */
 	public function filter_login_message( $message ) {
 
@@ -420,9 +416,9 @@ class user_switching {
 	/**
 	 * Adds a 'Switch To' link to each list of user actions on the Users screen.
 	 *
-	 * @param array   $actions The actions to display for this user row
-	 * @param WP_User $user    The user object displayed in this row
-	 * @return array The actions to display for this user row
+	 * @param  array   $actions The actions to display for this user row.
+	 * @param  WP_User $user    The user object displayed in this row.
+	 * @return array The actions to display for this user row.
 	 */
 	public function filter_user_row_actions( array $actions, WP_User $user ) {
 
@@ -437,7 +433,6 @@ class user_switching {
 
 	/**
 	 * Adds a 'Switch To' link to each member's profile page and profile listings in BuddyPress.
-	 *
 	 */
 	public function action_bp_button() {
 
@@ -479,7 +474,6 @@ class user_switching {
 
 	/**
 	 * Adds a 'Switch To' link to each member's profile page in bbPress.
-	 *
 	 */
 	public function action_bbpress_button() {
 
@@ -505,7 +499,7 @@ class user_switching {
 	/**
 	 * Helper function. Returns the switch to or switch back URL for a given user.
 	 *
-	 * @param WP_User $user The user to be switched to.
+	 * @param  WP_User $user The user to be switched to.
 	 * @return string|bool The required URL, or false if there's no old user or the user doesn't have the required capability.
 	 */
 	public static function maybe_switch_url( WP_User $user ) {
@@ -525,8 +519,8 @@ class user_switching {
 	/**
 	 * Helper function. Returns the nonce-secured URL needed to switch to a given user ID.
 	 *
-	 * @param WP_User $user The user to be switched to.
-	 * @return string The required URL
+	 * @param  WP_User $user The user to be switched to.
+	 * @return string The required URL.
 	 */
 	public static function switch_to_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
@@ -539,7 +533,7 @@ class user_switching {
 	 * Helper function. Returns the nonce-secured URL needed to switch back to the originating user.
 	 *
 	 * @param  WP_User $user The old user.
-	 * @return string The required URL
+	 * @return string        The required URL.
 	 */
 	public static function switch_back_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
@@ -550,8 +544,8 @@ class user_switching {
 	/**
 	 * Helper function. Returns the nonce-secured URL needed to switch off the current user.
 	 *
-	 * @param WP_User $user The user to be switched off.
-	 * @return string The required URL
+	 * @param  WP_User $user The user to be switched off.
+	 * @return string        The required URL.
 	 */
 	public static function switch_off_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
@@ -562,7 +556,7 @@ class user_switching {
 	/**
 	 * Helper function. Returns the current URL.
 	 *
-	 * @return string The current URL
+	 * @return string The current URL.
 	 */
 	public static function current_url() {
 		return ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -571,8 +565,8 @@ class user_switching {
 	/**
 	 * Helper function. Removes a list of common confirmation-style query args from a URL.
 	 *
-	 * @param string $url A URL
-	 * @return string The URL with the listed query args removed
+	 * @param  string $url A URL.
+	 * @return string The URL with the listed query args removed.
 	 */
 	public static function remove_query_args( $url ) {
 		return remove_query_arg( array(
@@ -616,13 +610,13 @@ class user_switching {
 	 *
 	 * Important: This does not get called for Super Admins. See filter_map_meta_cap() below.
 	 *
-	 * @param array $user_caps     User's capabilities
-	 * @param array $required_caps Actual required capabilities for the requested capability
-	 * @param array $args          Arguments that accompany the requested capability check:
-	 *                             [0] => Requested capability from current_user_can()
-	 *                             [1] => Current user ID
-	 *                             [2] => Optional second parameter from current_user_can()
-	 * @return array User's capabilities
+	 * @param  array $user_caps     User's capabilities.
+	 * @param  array $required_caps Actual required capabilities for the requested capability.
+	 * @param  array $args          Arguments that accompany the requested capability check:
+	 *                              [0] => Requested capability from current_user_can()
+	 *                              [1] => Current user ID
+	 *                              [2] => Optional second parameter from current_user_can()
+	 * @return array User's capabilities.
 	 */
 	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args ) {
 		if ( 'switch_to_user' == $args[0] ) {
@@ -639,11 +633,11 @@ class user_switching {
 	 * This is used to add the 'do_not_allow' capability to the list of required capabilities when a super admin
 	 * is trying to switch to themselves. It affects nothing else as super admins can do everything by default.
 	 *
-	 * @param array  $required_caps Actual required capabilities for the requested action
-	 * @param string $cap           Capability or meta capability being checked
-	 * @param string $user_id       Current user ID
-	 * @param array  $args          Arguments that accompany this capability check
-	 * @return array Required capabilities for the requested action
+	 * @param  array  $required_caps Actual required capabilities for the requested action.
+	 * @param  string $cap           Capability or meta capability being checked.
+	 * @param  string $user_id       Current user ID.
+	 * @param  array  $args          Arguments that accompany this capability check.
+	 * @return array  Required capabilities for the requested action.
 	 */
 	public function filter_map_meta_cap( array $required_caps, $cap, $user_id, array $args ) {
 		if ( ( 'switch_to_user' == $cap ) and ( $args[0] == $user_id ) ) {
@@ -760,10 +754,10 @@ function user_switching_get_auth_cookie() {
 /**
  * Switches the current logged in user to the specified user.
  *
- * @param int  $user_id      The ID of the user to switch to.
- * @param bool $remember     Whether to 'remember' the user in the form of a persistent browser cookie. Optional.
- * @param bool $set_old_user Whether to set the old user cookie. Optional.
- * @return bool|WP_User      WP_User object on success, false on failure.
+ * @param  int  $user_id      The ID of the user to switch to.
+ * @param  bool $remember     Whether to 'remember' the user in the form of a persistent browser cookie. Optional.
+ * @param  bool $set_old_user Whether to set the old user cookie. Optional.
+ * @return bool|WP_User WP_User object on success, false on failure.
  */
 if ( !function_exists( 'switch_to_user' ) ) {
 function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
@@ -794,8 +788,8 @@ function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
 }
 
 /**
- * Switches off the current logged in user. This logs the current user out while retaining a cookie allowing them to log straight
- * back in using the 'Switch back to {user}' system.
+ * Switches off the current logged in user. This logs the current user out while retaining a cookie allowing them to log
+ * straight back in using the 'Switch back to {user}' system.
  *
  * @return bool True on success, false on failure.
  */
@@ -817,7 +811,8 @@ function switch_off_user() {
 /**
  * Helper function. Did the current user switch into their account?
  *
- * @return bool|WP_User False if the user isn't logged in or they didn't switch in; old user object (which evalutes to true) if the user switched into the current user account.
+ * @return bool|WP_User False if the user isn't logged in or they didn't switch in; old user object (which evalutes to
+ *                    true) if the user switched into the current user account.
  */
 if ( !function_exists( 'current_user_switched' ) ) {
 function current_user_switched() {
