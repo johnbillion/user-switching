@@ -584,9 +584,9 @@ class user_switching {
 	 * 
 	 * @link https://core.trac.wordpress.org/ticket/15330
 	 *
-	 * @return bool Should the logged in cookie be secure?
+	 * @return bool Should the old user cookie be secure?
 	 */
-	public static function secure_logged_in_cookie() {
+	public static function secure_olduser_cookie() {
 		return ( is_ssl() and ( 'https' === parse_url( home_url(), PHP_URL_SCHEME ) ) );
 	}
 
@@ -657,7 +657,7 @@ if ( !function_exists( 'user_switching_set_olduser_cookie' ) ) {
  */
 function user_switching_set_olduser_cookie( $old_user_id, $pop = false ) {
 	$secure_auth_cookie    = user_switching::secure_auth_cookie();
-	$secure_olduser_cookie = user_switching::secure_logged_in_cookie();
+	$secure_olduser_cookie = user_switching::secure_olduser_cookie();
 	$expiration            = time() + 172800; # 48 hours
 	$auth_cookie           = user_switching_get_auth_cookie();
 	$olduser_cookie        = wp_generate_auth_cookie( $old_user_id, $expiration, 'logged_in' );
