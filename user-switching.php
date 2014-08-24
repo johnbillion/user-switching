@@ -39,8 +39,8 @@ class user_switching {
 		add_action( 'plugins_loaded',                  array( $this, 'action_plugins_loaded' ) );
 		add_action( 'init',                            array( $this, 'action_init' ) );
 		add_action( 'all_admin_notices',               array( $this, 'action_admin_notices' ), 1 );
-		add_action( 'wp_logout',                       'wp_clear_olduser_cookie' );
-		add_action( 'wp_login',                        'wp_clear_olduser_cookie' );
+		add_action( 'wp_logout',                       'user_switching_clear_olduser_cookie' );
+		add_action( 'wp_login',                        'user_switching_clear_olduser_cookie' );
 
 		# Nice-to-haves:
 		add_filter( 'ms_user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
@@ -59,9 +59,20 @@ class user_switching {
 	 *
 	 */
 	public function action_plugins_loaded() {
-		if ( !defined( 'OLDUSER_COOKIE' ) ) {
-			define( 'OLDUSER_COOKIE', 'wordpress_olduser_' . COOKIEHASH );
+
+		// User Switching's auth_cookie
+		if ( !defined( 'USER_SWITCHING_COOKIE' ) ) {
+			define( 'USER_SWITCHING_COOKIE', 'wordpress_user_switching_' . COOKIEHASH );
 		}
+		// User Switching's secure_auth_cookie
+		if ( !defined( 'USER_SWITCHING_SECURE_COOKIE' ) ) {
+			define( 'USER_SWITCHING_SECURE_COOKIE', 'wordpress_user_switching_secure_' . COOKIEHASH );
+		}
+		// User Switching's logged_in_cookie
+		if ( !defined( 'USER_SWITCHING_OLDUSER_COOKIE' ) ) {
+			define( 'USER_SWITCHING_OLDUSER_COOKIE', 'wordpress_user_switching_olduser_' . COOKIEHASH );
+		}
+
 	}
 
 	/**
@@ -156,6 +167,12 @@ class user_switching {
 					wp_die( __( 'Could not switch users.', 'user-switching' ) );
 				}
 
+				# Check authentication:
+				if ( !self::authenticate_old_user( $old_user ) ) {
+					wp_die( __( 'Could not switch users.', 'user-switching' ) );
+				}
+
+				# Check intent:
 				check_admin_referer( "switch_to_olduser_{$old_user->ID}" );
 
 				# Switch user:
@@ -270,15 +287,37 @@ class user_switching {
 	}
 
 	/**
-	 * Validate the latest item in the old_user cookie and return its user data.
+	 * Validate the old user cookie and return its user data.
 	 *
 	 * @return bool|WP_User False if there's no old user cookie or it's invalid, WP_User object if it's present and valid.
 	 */
 	public static function get_old_user() {
-		$cookie = wp_get_olduser_cookie();
+		$cookie = user_switching_get_olduser_cookie();
 		if ( !empty( $cookie ) ) {
-			if ( $old_user_id = wp_validate_auth_cookie( end( $cookie ), 'old_user' ) ) {
+			if ( $old_user_id = wp_validate_auth_cookie( $cookie, 'logged_in' ) ) {
 				return get_userdata( $old_user_id );
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Authenticate an old user by verifying the latest entry in the auth cookie.
+	 * 
+	 * @param  WP_User $user A WP_User object (usually from the logged_in cookie).
+	 * @return bool Whether verification with the auth cookie passed.
+	 */
+	public static function authenticate_old_user( WP_User $user ) {
+		$cookie = user_switching_get_auth_cookie();
+		if ( !empty( $cookie ) ) {
+
+			if ( user_switching::secure_auth_cookie() ) {
+				$scheme = 'secure_auth';
+			} else {
+				$scheme = 'auth';
+			}
+			if ( $old_user_id = wp_validate_auth_cookie( end( $cookie ), $scheme ) ) {
+				return ( $user->ID == $old_user_id );
 			}
 		}
 		return false;
@@ -545,15 +584,27 @@ class user_switching {
 	}
 
 	/**
-	 * Helper function. Is the site using SSL?
+	 * Helper function. Should User Switching's equivalent of the 'logged_in' cookie be secure?
 	 *
-	 * This is used to set the 'secure' flag on the 'old_user' cookie, for enhanced security.
-	 * Related: https://core.trac.wordpress.org/ticket/15330
+	 * This is used to set the 'secure' flag on the old user cookie, for enhanced security.
 	 * 
-	 * @return boolean Whether the site is using SSL.
+	 * @link https://core.trac.wordpress.org/ticket/15330
+	 *
+	 * @return bool Should the logged in cookie be secure?
 	 */
-	public static function is_site_ssl() {
-		return ( is_ssl() and 'https' === parse_url( get_option( 'home' ), PHP_URL_SCHEME ) );
+	public static function secure_logged_in_cookie() {
+		return ( is_ssl() and ( 'https' === parse_url( home_url(), PHP_URL_SCHEME ) ) );
+	}
+
+	/**
+	 * Helper function. Should User Switching's equivalent of the 'auth' cookie be secure?
+	 * 
+	 * This is used to determine whether to set a secure auth cookie or not.
+	 *
+	 * @return bool Should the auth cookie be secure?
+	 */
+	public static function secure_auth_cookie() {
+		return ( is_ssl() and ( 'https' === parse_url( wp_login_url(), PHP_URL_SCHEME ) ) );
 	}
 
 	/**
@@ -604,50 +655,100 @@ class user_switching {
 }
 
 /**
- * Sets an authorisation cookie containing the originating user, or appends it if there's more than one.
+ * Sets authorisation cookies containing the originating user information.
  *
- * @param int $old_user_id The ID of the originating user, usually the current logged in user.
+ * @param int  $old_user_id The ID of the originating user, usually the current logged in user.
+ * @param bool $pop         Pop the latest user off the auth cookie, instead of appending the new one. Default false.
  */
-if ( !function_exists( 'wp_set_olduser_cookie' ) ) {
-function wp_set_olduser_cookie( $old_user_id ) {
-	$expiration = time() + 172800; # 48 hours
-	$cookie     = wp_get_olduser_cookie();
-	$cookie[]   = wp_generate_auth_cookie( $old_user_id, $expiration, 'old_user' );
-	$secure     = apply_filters( 'secure_logged_in_cookie', user_switching::is_site_ssl(), $old_user_id, is_ssl() );
-	setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
-}
-}
+if ( !function_exists( 'user_switching_set_olduser_cookie' ) ) {
+function user_switching_set_olduser_cookie( $old_user_id, $pop = false ) {
+	$secure_auth_cookie    = user_switching::secure_auth_cookie();
+	$secure_olduser_cookie = user_switching::secure_logged_in_cookie();
+	$expiration            = time() + 172800; # 48 hours
+	$auth_cookie           = user_switching_get_auth_cookie();
+	$olduser_cookie        = wp_generate_auth_cookie( $old_user_id, $expiration, 'logged_in' );
 
-/**
- * Clears the cookie containing the originating user, or pops the latest item off the end if there's more than one.
- *
- * @param bool $clear_all Whether to clear the cookie or just pop the last user information off the end.
- */
-if ( !function_exists( 'wp_clear_olduser_cookie' ) ) {
-function wp_clear_olduser_cookie( $clear_all = true ) {
-	$cookie = wp_get_olduser_cookie();
-	if ( !empty( $cookie ) ) {
-		array_pop( $cookie );
-	}
-	if ( $clear_all or empty( $cookie ) ) {
-		setcookie( OLDUSER_COOKIE, ' ', time() - 31536000, COOKIEPATH, COOKIE_DOMAIN );
+	if ( $secure_auth_cookie ) {
+		$auth_cookie_name = USER_SWITCHING_SECURE_COOKIE;
+		$scheme = 'secure_auth';
 	} else {
-		$expiration = time() + 172800; # 48 hours
-		$secure = apply_filters( 'secure_logged_in_cookie', user_switching::is_site_ssl(), get_current_user_id(), is_ssl() );
-		setcookie( OLDUSER_COOKIE, json_encode( $cookie ), $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
+		$auth_cookie_name = USER_SWITCHING_COOKIE;
+		$scheme = 'auth';
+	}
+
+	if ( $pop ) {
+		array_pop( $auth_cookie );
+	} else {
+		array_push( $auth_cookie, wp_generate_auth_cookie( $old_user_id, $expiration, $scheme ) );
+	}
+
+	setcookie( $auth_cookie_name, json_encode( $auth_cookie ), $expiration, SITECOOKIEPATH, COOKIE_DOMAIN, $secure_auth_cookie, true );
+	setcookie( USER_SWITCHING_OLDUSER_COOKIE, $olduser_cookie, $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure_olduser_cookie, true );
+}
+}
+
+/**
+ * Clears the cookies containing the originating user, or pops the latest item off the end if there's more than one.
+ * 
+ * @param bool $clear_all Whether to clear the cookies or just pop the last user information off the end.
+ */
+if ( !function_exists( 'user_switching_clear_olduser_cookie' ) ) {
+function user_switching_clear_olduser_cookie( $clear_all = true ) {
+	$auth_cookie = user_switching_get_auth_cookie();
+	if ( !empty( $auth_cookie ) ) {
+		array_pop( $auth_cookie );
+	}
+	if ( $clear_all or empty( $auth_cookie ) ) {
+		$expire = time() - 31536000;
+		setcookie( USER_SWITCHING_COOKIE,         ' ', $expire, SITECOOKIEPATH, COOKIE_DOMAIN );
+		setcookie( USER_SWITCHING_SECURE_COOKIE,  ' ', $expire, SITECOOKIEPATH, COOKIE_DOMAIN );
+		setcookie( USER_SWITCHING_OLDUSER_COOKIE, ' ', $expire, COOKIEPATH, COOKIE_DOMAIN );
+	} else {
+
+		if ( user_switching::secure_auth_cookie() ) {
+			$scheme = 'secure_auth';
+		} else {
+			$scheme = 'auth';
+		}
+
+		if ( $old_user_id = wp_validate_auth_cookie( end( $auth_cookie ), $scheme ) ) {
+			user_switching_set_olduser_cookie( $old_user_id, true );
+		}
+
 	}
 }
 }
 
 /**
- * Gets the value of the cookie containing the list of originating users.
+ * Gets the value of the cookie containing the originating user.
  *
- * @return array Array of originating user authentication cookies. @see wp_generate_auth_cookie()
+ * @return string|bool The old user cookie, or boolean false on if there isn't one.
  */
-if ( !function_exists( 'wp_get_olduser_cookie' ) ) {
-function wp_get_olduser_cookie() {
-	if ( isset( $_COOKIE[OLDUSER_COOKIE] ) ) {
-		$cookie = json_decode( stripslashes( $_COOKIE[OLDUSER_COOKIE] ) );
+if ( !function_exists( 'user_switching_get_olduser_cookie' ) ) {
+function user_switching_get_olduser_cookie() {
+	if ( isset( $_COOKIE[USER_SWITCHING_OLDUSER_COOKIE] ) ) {
+		return stripslashes( $_COOKIE[USER_SWITCHING_OLDUSER_COOKIE] );
+	} else {
+		return false;
+	}
+}
+}
+
+/**
+ * Gets the value of the auth cookie containing the list of originating users.
+ *
+ * @return array Array of originating user authentication cookies. Empty array if there are none.
+ */
+if ( !function_exists( 'user_switching_get_auth_cookie' ) ) {
+function user_switching_get_auth_cookie() {
+	if ( user_switching::secure_auth_cookie() ) {
+		$auth_cookie_name = USER_SWITCHING_SECURE_COOKIE;
+	} else {
+		$auth_cookie_name = USER_SWITCHING_COOKIE;
+	}
+
+	if ( isset( $_COOKIE[$auth_cookie_name] ) ) {
+		$cookie = json_decode( stripslashes( $_COOKIE[$auth_cookie_name] ) );
 	}
 	if ( !isset( $cookie ) or !is_array( $cookie ) ) {
 		$cookie = array();
@@ -672,10 +773,10 @@ function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
 
 	if ( $set_old_user and is_user_logged_in() ) {
 		$old_user_id = get_current_user_id();
-		wp_set_olduser_cookie( $old_user_id );
+		user_switching_set_olduser_cookie( $old_user_id );
 	} else {
 		$old_user_id = false;
-		wp_clear_olduser_cookie( false );
+		user_switching_clear_olduser_cookie( false );
 	}
 
 	wp_clear_auth_cookie();
@@ -704,7 +805,7 @@ function switch_off_user() {
 		return false;
 	}
 
-	wp_set_olduser_cookie( $old_user_id );
+	user_switching_set_olduser_cookie( $old_user_id );
 	wp_clear_auth_cookie();
 
 	do_action( 'switch_off_user', $old_user_id );
