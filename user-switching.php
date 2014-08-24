@@ -648,13 +648,13 @@ class user_switching {
 
 }
 
+if ( !function_exists( 'user_switching_set_olduser_cookie' ) ) {
 /**
  * Sets authorisation cookies containing the originating user information.
  *
  * @param int  $old_user_id The ID of the originating user, usually the current logged in user.
  * @param bool $pop         Pop the latest user off the auth cookie, instead of appending the new one. Default false.
  */
-if ( !function_exists( 'user_switching_set_olduser_cookie' ) ) {
 function user_switching_set_olduser_cookie( $old_user_id, $pop = false ) {
 	$secure_auth_cookie    = user_switching::secure_auth_cookie();
 	$secure_olduser_cookie = user_switching::secure_logged_in_cookie();
@@ -681,12 +681,12 @@ function user_switching_set_olduser_cookie( $old_user_id, $pop = false ) {
 }
 }
 
+if ( !function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 /**
  * Clears the cookies containing the originating user, or pops the latest item off the end if there's more than one.
  * 
  * @param bool $clear_all Whether to clear the cookies or just pop the last user information off the end.
  */
-if ( !function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 function user_switching_clear_olduser_cookie( $clear_all = true ) {
 	$auth_cookie = user_switching_get_auth_cookie();
 	if ( !empty( $auth_cookie ) ) {
@@ -713,12 +713,12 @@ function user_switching_clear_olduser_cookie( $clear_all = true ) {
 }
 }
 
+if ( !function_exists( 'user_switching_get_olduser_cookie' ) ) {
 /**
  * Gets the value of the cookie containing the originating user.
  *
  * @return string|bool The old user cookie, or boolean false on if there isn't one.
  */
-if ( !function_exists( 'user_switching_get_olduser_cookie' ) ) {
 function user_switching_get_olduser_cookie() {
 	if ( isset( $_COOKIE[USER_SWITCHING_OLDUSER_COOKIE] ) ) {
 		return stripslashes( $_COOKIE[USER_SWITCHING_OLDUSER_COOKIE] );
@@ -728,12 +728,12 @@ function user_switching_get_olduser_cookie() {
 }
 }
 
+if ( !function_exists( 'user_switching_get_auth_cookie' ) ) {
 /**
  * Gets the value of the auth cookie containing the list of originating users.
  *
  * @return array Array of originating user authentication cookies. Empty array if there are none.
  */
-if ( !function_exists( 'user_switching_get_auth_cookie' ) ) {
 function user_switching_get_auth_cookie() {
 	if ( user_switching::secure_auth_cookie() ) {
 		$auth_cookie_name = USER_SWITCHING_SECURE_COOKIE;
@@ -751,6 +751,7 @@ function user_switching_get_auth_cookie() {
 }
 }
 
+if ( !function_exists( 'switch_to_user' ) ) {
 /**
  * Switches the current logged in user to the specified user.
  *
@@ -759,7 +760,6 @@ function user_switching_get_auth_cookie() {
  * @param  bool $set_old_user Whether to set the old user cookie. Optional.
  * @return bool|WP_User WP_User object on success, false on failure.
  */
-if ( !function_exists( 'switch_to_user' ) ) {
 function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
 	if ( !$user = get_userdata( $user_id ) ) {
 		return false;
@@ -787,13 +787,13 @@ function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
 }
 }
 
+if ( !function_exists( 'switch_off_user' ) ) {
 /**
  * Switches off the current logged in user. This logs the current user out while retaining a cookie allowing them to log
  * straight back in using the 'Switch back to {user}' system.
  *
  * @return bool True on success, false on failure.
  */
-if ( !function_exists( 'switch_off_user' ) ) {
 function switch_off_user() {
 	if ( !$old_user_id = get_current_user_id() ) {
 		return false;
@@ -808,13 +808,13 @@ function switch_off_user() {
 }
 }
 
+if ( !function_exists( 'current_user_switched' ) ) {
 /**
  * Helper function. Did the current user switch into their account?
  *
  * @return bool|WP_User False if the user isn't logged in or they didn't switch in; old user object (which evalutes to
  *                    true) if the user switched into the current user account.
  */
-if ( !function_exists( 'current_user_switched' ) ) {
 function current_user_switched() {
 	if ( !is_user_logged_in() ) {
 		return false;
