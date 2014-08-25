@@ -1,11 +1,17 @@
 
 ## Upgrade Notice ##
 
-### 0.9 ###
+### 1.0 ###
 
-* Minor fixes for the `login_redirect` filter.
+* Security hardening for sites that use HTTPS in the admin area and HTTP on the front end.
 
 ## Changelog ##
+
+### 1.0 ###
+
+* Security hardening for sites that use HTTPS in the admin area and HTTP on the front end.
+* Add an extra auth check before the nonce verification.
+* Pretty icon next to the switch back links.
 
 ### 0.9 ###
 
