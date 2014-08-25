@@ -143,12 +143,13 @@ class user_switching {
 					$redirect_to = self::get_redirect( $user );
 
 					# Redirect to the dashboard or the home URL depending on capabilities:
+					$args = array( 'user_switched' => 'true' );
 					if ( $redirect_to ) {
-						wp_safe_redirect( add_query_arg( array( 'user_switched' => 'true' ), $redirect_to ) );
+						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
 					} else if ( !current_user_can( 'read' ) ) {
-						wp_redirect( add_query_arg( array( 'user_switched' => 'true' ), home_url() ) );
+						wp_redirect( add_query_arg( $args, home_url() ) );
 					} else {
-						wp_redirect( add_query_arg( array( 'user_switched' => 'true' ), admin_url() ) );
+						wp_redirect( add_query_arg( $args, admin_url() ) );
 					}
 					die();
 
@@ -177,11 +178,11 @@ class user_switching {
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
 
 					$redirect_to = self::get_redirect( $old_user );
-
+					$args = array( 'user_switched' => 'true', 'switched_back' => 'true' );
 					if ( $redirect_to ) {
-						wp_safe_redirect( add_query_arg( array( 'user_switched' => 'true', 'switched_back' => 'true' ), $redirect_to ) );
+						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
 					} else {
-						wp_redirect( add_query_arg( array( 'user_switched' => 'true', 'switched_back' => 'true' ), admin_url( 'users.php' ) ) );
+						wp_redirect( add_query_arg( $args, admin_url( 'users.php' ) ) );
 					}
 					die();
 				} else {
@@ -205,10 +206,11 @@ class user_switching {
 				# Switch off:
 				if ( switch_off_user() ) {
 					$redirect_to = self::get_redirect();
+					$args = array( 'switched_off' => 'true' );
 					if ( $redirect_to ) {
-						wp_safe_redirect( add_query_arg( array( 'switched_off' => 'true' ), $redirect_to ) );
+						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
 					} else {
-						wp_redirect( add_query_arg( array( 'switched_off' => 'true' ), home_url() ) );
+						wp_redirect( add_query_arg( $args, home_url() ) );
 					}
 					die();
 				} else {
