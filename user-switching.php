@@ -55,21 +55,21 @@ class user_switching {
 	}
 
 	/**
-	 * Define the names of our cookies. Uses WordPress' cookie hash for increased security.
+	 * Define the names of our cookies.
 	 */
 	public function action_plugins_loaded() {
 
 		// User Switching's auth_cookie
 		if ( !defined( 'USER_SWITCHING_COOKIE' ) ) {
-			define( 'USER_SWITCHING_COOKIE', 'wordpress_user_switching_' . COOKIEHASH );
+			define( 'USER_SWITCHING_COOKIE', 'wordpress_user_sw_' . COOKIEHASH );
 		}
 		// User Switching's secure_auth_cookie
 		if ( !defined( 'USER_SWITCHING_SECURE_COOKIE' ) ) {
-			define( 'USER_SWITCHING_SECURE_COOKIE', 'wordpress_user_switching_secure_' . COOKIEHASH );
+			define( 'USER_SWITCHING_SECURE_COOKIE', 'wordpress_user_sw_secure_' . COOKIEHASH );
 		}
 		// User Switching's logged_in_cookie
 		if ( !defined( 'USER_SWITCHING_OLDUSER_COOKIE' ) ) {
-			define( 'USER_SWITCHING_OLDUSER_COOKIE', 'wordpress_user_switching_olduser_' . COOKIEHASH );
+			define( 'USER_SWITCHING_OLDUSER_COOKIE', 'wordpress_user_sw_olduser_' . COOKIEHASH );
 		}
 
 	}
