@@ -1,11 +1,21 @@
 
 ## Upgrade Notice ##
 
+### 1.0.1 ###
+
+* Shorten the names of User Switching's cookies to avoid problems with Suhosin's over-zealous default rules.
+* Add backwards compatibility for the deprecated `OLDUSER_COOKIE` constant.
+
 ### 1.0 ###
 
 * Security hardening for sites that use HTTPS in the admin area and HTTP on the front end.
 
 ## Changelog ##
+
+### 1.0.1 ###
+
+* Shorten the names of User Switching's cookies to avoid problems with Suhosin's over-zealous default rules.
+* Add backwards compatibility for the deprecated `OLDUSER_COOKIE` constant.
 
 ### 1.0 ###
 
