@@ -1,16 +1,22 @@
 
 ## Upgrade Notice ##
 
-### 1.0.1 ###
+### 1.0.2 ###
 
-* Shorten the names of User Switching's cookies to avoid problems with Suhosin's over-zealous default rules.
-* Add backwards compatibility for the deprecated `OLDUSER_COOKIE` constant.
-
-### 1.0 ###
-
-* Security hardening for sites that use HTTPS in the admin area and HTTP on the front end.
+* New translations: Türkçe (Turkish), Română (Romanian), Nederlands (Dutch), Ελληνικά (Greek), Български (Bulgarian), Suomi (Finnish), and Italiano (Italian).
 
 ## Changelog ##
+
+### 1.0.2 ###
+
+* Turkish translation by Abdullah Pazarbasi.
+* Romanian translation by ArianServ.
+* Dutch translation by Thom.
+* Greek translation by evigiannakou.
+* Bulgarian translation by Petya Raykovska.
+* Finnish translation by Sami Keijonen.
+* Italian translation by Alessandro Curci and Alessandro Tesoro.
+* Updated Arabic, Spanish, German, and Polish translations.
 
 ### 1.0.1 ###
 
