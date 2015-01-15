@@ -4,7 +4,7 @@
 **Tags:** users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 **Requires at least:** 3.1  
 **Tested up to:** 4.1  
-**Stable tag:** 1.0.2  
+**Stable tag:** 1.0.3  
 **License:** GPL v2 or later  
 
 Instant switching between user accounts in WordPress.
@@ -42,6 +42,7 @@ See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information
  * العربية (Arabic)
  * Български (Bulgarian)
  * 中文 (Chinese Simplified)
+ * Hrvatski (Croatian)
  * Nederlands (Dutch)
  * Suomi (Finnish)
  * Français (French)
@@ -61,7 +62,7 @@ See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information
  * Español (Spanish)
  * Türkçe (Turkish)
 
-Thanks to translations by Hassan Hisham, Tunghsiao Liu, Francois-Xavier Bénard, Ralph Stenzel, Rami Y, Yusuke Hayasaki, Tommixoft, Amin Ab, Bartosz Arendt, Raphael Mendonça, R J, Max Samael, Eko Ikhyar, Marcelo Pedra, Abdullah Pazarbasi, ArianServ, SilverXp, Evi Giannakou, Petya Raykovska, Martin Sauter, Yaser Tallo, Enrique Errando, Sami Keijonen, Ishka Michocka, Alessandro Curci, and Alessandro Tesoro!
+Thanks to translations by Hassan Hisham, Tunghsiao Liu, Francois-Xavier Bénard, Ralph Stenzel, Rami Y, Yusuke Hayasaki, Tommixoft, Amin Ab, Bartosz Arendt, Raphael Mendonça, R J, Max Samael, Eko Ikhyar, Marcelo Pedra, Abdullah Pazarbasi, ArianServ, SilverXp, Evi Giannakou, Petya Raykovska, Martin Sauter, Yaser Tallo, Enrique Errando, Sami Keijonen, Ishka Michocka, Alessandro Curci, Alessandro Tesoro, and Ante Sepic!
 
 ## Screenshots ##
 

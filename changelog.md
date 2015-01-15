@@ -1,11 +1,16 @@
 
 ## Upgrade Notice ##
 
-### 1.0.2 ###
+### 1.0.3 ###
 
-* New translations: Türkçe (Turkish), Română (Romanian), Nederlands (Dutch), Ελληνικά (Greek), Български (Bulgarian), Suomi (Finnish), and Italiano (Italian).
+* Croatian translation, plus a small fix to avoid PHP notices triggered by poorly coded plugins.
 
 ## Changelog ##
+
+### 1.0.3 ###
+
+* Croation translation.
+* Avoid PHP notices caused by other plugins which erroneously use boolean `true` as a capability.
 
 ### 1.0.2 ###
 
