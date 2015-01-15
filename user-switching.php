@@ -631,9 +631,9 @@ class user_switching {
 	 * @return array User's capabilities.
 	 */
 	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args ) {
-		if ( 'switch_to_user' == $args[0] ) {
+		if ( 'switch_to_user' === $args[0] ) {
 			$user_caps['switch_to_user'] = ( user_can( $args[1], 'edit_user', $args[2] ) and ( $args[2] != $args[1] ) );
-		} else if ( 'switch_off' == $args[0] ) {
+		} else if ( 'switch_off' === $args[0] ) {
 			$user_caps['switch_off'] = user_can( $args[1], 'edit_users' );
 		}
 		return $user_caps;
@@ -652,7 +652,7 @@ class user_switching {
 	 * @return array  Required capabilities for the requested action.
 	 */
 	public function filter_map_meta_cap( array $required_caps, $cap, $user_id, array $args ) {
-		if ( ( 'switch_to_user' == $cap ) and ( $args[0] == $user_id ) ) {
+		if ( ( 'switch_to_user' === $cap ) and ( $args[0] == $user_id ) ) {
 			$required_caps[] = 'do_not_allow';
 		}
 		return $required_caps;
