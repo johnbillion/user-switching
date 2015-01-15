@@ -729,7 +729,7 @@ if ( !function_exists( 'user_switching_get_olduser_cookie' ) ) {
 /**
  * Gets the value of the cookie containing the originating user.
  *
- * @return string|bool The old user cookie, or boolean false on if there isn't one.
+ * @return string|bool The old user cookie, or boolean false if there isn't one.
  */
 function user_switching_get_olduser_cookie() {
 	if ( isset( $_COOKIE[USER_SWITCHING_OLDUSER_COOKIE] ) ) {
