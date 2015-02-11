@@ -132,6 +132,8 @@ class user_switching {
 			return;
 		}
 
+		$current_user = ( is_user_logged_in() ) ? wp_get_current_user() : null;
+
 		switch ( $_REQUEST['action'] ) {
 
 			# We're attempting to switch to another user:
@@ -150,7 +152,7 @@ class user_switching {
 				$user = switch_to_user( $user_id, self::remember() );
 				if ( $user ) {
 
-					$redirect_to = self::get_redirect( $user );
+					$redirect_to = self::get_redirect( $user, $current_user );
 
 					# Redirect to the dashboard or the home URL depending on capabilities:
 					$args = array( 'user_switched' => 'true' );
@@ -187,7 +189,7 @@ class user_switching {
 				# Switch user:
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
 
-					$redirect_to = self::get_redirect( $old_user );
+					$redirect_to = self::get_redirect( $old_user, $current_user );
 					$args = array( 'user_switched' => 'true', 'switched_back' => 'true' );
 					if ( $redirect_to ) {
 						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
@@ -203,19 +205,17 @@ class user_switching {
 			# We're attempting to switch off the current user:
 			case 'switch_off':
 
-				$user = wp_get_current_user();
-
 				# Check authentication:
 				if ( !current_user_can( 'switch_off' ) ) {
 					wp_die( __( 'Could not switch off.', 'user-switching' ) );
 				}
 
 				# Check intent:
-				check_admin_referer( "switch_off_{$user->ID}" );
+				check_admin_referer( "switch_off_{$current_user->ID}" );
 
 				# Switch off:
 				if ( switch_off_user() ) {
-					$redirect_to = self::get_redirect();
+					$redirect_to = self::get_redirect( null, $current_user );
 					$args = array( 'switched_off' => 'true' );
 					if ( $redirect_to ) {
 						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
@@ -235,20 +235,24 @@ class user_switching {
 	/**
 	 * Fetch the URL to redirect to for a given user (used after switching).
 	 *
-	 * @param  WP_User|null A WP_User object (optional).
+	 * @param  WP_User $new_user The new user's WP_User object (optional).
+	 * @param  WP_User $old_user The old user's WP_User object (optional).
 	 * @return string The URL to redirect to.
 	 */
-	protected static function get_redirect( WP_User $user = null ) {
+	protected static function get_redirect( WP_User $new_user = null, WP_User $old_user = null ) {
 
 		if ( isset( $_REQUEST['redirect_to'] ) and !empty( $_REQUEST['redirect_to'] ) ) {
 			$redirect_to = self::remove_query_args( $_REQUEST['redirect_to'] );
+			$requested_redirect_to = $_REQUEST['redirect_to'];
 		} else {
 			$redirect_to = '';
+			$requested_redirect_to = '';
 		}
 
-		if ( $user ) {
-			$requested_redirect_to = isset( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '';
-			$redirect_to = apply_filters( 'login_redirect', $redirect_to, $requested_redirect_to, $user );
+		if ( ! $new_user ) {
+			$redirect_to = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $old_user );
+		} else {
+			$redirect_to = apply_filters( 'login_redirect', $redirect_to, $requested_redirect_to, $new_user );
 		}
 
 		return $redirect_to;
