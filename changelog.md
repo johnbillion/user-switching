@@ -1,19 +1,19 @@
 
 ## Upgrade Notice ##
 
-### 1.0.3 ###
-
-* Croatian translation, plus a small fix to avoid PHP notices triggered by poorly coded plugins.
+### 1.0.4 ###
+* Support for the new `logout_redirect` and `removable_query_args` filters in WordPress 4.2.
 
 ## Changelog ##
 
-### 1.0.3 ###
+### 1.0.4 ###
+* Support for the new `logout_redirect` and `removable_query_args` filters in WordPress 4.2.
 
+### 1.0.3 ###
 * Croation translation.
 * Avoid PHP notices caused by other plugins which erroneously use boolean `true` as a capability.
 
 ### 1.0.2 ###
-
 * Turkish translation by Abdullah Pazarbasi.
 * Romanian translation by ArianServ.
 * Dutch translation by Thom.
@@ -24,18 +24,15 @@
 * Updated Arabic, Spanish, German, and Polish translations.
 
 ### 1.0.1 ###
-
 * Shorten the names of User Switching's cookies to avoid problems with Suhosin's over-zealous default rules.
 * Add backwards compatibility for the deprecated `OLDUSER_COOKIE` constant.
 
 ### 1.0 ###
-
 * Security hardening for sites that use HTTPS in the admin area and HTTP on the front end.
 * Add an extra auth check before the nonce verification.
 * Pretty icon next to the switch back links.
 
 ### 0.9 ###
-
 * Minor fixes for the `login_redirect` filter.
 * Increase the specificity of the `switch_to_old_user` and `switch_off` nonces.
 
