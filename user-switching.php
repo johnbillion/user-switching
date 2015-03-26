@@ -30,7 +30,7 @@ class user_switching {
 	/**
 	 * Class constructor. Set up some filters and actions.
 	 */
-	public function __construct() {
+	private function __construct() {
 
 		# Required functionality:
 		add_filter( 'user_has_cap',                    array( $this, 'filter_user_has_cap' ), 10, 3 );
@@ -45,6 +45,7 @@ class user_switching {
 		# Nice-to-haves:
 		add_filter( 'ms_user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
 		add_filter( 'login_message',                   array( $this, 'filter_login_message' ), 1 );
+		add_action( 'wp_meta',                         array( $this, 'action_wp_meta' ) );
 		add_action( 'wp_footer',                       array( $this, 'action_wp_footer' ) );
 		add_action( 'personal_options',                array( $this, 'action_personal_options' ) );
 		add_action( 'admin_bar_menu',                  array( $this, 'action_admin_bar_menu' ), 11 );
@@ -392,11 +393,26 @@ class user_switching {
 	}
 
 	/**
+	 * Adds a 'Switch back to {user}' link to the Meta sidebar widget if the admin toolbar isn't showing.
+	 */
+	public function action_wp_meta() {
+
+		if ( !is_admin_bar_showing() and $old_user = self::get_old_user() ) {
+			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
+			$url = add_query_arg( array(
+				'redirect_to' => urlencode( self::current_url() )
+			), self::switch_back_url( $old_user ) );
+			echo '<li id="user_switching_switch_on"><a href="' . $url . '">' . $link . '</a></li>';
+		}
+
+	}
+
+	/**
 	 * Adds a 'Switch back to {user}' link to the WordPress footer if the admin toolbar isn't showing.
 	 */
 	public function action_wp_footer() {
 
-		if ( !is_admin_bar_showing() and $old_user = self::get_old_user() ) {
+		if ( !did_action( 'wp_meta' ) and !is_admin_bar_showing() and $old_user = self::get_old_user() ) {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() )
@@ -662,6 +678,21 @@ class user_switching {
 		return $required_caps;
 	}
 
+	/**
+	 * Singleton instantiator.
+	 *
+	 * @return user_switching User Switching instance.
+	 */
+	public static function get_instance() {
+		static $instance;
+
+		if ( ! isset( $instance ) ) {
+			$instance = new user_switching;
+		}
+
+		return $instance;
+	}
+
 }
 
 if ( !function_exists( 'user_switching_set_olduser_cookie' ) ) {
@@ -840,6 +871,4 @@ function current_user_switched() {
 }
 }
 
-global $user_switching;
-
-$user_switching = new user_switching;
+$GLOBALS['user_switching'] = user_switching::get_instance();
