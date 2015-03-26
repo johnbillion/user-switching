@@ -45,6 +45,7 @@ class user_switching {
 		# Nice-to-haves:
 		add_filter( 'ms_user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
 		add_filter( 'login_message',                   array( $this, 'filter_login_message' ), 1 );
+		add_filter( 'removable_query_args',            array( $this, 'filter_removable_query_args' ) );
 		add_action( 'wp_meta',                         array( $this, 'action_wp_meta' ) );
 		add_action( 'wp_footer',                       array( $this, 'action_wp_footer' ) );
 		add_action( 'personal_options',                array( $this, 'action_personal_options' ) );
@@ -529,6 +530,20 @@ class user_switching {
 	}
 
 	/**
+	 * Filter the list of query arguments which get removed from admin area URLs in WordPress.
+	 * 
+	 * @link https://core.trac.wordpress.org/ticket/23367
+	 *
+	 * @param  array $args List of removable query arguments.
+	 * @return array       Updated list of removable query arguments.
+	 */
+	public function filter_removable_query_args( array $args ) {
+		return array_merge( $args, array(
+			'user_switched', 'switched_off', 'switched_back',
+		) );
+	}
+
+	/**
 	 * Helper function. Returns the switch to or switch back URL for a given user.
 	 *
 	 * @param  WP_User $user The user to be switched to.
@@ -601,12 +616,12 @@ class user_switching {
 	 * @return string The URL with the listed query args removed.
 	 */
 	public static function remove_query_args( $url ) {
-		return remove_query_arg( array(
-			'user_switched', 'switched_off', 'switched_back',
+		$args = apply_filters( 'removable_query_args', array(
 			'message', 'update', 'updated', 'settings-updated', 'saved',
 			'activated', 'activate', 'deactivate', 'enabled', 'disabled',
 			'locked', 'skipped', 'deleted', 'trashed', 'untrashed'
-		), $url );
+		) );
+		return remove_query_arg( $args, $url );
 	}
 
 	/**
