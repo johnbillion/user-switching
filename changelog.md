@@ -1,16 +1,20 @@
 
 ## Upgrade Notice ##
 
-### 1.0.4 ###
-* Support for the new `logout_redirect` and `removable_query_args` filters in WordPress 4.2.
+### 1.0.5 ###
+* Norwegian translation by Per Søderlind.
 
 ## Changelog ##
+
+### 1.0.5 ###
+* Norwegian translation by Per Søderlind.
+* Code standards tweaks.
 
 ### 1.0.4 ###
 * Support for the new `logout_redirect` and `removable_query_args` filters in WordPress 4.2.
 
 ### 1.0.3 ###
-* Croation translation.
+* Croation translation by Ante Sepic.
 * Avoid PHP notices caused by other plugins which erroneously use boolean `true` as a capability.
 
 ### 1.0.2 ###

@@ -53,6 +53,7 @@ See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information
  * Italiano (Italian)
  * 日本語 (Japanese)
  * Lietuvių kalba (Lithuanian)
+ * Norsk bokmål (Norwegian)
  * فارسی (Persian)
  * Polski (Polish)
  * Português do Brasil (Brazilian Portuguese)
@@ -62,7 +63,7 @@ See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information
  * Español (Spanish)
  * Türkçe (Turkish)
 
-Thanks to translations by Hassan Hisham, Tunghsiao Liu, Francois-Xavier Bénard, Ralph Stenzel, Rami Y, Yusuke Hayasaki, Tommixoft, Amin Ab, Bartosz Arendt, Raphael Mendonça, R J, Max Samael, Eko Ikhyar, Marcelo Pedra, Abdullah Pazarbasi, ArianServ, SilverXp, Evi Giannakou, Petya Raykovska, Martin Sauter, Yaser Tallo, Enrique Errando, Sami Keijonen, Kalina Michocka, Alessandro Curci, Alessandro Tesoro, and Ante Sepic!
+Thanks to translations by Hassan Hisham, Tunghsiao Liu, Francois-Xavier Bénard, Ralph Stenzel, Rami Y, Yusuke Hayasaki, Tommixoft, Amin Ab, Bartosz Arendt, Raphael Mendonça, R J, Max Samael, Eko Ikhyar, Marcelo Pedra, Abdullah Pazarbasi, ArianServ, SilverXp, Evi Giannakou, Petya Raykovska, Martin Sauter, Yaser Tallo, Enrique Errando, Sami Keijonen, Kalina Michocka, Alessandro Curci, Alessandro Tesoro, Ante Sepic, and Per Søderlind!
 
 ## Screenshots ##
 
