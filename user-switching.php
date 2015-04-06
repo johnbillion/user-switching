@@ -619,7 +619,8 @@ class user_switching {
 		$args = apply_filters( 'removable_query_args', array(
 			'message', 'update', 'updated', 'settings-updated', 'saved',
 			'activated', 'activate', 'deactivate', 'enabled', 'disabled',
-			'locked', 'skipped', 'deleted', 'trashed', 'untrashed'
+			'locked', 'skipped', 'deleted', 'trashed', 'untrashed',
+			'spammed', 'unspammed',
 		) );
 		return remove_query_arg( $args, $url );
 	}
