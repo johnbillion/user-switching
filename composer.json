@@ -1,7 +1,7 @@
 {
 	"name"       : "johnbillion/user-switching",
 	"description": "WordPress plugin that provides instant switching between user accounts.",
-	"homepage"   : "https://github.com/johnbillion/user-switching/",
+	"homepage"   : "https://github.com/johnbillion/user-switching",
 	"type"       : "wordpress-plugin",
 	"license"    : "GPL-2.0+",
 	"authors"    : [
@@ -10,10 +10,15 @@
 			"homepage": "https://johnblackbourn.com/"
 		}
 	],
+	"support": {
+		"issues": "https://github.com/johnbillion/user-switching/issues",
+		"forum": "https://wordpress.org/support/plugin/user-switching",
+		"source": "https://github.com/johnbillion/user-switching"
+	},
 	"require": {
 		"composer/installers": "~1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": ">=3.7"
-	}
+    }
 }
