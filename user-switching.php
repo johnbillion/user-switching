@@ -99,8 +99,8 @@ class user_switching {
 
 		?>
 		<tr>
-			<th scope="row"><?php _ex( 'User Switching', 'User Switching title on user profile screen', 'user-switching' ); ?></th>
-			<td><a href="<?php echo $link; ?>"><?php _e( 'Switch&nbsp;To', 'user-switching' ); ?></a></td>
+			<th scope="row"><?php esc_html_x( 'User Switching', 'User Switching title on user profile screen', 'user-switching' ); ?></th>
+			<td><a href="<?php echo esc_url( $link ); ?>"><?php esc_html_e( 'Switch&nbsp;To', 'user-switching' ); ?></a></td>
 		</tr>
 		<?php
 	}
@@ -144,7 +144,7 @@ class user_switching {
 
 				# Check authentication:
 				if ( ! current_user_can( 'switch_to_user', $user_id ) ) {
-					wp_die( __( 'Could not switch users.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
 
 				# Check intent:
@@ -168,7 +168,7 @@ class user_switching {
 					die();
 
 				} else {
-					wp_die( __( 'Could not switch users.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
 				break;
 
@@ -177,12 +177,12 @@ class user_switching {
 
 				# Fetch the originating user data:
 				if ( ! $old_user = self::get_old_user() ) {
-					wp_die( __( 'Could not switch users.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
 
 				# Check authentication:
 				if ( ! self::authenticate_old_user( $old_user ) ) {
-					wp_die( __( 'Could not switch users.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
 
 				# Check intent:
@@ -200,7 +200,7 @@ class user_switching {
 					}
 					die();
 				} else {
-					wp_die( __( 'Could not switch users.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
 				break;
 
@@ -209,7 +209,7 @@ class user_switching {
 
 				# Check authentication:
 				if ( ! current_user_can( 'switch_off' ) ) {
-					wp_die( __( 'Could not switch off.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ) );
 				}
 
 				# Check intent:
@@ -226,7 +226,7 @@ class user_switching {
 					}
 					die();
 				} else {
-					wp_die( __( 'Could not switch off.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ) );
 				}
 				break;
 
@@ -274,12 +274,12 @@ class user_switching {
 				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
 				<?php
 					if ( isset( $_GET['user_switched'] ) ) {
-						printf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
+						printf( esc_html__( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
 					}
 					$url = add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
 					), self::switch_back_url( $old_user ) );
-					printf( ' <a href="%s">%s</a>.', $url, sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) );
+					printf( ' <a href="%s">%s</a>.', esc_url( $url ), sprintf( esc_html__( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) );
 				?></p>
 			</div>
 			<?php
@@ -290,9 +290,9 @@ class user_switching {
 			<div id="user_switching" class="updated">
 				<p><?php
 					if ( isset( $_GET['switched_back'] ) ) {
-						printf( __( 'Switched back to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
+						printf( esc_html__( 'Switched back to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
 					} else {
-						printf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
+						printf( esc_html__( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
 					}
 				?></p>
 			</div>
@@ -365,7 +365,7 @@ class user_switching {
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
 				'id'     => 'switch-back',
-				'title'  => sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ),
+				'title'  => sprintf( esc_html__( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ),
 				'href'   => add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() ),
 				), self::switch_back_url( $old_user ) )
@@ -385,7 +385,7 @@ class user_switching {
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
 				'id'     => 'switch-off',
-				'title'  => __( 'Switch Off', 'user-switching' ),
+				'title'  => esc_html__( 'Switch Off', 'user-switching' ),
 				'href'   => $url,
 			) );
 
@@ -403,7 +403,7 @@ class user_switching {
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() )
 			), self::switch_back_url( $old_user ) );
-			echo '<li id="user_switching_switch_on"><a href="' . $url . '">' . $link . '</a></li>';
+			echo '<li id="user_switching_switch_on"><a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></li>';
 		}
 
 	}
@@ -418,7 +418,7 @@ class user_switching {
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() )
 			), self::switch_back_url( $old_user ) );
-			echo '<p id="user_switching_switch_on"><a href="' . $url . '">' . $link . '</a></p>';
+			echo '<p id="user_switching_switch_on"><a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></p>';
 		}
 
 	}
@@ -439,7 +439,7 @@ class user_switching {
 					'redirect_to' => urlencode( $_REQUEST['redirect_to'] )
 				), $url );
 			}
-			$message .= '<p class="message"><span class="dashicons dashicons-admin-users" style="color:#56c234"></span> <a href="' . $url . '">' . $link . '</a></p>';
+			$message .= '<p class="message"><span class="dashicons dashicons-admin-users" style="color:#56c234"></span> <a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></p>';
 		}
 
 		return $message;
@@ -459,7 +459,7 @@ class user_switching {
 			return $actions;
 		}
 
-		$actions['switch_to_user'] = '<a href="' . $link . '">' . __( 'Switch&nbsp;To', 'user-switching' ) . '</a>';
+		$actions['switch_to_user'] = '<a href="' . esc_url( $link ) . '">' . esc_html__( 'Switch&nbsp;To', 'user-switching' ) . '</a>';
 
 		return $actions;
 	}
@@ -499,8 +499,8 @@ class user_switching {
 		echo bp_get_button( array(
 			'id'         => 'user_switching',
 			'component'  => $component,
-			'link_href'  => $link,
-			'link_text'  => __( 'Switch&nbsp;To', 'user-switching' )
+			'link_href'  => esc_url( $link ),
+			'link_text'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
 		) );
 
 	}
@@ -523,7 +523,7 @@ class user_switching {
 
 		?>
 		<ul>
-			<li><a href="<?php echo $link; ?>"><?php _e( 'Switch&nbsp;To', 'user-switching' ); ?></a></li>
+			<li><a href="<?php echo esc_url( $link ); ?>"><?php esc_html_e( 'Switch&nbsp;To', 'user-switching' ); ?></a></li>
 		</ul>
 		<?php
 
