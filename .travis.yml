@@ -36,5 +36,5 @@ before_script:
 
 script:
     - phpunit
-    - php -S localhost:8000 -t vendor/wordpress -d disable_functions=mail
+    - php -S localhost:8000 -t vendor/wordpress -d disable_functions=mail &
     - ./bin/behat --profile=travis
