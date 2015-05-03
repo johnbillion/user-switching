@@ -3,7 +3,7 @@ use Behat\Behat\Context\Context,
 	Behat\Behat\Context\SnippetAcceptingContext,
 	Behat\Gherkin\Node\TableNode;
 
-use Tmf\WordPressExtension\Context\WordPressContext;
+use Johnbillion\WordPressExtension\Context\WordPressContext;
 
 /**
  * Defines application features from the specific context.
