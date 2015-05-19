@@ -365,7 +365,7 @@ class user_switching {
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
 				'id'     => 'switch-back',
-				'title'  => sprintf( esc_html__( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ),
+				'title'  => esc_html( sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) ),
 				'href'   => add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() ),
 				), self::switch_back_url( $old_user ) )
