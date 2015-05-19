@@ -274,12 +274,12 @@ class user_switching {
 				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
 				<?php
 					if ( isset( $_GET['user_switched'] ) ) {
-						printf( esc_html__( 'Switched to %1$s (%2$s).', 'user-switching' ), esc_html($user->display_name ), esc_html( $user->user_login ) );
+						echo esc_html( sprintf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
 					}
 					$url = add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
 					), self::switch_back_url( $old_user ) );
-					printf( ' <a href="%s">%s</a>.', esc_url( $url ), sprintf( esc_html__( 'Switch back to %1$s (%2$s)', 'user-switching' ), esc_html( $old_user->display_name ), esc_html( $old_user->user_login ) ) );
+					printf( ' <a href="%s">%s</a>.', esc_url( $url ), esc_html( sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) ) );
 				?></p>
 			</div>
 			<?php
@@ -290,9 +290,9 @@ class user_switching {
 			<div id="user_switching" class="updated">
 				<p><?php
 					if ( isset( $_GET['switched_back'] ) ) {
-						printf( esc_html__( 'Switched back to %1$s (%2$s).', 'user-switching' ), esc_html( $user->display_name ), esc_html( $user->user_login ) );
+						echo esc_html( sprintf( __( 'Switched back to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
 					} else {
-						printf( esc_html__( 'Switched to %1$s (%2$s).', 'user-switching' ), esc_html( $user->display_name ), esc_html( $user->user_login ) );
+						echo esc_html( sprintf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
 					}
 				?></p>
 			</div>
