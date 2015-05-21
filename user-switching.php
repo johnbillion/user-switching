@@ -73,15 +73,7 @@ class user_switching {
 
 		// User Switching's logged_in_cookie
 		if ( ! defined( 'USER_SWITCHING_OLDUSER_COOKIE' ) ) {
-			if ( defined( 'OLDUSER_COOKIE' ) ) {
-				trigger_error( sprintf(
-					'The OLDUSER_COOKIE constant is deprecated. See <code>%s()</code>.',
-					__METHOD__
-				), ( WP_DEBUG ? E_USER_WARNING : E_USER_NOTICE ) );
-				define( 'USER_SWITCHING_OLDUSER_COOKIE', OLDUSER_COOKIE );
-			} else {
-				define( 'USER_SWITCHING_OLDUSER_COOKIE', 'wordpress_user_sw_olduser_' . COOKIEHASH );
-			}
+			define( 'USER_SWITCHING_OLDUSER_COOKIE', 'wordpress_user_sw_olduser_' . COOKIEHASH );
 		}
 
 	}
