@@ -821,11 +821,11 @@ function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
 		return false;
 	}
 
-	if ( $set_old_user && is_user_logged_in() ) {
-		$old_user_id = get_current_user_id();
+	$old_user_id = get_current_user_id();
+
+	if ( $set_old_user && $old_user_id ) {
 		user_switching_set_olduser_cookie( $old_user_id );
 	} else {
-		$old_user_id = false;
 		user_switching_clear_olduser_cookie( false );
 	}
 
