@@ -324,7 +324,7 @@ class user_switching {
 				$scheme = 'auth';
 			}
 			if ( $old_user_id = wp_validate_auth_cookie( end( $cookie ), $scheme ) ) {
-				return ( $user->ID == $old_user_id );
+				return ( $user->ID === $old_user_id );
 			}
 		}
 		return false;
@@ -547,7 +547,7 @@ class user_switching {
 
 		$old_user = self::get_old_user();
 
-		if ( $old_user && ( $old_user->ID == $user->ID ) ) {
+		if ( $old_user && ( $old_user->ID === $user->ID ) ) {
 			return self::switch_back_url( $old_user );
 		} else if ( current_user_can( 'switch_to_user', $user->ID ) ) {
 			return self::switch_to_url( $user );
