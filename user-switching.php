@@ -243,7 +243,7 @@ class user_switching {
 	 */
 	protected static function get_redirect( WP_User $new_user = null, WP_User $old_user = null ) {
 
-		if ( isset( $_REQUEST['redirect_to'] ) and ! empty( $_REQUEST['redirect_to'] ) ) {
+		if ( isset( $_REQUEST['redirect_to'] ) && ! empty( $_REQUEST['redirect_to'] ) ) {
 			$redirect_to = self::remove_query_args( $_REQUEST['redirect_to'] );
 			$requested_redirect_to = $_REQUEST['redirect_to'];
 		} else {
@@ -274,12 +274,12 @@ class user_switching {
 				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
 				<?php
 					if ( isset( $_GET['user_switched'] ) ) {
-						printf( esc_html__( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
+						echo esc_html( sprintf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
 					}
 					$url = add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
 					), self::switch_back_url( $old_user ) );
-					printf( ' <a href="%s">%s</a>.', esc_url( $url ), sprintf( esc_html__( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) );
+					printf( ' <a href="%s">%s</a>.', esc_url( $url ), esc_html( sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) ) );
 				?></p>
 			</div>
 			<?php
@@ -290,9 +290,9 @@ class user_switching {
 			<div id="user_switching" class="updated">
 				<p><?php
 					if ( isset( $_GET['switched_back'] ) ) {
-						printf( esc_html__( 'Switched back to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
+						echo esc_html( sprintf( __( 'Switched back to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
 					} else {
-						printf( esc_html__( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login );
+						echo esc_html( sprintf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
 					}
 				?></p>
 			</div>
@@ -352,7 +352,7 @@ class user_switching {
 			return;
 		}
 
-		if ( method_exists( $wp_admin_bar, 'get_node' ) and $wp_admin_bar->get_node( 'user-actions' ) ) {
+		if ( method_exists( $wp_admin_bar, 'get_node' ) && $wp_admin_bar->get_node( 'user-actions' ) ) {
 			$parent = 'user-actions';
 		} else if ( get_option( 'show_avatars' ) ) {
 			$parent = 'my-account-with-avatar';
@@ -365,7 +365,7 @@ class user_switching {
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
 				'id'     => 'switch-back',
-				'title'  => sprintf( esc_html__( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ),
+				'title'  => esc_html( sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) ),
 				'href'   => add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() ),
 				), self::switch_back_url( $old_user ) )
@@ -398,7 +398,7 @@ class user_switching {
 	 */
 	public function action_wp_meta() {
 
-		if ( ! is_admin_bar_showing() and $old_user = self::get_old_user() ) {
+		if ( ! is_admin_bar_showing() && $old_user = self::get_old_user() ) {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() )
@@ -413,7 +413,7 @@ class user_switching {
 	 */
 	public function action_wp_footer() {
 
-		if ( ! did_action( 'wp_meta' ) and ! is_admin_bar_showing() and $old_user = self::get_old_user() ) {
+		if ( ! did_action( 'wp_meta' ) && ! is_admin_bar_showing() && $old_user = self::get_old_user() ) {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() )
@@ -434,7 +434,7 @@ class user_switching {
 		if ( $old_user = self::get_old_user() ) {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = self::switch_back_url( $old_user );
-			if ( isset( $_REQUEST['redirect_to'] ) and ! empty( $_REQUEST['redirect_to'] ) ) {
+			if ( isset( $_REQUEST['redirect_to'] ) && ! empty( $_REQUEST['redirect_to'] ) ) {
 				$url = add_query_arg( array(
 					'redirect_to' => urlencode( $_REQUEST['redirect_to'] )
 				), $url );
@@ -471,7 +471,7 @@ class user_switching {
 
 		global $bp, $members_template;
 
-		if ( ! empty( $members_template ) and empty( $bp->displayed_user->id ) ) {
+		if ( ! empty( $members_template ) && empty( $bp->displayed_user->id ) ) {
 			$user = get_userdata( $members_template->member->id );
 		} else {
 			$user = get_userdata( $bp->displayed_user->id );
@@ -496,12 +496,14 @@ class user_switching {
 			$component = 'core';
 		}
 
+		// @codingStandardsIgnoreStart
 		echo bp_get_button( array(
 			'id'         => 'user_switching',
 			'component'  => $component,
 			'link_href'  => esc_url( $link ),
 			'link_text'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
 		) );
+		// @codingStandardsIgnoreEnd
 
 	}
 
@@ -553,7 +555,7 @@ class user_switching {
 
 		$old_user = self::get_old_user();
 
-		if ( $old_user and ( $old_user->ID == $user->ID ) ) {
+		if ( $old_user && ( $old_user->ID == $user->ID ) ) {
 			return self::switch_back_url( $old_user );
 		} else if ( current_user_can( 'switch_to_user', $user->ID ) ) {
 			return self::switch_to_url( $user );
@@ -635,7 +637,7 @@ class user_switching {
 	 * @return bool Should the old user cookie be secure?
 	 */
 	public static function secure_olduser_cookie() {
-		return ( is_ssl() and ( 'https' === parse_url( home_url(), PHP_URL_SCHEME ) ) );
+		return ( is_ssl() && ( 'https' === parse_url( home_url(), PHP_URL_SCHEME ) ) );
 	}
 
 	/**
@@ -646,7 +648,7 @@ class user_switching {
 	 * @return bool Should the auth cookie be secure?
 	 */
 	public static function secure_auth_cookie() {
-		return ( is_ssl() and ( 'https' === parse_url( wp_login_url(), PHP_URL_SCHEME ) ) );
+		return ( is_ssl() && ( 'https' === parse_url( wp_login_url(), PHP_URL_SCHEME ) ) );
 	}
 
 	/**
@@ -668,7 +670,7 @@ class user_switching {
 	 */
 	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args ) {
 		if ( 'switch_to_user' === $args[0] ) {
-			$user_caps['switch_to_user'] = ( user_can( $args[1], 'edit_user', $args[2] ) and ( $args[2] != $args[1] ) );
+			$user_caps['switch_to_user'] = ( user_can( $args[1], 'edit_user', $args[2] ) && ( $args[2] != $args[1] ) );
 		} else if ( 'switch_off' === $args[0] ) {
 			$user_caps['switch_off'] = user_can( $args[1], 'edit_users' );
 		}
@@ -688,7 +690,7 @@ class user_switching {
 	 * @return array  Required capabilities for the requested action.
 	 */
 	public function filter_map_meta_cap( array $required_caps, $cap, $user_id, array $args ) {
-		if ( ( 'switch_to_user' === $cap ) and ( $args[0] == $user_id ) ) {
+		if ( ( 'switch_to_user' === $cap ) && ( $args[0] == $user_id ) ) {
 			$required_caps[] = 'do_not_allow';
 		}
 		return $required_caps;
@@ -755,7 +757,7 @@ function user_switching_clear_olduser_cookie( $clear_all = true ) {
 	if ( ! empty( $auth_cookie ) ) {
 		array_pop( $auth_cookie );
 	}
-	if ( $clear_all or empty( $auth_cookie ) ) {
+	if ( $clear_all || empty( $auth_cookie ) ) {
 		$expire = time() - 31536000;
 		setcookie( USER_SWITCHING_COOKIE,         ' ', $expire, SITECOOKIEPATH, COOKIE_DOMAIN );
 		setcookie( USER_SWITCHING_SECURE_COOKIE,  ' ', $expire, SITECOOKIEPATH, COOKIE_DOMAIN );
@@ -806,7 +808,7 @@ function user_switching_get_auth_cookie() {
 	if ( isset( $_COOKIE[ $auth_cookie_name ] ) ) {
 		$cookie = json_decode( stripslashes( $_COOKIE[ $auth_cookie_name ] ) );
 	}
-	if ( ! isset( $cookie ) or ! is_array( $cookie ) ) {
+	if ( ! isset( $cookie ) || ! is_array( $cookie ) ) {
 		$cookie = array();
 	}
 	return $cookie;
@@ -827,7 +829,7 @@ function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
 		return false;
 	}
 
-	if ( $set_old_user and is_user_logged_in() ) {
+	if ( $set_old_user && is_user_logged_in() ) {
 		$old_user_id = get_current_user_id();
 		user_switching_set_olduser_cookie( $old_user_id );
 	} else {
