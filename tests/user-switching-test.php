@@ -4,6 +4,8 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 
 	function setUp() {
 
+		parent::setUp();
+
 		$this->admin = $this->factory->user->create_and_get( array(
 			'role' => 'administrator'
 		) );
@@ -30,8 +32,6 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 			) );
 			grant_super_admin( $this->super->ID );
 		}
-
-		parent::setUp();
 
 	}
 
