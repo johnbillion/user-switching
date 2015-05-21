@@ -857,6 +857,7 @@ function switch_off_user() {
 
 	user_switching_set_olduser_cookie( $old_user_id );
 	wp_clear_auth_cookie();
+	wp_set_current_user( 0 );
 
 	do_action( 'switch_off_user', $old_user_id );
 
