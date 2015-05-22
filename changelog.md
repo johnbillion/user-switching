@@ -1,10 +1,14 @@
 
 ## Upgrade Notice ##
 
-### 1.0.5 ###
-* Norwegian translation by Per Søderlind.
+### 1.0.6 ###
+* Correct the values passed to the `switch_back_user` action when a user switches back.
 
 ## Changelog ##
+
+### 1.0.6 ###
+* Correct the values passed to the `switch_back_user` action when a user switches back.
+* More code standards tweaks.
 
 ### 1.0.5 ###
 * Norwegian translation by Per Søderlind.
