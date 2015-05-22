@@ -33,12 +33,11 @@ matrix:
           env: WP_VERSION=3.1 WP_MULTISITE=1
 
 install:
-    - composer install
+	- bash bin/install.sh
 
 before_script:
     - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION 
 
 script:
     - phpunit
-    - php -S localhost:8000 -t vendor/wordpress -d disable_functions=mail &
-    - ./bin/behat --profile=travis
+    - bash bin/script.sh
