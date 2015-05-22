@@ -1,7 +1,7 @@
 language: php
 
 notifications:
-    on_success: never
+    on_success: change
     on_failure: change
 
 php:
