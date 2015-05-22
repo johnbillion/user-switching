@@ -1,3 +1,8 @@
+[![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/user-switching.svg)](https://wordpress.org/plugins/user-switching/)
+[![License](https://img.shields.io/badge/license-GPL_v2%2B-blue.svg)](http://opensource.org/licenses/GPL-2.0)
+[![WordPress Tested](https://img.shields.io/wordpress/v/user-switching.svg)](https://wordpress.org/plugins/user-switching/)
+[![Build Status](https://img.shields.io/travis/johnbillion/user-switching.svg)](https://travis-ci.org/johnbillion/user-switching)
+
 # User Switching #
 
 **Contributors:** johnbillion  
