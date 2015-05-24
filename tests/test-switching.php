@@ -13,9 +13,6 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 	}
 
-	/**
-	 * @covers switch_to_user
-	 */
 	function testSwitchUserAndBack() {
 
 		if ( is_multisite() ) {
@@ -73,10 +70,6 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 	}
 
-	/**
-	 * @covers switch_off_user
-	 * @covers switch_to_user
-	 */
 	function testSwitchOffAndBack() {
 
 		if ( is_multisite() ) {
