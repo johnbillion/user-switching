@@ -114,7 +114,7 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 		$this->assertEquals( 1,          did_action( 'switch_back_user' ) );
 		$this->assertEquals( 1,          did_action( 'switch_off_user' ) );
 		$this->assertEquals( $admin->ID, $this->test_switching_user_id );
-		$this->assertEquals( 0,          $this->test_switching_old_user_id );
+		$this->assertFalse( $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
 		$this->assertEquals( $admin->ID, $this->test_switching_auth_cookie_user_id );
