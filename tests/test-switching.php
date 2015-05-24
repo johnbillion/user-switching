@@ -33,18 +33,18 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 		// Check that we've switched
 		$this->assertInstanceOf( 'WP_User', $user );
-		$this->assertEquals( $this->editor->ID, $user->ID );
-		$this->assertEquals( $this->editor->ID, get_current_user_id() );
+		$this->assertSame( $this->editor->ID, $user->ID );
+		$this->assertSame( $this->editor->ID, get_current_user_id() );
 
 		// Check the `switch_*` actions and their parameters
-		$this->assertEquals( 1,                 did_action( 'switch_to_user' ) );
-		$this->assertEquals( 0,                 did_action( 'switch_back_user' ) );
-		$this->assertEquals( 0,                 did_action( 'switch_off_user' ) );
-		$this->assertEquals( $this->editor->ID, $this->test_switching_user_id );
-		$this->assertEquals( $admin->ID,        $this->test_switching_old_user_id );
+		$this->assertSame( 1,                 did_action( 'switch_to_user' ) );
+		$this->assertSame( 0,                 did_action( 'switch_back_user' ) );
+		$this->assertSame( 0,                 did_action( 'switch_off_user' ) );
+		$this->assertSame( $this->editor->ID, $this->test_switching_user_id );
+		$this->assertSame( $admin->ID,        $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
-		$this->assertEquals( $this->editor->ID, $this->test_switching_auth_cookie_user_id );
+		$this->assertSame( $this->editor->ID, $this->test_switching_auth_cookie_user_id );
 		$this->assertTrue( $this->test_switching_auth_cookie_remember );
 
 		// Switch back
@@ -54,18 +54,18 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 		// Check that we've switched
 		$this->assertInstanceOf( 'WP_User', $user );
-		$this->assertEquals( $admin->ID, $user->ID );
-		$this->assertEquals( $admin->ID, get_current_user_id() );
+		$this->assertSame( $admin->ID, $user->ID );
+		$this->assertSame( $admin->ID, get_current_user_id() );
 
 		// Check the `switch_*` actions and their parameters
-		$this->assertEquals( 1,                 did_action( 'switch_to_user' ) );
-		$this->assertEquals( 1,                 did_action( 'switch_back_user' ) );
-		$this->assertEquals( 0,                 did_action( 'switch_off_user' ) );
-		$this->assertEquals( $admin->ID,        $this->test_switching_user_id );
-		$this->assertEquals( $this->editor->ID, $this->test_switching_old_user_id );
+		$this->assertSame( 1,                 did_action( 'switch_to_user' ) );
+		$this->assertSame( 1,                 did_action( 'switch_back_user' ) );
+		$this->assertSame( 0,                 did_action( 'switch_off_user' ) );
+		$this->assertSame( $admin->ID,        $this->test_switching_user_id );
+		$this->assertSame( $this->editor->ID, $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
-		$this->assertEquals( $admin->ID, $this->test_switching_auth_cookie_user_id );
+		$this->assertSame( $admin->ID, $this->test_switching_auth_cookie_user_id );
 		$this->assertFalse( $this->test_switching_auth_cookie_remember );
 
 	}
@@ -87,17 +87,17 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 		// Check that we've switched off
 		$this->assertTrue( $user );
-		$this->assertEquals( 0, get_current_user_id() );
+		$this->assertSame( 0, get_current_user_id() );
 
 		// Check the `switch_*` actions and their parameters
-		$this->assertEquals( 0,          did_action( 'switch_to_user' ) );
-		$this->assertEquals( 0,          did_action( 'switch_back_user' ) );
-		$this->assertEquals( 1,          did_action( 'switch_off_user' ) );
+		$this->assertSame( 0,          did_action( 'switch_to_user' ) );
+		$this->assertSame( 0,          did_action( 'switch_back_user' ) );
+		$this->assertSame( 1,          did_action( 'switch_off_user' ) );
 		$this->assertFalse( $this->test_switching_user_id );
-		$this->assertEquals( $admin->ID, $this->test_switching_old_user_id );
+		$this->assertSame( $admin->ID, $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
-		$this->assertEquals( 1, did_action( 'clear_auth_cookie' ) );
+		$this->assertSame( 1, did_action( 'clear_auth_cookie' ) );
 
 		// Switch back
 		$this->silence();
@@ -106,18 +106,18 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 		// Check that we've switched back
 		$this->assertInstanceOf( 'WP_User', $user );
-		$this->assertEquals( $admin->ID, $user->ID );
-		$this->assertEquals( $admin->ID, get_current_user_id() );
+		$this->assertSame( $admin->ID, $user->ID );
+		$this->assertSame( $admin->ID, get_current_user_id() );
 
 		// Check the `switch_*` actions and their parameters
-		$this->assertEquals( 0,          did_action( 'switch_to_user' ) );
-		$this->assertEquals( 1,          did_action( 'switch_back_user' ) );
-		$this->assertEquals( 1,          did_action( 'switch_off_user' ) );
-		$this->assertEquals( $admin->ID, $this->test_switching_user_id );
+		$this->assertSame( 0,          did_action( 'switch_to_user' ) );
+		$this->assertSame( 1,          did_action( 'switch_back_user' ) );
+		$this->assertSame( 1,          did_action( 'switch_off_user' ) );
+		$this->assertSame( $admin->ID, $this->test_switching_user_id );
 		$this->assertFalse( $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
-		$this->assertEquals( $admin->ID, $this->test_switching_auth_cookie_user_id );
+		$this->assertSame( $admin->ID, $this->test_switching_auth_cookie_user_id );
 		$this->assertFalse( $this->test_switching_auth_cookie_remember );
 
 	}
