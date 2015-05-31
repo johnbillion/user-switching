@@ -5,6 +5,7 @@ notifications:
     on_failure: change
 
 php:
+    - 7.0
     - 5.6
     - 5.3
     - 5.2
@@ -28,6 +29,14 @@ matrix:
           env: WP_VERSION=3.1 WP_MULTISITE=0
         - php: hhvm
           env: WP_VERSION=3.1 WP_MULTISITE=1
+        # don't test 3.1 on PHP 7:
+        - php: 7.0
+          env: WP_VERSION=3.1 WP_MULTISITE=0
+        - php: 7.0
+          env: WP_VERSION=3.1 WP_MULTISITE=1
+    allow_failures:
+        # allow failures on PHP 7 for now:
+        - php: 7.0
 
 install:
     - bash bin/install.sh
