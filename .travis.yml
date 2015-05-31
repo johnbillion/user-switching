@@ -11,9 +11,6 @@ php:
     - hhvm
 
 env:
-    # trunk:
-    - WP_VERSION=latest WP_MULTISITE=0
-    - WP_VERSION=latest WP_MULTISITE=1
     # latest stable:
     - WP_VERSION=4.2 WP_MULTISITE=0
     - WP_VERSION=4.2 WP_MULTISITE=1
