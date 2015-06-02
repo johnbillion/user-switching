@@ -240,8 +240,8 @@ class user_switching {
 	/**
 	 * Fetch the URL to redirect to for a given user (used after switching).
 	 *
-	 * @param  WP_User $new_user The new user's WP_User object (optional).
-	 * @param  WP_User $old_user The old user's WP_User object (optional).
+	 * @param  WP_User $new_user Optional. The new user's WP_User object.
+	 * @param  WP_User $old_user Optional. The old user's WP_User object.
 	 * @return string The URL to redirect to.
 	 */
 	protected static function get_redirect( WP_User $new_user = null, WP_User $old_user = null ) {
@@ -752,7 +752,7 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
  * Sets authorisation cookies containing the originating user information.
  *
  * @param int  $old_user_id The ID of the originating user, usually the current logged in user.
- * @param bool $pop         Pop the latest user off the auth cookie, instead of appending the new one. Default false.
+ * @param bool $pop         Optional. Pop the latest user off the auth cookie, instead of appending the new one. Default false.
  */
 function user_switching_set_olduser_cookie( $old_user_id, $pop = false ) {
 	$secure_auth_cookie    = user_switching::secure_auth_cookie();
@@ -784,7 +784,7 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 /**
  * Clears the cookies containing the originating user, or pops the latest item off the end if there's more than one.
  *
- * @param bool $clear_all Whether to clear the cookies or just pop the last user information off the end.
+ * @param bool $clear_all Optional. Whether to clear the cookies (as opposed to just popping the last user off the end). Default true.
  */
 function user_switching_clear_olduser_cookie( $clear_all = true ) {
 	$auth_cookie = user_switching_get_auth_cookie();
@@ -854,8 +854,8 @@ if ( ! function_exists( 'switch_to_user' ) ) {
  * Switches the current logged in user to the specified user.
  *
  * @param  int  $user_id      The ID of the user to switch to.
- * @param  bool $remember     Whether to 'remember' the user in the form of a persistent browser cookie. Optional.
- * @param  bool $set_old_user Whether to set the old user cookie. Optional.
+ * @param  bool $remember     Optional. Whether to 'remember' the user in the form of a persistent browser cookie. Default false.
+ * @param  bool $set_old_user Optional. Whether to set the old user cookie. Default true.
  * @return bool|WP_User WP_User object on success, false on failure.
  */
 function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
