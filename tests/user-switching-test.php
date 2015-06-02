@@ -40,7 +40,7 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 		// Verify the integrity of our wrapper methods
 		$target  = new ReflectionFunction( 'switch_to_user' );
 		$wrapper = new ReflectionMethod( __METHOD__ );
-		$this->assertEquals( $wrapper->getParameters(), $target->getParameters() );
+		$this->assertSame( $wrapper->getNumberOfParameters(), $target->getNumberOfParameters() );
 
 		/*
 		 * `switch_to_user()` and the functions it subsequently calls will trigger "headers already sent" PHP errors, so
@@ -59,7 +59,7 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 		// Verify the integrity of our wrapper methods
 		$target  = new ReflectionFunction( 'switch_off_user' );
 		$wrapper = new ReflectionMethod( __METHOD__ );
-		$this->assertEquals( $wrapper->getParameters(), $target->getParameters() );
+		$this->assertSame( $wrapper->getNumberOfParameters(), $target->getNumberOfParameters() );
 
 		/*
 		 * `switch_off_user()` and the functions it subsequently calls will trigger "headers already sent" PHP errors, so
