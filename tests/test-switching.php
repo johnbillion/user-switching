@@ -131,6 +131,7 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 		// Check that we've switched off
 		$this->assertTrue( $user );
+		$this->assertFalse( is_user_logged_in() );
 		$this->assertSame( 0, get_current_user_id() );
 
 		// Check the `switch_*` actions were fired
@@ -150,6 +151,7 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 		// Check that we've switched back
 		$this->assertInstanceOf( 'WP_User', $user );
+		$this->assertTrue( is_user_logged_in() );
 		$this->assertSame( $admin->ID, $user->ID );
 		$this->assertSame( $admin->ID, get_current_user_id() );
 
