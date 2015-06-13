@@ -32,12 +32,14 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 		$this->assertSame( $this->users['author']->ID, $user->ID );
 		$this->assertSame( $this->users['author']->ID, get_current_user_id() );
 
-		// Check the `switch_*` actions and their parameters
-		$this->assertSame( 1,                 did_action( 'switch_to_user' ) );
-		$this->assertSame( 0,                 did_action( 'switch_back_user' ) );
-		$this->assertSame( 0,                 did_action( 'switch_off_user' ) );
+		// Check the `switch_*` actions were fired
+		$this->assertSame( 1, did_action( 'switch_to_user' ) );
+		$this->assertSame( 0, did_action( 'switch_back_user' ) );
+		$this->assertSame( 0, did_action( 'switch_off_user' ) );
+
+		// Check the `switch_*` actions' parameters
 		$this->assertSame( $this->users['author']->ID, $this->test_switching_user_id );
-		$this->assertSame( $admin->ID,        $this->test_switching_old_user_id );
+		$this->assertSame( $admin->ID,                 $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
 		$this->assertSame( $this->users['author']->ID, $this->test_switching_auth_cookie_user_id );
@@ -53,10 +55,12 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 		$this->assertSame( $this->users['editor']->ID, $user->ID );
 		$this->assertSame( $this->users['editor']->ID, get_current_user_id() );
 
-		// Check the `switch_*` actions and their parameters
-		$this->assertSame( 2,                 did_action( 'switch_to_user' ) );
-		$this->assertSame( 0,                 did_action( 'switch_back_user' ) );
-		$this->assertSame( 0,                 did_action( 'switch_off_user' ) );
+		// Check the `switch_*` actions were fired
+		$this->assertSame( 2, did_action( 'switch_to_user' ) );
+		$this->assertSame( 0, did_action( 'switch_back_user' ) );
+		$this->assertSame( 0, did_action( 'switch_off_user' ) );
+
+		// Check the `switch_*` actions' parameters
 		$this->assertSame( $this->users['editor']->ID, $this->test_switching_user_id );
 		$this->assertSame( $this->users['author']->ID, $this->test_switching_old_user_id );
 
@@ -74,10 +78,12 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 		$this->assertSame( $this->users['author']->ID, $user->ID );
 		$this->assertSame( $this->users['author']->ID, get_current_user_id() );
 
-		// Check the `switch_*` actions and their parameters
-		$this->assertSame( 2,                 did_action( 'switch_to_user' ) );
-		$this->assertSame( 1,                 did_action( 'switch_back_user' ) );
-		$this->assertSame( 0,                 did_action( 'switch_off_user' ) );
+		// Check the `switch_*` actions were fired
+		$this->assertSame( 2, did_action( 'switch_to_user' ) );
+		$this->assertSame( 1, did_action( 'switch_back_user' ) );
+		$this->assertSame( 0, did_action( 'switch_off_user' ) );
+
+		// Check the `switch_*` actions' parameters
 		$this->assertSame( $this->users['author']->ID, $this->test_switching_user_id );
 		$this->assertSame( $this->users['editor']->ID, $this->test_switching_old_user_id );
 
@@ -95,11 +101,13 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 		$this->assertSame( $admin->ID, $user->ID );
 		$this->assertSame( $admin->ID, get_current_user_id() );
 
-		// Check the `switch_*` actions and their parameters
-		$this->assertSame( 2,                 did_action( 'switch_to_user' ) );
-		$this->assertSame( 2,                 did_action( 'switch_back_user' ) );
-		$this->assertSame( 0,                 did_action( 'switch_off_user' ) );
-		$this->assertSame( $admin->ID,        $this->test_switching_user_id );
+		// Check the `switch_*` actions were fired
+		$this->assertSame( 2, did_action( 'switch_to_user' ) );
+		$this->assertSame( 2, did_action( 'switch_back_user' ) );
+		$this->assertSame( 0, did_action( 'switch_off_user' ) );
+
+		// Check the `switch_*` actions' parameters
+		$this->assertSame( $admin->ID,                 $this->test_switching_user_id );
 		$this->assertSame( $this->users['author']->ID, $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
@@ -125,10 +133,12 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 		$this->assertTrue( $user );
 		$this->assertSame( 0, get_current_user_id() );
 
-		// Check the `switch_*` actions and their parameters
-		$this->assertSame( 0,          did_action( 'switch_to_user' ) );
-		$this->assertSame( 0,          did_action( 'switch_back_user' ) );
-		$this->assertSame( 1,          did_action( 'switch_off_user' ) );
+		// Check the `switch_*` actions were fired
+		$this->assertSame( 0, did_action( 'switch_to_user' ) );
+		$this->assertSame( 0, did_action( 'switch_back_user' ) );
+		$this->assertSame( 1, did_action( 'switch_off_user' ) );
+
+		// Check the `switch_*` actions' parameters
 		$this->assertFalse( $this->test_switching_user_id );
 		$this->assertSame( $admin->ID, $this->test_switching_old_user_id );
 
@@ -143,10 +153,12 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 		$this->assertSame( $admin->ID, $user->ID );
 		$this->assertSame( $admin->ID, get_current_user_id() );
 
-		// Check the `switch_*` actions and their parameters
-		$this->assertSame( 0,          did_action( 'switch_to_user' ) );
-		$this->assertSame( 1,          did_action( 'switch_back_user' ) );
-		$this->assertSame( 1,          did_action( 'switch_off_user' ) );
+		// Check the `switch_*` actions were fired
+		$this->assertSame( 0, did_action( 'switch_to_user' ) );
+		$this->assertSame( 1, did_action( 'switch_back_user' ) );
+		$this->assertSame( 1, did_action( 'switch_off_user' ) );
+
+		// Check the `switch_*` actions' parameters
 		$this->assertSame( $admin->ID, $this->test_switching_user_id );
 		$this->assertFalse( $this->test_switching_old_user_id );
 
