@@ -2,25 +2,28 @@
 
 class User_Switching_Test_Caps extends User_Switching_Test {
 
+	/**
+	 * @group multisite
+	 */
 	function testSuperAdminCaps() {
 
-		if ( is_multisite() ) {
-
-			# Super Admins can switch to all users:
-			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->admin->ID ) );
-			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->editor->ID ) );
-			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->author->ID ) );
-			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->contributor->ID ) );
-			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->subscriber->ID ) );
-			$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->no_role->ID ) );
-
-			# Super Admins cannot switch to themselves:
-			$this->assertFalse( user_can( $this->super->ID, 'switch_to_user', $this->super->ID ) );
-
-			# Super Admins can switch off:
-			$this->assertTrue( user_can( $this->super->ID, 'switch_off' ) );
-
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'Super admin capabilities are only tested on Multisite.' );
 		}
+
+		# Super Admins can switch to all users:
+		$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->admin->ID ) );
+		$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->editor->ID ) );
+		$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->author->ID ) );
+		$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->contributor->ID ) );
+		$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->subscriber->ID ) );
+		$this->assertTrue( user_can( $this->super->ID, 'switch_to_user', $this->no_role->ID ) );
+
+		# Super Admins cannot switch to themselves:
+		$this->assertFalse( user_can( $this->super->ID, 'switch_to_user', $this->super->ID ) );
+
+		# Super Admins can switch off:
+		$this->assertTrue( user_can( $this->super->ID, 'switch_off' ) );
 
 	}
 
