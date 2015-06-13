@@ -12,6 +12,7 @@ class User_Switching_Test_Caps extends User_Switching_Test {
 		}
 
 		# Super Admins can switch to all users:
+		$this->assertTrue( user_can( $this->testers['super']->ID, 'switch_to_user', $this->users['super']->ID ) );
 		$this->assertTrue( user_can( $this->testers['super']->ID, 'switch_to_user', $this->users['admin']->ID ) );
 		$this->assertTrue( user_can( $this->testers['super']->ID, 'switch_to_user', $this->users['editor']->ID ) );
 		$this->assertTrue( user_can( $this->testers['super']->ID, 'switch_to_user', $this->users['author']->ID ) );
@@ -33,6 +34,7 @@ class User_Switching_Test_Caps extends User_Switching_Test {
 
 			# Admins cannot switch to other users:
 			$this->assertFalse( user_can( $this->testers['admin']->ID, 'switch_to_user', $this->users['super']->ID ) );
+			$this->assertFalse( user_can( $this->testers['admin']->ID, 'switch_to_user', $this->users['admin']->ID ) );
 			$this->assertFalse( user_can( $this->testers['admin']->ID, 'switch_to_user', $this->users['editor']->ID ) );
 			$this->assertFalse( user_can( $this->testers['admin']->ID, 'switch_to_user', $this->users['author']->ID ) );
 			$this->assertFalse( user_can( $this->testers['admin']->ID, 'switch_to_user', $this->users['contributor']->ID ) );
@@ -48,6 +50,7 @@ class User_Switching_Test_Caps extends User_Switching_Test {
 		} else {
 
 			# Admins can switch to all users:
+			$this->assertTrue( user_can( $this->testers['admin']->ID, 'switch_to_user', $this->users['admin']->ID ) );
 			$this->assertTrue( user_can( $this->testers['admin']->ID, 'switch_to_user', $this->users['editor']->ID ) );
 			$this->assertTrue( user_can( $this->testers['admin']->ID, 'switch_to_user', $this->users['author']->ID ) );
 			$this->assertTrue( user_can( $this->testers['admin']->ID, 'switch_to_user', $this->users['contributor']->ID ) );
@@ -68,6 +71,7 @@ class User_Switching_Test_Caps extends User_Switching_Test {
 
 		# Editors cannot switch to other users:
 		$this->assertFalse( user_can( $this->testers['editor']->ID, 'switch_to_user', $this->users['admin']->ID ) );
+		$this->assertFalse( user_can( $this->testers['editor']->ID, 'switch_to_user', $this->users['editor']->ID ) );
 		$this->assertFalse( user_can( $this->testers['editor']->ID, 'switch_to_user', $this->users['author']->ID ) );
 		$this->assertFalse( user_can( $this->testers['editor']->ID, 'switch_to_user', $this->users['contributor']->ID ) );
 		$this->assertFalse( user_can( $this->testers['editor']->ID, 'switch_to_user', $this->users['subscriber']->ID ) );
@@ -90,6 +94,7 @@ class User_Switching_Test_Caps extends User_Switching_Test {
 		# Authors cannot switch to other users:
 		$this->assertFalse( user_can( $this->testers['author']->ID, 'switch_to_user', $this->users['admin']->ID ) );
 		$this->assertFalse( user_can( $this->testers['author']->ID, 'switch_to_user', $this->users['editor']->ID ) );
+		$this->assertFalse( user_can( $this->testers['author']->ID, 'switch_to_user', $this->users['author']->ID ) );
 		$this->assertFalse( user_can( $this->testers['author']->ID, 'switch_to_user', $this->users['contributor']->ID ) );
 		$this->assertFalse( user_can( $this->testers['author']->ID, 'switch_to_user', $this->users['subscriber']->ID ) );
 		$this->assertFalse( user_can( $this->testers['author']->ID, 'switch_to_user', $this->users['no_role']->ID ) );
@@ -112,6 +117,7 @@ class User_Switching_Test_Caps extends User_Switching_Test {
 		$this->assertFalse( user_can( $this->testers['contributor']->ID, 'switch_to_user', $this->users['admin']->ID ) );
 		$this->assertFalse( user_can( $this->testers['contributor']->ID, 'switch_to_user', $this->users['editor']->ID ) );
 		$this->assertFalse( user_can( $this->testers['contributor']->ID, 'switch_to_user', $this->users['author']->ID ) );
+		$this->assertFalse( user_can( $this->testers['contributor']->ID, 'switch_to_user', $this->users['contributor']->ID ) );
 		$this->assertFalse( user_can( $this->testers['contributor']->ID, 'switch_to_user', $this->users['subscriber']->ID ) );
 		$this->assertFalse( user_can( $this->testers['contributor']->ID, 'switch_to_user', $this->users['no_role']->ID ) );
 
@@ -134,6 +140,7 @@ class User_Switching_Test_Caps extends User_Switching_Test {
 		$this->assertFalse( user_can( $this->testers['subscriber']->ID, 'switch_to_user', $this->users['editor']->ID ) );
 		$this->assertFalse( user_can( $this->testers['subscriber']->ID, 'switch_to_user', $this->users['author']->ID ) );
 		$this->assertFalse( user_can( $this->testers['subscriber']->ID, 'switch_to_user', $this->users['contributor']->ID ) );
+		$this->assertFalse( user_can( $this->testers['subscriber']->ID, 'switch_to_user', $this->users['subscriber']->ID ) );
 		$this->assertFalse( user_can( $this->testers['subscriber']->ID, 'switch_to_user', $this->users['no_role']->ID ) );
 
 		if ( is_multisite() ) {
@@ -156,6 +163,7 @@ class User_Switching_Test_Caps extends User_Switching_Test {
 		$this->assertFalse( user_can( $this->testers['no_role']->ID, 'switch_to_user', $this->users['author']->ID ) );
 		$this->assertFalse( user_can( $this->testers['no_role']->ID, 'switch_to_user', $this->users['contributor']->ID ) );
 		$this->assertFalse( user_can( $this->testers['no_role']->ID, 'switch_to_user', $this->users['subscriber']->ID ) );
+		$this->assertFalse( user_can( $this->testers['no_role']->ID, 'switch_to_user', $this->users['no_role']->ID ) );
 
 		if ( is_multisite() ) {
 			$this->assertFalse( user_can( $this->testers['no_role']->ID, 'switch_to_user', $this->users['super']->ID ) );
