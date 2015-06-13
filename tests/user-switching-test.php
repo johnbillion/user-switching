@@ -2,35 +2,40 @@
 
 abstract class User_Switching_Test extends WP_UnitTestCase {
 
+	protected $users   = array();
+	protected $testers = array();
+
 	function setUp() {
 
 		parent::setUp();
 
-		$this->admin = $this->factory->user->create_and_get( array(
-			'role' => 'administrator'
-		) );
-		$this->editor = $this->factory->user->create_and_get( array(
-			'role' => 'editor'
-		) );
-		$this->author = $this->factory->user->create_and_get( array(
-			'role' => 'author'
-		) );
-		$this->contributor = $this->factory->user->create_and_get( array(
-			'role' => 'contributor'
-		) );
-		$this->subscriber = $this->factory->user->create_and_get( array(
-			'role' => 'subscriber'
-		) );
-		$this->no_role = $this->factory->user->create_and_get( array(
-			'role' => 'administrator'
-		) );
-		$this->no_role->remove_role( 'administrator' );
+		$roles = array(
+			'admin'       => 'administrator',
+			'editor'      => 'editor',
+			'author'      => 'author',
+			'contributor' => 'contributor',
+			'subscriber'  => 'subscriber',
+			'no_role'     => '',
+		);
+
+		foreach ( $roles as $name => $role ) {
+			$this->users[ $name ] = $this->factory->user->create_and_get( array(
+				'role' => $role,
+			) );
+			$this->testers[ $name ] = $this->factory->user->create_and_get( array(
+				'role' => $role,
+			) );
+		}
 
 		if ( is_multisite() ) {
-			$this->super = $this->factory->user->create_and_get( array(
+			$this->users['super'] = $this->factory->user->create_and_get( array(
 				'role' => 'administrator'
 			) );
-			grant_super_admin( $this->super->ID );
+			$this->testers['super'] = $this->factory->user->create_and_get( array(
+				'role' => 'administrator'
+			) );
+			grant_super_admin( $this->users['super']->ID );
+			grant_super_admin( $this->testers['super']->ID );
 		}
 
 	}
