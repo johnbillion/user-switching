@@ -143,7 +143,11 @@ class user_switching {
 
 			# We're attempting to switch to another user:
 			case 'switch_to_user':
-				$user_id = absint( $_REQUEST['user_id'] );
+				if ( isset( $_REQUEST['user_id'] ) ) {
+					$user_id = absint( $_REQUEST['user_id'] );
+				} else {
+					$user_id = 0;
+				}
 
 				# Check authentication:
 				if ( ! current_user_can( 'switch_to_user', $user_id ) ) {
@@ -246,7 +250,7 @@ class user_switching {
 	 */
 	protected static function get_redirect( WP_User $new_user = null, WP_User $old_user = null ) {
 
-		if ( isset( $_REQUEST['redirect_to'] ) && ! empty( $_REQUEST['redirect_to'] ) ) {
+		if ( ! empty( $_REQUEST['redirect_to'] ) ) {
 			$redirect_to = self::remove_query_args( $_REQUEST['redirect_to'] );
 			$requested_redirect_to = $_REQUEST['redirect_to'];
 		} else {
@@ -393,7 +397,7 @@ class user_switching {
 				'title'  => esc_html( sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) ),
 				'href'   => add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() ),
-				), self::switch_back_url( $old_user ) )
+				), self::switch_back_url( $old_user ) ),
 			) );
 
 		}
@@ -426,7 +430,7 @@ class user_switching {
 		if ( ! is_admin_bar_showing() && $old_user = self::get_old_user() ) {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
-				'redirect_to' => urlencode( self::current_url() )
+				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
 			echo '<li id="user_switching_switch_on"><a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></li>';
 		}
@@ -441,7 +445,7 @@ class user_switching {
 		if ( ! did_action( 'wp_meta' ) && ! is_admin_bar_showing() && $old_user = self::get_old_user() ) {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
-				'redirect_to' => urlencode( self::current_url() )
+				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
 			echo '<p id="user_switching_switch_on"><a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></p>';
 		}
@@ -459,9 +463,9 @@ class user_switching {
 		if ( $old_user = self::get_old_user() ) {
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = self::switch_back_url( $old_user );
-			if ( isset( $_REQUEST['redirect_to'] ) && ! empty( $_REQUEST['redirect_to'] ) ) {
+			if ( ! empty( $_REQUEST['redirect_to'] ) ) {
 				$url = add_query_arg( array(
-					'redirect_to' => urlencode( $_REQUEST['redirect_to'] )
+					'redirect_to' => urlencode( $_REQUEST['redirect_to'] ),
 				), $url );
 			}
 			$message .= '<p class="message"><span class="dashicons dashicons-admin-users" style="color:#56c234"></span> <a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></p>';
