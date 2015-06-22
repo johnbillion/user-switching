@@ -170,6 +170,14 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 	}
 
+	function testCurrentUrl() {
+
+		$url = add_query_arg( 'foo', 'bar', home_url( 'baz' ) );
+		$this->go_to( $url );
+		$this->assertSame( user_switching::current_url(), $url );
+
+	}
+
 	function _action_switch_user( $user_id, $old_user_id ) {
 		$this->test_switching_user_id     = $user_id;
 		$this->test_switching_old_user_id = $old_user_id;
