@@ -1,0 +1,67 @@
+# Translation of Development (trunk) in Danish
+# This file is distributed under the same license as the Development (trunk) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2015-03-03 23:13:11+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/1.0-alpha-1100\n"
+"Project-Id-Version: Development (trunk)\n"
+
+#. Author URI of the plugin/theme
+msgid "https://johnblackbourn.com/"
+msgstr "https://johnblackbourn.com/"
+
+#. Author of the plugin/theme
+msgid "John Blackbourn"
+msgstr "John Blackbourn"
+
+#. Description of the plugin/theme
+msgid "Instant switching between user accounts in WordPress"
+msgstr "Skift hurtigt mellem brugerkonti i WordPress"
+
+#. Plugin Name of the plugin/theme
+msgid "User Switching"
+msgstr "Brugerskift"
+
+#. Plugin URI of the plugin/theme
+msgid "https://johnblackbourn.com/wordpress-plugin-user-switching/"
+msgstr "https://johnblackbourn.com/wordpress-plugin-user-switching/"
+
+#: user-switching.php:417
+msgid "Switch Off"
+msgstr "Skift til egen bruger"
+
+#: user-switching.php:322
+msgid "Switched back to %1$s (%2$s)."
+msgstr "Skiftede tilbage til %1$s (%2$s)."
+
+#: user-switching.php:311 user-switching.php:397 user-switching.php:431
+#: user-switching.php:446 user-switching.php:464
+msgid "Switch back to %1$s (%2$s)"
+msgstr "Skift tilbage til %1$s (%2$s)"
+
+#: user-switching.php:306 user-switching.php:324
+msgid "Switched to %1$s (%2$s)."
+msgstr "Skiftede til %1$s (%2$s)."
+
+#: user-switching.php:219 user-switching.php:236
+msgid "Could not switch off."
+msgstr "Kunne ikke skifte til egen bruger."
+
+#: user-switching.php:95 user-switching.php:491 user-switching.php:533
+#: user-switching.php:557
+msgid "Switch&nbsp;To"
+msgstr "Skift til"
+
+#: user-switching.php:154 user-switching.php:178 user-switching.php:187
+#: user-switching.php:192 user-switching.php:210
+msgid "Could not switch users."
+msgstr "Kunne ikke skifte bruger."
+
+#: user-switching.php:94
+msgctxt "User Switching title on user profile screen"
+msgid "User Switching"
+msgstr "Brugerskift"
