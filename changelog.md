@@ -3,13 +3,15 @@
 
 ### 1.0.7 ###
 
+* Azerbaijani, Danish, and Bosnian translations.
 * Add back the 'User Switching' heading on the user profile screen, and correct the values passed to the `switch_back_user` hook when a user has been switched off.
 
 ## Changelog ##
 
 ### 1.0.7 ###
 
-* Add back the 'User Switching' heading on the user profile screen which was accidentally removed in 7cd5dd8.
+* Azerbaijani, Danish, and Bosnian translations.
+* Add back the 'User Switching' heading on the user profile screen.
 * Correct the value passed to the `$old_user_id` parameter of the `switch_back_user` hook when a user has been switched off. This should be boolean `false` rather than `0`.
 * Docblocks for actions and filters.
 * More code standards tweaks.
