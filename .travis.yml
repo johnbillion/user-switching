@@ -1,9 +1,9 @@
 # run on container environment
 sudo: false
 
+# cache composer directories
 cache:
     directories:
-    	# cache composer directories
         - vendor
         - $HOME/.composer/cache
 
