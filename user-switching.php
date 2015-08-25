@@ -381,8 +381,12 @@ class user_switching {
 			return;
 		}
 
-		if ( method_exists( $wp_admin_bar, 'get_node' ) && $wp_admin_bar->get_node( 'user-actions' ) ) {
-			$parent = 'user-actions';
+		if ( method_exists( $wp_admin_bar, 'get_node' ) ) {
+			if ( $wp_admin_bar->get_node( 'user-actions' ) ) {
+				$parent = 'user-actions';
+			} else {
+				return;
+			}
 		} else if ( get_option( 'show_avatars' ) ) {
 			$parent = 'my-account-with-avatar';
 		} else {
