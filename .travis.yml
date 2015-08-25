@@ -1,12 +1,6 @@
 # run on container environment
 sudo: false
 
-# cache composer directories
-cache:
-    directories:
-        - vendor
-        - $HOME/.composer/cache
-
 language: php
 
 notifications:
