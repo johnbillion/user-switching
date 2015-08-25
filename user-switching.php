@@ -468,7 +468,7 @@ class user_switching {
 					'redirect_to' => urlencode( $_REQUEST['redirect_to'] ),
 				), $url );
 			}
-			$message .= '<p class="message"><span class="dashicons dashicons-admin-users" style="color:#56c234"></span> <a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></p>';
+			$message .= '<p class="message" id="user_switching_switch_on"><span class="dashicons dashicons-admin-users" style="color:#56c234"></span> <a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></p>';
 		}
 
 		return $message;
@@ -531,6 +531,7 @@ class user_switching {
 			'component'  => $component,
 			'link_href'  => esc_url( $link ),
 			'link_text'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
+			'wrapper_id' => 'user_switching_switch_to',
 		) );
 		// @codingStandardsIgnoreEnd
 
@@ -553,7 +554,7 @@ class user_switching {
 		), $link );
 
 		?>
-		<ul>
+		<ul id="user_switching_switch_to">
 			<li><a href="<?php echo esc_url( $link ); ?>"><?php esc_html_e( 'Switch&nbsp;To', 'user-switching' ); ?></a></li>
 		</ul>
 		<?php
