@@ -88,12 +88,15 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 		$this->silence_warning = PHPUnit_Framework_Error_Warning::$enabled;
 		PHPUnit_Framework_Error_Warning::$enabled = false;
 		$this->silence_display = ini_get( 'display_errors' );
+		$this->silence_log = ini_get( 'error_log' );
 		ini_set( 'display_errors', 0 );
+		ini_set( 'error_log', '/dev/null' );
 	}
 
 	private function go_forth() {
 		PHPUnit_Framework_Error_Warning::$enabled = $this->silence_warning;
 		ini_set( 'display_errors', $this->silence_display );
+		ini_set( 'error_log', $this->silence_log );
 	}
 
 }
