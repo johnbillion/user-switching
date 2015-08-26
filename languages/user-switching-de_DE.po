@@ -40,7 +40,7 @@ msgstr "Gewechselt zu %1$s (%2$s)."
 #: user-switching.php:215 user-switching.php:275 user-switching.php:311
 #: user-switching.php:329 user-switching.php:370
 msgid "Switch back to %1$s (%2$s)"
-msgstr "Wechsele zurück zu %1$s (%2$s)"
+msgstr "Wechsle zurück zu %1$s (%2$s)"
 
 #: user-switching.php:226
 msgid "Switched back to %1$s (%2$s)."
