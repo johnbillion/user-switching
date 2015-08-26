@@ -9,6 +9,12 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 
 		parent::setUp();
 
+		// Hide deprecated warnings on PHP 7 so the use of deprecated constructors in WordPress
+		// don't cause our tests to fail
+		if ( version_compare( PHP_VERSION, 7, '>=' ) ) {
+			error_reporting( E_ALL & ~E_DEPRECATED );
+		}
+
 		$roles = array(
 			'admin'       => 'administrator',
 			'editor'      => 'editor',
