@@ -1,12 +1,20 @@
 
 ## Upgrade Notice ##
 
-### 1.0.7 ###
+### 1.0.8 ###
 
-* Azerbaijani, Danish, and Bosnian translations.
-* Add back the 'User Switching' heading on the user profile screen, and correct the values passed to the `switch_back_user` hook when a user has been switched off.
+* Chinese (Taiwan) and Czech translations.
+* Updated Dutch, Spanish, Hebrew, and German translations.
+* Add an ID attribute to the links on the WordPress login screen, BuddyPress screens, and bbPress screens.
 
 ## Changelog ##
+
+### 1.0.8 ###
+
+* Chinese (Taiwan) and Czech translations.
+* Updated Dutch, Spanish, Hebrew, and German translations.
+* Add an ID attribute to the links that User Switching outputs on the WordPress login screen, BuddyPress screens, and bbPress screens.
+* Avoid a deprecated argument notice when the `user-actions` admin toolbar node has been removed.
 
 ### 1.0.7 ###
 
