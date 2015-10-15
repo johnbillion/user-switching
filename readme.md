@@ -42,38 +42,38 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
 
 See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information about the *Switch Off* feature.
 
-### Translations Included ###
+### Translations Available ###
 
- * العربية (Arabic)
- * Azərbaycan dili (Azerbaijani)
- * Bosanski (Bosnian)
- * Български (Bulgarian)
- * 中文 (Chinese Simplified)
- * 繁體中文 (Chinese (Taiwan))
- * Hrvatski (Croatian)
- * Čeština‎ (Czech)
- * Dansk (Danish)
- * Nederlands (Dutch)
- * Suomi (Finnish)
- * Français (French)
- * Deutsch (German)
- * Ελληνικά (Greek)
- * עִבְרִית (Hebrew)
- * Bahasa Indonesia (Indonesian)
- * Italiano (Italian)
- * 日本語 (Japanese)
- * Lietuvių kalba (Lithuanian)
- * Norsk bokmål (Norwegian)
- * فارسی (Persian)
- * Polski (Polish)
- * Português do Brasil (Brazilian Portuguese)
- * Română (Romanian)
- * Русский (Russian)
- * Slovenčina (Slovak)
- * Español (Spanish)
- * Türkçe (Turkish)
-
-Thanks to translations by Hassan Hisham, Tunghsiao Liu, Francois-Xavier Bénard, Ralph Stenzel, Rami Y, Yusuke Hayasaki, Tommixoft, Amin Ab, Bartosz Arendt, Raphael Mendonça, R J, Max Samael, Eko Ikhyar, Marcelo Pedra, Abdullah Pazarbasi, ArianServ, SilverXp, Evi Giannakou, Petya Raykovska, Martin Sauter, Yaser Tallo, Enrique Errando, Sami Keijonen, Kalina Michocka, Alessandro Curci, Alessandro Tesoro, Ante Sepic, Per Søderlind, Mushviq Abdulla, Kenan Dervisevic, Tomáš Tuček, Gordon Yu, Seggev Shoresh, and Joachim Jensen!
+ * العربية
+ * Azərbaycan dili
+ * Bosanski
+ * Български
+ * Català
+ * 中文
+ * 繁體中文
+ * Hrvatski
+ * Čeština‎
+ * Dansk
+ * Nederlands
+ * Suomi
+ * Français
+ * Deutsch
+ * Ελληνικά
+ * עִבְרִית
+ * Bahasa Indonesia
+ * Italiano
+ * 日本語
+ * Lietuvių kalba
+ * Norsk bokmål
+ * فارسی
+ * Polski
+ * Português do Brasil
+ * Română
+ * Русский
+ * Slovenčina
+ * Español
+ * Türkçe
+ * Українська
 
 ## Screenshots ##
 
