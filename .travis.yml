@@ -22,22 +22,22 @@ env:
     # previous stable:
     - WP_VERSION=4.2 WP_MULTISITE=0
     - WP_VERSION=4.2 WP_MULTISITE=1
-    # earliest supported version with a unit test suite:
-    - WP_VERSION=3.7 WP_MULTISITE=0
-    - WP_VERSION=3.7 WP_MULTISITE=1
+    # earliest supported version with a non-buggy unit test suite:
+    - WP_VERSION=4.0 WP_MULTISITE=0
+    - WP_VERSION=4.0 WP_MULTISITE=1
 
 matrix:
     exclude:
-        # don't test 3.7 on hiphop:
+        # don't test 4.0 on hiphop:
         - php: hhvm
-          env: WP_VERSION=3.7 WP_MULTISITE=0
+          env: WP_VERSION=4.0 WP_MULTISITE=0
         - php: hhvm
-          env: WP_VERSION=3.7 WP_MULTISITE=1
-        # don't test 3.7 on PHP 7:
+          env: WP_VERSION=4.0 WP_MULTISITE=1
+        # don't test 4.0 on PHP 7:
         - php: 7.0
-          env: WP_VERSION=3.7 WP_MULTISITE=0
+          env: WP_VERSION=4.0 WP_MULTISITE=0
         - php: 7.0
-          env: WP_VERSION=3.7 WP_MULTISITE=1
+          env: WP_VERSION=4.0 WP_MULTISITE=1
 
 install:
     - bash bin/install.sh
