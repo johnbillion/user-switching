@@ -216,6 +216,7 @@ class user_switching {
 
 				# Check authentication:
 				if ( ! current_user_can( 'switch_off' ) ) {
+					/* Translators: "switch off" means to temporarily log out */
 					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ) );
 				}
 
@@ -233,6 +234,7 @@ class user_switching {
 					}
 					die();
 				} else {
+					/* Translators: "switch off" means to temporarily log out */
 					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ) );
 				}
 				break;
@@ -303,12 +305,22 @@ class user_switching {
 				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
 				<?php
 					if ( isset( $_GET['user_switched'] ) ) {
+						/* Translators: 1: user display name; 2: username; */
 						echo esc_html( sprintf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
 					}
 					$url = add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
 					), self::switch_back_url( $old_user ) );
-					printf( ' <a href="%s">%s</a>.', esc_url( $url ), esc_html( sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) ) );
+					printf(
+						' <a href="%s">%s</a>.',
+						esc_url( $url ),
+						esc_html( sprintf(
+							/* Translators: 1: user display name; 2: username; */
+							__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
+							$old_user->display_name,
+							$old_user->user_login
+						) )
+					);
 				?></p>
 			</div>
 			<?php
@@ -319,8 +331,10 @@ class user_switching {
 			<div id="user_switching" class="updated">
 				<p><?php
 					if ( isset( $_GET['switched_back'] ) ) {
+						/* Translators: 1: user display name; 2: username; */
 						echo esc_html( sprintf( __( 'Switched back to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
 					} else {
+						/* Translators: 1: user display name; 2: username; */
 						echo esc_html( sprintf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
 					}
 				?></p>
@@ -398,6 +412,7 @@ class user_switching {
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
 				'id'     => 'switch-back',
+				/* Translators: 1: user display name; 2: username; */
 				'title'  => esc_html( sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) ),
 				'href'   => add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() ),
@@ -418,6 +433,7 @@ class user_switching {
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
 				'id'     => 'switch-off',
+				/* Translators: "switch off" means to temporarily log out */
 				'title'  => esc_html__( 'Switch Off', 'user-switching' ),
 				'href'   => $url,
 			) );
@@ -432,6 +448,7 @@ class user_switching {
 	public function action_wp_meta() {
 
 		if ( ! is_admin_bar_showing() && $old_user = self::get_old_user() ) {
+			/* Translators: 1: user display name; 2: username; */
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
@@ -447,6 +464,7 @@ class user_switching {
 	public function action_wp_footer() {
 
 		if ( ! did_action( 'wp_meta' ) && ! is_admin_bar_showing() && $old_user = self::get_old_user() ) {
+			/* Translators: 1: user display name; 2: username; */
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
@@ -465,6 +483,7 @@ class user_switching {
 	public function filter_login_message( $message ) {
 
 		if ( $old_user = self::get_old_user() ) {
+			/* Translators: 1: user display name; 2: username; */
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = self::switch_back_url( $old_user );
 			if ( ! empty( $_REQUEST['redirect_to'] ) ) {
