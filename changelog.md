@@ -3,11 +3,13 @@
 
 ### 1.0.8 ###
 
-* Chinese (Taiwan) and Czech translations.
-* Updated Dutch, Spanish, Hebrew, and German translations.
-* Add an ID attribute to the links on the WordPress login screen, BuddyPress screens, and bbPress screens.
+* Remove the bundled languages in favour of language packs from translate.wordpress.org.
 
 ## Changelog ##
+
+### 1.0.9 ###
+
+* Remove the bundled languages in favour of language packs from translate.wordpress.org.
 
 ### 1.0.8 ###
 
