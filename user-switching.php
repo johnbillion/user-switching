@@ -664,7 +664,7 @@ class user_switching {
 	 */
 	public static function nonce_switch_url( $query_args, $nonce_action ) {
 		$url = apply_filters( 'user_switching_switch_url', wp_login_url(), $query_args['action'] );
-		return ( add_query_arg( $query_args, $url ), $nonce_action );
+		return wp_nonce_url( add_query_arg( $query_args, $url ), $nonce_action );
 	}
 
 	/**
