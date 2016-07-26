@@ -10,6 +10,6 @@ ver=${phpv[1]}
 if [ "$(version "$ver")" -gt "$(version "5.4")" ]; then
 
 	php -S localhost:8000 -t vendor/wordpress -d disable_functions=mail &
-	./bin/behat --profile=travis
+	./vendor/bin/behat --profile=travis
 
 fi
