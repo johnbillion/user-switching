@@ -8,7 +8,7 @@
 **Contributors:** johnbillion  
 **Tags:** users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 **Requires at least:** 3.7  
-**Tested up to:** 4.4  
+**Tested up to:** 4.7  
 **Stable tag:** 1.0.9  
 **License:** GPL v2 or later  
 
