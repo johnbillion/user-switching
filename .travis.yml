@@ -12,7 +12,6 @@ php:
     - 7.1
     - 5.6
     - 5.3
-    - 5.2
     - hhvm
 
 env:
@@ -44,7 +43,7 @@ matrix:
         - env: WP_VERSION=nightly WP_MULTISITE=1
 
 install:
-    - bash bin/install.sh
+    - composer install
 
 before_script:
     - stable='^[0-9\.]+$'; if [[ "$TRAVIS_PHP_VERSION" =~ $stable ]]; then phpenv config-rm xdebug.ini; fi
