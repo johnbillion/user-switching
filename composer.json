@@ -24,8 +24,8 @@
 		"behat/mink-goutte-driver": "~1.1",
 		"johnbillion/wordpress-behat-extension": "^0.1.4",
 		"johnpbloch/wordpress": ">=4.5.0@stable",
-		"johnbillion/php-docs-standards": "^1.0.2",
-		"phpunit/phpunit": ">=3.7@stable"
+		"johnbillion/php-docs-standards": "~1.0",
+		"phpunit/phpunit": ">=3.7"
     },
     "extra": {
         "wordpress-install-dir": "vendor/wordpress"
