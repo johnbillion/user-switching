@@ -18,8 +18,8 @@ env:
     - WP_VERSION=nightly WP_MULTISITE=0
     - WP_VERSION=nightly WP_MULTISITE=1
     # latest stable:
-    - WP_VERSION=latest WP_MULTISITE=0
-    - WP_VERSION=latest WP_MULTISITE=1
+    - WP_VERSION=4.7 WP_MULTISITE=0
+    - WP_VERSION=4.7 WP_MULTISITE=1
     # earliest supported version with a non-buggy unit test suite:
     - WP_VERSION=4.0 WP_MULTISITE=0
     - WP_VERSION=4.0 WP_MULTISITE=1
