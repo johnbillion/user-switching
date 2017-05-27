@@ -33,10 +33,12 @@ fi
 
 phpv=(`php -v`)
 ver=${phpv[1]}
+profile=${1:-default}
 
+# Run functional tests on PHP 5.4 or later:
 if [ "$(version "$ver")" -gt "$(version "5.4")" ]; then
 
 	php -S localhost:8000 -t vendor/wordpress -d disable_functions=mail &
-	./vendor/bin/behat --profile=travis
+	./vendor/bin/behat --profile="$profile"
 
 fi
