@@ -10,6 +10,8 @@ if find . -not \( -path ./vendor -prune \) -not \( -path ./features -prune \) -n
 	exit 1;
 fi;
 
+./vendor/bin/phpunit -v
+
 phpv=(`php -v`)
 ver=${phpv[1]}
 
