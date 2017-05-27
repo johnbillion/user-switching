@@ -29,6 +29,7 @@ env:
     - WP_VERSION=4.0 WP_MULTISITE=1
 
 matrix:
+    fast_finish: true
     exclude:
         # don't test 4.0 on PHP 7+:
         - php: 7.1
