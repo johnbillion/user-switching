@@ -5,8 +5,7 @@ class Test_Plugin extends WP_UnitTestCase {
 
 	public function test_stable_tag() {
 		if ( ! $readme_data = $this->get_readme() ) {
-			$this->markTestSkipped( 'There is no readme file' );
-			return;
+			$this->fail( 'There is no readme file' );
 		}
 		$plugin_data = get_plugin_data( dirname( dirname( __FILE__ ) ) . '/user-switching.php' );
 
