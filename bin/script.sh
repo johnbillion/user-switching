@@ -40,5 +40,6 @@ if [ "$(version "$ver")" -gt "$(version "5.4")" ]; then
 
 	php -S localhost:8000 -t vendor/wordpress -d disable_functions=mail &
 	./vendor/bin/behat --profile="$profile"
+	kill $!
 
 fi
