@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/johnbillion/user-switching.svg?branch=master)](https://travis-ci.org/johnbillion/user-switching)
 
-# User Switching Unit Tests
+# User Switching Tests
 
-## Setting up
+## Setup
 
 1. Clone this git repository on your local machine.
 2. Install [Composer](https://getcomposer.org/) if you don't already have it.
@@ -11,17 +11,17 @@
 
         ./bin/install-wp-tests.sh <db-name> <db-user> <db-pass>
 
-  Ensure you use a separate test database (eg. `wp_tests`) because, just like the WordPress test suite, the database will be wiped clean with every test run.
+   Ensure you use a separate test database (eg. `wordpress_test`) because, just like the WordPress test suite, the database will be wiped clean with every test run.
 
-## Running the unit tests
+## Running the Unit Tests
 
 To run the tests, execute the following:
 
     ./vendor/bin/phpunit
 
-## Running the acceptance tests
+## Running the Functional Tests
 
-User Switching uses [Behat](http://behat.org) for acceptance testing. This requires a web server to be running and able to accept requests.
+User Switching uses [Behat](http://behat.org) for functional testing. This requires a web server to be running and able to accept requests.
 
 First, edit `behat.yml` and change the database connection `db`, `username`, and `password` fields in the `default` block as appropriate.
 
@@ -31,4 +31,4 @@ Start PHP's built-in web server by executing the following:
 
 To run the tests, execute the following:
 
-    ./bin/behat --profile=local
+    ./bin/behat --profile=default
