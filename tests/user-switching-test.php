@@ -91,9 +91,6 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 	}
 
 	private function silence() {
-		if ( defined( 'HHVM_VERSION' ) ) {
-			return;
-		}
 		$this->silence_warning = PHPUnit_Framework_Error_Warning::$enabled;
 		PHPUnit_Framework_Error_Warning::$enabled = false;
 		$this->silence_display = ini_get( 'display_errors' );
@@ -103,9 +100,6 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 	}
 
 	private function go_forth() {
-		if ( defined( 'HHVM_VERSION' ) ) {
-			return;
-		}
 		PHPUnit_Framework_Error_Warning::$enabled = $this->silence_warning;
 		ini_set( 'display_errors', $this->silence_display );
 		ini_set( 'error_log', $this->silence_log );
