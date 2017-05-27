@@ -30,11 +30,11 @@ if [ ! -d "vendor" ]; then
 fi
 
 # Run single-site unit tests:
-export WP_TESTS_MULTISITE=0
+export WP_MULTISITE=0
 ./vendor/bin/phpunit -v
 
 # Run Multisite unit tests:
-export WP_TESTS_MULTISITE=1
+export WP_MULTISITE=1
 ./vendor/bin/phpunit -v
 
 phpv=(`php -v`)
