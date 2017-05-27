@@ -29,6 +29,12 @@ if [ ! -d "vendor" ]; then
 	exit 1
 fi
 
+# Run single-site unit tests:
+export WP_TESTS_MULTISITE=0
+./vendor/bin/phpunit -v
+
+# Run Multisite unit tests:
+export WP_TESTS_MULTISITE=1
 ./vendor/bin/phpunit -v
 
 phpv=(`php -v`)
