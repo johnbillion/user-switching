@@ -4,6 +4,7 @@ class User_Switching_Test_Caps extends User_Switching_Test {
 
 	/**
 	 * @group multisite
+	 * @group ms-required
 	 */
 	function testSuperAdminCaps() {
 

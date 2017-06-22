@@ -31,11 +31,11 @@ fi
 
 # Run single-site unit tests:
 export WP_MULTISITE=0
-./vendor/bin/phpunit -v
+./vendor/bin/phpunit -v --exclude-group=ms-required
 
 # Run Multisite unit tests:
 export WP_MULTISITE=1
-./vendor/bin/phpunit -v
+./vendor/bin/phpunit -v --exclude-group=ms-excluded
 
 phpv=(`php -v`)
 ver=${phpv[1]}
