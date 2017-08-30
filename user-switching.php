@@ -184,7 +184,6 @@ class user_switching {
 
 			# We're attempting to switch back to the originating user:
 			case 'switch_to_olduser':
-
 				# Fetch the originating user data:
 				$old_user = self::get_old_user();
 				if ( ! $old_user ) {
@@ -220,7 +219,6 @@ class user_switching {
 
 			# We're attempting to switch off the current user:
 			case 'switch_off':
-
 				# Check authentication:
 				if ( ! current_user_can( 'switch_off' ) ) {
 					/* Translators: "switch off" means to temporarily log out */
@@ -335,7 +333,8 @@ class user_switching {
 							$old_user->user_login
 						) )
 					);
-				?></p>
+				?>
+				</p>
 			</div>
 			<?php
 
@@ -343,7 +342,8 @@ class user_switching {
 
 			?>
 			<div id="user_switching" class="updated">
-				<p><?php
+				<p>
+				<?php
 					if ( isset( $_GET['switched_back'] ) ) {
 						echo esc_html( sprintf(
 							/* Translators: 1: user display name; 2: username; */
@@ -359,7 +359,8 @@ class user_switching {
 							$user->user_login
 						) );
 					}
-				?></p>
+				?>
+				</p>
 			</div>
 			<?php
 
