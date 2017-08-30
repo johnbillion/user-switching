@@ -84,8 +84,9 @@ class user_switching {
 	 * @param WP_User $user User object for this screen.
 	 */
 	public function action_personal_options( WP_User $user ) {
+		$link = self::maybe_switch_url( $user );
 
-		if ( ! $link = self::maybe_switch_url( $user ) ) {
+		if ( ! $link ) {
 			return;
 		}
 
@@ -164,7 +165,9 @@ class user_switching {
 					$redirect_to = self::get_redirect( $user, $current_user );
 
 					# Redirect to the dashboard or the home URL depending on capabilities:
-					$args = array( 'user_switched' => 'true' );
+					$args = array(
+						'user_switched' => 'true',
+					);
 					if ( $redirect_to ) {
 						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
 					} else if ( ! current_user_can( 'read' ) ) {
@@ -183,7 +186,8 @@ class user_switching {
 			case 'switch_to_olduser':
 
 				# Fetch the originating user data:
-				if ( ! $old_user = self::get_old_user() ) {
+				$old_user = self::get_old_user();
+				if ( ! $old_user ) {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
 
@@ -199,7 +203,10 @@ class user_switching {
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
 
 					$redirect_to = self::get_redirect( $old_user, $current_user );
-					$args = array( 'user_switched' => 'true', 'switched_back' => 'true' );
+					$args = array(
+						'user_switched' => 'true',
+						'switched_back' => 'true',
+					);
 					if ( $redirect_to ) {
 						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
 					} else {
@@ -226,7 +233,9 @@ class user_switching {
 				# Switch off:
 				if ( switch_off_user() ) {
 					$redirect_to = self::get_redirect( null, $current_user );
-					$args = array( 'switched_off' => 'true' );
+					$args = array(
+						'switched_off' => 'true',
+					);
 					if ( $redirect_to ) {
 						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
 					} else {
@@ -296,9 +305,10 @@ class user_switching {
 	 * Display the 'Switched to {user}' and 'Switch back to {user}' messages in the admin area.
 	 */
 	public function action_admin_notices() {
-		$user = wp_get_current_user();
+		$user     = wp_get_current_user();
+		$old_user = self::get_old_user();
 
-		if ( $old_user = self::get_old_user() ) {
+		if ( $old_user ) {
 
 			?>
 			<div id="user_switching" class="updated">
@@ -325,7 +335,7 @@ class user_switching {
 			</div>
 			<?php
 
-		} else if ( isset( $_GET['user_switched'] ) ) {
+		} elseif ( isset( $_GET['user_switched'] ) ) {
 
 			?>
 			<div id="user_switching" class="updated">
@@ -352,7 +362,9 @@ class user_switching {
 	public static function get_old_user() {
 		$cookie = user_switching_get_olduser_cookie();
 		if ( ! empty( $cookie ) ) {
-			if ( $old_user_id = wp_validate_auth_cookie( $cookie, 'logged_in' ) ) {
+			$old_user_id = wp_validate_auth_cookie( $cookie, 'logged_in' );
+
+			if ( $old_user_id ) {
 				return get_userdata( $old_user_id );
 			}
 		}
@@ -374,7 +386,10 @@ class user_switching {
 			} else {
 				$scheme = 'auth';
 			}
-			if ( $old_user_id = wp_validate_auth_cookie( end( $cookie ), $scheme ) ) {
+
+			$old_user_id = wp_validate_auth_cookie( end( $cookie ), $scheme );
+
+			if ( $old_user_id ) {
 				return ( $user->ID === $old_user_id );
 			}
 		}
@@ -401,13 +416,15 @@ class user_switching {
 			} else {
 				return;
 			}
-		} else if ( get_option( 'show_avatars' ) ) {
+		} elseif ( get_option( 'show_avatars' ) ) {
 			$parent = 'my-account-with-avatar';
 		} else {
 			$parent = 'my-account';
 		}
 
-		if ( $old_user = self::get_old_user() ) {
+		$old_user = self::get_old_user();
+
+		if ( $old_user ) {
 
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
@@ -506,8 +523,9 @@ class user_switching {
 	 * @return array The actions to display for this user row.
 	 */
 	public function filter_user_row_actions( array $actions, WP_User $user ) {
+		$link = self::maybe_switch_url( $user );
 
-		if ( ! $link = self::maybe_switch_url( $user ) ) {
+		if ( ! $link ) {
 			return $actions;
 		}
 
@@ -520,7 +538,6 @@ class user_switching {
 	 * Adds a 'Switch To' link to each member's profile page and profile listings in BuddyPress.
 	 */
 	public function action_bp_button() {
-
 		global $bp, $members_template;
 
 		if ( ! empty( $members_template ) && empty( $bp->displayed_user->id ) ) {
@@ -532,7 +549,10 @@ class user_switching {
 		if ( ! $user ) {
 			return;
 		}
-		if ( ! $link = self::maybe_switch_url( $user ) ) {
+
+		$link = self::maybe_switch_url( $user );
+
+		if ( ! $link ) {
 			return;
 		}
 
@@ -564,11 +584,15 @@ class user_switching {
 	 * Adds a 'Switch To' link to each member's profile page in bbPress.
 	 */
 	public function action_bbpress_button() {
+		$user = get_userdata( bbp_get_user_id() );
 
-		if ( ! $user = get_userdata( bbp_get_user_id() ) ) {
+		if ( ! $user ) {
 			return;
 		}
-		if ( ! $link = self::maybe_switch_url( $user ) ) {
+
+		$link = self::maybe_switch_url( $user );
+
+		if ( ! $link ) {
 			return;
 		}
 
@@ -594,7 +618,9 @@ class user_switching {
 	 */
 	public function filter_removable_query_args( array $args ) {
 		return array_merge( $args, array(
-			'user_switched', 'switched_off', 'switched_back',
+			'user_switched',
+			'switched_off',
+			'switched_back',
 		) );
 	}
 
@@ -610,7 +636,7 @@ class user_switching {
 
 		if ( $old_user && ( $old_user->ID === $user->ID ) ) {
 			return self::switch_back_url( $old_user );
-		} else if ( current_user_can( 'switch_to_user', $user->ID ) ) {
+		} elseif ( current_user_can( 'switch_to_user', $user->ID ) ) {
 			return self::switch_to_url( $user );
 		} else {
 			return false;
@@ -832,7 +858,8 @@ function user_switching_clear_olduser_cookie( $clear_all = true ) {
 			$scheme = 'auth';
 		}
 
-		if ( $old_user_id = wp_validate_auth_cookie( end( $auth_cookie ), $scheme ) ) {
+		$old_user_id = wp_validate_auth_cookie( end( $auth_cookie ), $scheme );
+		if ( $old_user_id ) {
 			user_switching_set_olduser_cookie( $old_user_id, true );
 		}
 	}
@@ -887,7 +914,9 @@ if ( ! function_exists( 'switch_to_user' ) ) {
  * @return bool|WP_User WP_User object on success, false on failure.
  */
 function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
-	if ( ! $user = get_userdata( $user_id ) ) {
+	$user = get_userdata( $user_id );
+
+	if ( ! $user ) {
 		return false;
 	}
 
@@ -938,7 +967,9 @@ if ( ! function_exists( 'switch_off_user' ) ) {
  * @return bool True on success, false on failure.
  */
 function switch_off_user() {
-	if ( ! $old_user_id = get_current_user_id() ) {
+	$old_user_id = get_current_user_id();
+
+	if ( ! $old_user_id ) {
 		return false;
 	}
 
