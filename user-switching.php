@@ -315,8 +315,12 @@ class user_switching {
 				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
 				<?php
 					if ( isset( $_GET['user_switched'] ) ) {
-						/* Translators: 1: user display name; 2: username; */
-						echo esc_html( sprintf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
+						echo esc_html( sprintf(
+							/* Translators: 1: user display name; 2: username; */
+							__( 'Switched to %1$s (%2$s).', 'user-switching' ),
+							$user->display_name,
+							$user->user_login
+						) );
 					}
 					$url = add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
@@ -341,11 +345,19 @@ class user_switching {
 			<div id="user_switching" class="updated">
 				<p><?php
 					if ( isset( $_GET['switched_back'] ) ) {
-						/* Translators: 1: user display name; 2: username; */
-						echo esc_html( sprintf( __( 'Switched back to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
+						echo esc_html( sprintf(
+							/* Translators: 1: user display name; 2: username; */
+							__( 'Switched back to %1$s (%2$s).', 'user-switching' ),
+							$user->display_name,
+							$user->user_login
+						) );
 					} else {
-						/* Translators: 1: user display name; 2: username; */
-						echo esc_html( sprintf( __( 'Switched to %1$s (%2$s).', 'user-switching' ), $user->display_name, $user->user_login ) );
+						echo esc_html( sprintf(
+							/* Translators: 1: user display name; 2: username; */
+							__( 'Switched to %1$s (%2$s).', 'user-switching' ),
+							$user->display_name,
+							$user->user_login
+						) );
 					}
 				?></p>
 			</div>
@@ -429,8 +441,12 @@ class user_switching {
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
 				'id'     => 'switch-back',
-				/* Translators: 1: user display name; 2: username; */
-				'title'  => esc_html( sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login ) ),
+				'title'  => esc_html( sprintf(
+					/* Translators: 1: user display name; 2: username; */
+					__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
+					$old_user->display_name,
+					$old_user->user_login
+				) ),
 				'href'   => add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() ),
 				), self::switch_back_url( $old_user ) ),
@@ -470,8 +486,12 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
-			/* Translators: 1: user display name; 2: username; */
-			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
+			$link = sprintf(
+				/* Translators: 1: user display name; 2: username; */
+				__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
+				$old_user->display_name,
+				$old_user->user_login
+			);
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
@@ -491,8 +511,12 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
-			/* Translators: 1: user display name; 2: username; */
-			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
+			$link = sprintf(
+				/* Translators: 1: user display name; 2: username; */
+				__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
+				$old_user->display_name,
+				$old_user->user_login
+			);
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
@@ -511,8 +535,12 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
-			/* Translators: 1: user display name; 2: username; */
-			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
+			$link = sprintf(
+				/* Translators: 1: user display name; 2: username; */
+				__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
+				$old_user->display_name,
+				$old_user->user_login
+			);
 			$url = self::switch_back_url( $old_user );
 			if ( ! empty( $_REQUEST['redirect_to'] ) ) {
 				$url = add_query_arg( array(
