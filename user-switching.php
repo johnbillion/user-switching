@@ -799,7 +799,7 @@ class user_switching {
 	 */
 	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args, WP_User $user ) {
 		if ( 'switch_to_user' === $args[0] ) {
-			$user_caps['switch_to_user'] = ( user_can( $user->ID, 'edit_user', $args[2] ) && ( $args[2] != $user->ID ) );
+			$user_caps['switch_to_user'] = ( user_can( $user->ID, 'edit_user', $args[2] ) && ( $args[2] !== $user->ID ) );
 		} elseif ( 'switch_off' === $args[0] ) {
 			$user_caps['switch_off'] = user_can( $user->ID, 'edit_users' );
 		}
@@ -822,7 +822,7 @@ class user_switching {
 	 * @return string[] Required capabilities for the requested action.
 	 */
 	public function filter_map_meta_cap( array $required_caps, $cap, $user_id, array $args ) {
-		if ( ( 'switch_to_user' === $cap ) && ( $args[0] == $user_id ) ) {
+		if ( ( 'switch_to_user' === $cap ) && ( $args[0] === $user_id ) ) {
 			$required_caps[] = 'do_not_allow';
 		}
 		return $required_caps;
