@@ -8,7 +8,7 @@
 **Contributors:** johnbillion  
 **Tags:** users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 **Requires at least:** 3.7  
-**Tested up to:** 4.7  
+**Tested up to:** 4.8  
 **Stable tag:** 1.0.9  
 **License:** GPL v2 or later  
 
@@ -42,54 +42,10 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
 
 See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information about the *Switch Off* feature.
 
-### Translations Available ###
-
- * العربية
- * Azərbaycan dili
- * Bosanski
- * Български
- * Català
- * 中文
- * 繁體中文
- * Hrvatski
- * Čeština‎
- * Dansk
- * Nederlands
- * Suomi
- * Français
- * Deutsch
- * Ελληνικά
- * עִבְרִית
- * Bahasa Indonesia
- * Italiano
- * 日本語
- * Lietuvių kalba
- * Norsk bokmål
- * فارسی
- * Polski
- * Português do Brasil
- * Română
- * Русский
- * Slovenčina
- * Español
- * Türkçe
- * Українська
-
 ## Screenshots ##
 
 1. ![The *Switch To* link on the Users screen](https://raw.github.com/johnbillion/user-switching/master/assets-wp-repo/screenshot-1.png)
 2. ![The *Switch To* link on a user's profile](https://raw.github.com/johnbillion/user-switching/master/assets-wp-repo/screenshot-2.png)
-
-## Installation ##
-
-If you have the [WordPress Developer plugin](https://wordpress.org/plugins/developer/) installed then User Switching is a one-click install from the Tools -> Developer screen.
-
-Alternatively, you can install this plugin directly from your WordPress dashboard:
-
- 1. Go to the *Plugins* menu and click *Add New*.
- 2. Search for *User Switching*.
- 3. Click *Install Now* next to the *User Switching* plugin.
- 4. Activate the plugin.
 
 ## Frequently Asked Questions ##
 
@@ -117,10 +73,6 @@ Yes, mostly.
 
 One exception I'm aware of is [Duo Security](https://wordpress.org/plugins/duo-wordpress/). If you're using this plugin, you should install the [User Switching for Duo Security](https://github.com/johnbillion/user-switching-duo-security) add-on plugin which will prevent the two-factor authentication prompt from appearing when you switch between users.
 
-### Does this work as a mu-plugin? ###
-
-Yes, but you'll need to install `user-switching.php` into the root of your `mu-plugins` directory, not in the `user-switching` subdirectory. This is a limitation of WordPress.
-
 ### What capability does a user need in order to switch accounts? ###
 
 A user needs the `edit_users` capability in order to switch user accounts. By default only Administrators have this capability, and with Multisite enabled only Super Admins have this capability.
@@ -128,6 +80,10 @@ A user needs the `edit_users` capability in order to switch user accounts. By de
 ### Can regular admins on Multisite installs switch accounts? ###
 
 No. This can be enabled though by installing the [User Switching for Regular Admins](https://github.com/johnbillion/user-switching-for-regular-admins) plugin.
+
+### Can I switch users directly from the admin toolbar? ###
+
+Yes, there's a third party add-on plugin for this: [Admin Bar User Switching](https://wordpress.org/plugins/admin-bar-user-switching/).
 
 ### Are any plugin actions called when a user switches account? ###
 
