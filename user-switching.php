@@ -170,7 +170,7 @@ class user_switching {
 					);
 					if ( $redirect_to ) {
 						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
-					} else if ( ! current_user_can( 'read' ) ) {
+					} elseif ( ! current_user_can( 'read' ) ) {
 						wp_redirect( add_query_arg( $args, home_url() ) );
 					} else {
 						wp_redirect( add_query_arg( $args, admin_url() ) );
@@ -262,8 +262,8 @@ class user_switching {
 	protected static function get_redirect( WP_User $new_user = null, WP_User $old_user = null ) {
 
 		if ( ! empty( $_REQUEST['redirect_to'] ) ) {
-			$redirect_to = self::remove_query_args( $_REQUEST['redirect_to'] );
-			$requested_redirect_to = $_REQUEST['redirect_to'];
+			$redirect_to = self::remove_query_args( wp_unslash( $_REQUEST['redirect_to'] ) ); // WPCS: sanitization ok
+			$requested_redirect_to = wp_unslash( $_REQUEST['redirect_to'] ); // WPCS: sanitization ok
 		} else {
 			$redirect_to = '';
 			$requested_redirect_to = '';
@@ -505,7 +505,7 @@ class user_switching {
 			$url = self::switch_back_url( $old_user );
 			if ( ! empty( $_REQUEST['redirect_to'] ) ) {
 				$url = add_query_arg( array(
-					'redirect_to' => urlencode( $_REQUEST['redirect_to'] ),
+					'redirect_to' => urlencode( wp_unslash( $_REQUEST['redirect_to'] ) ), // WPCS: sanitization ok
 				), $url );
 			}
 			$message .= '<p class="message" id="user_switching_switch_on"><span class="dashicons dashicons-admin-users" style="color:#56c234"></span> <a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></p>';
@@ -687,7 +687,7 @@ class user_switching {
 	 * @return string The current URL.
 	 */
 	public static function current_url() {
-		return ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		return ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; // @codingStandardsIgnoreLine
 	}
 
 	/**
@@ -882,7 +882,7 @@ if ( ! function_exists( 'user_switching_get_olduser_cookie' ) ) {
  */
 function user_switching_get_olduser_cookie() {
 	if ( isset( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] ) ) {
-		return stripslashes( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] );
+		return wp_unslash( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] ); // WPCS: sanitization ok
 	} else {
 		return false;
 	}
@@ -903,7 +903,7 @@ function user_switching_get_auth_cookie() {
 	}
 
 	if ( isset( $_COOKIE[ $auth_cookie_name ] ) ) {
-		$cookie = json_decode( stripslashes( $_COOKIE[ $auth_cookie_name ] ) );
+		$cookie = json_decode( wp_unslash( $_COOKIE[ $auth_cookie_name ] ) ); // WPCS: sanitization ok
 	}
 	if ( ! isset( $cookie ) || ! is_array( $cookie ) ) {
 		$cookie = array();
