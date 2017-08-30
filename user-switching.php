@@ -39,7 +39,7 @@ class user_switching {
 	 */
 	private function __construct() {
 
-		# Required functionality:
+		// Required functionality:
 		add_filter( 'user_has_cap',                    array( $this, 'filter_user_has_cap' ), 10, 4 );
 		add_filter( 'map_meta_cap',                    array( $this, 'filter_map_meta_cap' ), 10, 4 );
 		add_filter( 'user_row_actions',                array( $this, 'filter_user_row_actions' ), 10, 2 );
@@ -49,7 +49,7 @@ class user_switching {
 		add_action( 'wp_logout',                       'user_switching_clear_olduser_cookie' );
 		add_action( 'wp_login',                        'user_switching_clear_olduser_cookie' );
 
-		# Nice-to-haves:
+		// Nice-to-haves:
 		add_filter( 'ms_user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
 		add_filter( 'login_message',                   array( $this, 'filter_login_message' ), 1 );
 		add_filter( 'removable_query_args',            array( $this, 'filter_removable_query_args' ) );
@@ -128,8 +128,8 @@ class user_switching {
 		$cookie_life = apply_filters( 'auth_cookie_expiration', 172800, get_current_user_id(), false );
 		$current     = wp_parse_auth_cookie( '', 'logged_in' );
 
-		# Here we calculate the expiration length of the current auth cookie and compare it to the default expiration.
-		# If it's greater than this, then we know the user checked 'Remember Me' when they logged in.
+		// Here we calculate the expiration length of the current auth cookie and compare it to the default expiration.
+		// If it's greater than this, then we know the user checked 'Remember Me' when they logged in.
 		return ( ( $current['expiration'] - time() ) > $cookie_life );
 
 	}
@@ -149,7 +149,7 @@ class user_switching {
 
 		switch ( $_REQUEST['action'] ) {
 
-			# We're attempting to switch to another user:
+			// We're attempting to switch to another user:
 			case 'switch_to_user':
 				if ( isset( $_REQUEST['user_id'] ) ) {
 					$user_id = absint( $_REQUEST['user_id'] );
@@ -157,21 +157,21 @@ class user_switching {
 					$user_id = 0;
 				}
 
-				# Check authentication:
+				// Check authentication:
 				if ( ! current_user_can( 'switch_to_user', $user_id ) ) {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
 
-				# Check intent:
+				// Check intent:
 				check_admin_referer( "switch_to_user_{$user_id}" );
 
-				# Switch user:
+				// Switch user:
 				$user = switch_to_user( $user_id, self::remember() );
 				if ( $user ) {
 
 					$redirect_to = self::get_redirect( $user, $current_user );
 
-					# Redirect to the dashboard or the home URL depending on capabilities:
+					// Redirect to the dashboard or the home URL depending on capabilities:
 					$args = array(
 						'user_switched' => 'true',
 					);
@@ -189,23 +189,23 @@ class user_switching {
 				}
 				break;
 
-			# We're attempting to switch back to the originating user:
+			// We're attempting to switch back to the originating user:
 			case 'switch_to_olduser':
-				# Fetch the originating user data:
+				// Fetch the originating user data:
 				$old_user = self::get_old_user();
 				if ( ! $old_user ) {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
 
-				# Check authentication:
+				// Check authentication:
 				if ( ! self::authenticate_old_user( $old_user ) ) {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
 
-				# Check intent:
+				// Check intent:
 				check_admin_referer( "switch_to_olduser_{$old_user->ID}" );
 
-				# Switch user:
+				// Switch user:
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
 
 					$redirect_to = self::get_redirect( $old_user, $current_user );
@@ -224,18 +224,18 @@ class user_switching {
 				}
 				break;
 
-			# We're attempting to switch off the current user:
+			// We're attempting to switch off the current user:
 			case 'switch_off':
-				# Check authentication:
+				// Check authentication:
 				if ( ! current_user_can( 'switch_off' ) ) {
 					/* Translators: "switch off" means to temporarily log out */
 					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ) );
 				}
 
-				# Check intent:
+				// Check intent:
 				check_admin_referer( "switch_off_{$current_user->ID}" );
 
-				# Switch off:
+				// Switch off:
 				if ( switch_off_user() ) {
 					$redirect_to = self::get_redirect( null, $current_user );
 					$args = array(
@@ -419,7 +419,7 @@ class user_switching {
 	/**
 	 * Adds a 'Switch back to {user}' link to the account menu in WordPress' admin bar.
 	 *
-	 * @param WP_Admin_Bar $wp_admin_bar The admin bar object
+	 * @param WP_Admin_Bar $wp_admin_bar The admin bar object.
 	 */
 	public function action_admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 
@@ -607,7 +607,7 @@ class user_switching {
 			'redirect_to' => urlencode( bp_core_get_user_domain( $user->ID ) ),
 		), $link );
 
-		# Workaround for https://buddypress.trac.wordpress.org/ticket/4212
+		// Workaround for https://buddypress.trac.wordpress.org/ticket/4212
 		$components = array_keys( $bp->active_components );
 		if ( ! empty( $components ) ) {
 			$component = reset( $components );
@@ -855,7 +855,7 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 function user_switching_set_olduser_cookie( $old_user_id, $pop = false ) {
 	$secure_auth_cookie    = user_switching::secure_auth_cookie();
 	$secure_olduser_cookie = user_switching::secure_olduser_cookie();
-	$expiration            = time() + 172800; # 48 hours
+	$expiration            = time() + 172800; // 48 hours
 	$auth_cookie           = user_switching_get_auth_cookie();
 	$olduser_cookie        = wp_generate_auth_cookie( $old_user_id, $expiration, 'logged_in' );
 
