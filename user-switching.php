@@ -932,7 +932,7 @@ if ( ! function_exists( 'user_switching_get_auth_cookie' ) ) {
 /**
  * Gets the value of the auth cookie containing the list of originating users.
  *
- * @return array Array of originating user authentication cookies. Empty array if there are none.
+ * @return string[] Array of originating user authentication cookie values. Empty array if there are none.
  */
 function user_switching_get_auth_cookie() {
 	if ( user_switching::secure_auth_cookie() ) {
