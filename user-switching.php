@@ -518,9 +518,9 @@ class user_switching {
 	/**
 	 * Adds a 'Switch To' link to each list of user actions on the Users screen.
 	 *
-	 * @param  array   $actions The actions to display for this user row.
-	 * @param  WP_User $user    The user object displayed in this row.
-	 * @return array The actions to display for this user row.
+	 * @param string[] $actions The actions to display for this user row.
+	 * @param WP_User  $user    The user object displayed in this row.
+	 * @return string[] The actions to display for this user row.
 	 */
 	public function filter_user_row_actions( array $actions, WP_User $user ) {
 		$link = self::maybe_switch_url( $user );
@@ -613,8 +613,8 @@ class user_switching {
 	 *
 	 * @link https://core.trac.wordpress.org/ticket/23367
 	 *
-	 * @param  array $args List of removable query arguments.
-	 * @return array       Updated list of removable query arguments.
+	 * @param string[] $args List of removable query arguments.
+	 * @return string[] Updated list of removable query arguments.
 	 */
 	public function filter_removable_query_args( array $args ) {
 		return array_merge( $args, array(
@@ -704,7 +704,7 @@ class user_switching {
 		 *
 		 * @since 1.0.4
 		 *
-		 * @param array $removable_query_args An array of parameters to remove from the URL.
+		 * @param string[] $removable_query_args An array of parameters to remove from the URL.
 		 */
 		$args = apply_filters( 'removable_query_args', array(
 			'message', 'update', 'updated', 'settings-updated', 'saved',
@@ -740,22 +740,26 @@ class user_switching {
 	}
 
 	/**
-	 * Filter the user's capabilities so they can be added/removed on the fly.
+	 * Filter a user's capabilities so they can be altered at runtime.
 	 *
-	 * This is used to grant the 'switch_to_user' capability to a user if they have the ability to edit the user
-	 * they're trying to switch to (and that user is not themselves), and to grant the 'switch_off' capability to
-	 * a user if they can edit users.
+	 * This is used to:
+	 *  - Grant the 'switch_to_user' capability to the user if they have the ability to edit the user they're trying to
+	 *    switch to (and that user is not themselves).
+	 *  - Grant the 'switch_off' capability to the user if they can edit other users.
 	 *
 	 * Important: This does not get called for Super Admins. See filter_map_meta_cap() below.
 	 *
-	 * @param  array $user_caps     User's capabilities.
-	 * @param  array $required_caps Actual required capabilities for the requested capability.
-	 * @param  array $args          Arguments that accompany the requested capability check:
-	 *                              [0] => Requested capability from current_user_can()
-	 *                              [1] => Current user ID
-	 *                              [2] => Optional second parameter from current_user_can()
+	 * @param bool[]   $user_caps     Concerned user's capabilities.
+	 * @param string[] $required_caps Required primitive capabilities for the requested capability.
+	 * @param array    $args {
+	 *     Arguments that accompany the requested capability check.
+	 *
+	 *     @type string $0 Requested capability.
+	 *     @type int    $1 Concerned user ID.
+	 *     @type mixed  $2 Optional second parameter.
+	 * }
 	 * @param WP_User  $user          Concerned user object.
-	 * @return array User's capabilities.
+	 * @return bool[] Concerned user's capabilities.
 	 */
 	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args, WP_User $user ) {
 		if ( 'switch_to_user' === $args[0] ) {
@@ -767,16 +771,19 @@ class user_switching {
 	}
 
 	/**
-	 * Filters the actual required capabilities for a given capability or meta capability.
+	 * Filter the required primitive capabilities for the given primitive or meta capability.
 	 *
-	 * This is used to add the 'do_not_allow' capability to the list of required capabilities when a super admin
-	 * is trying to switch to themselves. It affects nothing else as super admins can do everything by default.
+	 * This is used to:
+	 *  - Add the 'do_not_allow' capability to the list of required capabilities when a Super Admin is trying to switch
+	 *    to themselves.
 	 *
-	 * @param  array  $required_caps Actual required capabilities for the requested action.
-	 * @param  string $cap           Capability or meta capability being checked.
-	 * @param  string $user_id       Current user ID.
-	 * @param  array  $args          Arguments that accompany this capability check.
-	 * @return array  Required capabilities for the requested action.
+	 * It affects nothing else as Super Admins can do everything by default.
+	 *
+	 * @param string[] $required_caps Required primitive capabilities for the requested capability.
+	 * @param string   $cap           Capability or meta capability being checked.
+	 * @param int      $user_id       Current user ID.
+	 * @param array    $args          Arguments that accompany this capability check.
+	 * @return string[] Required capabilities for the requested action.
 	 */
 	public function filter_map_meta_cap( array $required_caps, $cap, $user_id, array $args ) {
 		if ( ( 'switch_to_user' === $cap ) && ( $args[0] == $user_id ) ) {
