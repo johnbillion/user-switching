@@ -1,30 +1,37 @@
 <?php
-/*
-Plugin Name: User Switching
-Description: Instant switching between user accounts in WordPress
-Version:     1.0.9
-Plugin URI:  https://johnblackbourn.com/wordpress-plugin-user-switching/
-Author:      John Blackbourn
-Author URI:  https://johnblackbourn.com/
-Text Domain: user-switching
-Domain Path: /languages/
-License:     GPL v2 or later
-Network:     true
+/**
+ * User Switching plugin for WordPress
+ *
+ * @package   user-switching
+ * @link      https://github.com/johnbillion/user-switching
+ * @author    John Blackbourn <john@johnblackbourn.com>
+ * @copyright 2009-2015 John Blackbourn
+ * @license   GPL v2 or later
+ *
+ * Plugin Name: User Switching
+ * Description: Instant switching between user accounts in WordPress
+ * Version:     1.0.9
+ * Plugin URI:  https://johnblackbourn.com/wordpress-plugin-user-switching/
+ * Author:      John Blackbourn
+ * Author URI:  https://johnblackbourn.com/
+ * Text Domain: user-switching
+ * Domain Path: /languages/
+ * Network:     true
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
 
-Copyright © 2009-2015 John Blackbourn
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-*/
-
+/**
+ * Main container class for the User Switching plugin.
+ */
 class user_switching {
 
 	/**
