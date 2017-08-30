@@ -21,7 +21,7 @@ env:
     # nightly:
     - WP_VERSION=nightly
     # latest stable:
-    - WP_VERSION=4.7
+    - WP_VERSION=latest
     # earliest supported version with a non-buggy unit test suite:
     - WP_VERSION=4.0
 
