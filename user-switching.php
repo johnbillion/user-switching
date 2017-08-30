@@ -33,7 +33,7 @@ class user_switching {
 	private function __construct() {
 
 		# Required functionality:
-		add_filter( 'user_has_cap',                    array( $this, 'filter_user_has_cap' ), 10, 3 );
+		add_filter( 'user_has_cap',                    array( $this, 'filter_user_has_cap' ), 10, 4 );
 		add_filter( 'map_meta_cap',                    array( $this, 'filter_map_meta_cap' ), 10, 4 );
 		add_filter( 'user_row_actions',                array( $this, 'filter_user_row_actions' ), 10, 2 );
 		add_action( 'plugins_loaded',                  array( $this, 'action_plugins_loaded' ) );
@@ -754,13 +754,14 @@ class user_switching {
 	 *                              [0] => Requested capability from current_user_can()
 	 *                              [1] => Current user ID
 	 *                              [2] => Optional second parameter from current_user_can()
+	 * @param WP_User  $user          Concerned user object.
 	 * @return array User's capabilities.
 	 */
-	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args ) {
+	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args, WP_User $user ) {
 		if ( 'switch_to_user' === $args[0] ) {
-			$user_caps['switch_to_user'] = ( user_can( $args[1], 'edit_user', $args[2] ) && ( $args[2] != $args[1] ) );
-		} else if ( 'switch_off' === $args[0] ) {
-			$user_caps['switch_off'] = user_can( $args[1], 'edit_users' );
+			$user_caps['switch_to_user'] = ( user_can( $user->ID, 'edit_user', $args[2] ) && ( $args[2] != $user->ID ) );
+		} elseif ( 'switch_off' === $args[0] ) {
+			$user_caps['switch_off'] = user_can( $user->ID, 'edit_users' );
 		}
 		return $user_caps;
 	}
