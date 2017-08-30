@@ -171,9 +171,9 @@ class user_switching {
 					if ( $redirect_to ) {
 						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
 					} elseif ( ! current_user_can( 'read' ) ) {
-						wp_redirect( add_query_arg( $args, home_url() ) );
+						wp_safe_redirect( add_query_arg( $args, home_url() ) );
 					} else {
-						wp_redirect( add_query_arg( $args, admin_url() ) );
+						wp_safe_redirect( add_query_arg( $args, admin_url() ) );
 					}
 					die();
 
@@ -210,7 +210,7 @@ class user_switching {
 					if ( $redirect_to ) {
 						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
 					} else {
-						wp_redirect( add_query_arg( $args, admin_url( 'users.php' ) ) );
+						wp_safe_redirect( add_query_arg( $args, admin_url( 'users.php' ) ) );
 					}
 					die();
 				} else {
@@ -239,7 +239,7 @@ class user_switching {
 					if ( $redirect_to ) {
 						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
 					} else {
-						wp_redirect( add_query_arg( $args, home_url() ) );
+						wp_safe_redirect( add_query_arg( $args, home_url() ) );
 					}
 					die();
 				} else {
