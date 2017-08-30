@@ -463,8 +463,13 @@ class user_switching {
 	 * Adds a 'Switch back to {user}' link to the Meta sidebar widget if the admin toolbar isn't showing.
 	 */
 	public function action_wp_meta() {
+		if ( is_admin_bar_showing() ) {
+			return;
+		}
 
-		if ( ! is_admin_bar_showing() && $old_user = self::get_old_user() ) {
+		$old_user = self::get_old_user();
+
+		if ( $old_user instanceof WP_User ) {
 			/* Translators: 1: user display name; 2: username; */
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
@@ -479,8 +484,13 @@ class user_switching {
 	 * Adds a 'Switch back to {user}' link to the WordPress footer if the admin toolbar isn't showing.
 	 */
 	public function action_wp_footer() {
+		if ( is_admin_bar_showing() || did_action( 'wp_meta' ) ) {
+			return;
+		}
 
-		if ( ! did_action( 'wp_meta' ) && ! is_admin_bar_showing() && $old_user = self::get_old_user() ) {
+		$old_user = self::get_old_user();
+
+		if ( $old_user instanceof WP_User ) {
 			/* Translators: 1: user display name; 2: username; */
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = add_query_arg( array(
@@ -498,8 +508,9 @@ class user_switching {
 	 * @return string The login screen message.
 	 */
 	public function filter_login_message( $message ) {
+		$old_user = self::get_old_user();
 
-		if ( $old_user = self::get_old_user() ) {
+		if ( $old_user instanceof WP_User ) {
 			/* Translators: 1: user display name; 2: username; */
 			$link = sprintf( __( 'Switch back to %1$s (%2$s)', 'user-switching' ), $old_user->display_name, $old_user->user_login );
 			$url = self::switch_back_url( $old_user );
