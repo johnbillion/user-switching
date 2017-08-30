@@ -734,25 +734,14 @@ class user_switching {
 	 * Helper function. Removes a list of common confirmation-style query args from a URL.
 	 *
 	 * @param  string $url A URL.
-	 * @return string The URL with the listed query args removed.
+	 * @return string The URL with query args removed.
 	 */
 	public static function remove_query_args( $url ) {
-		/**
-		 * Filter the list of URL parameters to remove from the URL when redirecting after a user switches.
-		 *
-		 * This matches the WordPress core filter in `wp_admin_canonical_url()`.
-		 *
-		 * @since 1.0.4
-		 *
-		 * @param string[] $removable_query_args An array of parameters to remove from the URL.
-		 */
-		$args = apply_filters( 'removable_query_args', array(
-			'message', 'update', 'updated', 'settings-updated', 'saved',
-			'activated', 'activate', 'deactivate', 'enabled', 'disabled',
-			'locked', 'skipped', 'deleted', 'trashed', 'untrashed',
-			'spammed', 'unspammed',
-		) );
-		return remove_query_arg( $args, $url );
+		if ( function_exists( 'wp_removable_query_args' ) ) {
+			$url = remove_query_arg( wp_removable_query_args(), $url );
+		}
+
+		return $url;
 	}
 
 	/**
