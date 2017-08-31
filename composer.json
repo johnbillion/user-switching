@@ -25,7 +25,8 @@
 		"johnbillion/wordpress-behat-extension": "^0.1.5",
 		"johnpbloch/wordpress": ">=4.8.0@stable",
 		"johnbillion/php-docs-standards": "^1.2",
-		"phpunit/phpunit": "^5"
+		"phpunit/phpunit": "^5",
+		"wp-coding-standards/wpcs": "^0.13"
     },
     "extra": {
         "wordpress-install-dir": "vendor/wordpress"

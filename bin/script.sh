@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 function version {
 	echo "$@" | gawk -F. '{ printf("%03d%03d%03d\n", $1,$2,$3); }';
 }
@@ -36,6 +38,10 @@ export WP_MULTISITE=0
 # Run Multisite unit tests:
 export WP_MULTISITE=1
 ./vendor/bin/phpunit -v --exclude-group=ms-excluded
+
+# Run the code sniffer:
+./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
+./vendor/bin/phpcs -p -s --colors user-switching.php
 
 phpv=(`php -v`)
 ver=${phpv[1]}
