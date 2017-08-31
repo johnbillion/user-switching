@@ -319,20 +319,22 @@ class user_switching {
 			<div id="user_switching" class="updated">
 				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
 				<?php
-					if ( isset( $_GET['user_switched'] ) ) {
-						echo esc_html( sprintf(
+					$message = '';
+					$just_switched = isset( $_GET['user_switched'] );
+					if ( $just_switched ) {
+						$message = esc_html( sprintf(
 							/* Translators: 1: user display name; 2: username; */
 							__( 'Switched to %1$s (%2$s).', 'user-switching' ),
 							$user->display_name,
 							$user->user_login
 						) );
 					}
-					$url = add_query_arg( array(
+					$switch_back_url = add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
 					), self::switch_back_url( $old_user ) );
-					printf(
+					$message .= sprintf(
 						' <a href="%s">%s</a>.',
-						esc_url( $url ),
+						esc_url( $switch_back_url ),
 						esc_html( sprintf(
 							/* Translators: 1: user display name; 2: username; */
 							__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
@@ -340,6 +342,20 @@ class user_switching {
 							$old_user->user_login
 						) )
 					);
+
+					/**
+					 * Filter the contents of the message that's displayed to switched users in the admin area.
+					 *
+					 * @since 1.1.0
+					 *
+					 * @param string  $message         The message displayed to the switched user.
+					 * @param WP_User $user            The current user object.
+					 * @param WP_User $old_user        The old user object.
+					 * @param string  $switch_back_url The switch back URL.
+					 * @param bool    $just_switched   Whether the user made the switch on this page request.
+					 */
+					$message = apply_filters( 'user_switching_switched_message', $message, $user, $old_user, $switch_back_url, $just_switched );
+					echo $message; // WPCS: XSS ok.
 				?>
 				</p>
 			</div>
