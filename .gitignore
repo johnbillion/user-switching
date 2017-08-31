@@ -1,2 +1,4 @@
-/vendor
+/build
+/node_modules
 /svn
+/vendor
