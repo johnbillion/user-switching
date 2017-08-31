@@ -36,7 +36,10 @@ matrix:
         - env: WP_VERSION=nightly
 
 before_install:
-    - phpenv config-rm xdebug.ini
+    - |
+      if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then 
+        phpenv config-rm xdebug.ini
+      fi
 
 install:
     - composer install
