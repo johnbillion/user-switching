@@ -208,6 +208,12 @@ class user_switching {
 				// Switch user:
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
 
+					if ( ! empty( $_REQUEST['interim-login'] ) ) {
+						$GLOBALS['interim_login'] = 'success';
+						login_header( '', '' );
+						exit;
+					}
+
 					$redirect_to = self::get_redirect( $old_user, $current_user );
 					$args = array(
 						'user_switched' => 'true',
@@ -566,12 +572,21 @@ class user_switching {
 				$old_user->user_login
 			);
 			$url = self::switch_back_url( $old_user );
-			if ( ! empty( $_REQUEST['redirect_to'] ) ) {
+
+			if ( ! empty( $_REQUEST['interim-login'] ) ) {
+				$url = add_query_arg( array(
+					'interim-login' => '1',
+				), $url );
+			} elseif ( ! empty( $_REQUEST['redirect_to'] ) ) {
 				$url = add_query_arg( array(
 					'redirect_to' => urlencode( wp_unslash( $_REQUEST['redirect_to'] ) ), // WPCS: sanitization ok
 				), $url );
 			}
-			$message .= '<p class="message" id="user_switching_switch_on"><span class="dashicons dashicons-admin-users" style="color:#56c234"></span> <a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></p>';
+
+			$message .= '<p class="message" id="user_switching_switch_on">';
+			$message .= '<span class="dashicons dashicons-admin-users" style="color:#56c234"></span> ';
+			$message .= '<a href="' . esc_url( $url ) . '" onclick="window.location.href=\'' . esc_url( $url ) . '\';return false;">' . esc_html( $link ) . '</a>';
+			$message .= '</p>';
 		}
 
 		return $message;
