@@ -182,7 +182,7 @@ class user_switching {
 					} else {
 						wp_safe_redirect( add_query_arg( $args, admin_url() ) );
 					}
-					die();
+					exit;
 
 				} else {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
@@ -224,7 +224,7 @@ class user_switching {
 					} else {
 						wp_safe_redirect( add_query_arg( $args, admin_url( 'users.php' ) ) );
 					}
-					die();
+					exit;
 				} else {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
@@ -252,7 +252,7 @@ class user_switching {
 					} else {
 						wp_safe_redirect( add_query_arg( $args, home_url() ) );
 					}
-					die();
+					exit;
 				} else {
 					/* Translators: "switch off" means to temporarily log out */
 					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ) );
