@@ -506,13 +506,9 @@ class user_switching {
 	}
 
 	/**
-	 * Adds a 'Switch back to {user}' link to the Meta sidebar widget if the admin toolbar isn't showing.
+	 * Adds a 'Switch back to {user}' link to the Meta sidebar widget.
 	 */
 	public function action_wp_meta() {
-		if ( is_admin_bar_showing() ) {
-			return;
-		}
-
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
