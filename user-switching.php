@@ -725,10 +725,10 @@ class user_switching {
 	 * @return string The required URL.
 	 */
 	public static function switch_to_url( WP_User $user ) {
-		return wp_nonce_url( add_query_arg( array(
+		return self::nonce_switch_url( array(
 			'action'  => 'switch_to_user',
 			'user_id' => $user->ID,
-		), wp_login_url() ), "switch_to_user_{$user->ID}" );
+		), "switch_to_user_{$user->ID}" );
 	}
 
 	/**
@@ -738,9 +738,9 @@ class user_switching {
 	 * @return string        The required URL.
 	 */
 	public static function switch_back_url( WP_User $user ) {
-		return wp_nonce_url( add_query_arg( array(
+		return self::nonce_switch_url( array(
 			'action' => 'switch_to_olduser',
-		), wp_login_url() ), "switch_to_olduser_{$user->ID}" );
+		), "switch_to_olduser_{$user->ID}" );
 	}
 
 	/**
@@ -750,9 +750,21 @@ class user_switching {
 	 * @return string        The required URL.
 	 */
 	public static function switch_off_url( WP_User $user ) {
-		return wp_nonce_url( add_query_arg( array(
+		return self::nonce_switch_url( array(
 			'action' => 'switch_off',
-		), wp_login_url() ), "switch_off_{$user->ID}" );
+		), "switch_off_{$user->ID}" );
+	}
+
+	/**
+	 * Helper function. Returns the nonce-secured URL needed to perform a switch.
+	 *
+	 * @param  array 	$query_args		The query args to append to the url
+	 * @param  string 	$nonce_action 	The action used to generate the nonce
+	 * @return string    				The required URL.
+	 */
+	public static function nonce_switch_url( $query_args, $nonce_action ) {
+		$url = apply_filters( 'user_switching_switch_url', wp_login_url(), $query_args['action'] );
+		return wp_nonce_url( add_query_arg( $query_args, $url ), $nonce_action );
 	}
 
 	/**
