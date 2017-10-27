@@ -36,7 +36,6 @@ export WP_MULTISITE=1
 ./vendor/bin/phpunit -v --exclude-group=ms-excluded
 
 # Run the code sniffer:
-./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
 ./vendor/bin/phpcs -p -s --colors user-switching.php
 
 profile=${1:-default}
