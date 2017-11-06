@@ -815,9 +815,9 @@ class user_switching {
 	 * @param array    $args {
 	 *     Arguments that accompany the requested capability check.
 	 *
-	 *     @type string $0 Requested capability.
-	 *     @type int    $1 Concerned user ID.
-	 *     @type mixed  $2 Optional second parameter.
+	 *     @type string    $0 Requested capability.
+	 *     @type int       $1 Concerned user ID.
+	 *     @type mixed  ...$2 Optional second and further parameters.
 	 * }
 	 * @param WP_User  $user          Concerned user object.
 	 * @return bool[] Concerned user's capabilities.
@@ -842,8 +842,12 @@ class user_switching {
 	 *
 	 * @param string[] $required_caps Required primitive capabilities for the requested capability.
 	 * @param string   $cap           Capability or meta capability being checked.
-	 * @param int      $user_id       Current user ID.
-	 * @param array    $args          Arguments that accompany this capability check.
+	 * @param int      $user_id       Concerned user ID.
+	 * @param array    $args {
+	 *     Arguments that accompany the requested capability check.
+	 *
+	 *     @type mixed ...$0 Optional second and further parameters.
+	 * }
 	 * @return string[] Required capabilities for the requested action.
 	 */
 	public function filter_map_meta_cap( array $required_caps, $cap, $user_id, array $args ) {
