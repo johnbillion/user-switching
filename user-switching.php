@@ -642,7 +642,6 @@ class user_switching {
 			$component = 'core';
 		}
 
-		// @codingStandardsIgnoreStart
 		echo bp_get_button( array(
 			'id'         => 'user_switching',
 			'component'  => $component,
@@ -650,7 +649,6 @@ class user_switching {
 			'link_text'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
 			'wrapper_id' => 'user_switching_switch_to',
 		) );
-		// @codingStandardsIgnoreEnd
 
 	}
 

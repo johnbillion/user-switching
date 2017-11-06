@@ -35,6 +35,12 @@
 
 	<rule ref="WordPress-Docs" />
 
+	<rule ref="WordPress.XSS.EscapeOutput">
+		<properties>
+			<property type="array" name="customAutoEscapedFunctions" value="bp_get_button"/>
+		</properties>
+	</rule>
+
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array" value="user-switching"/>
