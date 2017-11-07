@@ -26,6 +26,7 @@
 		"johnpbloch/wordpress": ">=4.8.0@stable",
 		"johnbillion/php-docs-standards": "^1.2",
 		"phpunit/phpunit": "^5",
+		"wimg/php-compatibility": "^8",
 		"wp-coding-standards/wpcs": "^0.13"
     },
     "extra": {
