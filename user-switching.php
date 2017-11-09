@@ -720,6 +720,7 @@ class user_switching {
 		return wp_nonce_url( add_query_arg( array(
 			'action'  => 'switch_to_user',
 			'user_id' => $user->ID,
+			'nr'      => 1,
 		), wp_login_url() ), "switch_to_user_{$user->ID}" );
 	}
 
@@ -732,6 +733,7 @@ class user_switching {
 	public static function switch_back_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
 			'action' => 'switch_to_olduser',
+			'nr'     => 1,
 		), wp_login_url() ), "switch_to_olduser_{$user->ID}" );
 	}
 
@@ -744,6 +746,7 @@ class user_switching {
 	public static function switch_off_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
 			'action' => 'switch_off',
+			'nr'     => 1,
 		), wp_login_url() ), "switch_off_{$user->ID}" );
 	}
 
