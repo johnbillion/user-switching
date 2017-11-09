@@ -612,12 +612,12 @@ class user_switching {
 	 * Adds a 'Switch To' link to each member's profile page and profile listings in BuddyPress.
 	 */
 	public function action_bp_button() {
-		global $bp, $members_template;
+		$user = null;
 
-		if ( ! empty( $members_template ) && empty( $bp->displayed_user->id ) ) {
-			$user = get_userdata( $members_template->member->id );
-		} else {
-			$user = get_userdata( $bp->displayed_user->id );
+		if ( bp_is_user() ) {
+			$user = get_userdata( bp_displayed_user_id() );
+		} elseif ( bp_is_members_directory() ) {
+			$user = get_userdata( bp_get_member_user_id() );
 		}
 
 		if ( ! $user ) {
@@ -634,17 +634,11 @@ class user_switching {
 			'redirect_to' => urlencode( bp_core_get_user_domain( $user->ID ) ),
 		), $link );
 
-		// Workaround for https://buddypress.trac.wordpress.org/ticket/4212
-		$components = array_keys( $bp->active_components );
-		if ( ! empty( $components ) ) {
-			$component = reset( $components );
-		} else {
-			$component = 'core';
-		}
+		$components = array_keys( buddypress()->active_components );
 
 		echo bp_get_button( array(
 			'id'         => 'user_switching',
-			'component'  => $component,
+			'component'  => reset( $components ),
 			'link_href'  => esc_url( $link ),
 			'link_text'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
 			'wrapper_id' => 'user_switching_switch_to',
