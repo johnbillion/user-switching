@@ -322,7 +322,7 @@ class user_switching {
 		if ( $old_user ) {
 
 			?>
-			<div id="user_switching" class="updated">
+			<div id="user_switching" class="updated notice is-dismissible">
 				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
 				<?php
 					$message = '';
@@ -370,7 +370,7 @@ class user_switching {
 		} elseif ( isset( $_GET['user_switched'] ) ) {
 
 			?>
-			<div id="user_switching" class="updated">
+			<div id="user_switching" class="updated notice is-dismissible">
 				<p>
 				<?php
 					if ( isset( $_GET['switched_back'] ) ) {
