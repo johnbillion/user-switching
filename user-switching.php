@@ -5,15 +5,15 @@
  * @package   user-switching
  * @link      https://github.com/johnbillion/user-switching
  * @author    John Blackbourn <john@johnblackbourn.com>
- * @copyright 2009-2017 John Blackbourn
+ * @copyright 2009-2018 John Blackbourn
  * @license   GPL v2 or later
  *
  * Plugin Name: User Switching
  * Description: Instant switching between user accounts in WordPress
  * Version:     1.3.0
  * Plugin URI:  https://johnblackbourn.com/wordpress-plugin-user-switching/
- * Author:      John Blackbourn
- * Author URI:  https://johnblackbourn.com/
+ * Author:      John Blackbourn & contributors
+ * Author URI:  https://github.com/johnbillion/user-switching/graphs/contributors
  * Text Domain: user-switching
  * Domain Path: /languages/
  * Network:     true
