@@ -28,7 +28,7 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
 
 ### Security ###
 
- * Only users with the ability to edit other users can switch user accounts. By default this is only Administrators on single site installs, and Super Admins on Multisite installs.
+ * Only users with the ability to edit other users can switch user accounts. By default this is only Administrators on single site installations, and Super Admins on Multisite installations.
  * Passwords are not (and cannot be) revealed.
  * Uses the cookie authentication system in WordPress when remembering the account(s) you've switched from and when switching back.
  * Implements the nonce security system in WordPress, meaning only those who intend to switch users can switch.
@@ -77,7 +77,7 @@ One exception I'm aware of is [Duo Security](https://wordpress.org/plugins/duo-w
 
 A user needs the `edit_users` capability in order to switch user accounts. By default only Administrators have this capability, and with Multisite enabled only Super Admins have this capability.
 
-### Can regular admins on Multisite installs switch accounts? ###
+### Can regular admins on Multisite installations switch accounts? ###
 
 No. This can be enabled though by installing the [User Switching for Regular Admins](https://github.com/johnbillion/user-switching-for-regular-admins) plugin.
 
