@@ -3,7 +3,7 @@
 	"description": "WordPress plugin that provides instant switching between user accounts.",
 	"homepage"   : "https://github.com/johnbillion/user-switching",
 	"type"       : "wordpress-plugin",
-	"license"    : "GPL-2.0+",
+	"license"    : "GPL-2.0-or-later",
 	"authors"    : [
 		{
 			"name"    : "John Blackbourn",
