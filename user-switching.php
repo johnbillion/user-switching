@@ -35,6 +35,13 @@
 class user_switching {
 
 	/**
+	 * The name used to identify the application for debugging purposes.
+	 *
+	 * @var string
+	 */
+	public static $application = 'WordPress/User Switching';
+
+	/**
 	 * Class constructor. Sets up some filters and actions.
 	 */
 	private function __construct() {
@@ -176,14 +183,12 @@ class user_switching {
 						'user_switched' => 'true',
 					);
 
-					add_filter( 'x_redirect_by', array( $this, 'filter_x_redirect_by' ), 10, 3 );
-
 					if ( $redirect_to ) {
-						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
+						wp_safe_redirect( add_query_arg( $args, $redirect_to ), 302, self::$application );
 					} elseif ( ! current_user_can( 'read' ) ) {
-						wp_safe_redirect( add_query_arg( $args, home_url() ) );
+						wp_safe_redirect( add_query_arg( $args, home_url() ), 302, self::$application );
 					} else {
-						wp_safe_redirect( add_query_arg( $args, admin_url() ) );
+						wp_safe_redirect( add_query_arg( $args, admin_url() ), 302, self::$application );
 					}
 					exit;
 
@@ -223,12 +228,10 @@ class user_switching {
 						'switched_back' => 'true',
 					);
 
-					add_filter( 'x_redirect_by', array( $this, 'filter_x_redirect_by' ), 10, 3 );
-
 					if ( $redirect_to ) {
-						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
+						wp_safe_redirect( add_query_arg( $args, $redirect_to ), 302, self::$application );
 					} else {
-						wp_safe_redirect( add_query_arg( $args, admin_url( 'users.php' ) ) );
+						wp_safe_redirect( add_query_arg( $args, admin_url( 'users.php' ) ), 302, self::$application );
 					}
 					exit;
 				} else {
@@ -254,12 +257,10 @@ class user_switching {
 						'switched_off' => 'true',
 					);
 
-					add_filter( 'x_redirect_by', array( $this, 'filter_x_redirect_by' ), 10, 3 );
-
 					if ( $redirect_to ) {
-						wp_safe_redirect( add_query_arg( $args, $redirect_to ) );
+						wp_safe_redirect( add_query_arg( $args, $redirect_to ), 302, self::$application );
 					} else {
-						wp_safe_redirect( add_query_arg( $args, home_url() ) );
+						wp_safe_redirect( add_query_arg( $args, home_url() ), 302, self::$application );
 					}
 					exit;
 				} else {
@@ -270,18 +271,6 @@ class user_switching {
 
 		}
 
-	}
-
-	/**
-	 * Filters the X-Redirect-By header so User Switching can identify itself as the source of a redirect.
-	 *
-	 * @param string $x_redirect_by The application doing the redirect.
-	 * @param int    $status        Status code to use.
-	 * @param string $location      The path to redirect to.
-	 */
-	public function filter_x_redirect_by( $x_redirect_by, $status, $location ) {
-		remove_filter( 'x_redirect_by', array( $this, 'filter_x_redirect_by' ) );
-		return 'WordPress/User Switching';
 	}
 
 	/**
