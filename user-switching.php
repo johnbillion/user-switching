@@ -816,7 +816,7 @@ class user_switching {
 	 *     @type int       $1 Concerned user ID.
 	 *     @type mixed  ...$2 Optional second and further parameters.
 	 * }
-	 * @param WP_User  $user          Concerned user object.
+	 * @param WP_User  $user          Optional. Concerned user object.
 	 * @return bool[] Concerned user's capabilities.
 	 */
 	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args, WP_User $user = null ) {
