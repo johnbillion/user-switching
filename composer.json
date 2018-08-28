@@ -27,7 +27,7 @@
 		"behat/mink-goutte-driver": "^1.1",
 		"johnbillion/php-docs-standards": "^1.2",
 		"johnbillion/wordpress-behat-extension": "^0.1.5",
-		"johnpbloch/wordpress": ">=4.8.0@stable",
+		"johnpbloch/wordpress": ">=4.9.0@stable",
 		"phpunit/phpunit": "^5",
 		"wimg/php-compatibility": "^8",
 		"wp-coding-standards/wpcs": "^1"
