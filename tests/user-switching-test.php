@@ -48,12 +48,6 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 			grant_super_admin( self::$static_testers['super']->ID );
 		}
 
-		// Prevent undefined index notices when using `wp_validate_auth_cookie()`.
-		// See https://core.trac.wordpress.org/ticket/32636
-		if ( ! isset( $_SERVER['REQUEST_METHOD'] ) ) {
-			$_SERVER['REQUEST_METHOD'] = 'GET';
-		}
-
 	}
 
 	protected function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
