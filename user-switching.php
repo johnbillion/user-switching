@@ -817,7 +817,8 @@ class user_switching {
 	 *
 	 * Important: This does not get called for Super Admins. See filter_map_meta_cap() below.
 	 *
-	 * @param bool[]   $user_caps     Concerned user's capabilities.
+	 * @param bool[]   $user_caps     Array of key/value pairs where keys represent a capability name and boolean values
+	 *                                represent whether the user has that capability.
 	 * @param string[] $required_caps Required primitive capabilities for the requested capability.
 	 * @param array    $args {
 	 *     Arguments that accompany the requested capability check.
