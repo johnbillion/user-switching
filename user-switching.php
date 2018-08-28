@@ -217,7 +217,7 @@ class user_switching {
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
 
 					if ( ! empty( $_REQUEST['interim-login'] ) ) {
-						$GLOBALS['interim_login'] = 'success';
+						$GLOBALS['interim_login'] = 'success'; // @codingStandardsIgnoreLine
 						login_header( '', '' );
 						exit;
 					}
@@ -253,7 +253,7 @@ class user_switching {
 				// Switch off:
 				if ( switch_off_user() ) {
 					$redirect_to = self::get_redirect( null, $current_user );
-					$args = array(
+					$args        = array(
 						'switched_off' => 'true',
 					);
 
@@ -283,10 +283,10 @@ class user_switching {
 	protected static function get_redirect( WP_User $new_user = null, WP_User $old_user = null ) {
 
 		if ( ! empty( $_REQUEST['redirect_to'] ) ) {
-			$redirect_to = self::remove_query_args( wp_unslash( $_REQUEST['redirect_to'] ) ); // WPCS: sanitization ok
+			$redirect_to           = self::remove_query_args( wp_unslash( $_REQUEST['redirect_to'] ) ); // WPCS: sanitization ok
 			$requested_redirect_to = wp_unslash( $_REQUEST['redirect_to'] ); // WPCS: sanitization ok
 		} else {
-			$redirect_to = '';
+			$redirect_to           = '';
 			$requested_redirect_to = '';
 		}
 
@@ -335,7 +335,7 @@ class user_switching {
 			<div id="user_switching" class="updated notice is-dismissible">
 				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
 				<?php
-					$message = '';
+					$message       = '';
 					$just_switched = isset( $_GET['user_switched'] );
 					if ( $just_switched ) {
 						$message = esc_html( sprintf(
@@ -433,7 +433,7 @@ class user_switching {
 		$cookie = user_switching_get_auth_cookie();
 		if ( ! empty( $cookie ) ) {
 
-			if ( user_switching::secure_auth_cookie() ) {
+			if ( self::secure_auth_cookie() ) {
 				$scheme = 'secure_auth';
 			} else {
 				$scheme = 'auth';
@@ -873,7 +873,7 @@ class user_switching {
 		static $instance;
 
 		if ( ! isset( $instance ) ) {
-			$instance = new user_switching;
+			$instance = new user_switching();
 		}
 
 		return $instance;
@@ -897,10 +897,10 @@ function user_switching_set_olduser_cookie( $old_user_id, $pop = false ) {
 
 	if ( $secure_auth_cookie ) {
 		$auth_cookie_name = USER_SWITCHING_SECURE_COOKIE;
-		$scheme = 'secure_auth';
+		$scheme           = 'secure_auth';
 	} else {
 		$auth_cookie_name = USER_SWITCHING_COOKIE;
-		$scheme = 'auth';
+		$scheme           = 'auth';
 	}
 
 	if ( $pop ) {
