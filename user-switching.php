@@ -409,7 +409,7 @@ class user_switching {
 	/**
 	 * Validates the old user cookie and returns its user data.
 	 *
-	 * @return bool|WP_User False if there's no old user cookie or it's invalid, WP_User object if it's present and valid.
+	 * @return false|WP_User False if there's no old user cookie or it's invalid, WP_User object if it's present and valid.
 	 */
 	public static function get_old_user() {
 		$cookie = user_switching_get_olduser_cookie();
@@ -704,7 +704,7 @@ class user_switching {
 	 * Returns the switch to or switch back URL for a given user.
 	 *
 	 * @param  WP_User $user The user to be switched to.
-	 * @return string|bool The required URL, or false if there's no old user or the user doesn't have the required capability.
+	 * @return string|false The required URL, or false if there's no old user or the user doesn't have the required capability.
 	 */
 	public static function maybe_switch_url( WP_User $user ) {
 
@@ -950,7 +950,7 @@ if ( ! function_exists( 'user_switching_get_olduser_cookie' ) ) {
 /**
  * Gets the value of the cookie containing the originating user.
  *
- * @return string|bool The old user cookie, or boolean false if there isn't one.
+ * @return string|false The old user cookie, or boolean false if there isn't one.
  */
 function user_switching_get_olduser_cookie() {
 	if ( isset( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] ) ) {
@@ -991,7 +991,7 @@ if ( ! function_exists( 'switch_to_user' ) ) {
  * @param  int  $user_id      The ID of the user to switch to.
  * @param  bool $remember     Optional. Whether to 'remember' the user in the form of a persistent browser cookie. Default false.
  * @param  bool $set_old_user Optional. Whether to set the old user cookie. Default true.
- * @return bool|WP_User WP_User object on success, false on failure.
+ * @return false|WP_User WP_User object on success, false on failure.
  */
 function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
 	$user = get_userdata( $user_id );
@@ -1074,8 +1074,8 @@ if ( ! function_exists( 'current_user_switched' ) ) {
 /**
  * Returns whether or not the current user switched into their account.
  *
- * @return bool|WP_User False if the user isn't logged in or they didn't switch in; old user object (which evaluates to
- *                      true) if the user switched into the current user account.
+ * @return false|WP_User False if the user isn't logged in or they didn't switch in; old user object (which evaluates to
+ *                       true) if the user switched into the current user account.
  */
 function current_user_switched() {
 	if ( ! is_user_logged_in() ) {
