@@ -813,8 +813,18 @@ class user_switching {
 	 */
 	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args, WP_User $user ) {
 		if ( 'switch_to_user' === $args[0] ) {
+			if ( array_key_exists( 'switch_users', $user_caps ) ) {
+				$user_caps['switch_to_user'] = $user_caps['switch_users'];
+				return $user_caps;
+			}
+
 			$user_caps['switch_to_user'] = ( user_can( $user->ID, 'edit_user', $args[2] ) && ( $args[2] !== $user->ID ) );
 		} elseif ( 'switch_off' === $args[0] ) {
+			if ( array_key_exists( 'switch_users', $user_caps ) ) {
+				$user_caps['switch_off'] = $user_caps['switch_users'];
+				return $user_caps;
+			}
+
 			$user_caps['switch_off'] = user_can( $user->ID, 'edit_users' );
 		}
 
