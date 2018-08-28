@@ -42,10 +42,9 @@ class user_switching {
 	public static $application = 'WordPress/User Switching';
 
 	/**
-	 * Class constructor. Sets up some filters and actions.
+	 * Sets up all the filters and actions.
 	 */
-	private function __construct() {
-
+	public function init_hooks() {
 		// Required functionality:
 		add_filter( 'user_has_cap',                    array( $this, 'filter_user_has_cap' ), 10, 4 );
 		add_filter( 'map_meta_cap',                    array( $this, 'filter_map_meta_cap' ), 10, 4 );
@@ -880,6 +879,11 @@ class user_switching {
 		return $instance;
 	}
 
+	/**
+	 * Private class constructor. Use `get_instance()` to get the instance.
+	 */
+	final private function __construct() {}
+
 }
 
 if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
@@ -1088,3 +1092,4 @@ function current_user_switched() {
 }
 
 $GLOBALS['user_switching'] = user_switching::get_instance();
+$GLOBALS['user_switching']->init_hooks();
