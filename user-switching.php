@@ -216,7 +216,7 @@ class user_switching {
 					}
 
 					$redirect_to = self::get_redirect( $old_user, $current_user );
-					$args = array(
+					$args        = array(
 						'user_switched' => 'true',
 						'switched_back' => 'true',
 					);
@@ -338,6 +338,7 @@ class user_switching {
 					$switch_back_url = add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
 					), self::switch_back_url( $old_user ) );
+
 					$message .= sprintf(
 						' <a href="%s">%s</a>.',
 						esc_url( $switch_back_url ),
