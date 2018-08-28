@@ -66,14 +66,12 @@ class user_switching {
 		add_action( 'bp_member_header_actions',        array( $this, 'action_bp_button' ), 11 );
 		add_action( 'bp_directory_members_actions',    array( $this, 'action_bp_button' ), 11 );
 		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ) );
-
 	}
 
 	/**
 	 * Defines the names of our cookies.
 	 */
 	public function action_plugins_loaded() {
-
 		// User Switching's auth_cookie
 		if ( ! defined( 'USER_SWITCHING_COOKIE' ) ) {
 			define( 'USER_SWITCHING_COOKIE', 'wordpress_user_sw_' . COOKIEHASH );
@@ -88,7 +86,6 @@ class user_switching {
 		if ( ! defined( 'USER_SWITCHING_OLDUSER_COOKIE' ) ) {
 			define( 'USER_SWITCHING_OLDUSER_COOKIE', 'wordpress_user_sw_olduser_' . COOKIEHASH );
 		}
-
 	}
 
 	/**
@@ -119,7 +116,6 @@ class user_switching {
 	 * @return bool Whether the current user is being 'remembered' or not.
 	 */
 	public static function remember() {
-
 		/**
 		 * Filter the duration of the authentication cookie expiration period.
 		 *
@@ -137,14 +133,12 @@ class user_switching {
 		// Here we calculate the expiration length of the current auth cookie and compare it to the default expiration.
 		// If it's greater than this, then we know the user checked 'Remember Me' when they logged in.
 		return ( ( $current['expiration'] - time() ) > $cookie_life );
-
 	}
 
 	/**
 	 * Loads localisation files and routes actions depending on the 'action' query var.
 	 */
 	public function action_init() {
-
 		load_plugin_textdomain( 'user-switching', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 		if ( ! isset( $_REQUEST['action'] ) ) {
@@ -269,7 +263,6 @@ class user_switching {
 				break;
 
 		}
-
 	}
 
 	/**
@@ -280,7 +273,6 @@ class user_switching {
 	 * @return string The URL to redirect to.
 	 */
 	protected static function get_redirect( WP_User $new_user = null, WP_User $old_user = null ) {
-
 		if ( ! empty( $_REQUEST['redirect_to'] ) ) {
 			$redirect_to           = self::remove_query_args( wp_unslash( $_REQUEST['redirect_to'] ) ); // WPCS: sanitization ok
 			$requested_redirect_to = wp_unslash( $_REQUEST['redirect_to'] ); // WPCS: sanitization ok
@@ -318,7 +310,6 @@ class user_switching {
 		}
 
 		return $redirect_to;
-
 	}
 
 	/**
@@ -453,7 +444,6 @@ class user_switching {
 	 * @param WP_Admin_Bar $wp_admin_bar The admin bar object.
 	 */
 	public function action_admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
-
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {
 			return;
 		}
@@ -511,7 +501,6 @@ class user_switching {
 			) );
 
 		}
-
 	}
 
 	/**
@@ -532,7 +521,6 @@ class user_switching {
 			), self::switch_back_url( $old_user ) );
 			echo '<li id="user_switching_switch_on"><a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></li>';
 		}
-
 	}
 
 	/**
@@ -557,7 +545,6 @@ class user_switching {
 			), self::switch_back_url( $old_user ) );
 			echo '<p id="user_switching_switch_on"><a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></p>';
 		}
-
 	}
 
 	/**
@@ -595,7 +582,6 @@ class user_switching {
 		}
 
 		return $message;
-
 	}
 
 	/**
@@ -652,7 +638,6 @@ class user_switching {
 			'link_text'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
 			'wrapper_id' => 'user_switching_switch_to',
 		) );
-
 	}
 
 	/**
@@ -680,7 +665,6 @@ class user_switching {
 			<li><a href="<?php echo esc_url( $link ); ?>"><?php esc_html_e( 'Switch&nbsp;To', 'user-switching' ); ?></a></li>
 		</ul>
 		<?php
-
 	}
 
 	/**
@@ -706,7 +690,6 @@ class user_switching {
 	 * @return string|false The required URL, or false if there's no old user or the user doesn't have the required capability.
 	 */
 	public static function maybe_switch_url( WP_User $user ) {
-
 		$old_user = self::get_old_user();
 
 		if ( $old_user && ( $old_user->ID === $user->ID ) ) {
@@ -716,7 +699,6 @@ class user_switching {
 		} else {
 			return false;
 		}
-
 	}
 
 	/**
@@ -835,6 +817,7 @@ class user_switching {
 		} elseif ( 'switch_off' === $args[0] ) {
 			$user_caps['switch_off'] = user_can( $user->ID, 'edit_users' );
 		}
+
 		return $user_caps;
 	}
 
