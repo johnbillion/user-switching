@@ -8,10 +8,6 @@ class User_Switching_Test_Caps extends User_Switching_Test {
 	 */
 	function testSuperAdminCaps() {
 
-		if ( ! is_multisite() ) {
-			$this->markTestSkipped( 'Super admin capabilities are only tested on Multisite.' );
-		}
-
 		# Super Admins can switch to all users:
 		$this->assertTrue( user_can( $this->testers['super']->ID, 'switch_to_user', $this->users['super']->ID ) );
 		$this->assertTrue( user_can( $this->testers['super']->ID, 'switch_to_user', $this->users['admin']->ID ) );
