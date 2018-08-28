@@ -10,12 +10,7 @@
 
 	<rule ref="PHPCompatibility"/>
 
-	<rule ref="WordPress-VIP">
-
-		<!-- User Switching deals with cookies by its nature: -->
-		<exclude name="WordPress.VIP.RestrictedFunctions.cookies_setcookie" />
-		<exclude name="WordPress.VIP.SuperGlobalInputUsage.AccessDetected" />
-		<exclude name="WordPress.VIP.RestrictedVariables.cache_constraints___COOKIE" />
+	<rule ref="WordPress-Extra">
 
 		<!-- User Switching supports WordPress versions older than 4.4: -->
 		<exclude name="WordPress.WP.AlternativeFunctions.parse_url_parse_url" />
@@ -28,17 +23,16 @@
 		<exclude name="WordPress.Files.FileName" />
 		<exclude name="PEAR.NamingConventions.ValidClassName" />
 		<exclude name="Generic.WhiteSpace.ScopeIndent" />
-		<exclude name="Squiz.Commenting.FileComment.Missing" />
 		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
 
 		<!-- These are all false positives: -->
-		<exclude name="WordPress.CSRF.NonceVerification.NoNonceVerification" />
+		<exclude name="WordPress.Security.NonceVerification.NoNonceVerification" />
 
 	</rule>
 
 	<rule ref="WordPress-Docs" />
 
-	<rule ref="WordPress.XSS.EscapeOutput">
+	<rule ref="WordPress.Security.EscapeOutput">
 		<properties>
 			<property type="array" name="customAutoEscapedFunctions" value="bp_get_button"/>
 		</properties>
