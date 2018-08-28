@@ -2,20 +2,8 @@
 
 abstract class User_Switching_Test extends WP_UnitTestCase {
 
-	protected static $static_users   = array();
-	protected static $static_testers = array();
-
-	protected $users   = array();
-	protected $testers = array();
-
-	function setUp() {
-
-		parent::setUp();
-
-		$this->users   = self::$static_users;
-		$this->testers = self::$static_testers;
-
-	}
+	protected static $users   = array();
+	protected static $testers = array();
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ) {
 
@@ -29,23 +17,23 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 		);
 
 		foreach ( $roles as $name => $role ) {
-			self::$static_users[ $name ] = $factory->user->create_and_get( array(
+			self::$users[ $name ] = $factory->user->create_and_get( array(
 				'role' => $role,
 			) );
-			self::$static_testers[ $name ] = $factory->user->create_and_get( array(
+			self::$testers[ $name ] = $factory->user->create_and_get( array(
 				'role' => $role,
 			) );
 		}
 
 		if ( is_multisite() ) {
-			self::$static_users['super'] = $factory->user->create_and_get( array(
+			self::$users['super'] = $factory->user->create_and_get( array(
 				'role' => 'administrator'
 			) );
-			self::$static_testers['super'] = $factory->user->create_and_get( array(
+			self::$testers['super'] = $factory->user->create_and_get( array(
 				'role' => 'administrator'
 			) );
-			grant_super_admin( self::$static_users['super']->ID );
-			grant_super_admin( self::$static_testers['super']->ID );
+			grant_super_admin( self::$users['super']->ID );
+			grant_super_admin( self::$testers['super']->ID );
 		}
 
 	}

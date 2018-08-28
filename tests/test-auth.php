@@ -4,8 +4,8 @@ class User_Switching_Test_Auth extends User_Switching_Test {
 
 	function testOldUserCookieAuthentication() {
 
-		$admin  = $this->testers['admin'];
-		$editor = $this->testers['editor'];
+		$admin  = self::$testers['admin'];
+		$editor = self::$testers['editor'];
 		$expiry = time() + 172800;
 
 		// A valid authentication cookie should pass authentication:
