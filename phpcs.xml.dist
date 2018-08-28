@@ -24,6 +24,7 @@
 		<exclude name="PEAR.NamingConventions.ValidClassName" />
 		<exclude name="Generic.WhiteSpace.ScopeIndent" />
 		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
+		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma" />
 
 		<!-- These are all false positives: -->
 		<exclude name="WordPress.Security.NonceVerification.NoNonceVerification" />
