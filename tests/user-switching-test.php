@@ -2,12 +2,22 @@
 
 abstract class User_Switching_Test extends WP_UnitTestCase {
 
+	protected static $static_users   = array();
+	protected static $static_testers = array();
+
 	protected $users   = array();
 	protected $testers = array();
 
 	function setUp() {
 
 		parent::setUp();
+
+		$this->users   = self::$static_users;
+		$this->testers = self::$static_testers;
+
+	}
+
+	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ) {
 
 		$roles = array(
 			'admin'       => 'administrator',
@@ -19,23 +29,23 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 		);
 
 		foreach ( $roles as $name => $role ) {
-			$this->users[ $name ] = $this->factory->user->create_and_get( array(
+			self::$static_users[ $name ] = $factory->user->create_and_get( array(
 				'role' => $role,
 			) );
-			$this->testers[ $name ] = $this->factory->user->create_and_get( array(
+			self::$static_testers[ $name ] = $factory->user->create_and_get( array(
 				'role' => $role,
 			) );
 		}
 
 		if ( is_multisite() ) {
-			$this->users['super'] = $this->factory->user->create_and_get( array(
+			self::$static_users['super'] = $factory->user->create_and_get( array(
 				'role' => 'administrator'
 			) );
-			$this->testers['super'] = $this->factory->user->create_and_get( array(
+			self::$static_testers['super'] = $factory->user->create_and_get( array(
 				'role' => 'administrator'
 			) );
-			grant_super_admin( $this->users['super']->ID );
-			grant_super_admin( $this->testers['super']->ID );
+			grant_super_admin( self::$static_users['super']->ID );
+			grant_super_admin( self::$static_testers['super']->ID );
 		}
 
 		// Prevent undefined index notices when using `wp_validate_auth_cookie()`.
