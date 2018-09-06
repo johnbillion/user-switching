@@ -35,7 +35,7 @@
 class user_switching {
 
 	/**
-	 * The name used to identify the application for debugging purposes.
+	 * The name used to identify the application during a WordPress redirect.
 	 *
 	 * @var string
 	 */
@@ -89,7 +89,7 @@ class user_switching {
 	}
 
 	/**
-	 * Outputs the 'Switch To' link on the user editing screen if we have permission to switch to this user.
+	 * Outputs the 'Switch To' link on the user editing screen if the current user has permission to switch to them.
 	 *
 	 * @param WP_User $user User object for this screen.
 	 */
@@ -116,17 +116,7 @@ class user_switching {
 	 * @return bool Whether the current user is being 'remembered' or not.
 	 */
 	public static function remember() {
-		/**
-		 * Filter the duration of the authentication cookie expiration period.
-		 *
-		 * This matches the WordPress core filter in `wp_set_auth_cookie()`.
-		 *
-		 * @since 0.2.2
-		 *
-		 * @param int  $length   Duration of the expiration period in seconds.
-		 * @param int  $user_id  User ID.
-		 * @param bool $remember Whether to remember the user login. Default false.
-		 */
+		/** This filter is documented in wp-includes/pluggable.php */
 		$cookie_life = apply_filters( 'auth_cookie_expiration', 172800, get_current_user_id(), false );
 		$current     = wp_parse_auth_cookie( '', 'logged_in' );
 
@@ -282,30 +272,10 @@ class user_switching {
 		}
 
 		if ( ! $new_user ) {
-			/**
-			 * Filter the redirect URL when a user switches off.
-			 *
-			 * This matches the WordPress core filter in wp-login.php.
-			 *
-			 * @since 1.0.4
-			 *
-			 * @param string  $redirect_to           The redirect destination URL.
-			 * @param string  $requested_redirect_to The requested redirect destination URL passed as a parameter.
-			 * @param WP_User $old_user              The WP_User object for the user that's switching off.
-			 */
+			/** This filter is documented in wp-login.php */
 			$redirect_to = apply_filters( 'logout_redirect', $redirect_to, $requested_redirect_to, $old_user );
 		} else {
-			/**
-			 * Filter the redirect URL when a user switches to another user or switches back.
-			 *
-			 * This matches the WordPress core filter in wp-login.php.
-			 *
-			 * @since 0.8.7
-			 *
-			 * @param string  $redirect_to           The redirect destination URL.
-			 * @param string  $requested_redirect_to The requested redirect destination URL passed as a parameter.
-			 * @param WP_User $new_user              The WP_User object for the user that's being switched to.
-			 */
+			/** This filter is documented in wp-login.php */
 			$redirect_to = apply_filters( 'login_redirect', $redirect_to, $requested_redirect_to, $new_user );
 		}
 
@@ -417,7 +387,7 @@ class user_switching {
 	/**
 	 * Authenticates an old user by verifying the latest entry in the auth cookie.
 	 *
-	 * @param  WP_User $user A WP_User object (usually from the logged_in cookie).
+	 * @param WP_User $user A WP_User object (usually from the logged_in cookie).
 	 * @return bool Whether verification with the auth cookie passed.
 	 */
 	public static function authenticate_old_user( WP_User $user ) {
@@ -892,7 +862,7 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 	 *
 	 * @param int    $old_user_id The ID of the originating user, usually the current logged in user.
 	 * @param bool   $pop         Optional. Pop the latest user off the auth cookie, instead of appending the new one. Default false.
-	 * @param string $token       Optional. The old user's session token to store for later reuse.
+	 * @param string $token       Optional. The old user's session token to store for later reuse. Default empty string.
 	 */
 	function user_switching_set_olduser_cookie( $old_user_id, $pop = false, $token = '' ) {
 		$secure_auth_cookie    = user_switching::secure_auth_cookie();
