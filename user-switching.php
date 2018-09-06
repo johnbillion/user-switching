@@ -430,7 +430,13 @@ class user_switching {
 				$scheme = 'auth';
 			}
 
-			$old_user_id = wp_validate_auth_cookie( end( $cookie ), $scheme );
+			$old_cookie = end( $cookie );
+
+			if ( ! is_object( $old_cookie ) || ! isset( $old_cookie->cookie ) ) {
+				return false;
+			}
+
+			$old_user_id = wp_validate_auth_cookie( $old_cookie->cookie, $scheme );
 
 			if ( $old_user_id ) {
 				return ( $user->ID === $old_user_id );
@@ -884,15 +890,16 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 	/**
 	 * Sets authorisation cookies containing the originating user information.
 	 *
-	 * @param int  $old_user_id The ID of the originating user, usually the current logged in user.
-	 * @param bool $pop         Optional. Pop the latest user off the auth cookie, instead of appending the new one. Default false.
+	 * @param int    $old_user_id The ID of the originating user, usually the current logged in user.
+	 * @param bool   $pop         Optional. Pop the latest user off the auth cookie, instead of appending the new one. Default false.
+	 * @param string $token       Optional. The old user's session token to store for later reuse.
 	 */
-	function user_switching_set_olduser_cookie( $old_user_id, $pop = false ) {
+	function user_switching_set_olduser_cookie( $old_user_id, $pop = false, $token = '' ) {
 		$secure_auth_cookie    = user_switching::secure_auth_cookie();
 		$secure_olduser_cookie = user_switching::secure_olduser_cookie();
 		$expiration            = time() + 172800; // 48 hours
 		$auth_cookie           = user_switching_get_auth_cookie();
-		$olduser_cookie        = wp_generate_auth_cookie( $old_user_id, $expiration, 'logged_in' );
+		$olduser_cookie        = wp_generate_auth_cookie( $old_user_id, $expiration, 'logged_in', $token );
 
 		if ( $secure_auth_cookie ) {
 			$auth_cookie_name = USER_SWITCHING_SECURE_COOKIE;
@@ -905,7 +912,10 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 		if ( $pop ) {
 			array_pop( $auth_cookie );
 		} else {
-			array_push( $auth_cookie, wp_generate_auth_cookie( $old_user_id, $expiration, $scheme ) );
+			array_push( $auth_cookie, (object) array(
+				'cookie' => wp_generate_auth_cookie( $old_user_id, $expiration, $scheme, $token ),
+				'token'  => $token,
+			) );
 		}
 
 		/**
@@ -913,7 +923,16 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 		 *
 		 * @since 1.4.0
 		 *
-		 * @param string[] $auth_cookie Array of authentication cookies.
+		 * @param stdClass[] $auth_cookie {
+		 *     Array of authentication cookies.
+		 *
+		 *     @type stdClass ...$0 {
+		 *         Information about the authentication instance.
+		 *
+		 *         @type string $cookie The authentication cookie value.
+		 *         @type string $token  The session token.
+		 *     }
+		 * }
 		 * @param int    $expiration  The time when the authentication cookie expires as a UNIX timestamp.
 		 *                            Default is 48 hours from now.
 		 * @param int    $old_user_id User ID.
@@ -983,9 +1002,15 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 				$scheme = 'auth';
 			}
 
-			$old_user_id = wp_validate_auth_cookie( end( $auth_cookie ), $scheme );
+			$old_cookie = end( $auth_cookie );
+
+			if ( ! is_object( $old_cookie ) || ! isset( $old_cookie->cookie ) ) {
+				return;
+			}
+
+			$old_user_id = wp_validate_auth_cookie( $old_cookie->cookie, $scheme );
 			if ( $old_user_id ) {
-				user_switching_set_olduser_cookie( $old_user_id, true );
+				user_switching_set_olduser_cookie( $old_user_id, true, $old_cookie->token );
 			}
 		}
 	}
@@ -1046,9 +1071,10 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 		}
 
 		$old_user_id = ( is_user_logged_in() ) ? get_current_user_id() : false;
+		$old_token   = function_exists( 'wp_get_session_token' ) ? wp_get_session_token() : '';
 
 		if ( $set_old_user && $old_user_id ) {
-			user_switching_set_olduser_cookie( $old_user_id );
+			user_switching_set_olduser_cookie( $old_user_id, false, $old_token );
 		} else {
 			user_switching_clear_olduser_cookie( false );
 		}
