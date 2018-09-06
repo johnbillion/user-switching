@@ -908,6 +908,34 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 			array_push( $auth_cookie, wp_generate_auth_cookie( $old_user_id, $expiration, $scheme ) );
 		}
 
+		/**
+		 * Fires immediately before the User Switching authentication cookie is set.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param string[] $auth_cookie Array of authentication cookies.
+		 * @param int    $expiration  The time when the authentication cookie expires as a UNIX timestamp.
+		 *                            Default is 48 hours from now.
+		 * @param int    $old_user_id User ID.
+		 * @param string $scheme      Authentication scheme. Values include 'auth' or 'secure_auth'.
+		 * @param string $token       User's session token to use for the latest cookie.
+		 */
+		do_action( 'set_user_switching_cookie', $auth_cookie, $expiration, $old_user_id, $scheme, $token );
+
+		/**
+		 * Fires immediately before the User Switching old user cookie is set.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param string $olduser_cookie The old user cookie value.
+		 * @param int    $expiration     The time when the logged-in authentication cookie expires as a UNIX timestamp.
+		 *                               Default is 48 hours from now.
+		 * @param int    $old_user_id    User ID.
+		 * @param string $scheme         Authentication scheme. Default 'logged_in'.
+		 * @param string $token          User's session token to use for this cookie.
+		 */
+		do_action( 'set_olduser_cookie', $olduser_cookie, $expiration, $old_user_id, 'logged_in', $token );
+
 		/** This filter is documented in wp-includes/pluggable.php */
 		if ( ! apply_filters( 'send_auth_cookies', true ) ) {
 			return;
@@ -930,6 +958,14 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 			array_pop( $auth_cookie );
 		}
 		if ( $clear_all || empty( $auth_cookie ) ) {
+
+			/**
+			 * Fires just before the user switching cookies are cleared.
+			 *
+			 * @since 1.4.0
+			 */
+			do_action( 'clear_olduser_cookie' );
+
 			/** This filter is documented in wp-includes/pluggable.php */
 			if ( ! apply_filters( 'send_auth_cookies', true ) ) {
 				return;
