@@ -51,6 +51,12 @@ class User_Switching_Test_Auth extends User_Switching_Test {
 		$this->assertFalse( user_switching::authenticate_old_user( $editor ) );
 		$this->assertFalse( user_switching::authenticate_old_user( $admin ) );
 
+		// The old format cookie (a string instead of the cookie and token object) should not pass authentication:
+		$auth_cookie = wp_generate_auth_cookie( $editor->ID, $expiry, 'auth' );
+		$_COOKIE[ USER_SWITCHING_COOKIE ] = json_encode( array( $auth_cookie ) );
+		$this->assertFalse( user_switching::authenticate_old_user( $editor ) );
+		$this->assertFalse( user_switching::authenticate_old_user( $admin ) );
+
 		// No cookie should not pass authentication and not trigger any PHP errors:
 		unset( $_COOKIE[ USER_SWITCHING_COOKIE ] );
 		$this->assertFalse( user_switching::authenticate_old_user( $editor ) );
