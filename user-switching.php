@@ -1020,7 +1020,7 @@ if ( ! function_exists( 'user_switching_get_auth_cookie' ) ) {
 			$auth_cookie_name = USER_SWITCHING_COOKIE;
 		}
 
-		if ( isset( $_COOKIE[ $auth_cookie_name ] ) ) {
+		if ( isset( $_COOKIE[ $auth_cookie_name ] ) && is_string( $_COOKIE[ $auth_cookie_name ] ) ) {
 			$cookie = json_decode( wp_unslash( $_COOKIE[ $auth_cookie_name ] ) ); // WPCS: sanitization ok
 		}
 		if ( ! isset( $cookie ) || ! is_array( $cookie ) ) {
