@@ -888,21 +888,27 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 			) );
 		}
 
+		$auth_cookie = json_encode( $auth_cookie );
+
 		/**
 		 * Fires immediately before the User Switching authentication cookie is set.
 		 *
+		 * The JSON-encoded auth cookie array is structured as such:
+		 *
+		 *     stdClass[] {
+		 *         Array of authentication cookies.
+		 *
+		 *         @type stdClass ...$0 {
+		 *             Information about the authentication instance.
+		 *
+		 *             @type string $cookie The authentication cookie value.
+		 *             @type string $token  The session token.
+		 *         }
+		 *     }
+		 *
 		 * @since 1.4.0
 		 *
-		 * @param stdClass[] $auth_cookie {
-		 *     Array of authentication cookies.
-		 *
-		 *     @type stdClass ...$0 {
-		 *         Information about the authentication instance.
-		 *
-		 *         @type string $cookie The authentication cookie value.
-		 *         @type string $token  The session token.
-		 *     }
-		 * }
+		 * @param string $auth_cookie JSON-encoded array of authentication cookies.
 		 * @param int    $expiration  The time when the authentication cookie expires as a UNIX timestamp.
 		 *                            Default is 48 hours from now.
 		 * @param int    $old_user_id User ID.
@@ -930,7 +936,7 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 			return;
 		}
 
-		setcookie( $auth_cookie_name, json_encode( $auth_cookie ), $expiration, SITECOOKIEPATH, COOKIE_DOMAIN, $secure_auth_cookie, true );
+		setcookie( $auth_cookie_name, $auth_cookie, $expiration, SITECOOKIEPATH, COOKIE_DOMAIN, $secure_auth_cookie, true );
 		setcookie( USER_SWITCHING_OLDUSER_COOKIE, $olduser_cookie, $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure_olduser_cookie, true );
 	}
 }
