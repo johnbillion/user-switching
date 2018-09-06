@@ -67,10 +67,8 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 	}
 
 	public function action_set_user_switching_cookie( $cookie, $expiration, $user_id, $scheme, $token ) {
-		$value = json_encode( $cookie );
-
-		$_COOKIE[ USER_SWITCHING_COOKIE ]        = $value;
-		$_COOKIE[ USER_SWITCHING_SECURE_COOKIE ] = $value;
+		$_COOKIE[ USER_SWITCHING_COOKIE ]        = $cookie;
+		$_COOKIE[ USER_SWITCHING_SECURE_COOKIE ] = $cookie;
 	}
 
 	public function action_set_olduser_cookie( $cookie, $expiration, $user_id, $scheme, $token ) {
