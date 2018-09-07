@@ -38,6 +38,12 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 
 		// Verify only one new session was created for the new user
 		$this->assertCount( 1, $author_manager->get_all() );
+
+		$cookie = user_switching_get_auth_cookie();
+		$parts  = wp_parse_auth_cookie( end( $cookie ) );
+
+		// Verify the stored session token matches
+		$this->assertSame( $admin_token, $parts['token'] );
 	}
 
 }
