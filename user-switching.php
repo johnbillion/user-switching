@@ -1083,7 +1083,9 @@ if ( ! function_exists( 'switch_off_user' ) ) {
 			return false;
 		}
 
-		user_switching_set_olduser_cookie( $old_user_id );
+		$old_token = function_exists( 'wp_get_session_token' ) ? wp_get_session_token() : '';
+
+		user_switching_set_olduser_cookie( $old_user_id, false, $old_token );
 		wp_clear_auth_cookie();
 		wp_set_current_user( 0 );
 
