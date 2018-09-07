@@ -400,13 +400,7 @@ class user_switching {
 				$scheme = 'auth';
 			}
 
-			$old_cookie = end( $cookie );
-
-			if ( ! is_object( $old_cookie ) || ! isset( $old_cookie->cookie ) ) {
-				return false;
-			}
-
-			$old_user_id = wp_validate_auth_cookie( $old_cookie->cookie, $scheme );
+			$old_user_id = wp_validate_auth_cookie( end( $cookie ), $scheme );
 
 			if ( $old_user_id ) {
 				return ( $user->ID === $old_user_id );
@@ -882,10 +876,7 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 		if ( $pop ) {
 			array_pop( $auth_cookie );
 		} else {
-			array_push( $auth_cookie, (object) array(
-				'cookie' => wp_generate_auth_cookie( $old_user_id, $expiration, $scheme, $token ),
-				'token'  => $token,
-			) );
+			array_push( $auth_cookie, wp_generate_auth_cookie( $old_user_id, $expiration, $scheme, $token ) );
 		}
 
 		$auth_cookie = json_encode( $auth_cookie );
@@ -895,15 +886,10 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 		 *
 		 * The JSON-encoded auth cookie array is structured as such:
 		 *
-		 *     stdClass[] {
+		 *     string[] {
 		 *         Array of authentication cookies.
 		 *
-		 *         @type stdClass ...$0 {
-		 *             Information about the authentication instance.
-		 *
-		 *             @type string $cookie The authentication cookie value.
-		 *             @type string $token  The session token.
-		 *         }
+		 *         @type string ...$0 The authentication cookie value.
 		 *     }
 		 *
 		 * @since 1.4.0
@@ -980,13 +966,10 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 
 			$old_cookie = end( $auth_cookie );
 
-			if ( ! is_object( $old_cookie ) || ! isset( $old_cookie->cookie ) ) {
-				return;
-			}
-
-			$old_user_id = wp_validate_auth_cookie( $old_cookie->cookie, $scheme );
+			$old_user_id = wp_validate_auth_cookie( $old_cookie, $scheme );
 			if ( $old_user_id ) {
-				user_switching_set_olduser_cookie( $old_user_id, true, $old_cookie->token );
+				$parts = wp_parse_auth_cookie( $old_cookie, $scheme );
+				user_switching_set_olduser_cookie( $old_user_id, true, $parts['token'] );
 			}
 		}
 	}
