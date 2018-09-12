@@ -30,7 +30,7 @@
 		"johnpbloch/wordpress": ">=4.9.0@stable",
 		"phpunit/phpunit": "^5",
 		"wimg/php-compatibility": "^8",
-		"wp-coding-standards/wpcs": "^1"
+		"wp-coding-standards/wpcs": "1.0"
 	},
     "extra": {
         "wordpress-install-dir": "vendor/wordpress"
