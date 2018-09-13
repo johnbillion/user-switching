@@ -44,7 +44,11 @@ See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information
 
 ### Privacy Statement ###
 
-User Switching makes use of browser cookies in order to allow users to switch to another account. Its cookies operate using the same mechanism as the authentication cookies in WordPress core, therefore they contain the user's `user_login` field in plain text which should be treated as potentially personally identifiable information. The name of the cookies are `wordpress_user_sw_{hash}`, `wordpress_user_sw_secure_{hash}`, and `wordpress_user_sw_olduser_{hash}`, where `{hash}` is an identifier unique to the installation of WordPress.
+User Switching makes use of browser cookies in order to allow users to switch to another account. Its cookies operate using the same mechanism as the authentication cookies in WordPress core, therefore their values contain the user's `user_login` field in plain text which should be treated as potentially personally identifiable information. The names of the cookies are:
+
+* `wordpress_user_sw_{COOKIEHASH}`
+* `wordpress_user_sw_secure_{COOKIEHASH}`
+* `wordpress_user_sw_olduser_{COOKIEHASH}`
 
 User Switching does not send data to any third party, nor does it include any third party resources, nor will it ever do so.
 
