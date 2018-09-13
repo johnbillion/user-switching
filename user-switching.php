@@ -1053,22 +1053,30 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 			 * Fires when a user switches to another user account.
 			 *
 			 * @since 0.6.0
+			 * @since 1.4.0 The `$old_token` and `$new_token` parameters were added.
 			 *
-			 * @param int $user_id     The ID of the user being switched to.
-			 * @param int $old_user_id The ID of the user being switched from.
+			 * @param int    $user_id     The ID of the user being switched to.
+			 * @param int    $old_user_id The ID of the user being switched from.
+			 * @param string $old_token   The token of the session of the user being switched from.
+			 * @param string $new_token   The token of the session of the user being switched to. Can be an empty string
+			 *                            or a token for a session that may or may not still be valid.
 			 */
-			do_action( 'switch_to_user', $user_id, $old_user_id );
+			do_action( 'switch_to_user', $user_id, $old_user_id, $old_token, $new_token );
 		} else {
 			/**
 			 * Fires when a user switches back to their originating account.
 			 *
 			 * @since 0.6.0
+			 * @since 1.4.0 The `$old_token` and `$new_token` parameters were added.
 			 *
 			 * @param int       $user_id     The ID of the user being switched back to.
 			 * @param int|false $old_user_id The ID of the user being switched from, or false if the user is switching back
 			 *                               after having been switched off.
+			 * @param string    $old_token   The token of the session of the user being switched from.
+			 * @param string    $new_token   The token of the session of the user being switched to. Can be an empty string
+			 *                               or a token for a session that may or may not still be valid.
 			 */
-			do_action( 'switch_back_user', $user_id, $old_user_id );
+			do_action( 'switch_back_user', $user_id, $old_user_id, $old_token, $new_token );
 		}
 
 		return $user;
@@ -1099,10 +1107,12 @@ if ( ! function_exists( 'switch_off_user' ) ) {
 		 * Fires when a user switches off.
 		 *
 		 * @since 0.6.0
+		 * @since 1.4.0 The `$old_token` parameter was added.
 		 *
-		 * @param int $old_user_id The ID of the user switching off.
+		 * @param int    $old_user_id The ID of the user switching off.
+		 * @param string $old_token   The token of the session of the user switching off.
 		 */
-		do_action( 'switch_off_user', $old_user_id );
+		do_action( 'switch_off_user', $old_user_id, $old_token );
 
 		return true;
 	}
