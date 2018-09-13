@@ -93,10 +93,52 @@ Yes, there's a third party add-on plugin for this: [Admin Bar User Switching](ht
 
 ### Are any plugin actions called when a user switches account? ###
 
-Yes. When a user switches to another account, the `switch_to_user` hook is called with the new and old user IDs passed as parameters.
+Yes. When a user switches to another account, the `switch_to_user` hook is called:
 
-When a user switches back to their original account, the `switch_back_user` hook is called with the new (original) and old user IDs passed as parameters. Note that the old user ID can be boolean false if the user is switching back after they've been switched off.
+```php
+/**
+ * Fires when a user switches to another user account.
+ *
+ * @since 0.6.0
+ * @since 1.4.0 The `$new_token` and `$old_token` parameters were added.
+ *
+ * @param int    $user_id     The ID of the user being switched to.
+ * @param int    $old_user_id The ID of the user being switched from.
+ * @param string $new_token   The token of the session of the user being switched to. Can be an empty string
+ *                            or a token for a session that may or may not still be valid.
+ * @param string $old_token   The token of the session of the user being switched from.
+ */
+do_action( 'switch_to_user', $user_id, $old_user_id, $new_token, $old_token );
+```
 
-When a user switches off, the `switch_off_user` hook is called with the old user ID as a parameter.
+When a user switches back to their originating account, the `switch_back_user` hook is called:
 
-See the plugin source code for complete hook documentation.
+```php
+/**
+ * Fires when a user switches back to their originating account.
+ *
+ * @since 0.6.0
+ * @since 1.4.0 The `$new_token` and `$old_token` parameters were added.
+ *
+ * @param int       $user_id     The ID of the user being switched back to.
+ * @param int|false $old_user_id The ID of the user being switched from, or false if the user is switching back
+ *                               after having been switched off.
+ * @param string    $new_token   The token of the session of the user being switched to. Can be an empty string
+ *                               or a token for a session that may or may not still be valid.
+ * @param string    $old_token   The token of the session of the user being switched from.
+ */
+```
+
+When a user switches off, the `switch_off_user` hook is called:
+
+```php
+/**
+ * Fires when a user switches off.
+ *
+ * @since 0.6.0
+ * @since 1.4.0 The `$old_token` parameter was added.
+ *
+ * @param int    $old_user_id The ID of the user switching off.
+ * @param string $old_token   The token of the session of the user switching off.
+ */
+```
