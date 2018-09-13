@@ -854,6 +854,8 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 	/**
 	 * Sets authorisation cookies containing the originating user information.
 	 *
+	 * @since 1.4.0 The `$token` parameter was added.
+	 *
 	 * @param int    $old_user_id The ID of the originating user, usually the current logged in user.
 	 * @param bool   $pop         Optional. Pop the latest user off the auth cookie, instead of appending the new one. Default false.
 	 * @param string $token       Optional. The old user's session token to store for later reuse. Default empty string.
@@ -884,17 +886,9 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 		/**
 		 * Fires immediately before the User Switching authentication cookie is set.
 		 *
-		 * The JSON-encoded auth cookie array is structured as such:
-		 *
-		 *     string[] {
-		 *         Array of authentication cookies.
-		 *
-		 *         @type string ...$0 The authentication cookie value.
-		 *     }
-		 *
 		 * @since 1.4.0
 		 *
-		 * @param string $auth_cookie JSON-encoded array of authentication cookies.
+		 * @param string $auth_cookie JSON-encoded array of authentication cookie values.
 		 * @param int    $expiration  The time when the authentication cookie expires as a UNIX timestamp.
 		 *                            Default is 48 hours from now.
 		 * @param int    $old_user_id User ID.
@@ -1035,11 +1029,11 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 		$cookie_parts = wp_parse_auth_cookie( end( $auth_cookie ) );
 
 		if ( $set_old_user && $old_user_id ) {
-			// switching to another user
+			// Switching to another user
 			$new_token = '';
 			user_switching_set_olduser_cookie( $old_user_id, false, $old_token );
 		} else {
-			// switching back, either after being switched off or after being switched to another user
+			// Switching back, either after being switched off or after being switched to another user
 			$new_token = isset( $cookie_parts['token'] ) ? $cookie_parts['token'] : '';
 			user_switching_clear_olduser_cookie( false );
 		}
