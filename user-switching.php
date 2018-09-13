@@ -1029,17 +1029,23 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 			return false;
 		}
 
-		$old_user_id = ( is_user_logged_in() ) ? get_current_user_id() : false;
-		$old_token   = function_exists( 'wp_get_session_token' ) ? wp_get_session_token() : '';
+		$old_user_id  = ( is_user_logged_in() ) ? get_current_user_id() : false;
+		$old_token    = function_exists( 'wp_get_session_token' ) ? wp_get_session_token() : '';
+		$auth_cookie  = user_switching_get_auth_cookie();
+		$cookie_parts = wp_parse_auth_cookie( end( $auth_cookie ) );
 
 		if ( $set_old_user && $old_user_id ) {
+			// switching to another user
+			$new_token = '';
 			user_switching_set_olduser_cookie( $old_user_id, false, $old_token );
 		} else {
+			// switching back, either after being switched off or after being switched to another user
+			$new_token = isset( $cookie_parts['token'] ) ? $cookie_parts['token'] : '';
 			user_switching_clear_olduser_cookie( false );
 		}
 
 		wp_clear_auth_cookie();
-		wp_set_auth_cookie( $user_id, $remember );
+		wp_set_auth_cookie( $user_id, $remember, '', $new_token );
 		wp_set_current_user( $user_id );
 
 		if ( $set_old_user ) {
