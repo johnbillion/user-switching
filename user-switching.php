@@ -1073,6 +1073,12 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 			do_action( 'switch_back_user', $user_id, $old_user_id, $new_token, $old_token );
 		}
 
+		if ( $old_token && $old_user_id && ! $set_old_user ) {
+			// When switching back, destroy the session for the old user
+			$manager = WP_Session_Tokens::get_instance( $old_user_id );
+			$manager->destroy( $old_token );
+		}
+
 		return $user;
 	}
 }
