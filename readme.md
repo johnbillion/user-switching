@@ -88,6 +88,12 @@ One exception I'm aware of is [Duo Security](https://wordpress.org/plugins/duo-w
 
 A user needs the `edit_users` capability in order to switch user accounts. By default only Administrators have this capability, and with Multisite enabled only Super Admins have this capability.
 
+### Can the ability to switch accounts be granted to other users or roles? ###
+
+Yes. The `switch_users` meta capability can be explicitly granted to a user or a role to allow them to switch users regardless of whether or not they have the `edit_users` capability. For practical purposes, the user or role will also need the `list_users` capability so they can access the Users menu in the WordPress admin area.
+
+If you know what you're doing with user capabilities, this capability can also be denied from a user or role to prevent the ability to switch users, regardless of whether or not they have the `edit_users` capability.
+
 ### Can regular admins on Multisite installations switch accounts? ###
 
 No. This can be enabled though by installing the [User Switching for Regular Admins](https://github.com/johnbillion/user-switching-for-regular-admins) plugin.
