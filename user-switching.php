@@ -291,7 +291,7 @@ class user_switching {
 		if ( $old_user ) {
 			?>
 			<div id="user_switching" class="updated notice is-dismissible">
-				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
+				<p><span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span>
 				<?php
 					$message       = '';
 					$just_switched = isset( $_GET['user_switched'] );
@@ -537,7 +537,7 @@ class user_switching {
 			}
 
 			$message .= '<p class="message" id="user_switching_switch_on">';
-			$message .= '<span class="dashicons dashicons-admin-users" style="color:#56c234"></span> ';
+			$message .= '<span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span> ';
 			$message .= '<a href="' . esc_url( $url ) . '" onclick="window.location.href=\'' . esc_url( $url ) . '\';return false;">' . esc_html( $link ) . '</a>';
 			$message .= '</p>';
 		}
