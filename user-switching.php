@@ -17,6 +17,7 @@
  * Text Domain: user-switching
  * Domain Path: /languages/
  * Network:     true
+ * Requires PHP: 5.3
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1038,9 +1039,26 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 			user_switching_clear_olduser_cookie( false );
 		}
 
+		/**
+		 * Attaches the original user ID and session token to the new session when a user switches to another user.
+		 *
+		 * @param array $session Array of extra data.
+		 * @param int   $user_id User ID.
+		 * @return array Array of extra data.
+		 */
+		$session_filter = function( array $session, $user_id ) use ( $old_user_id, $old_token ) {
+			$session['switched_from_id']      = $old_user_id;
+			$session['switched_from_session'] = $old_token;
+			return $session;
+		};
+
+		add_filter( 'attach_session_information', $session_filter, 99, 2 );
+
 		wp_clear_auth_cookie();
 		wp_set_auth_cookie( $user_id, $remember, '', $new_token );
 		wp_set_current_user( $user_id );
+
+		remove_filter( 'attach_session_information', $session_filter, 99 );
 
 		if ( $set_old_user ) {
 			/**

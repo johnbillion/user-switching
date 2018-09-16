@@ -166,4 +166,46 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 		$this->assertCount( 0, $author_manager->get_all() );
 	}
 
+	public function testSessionTokensAreCorrectlyReusedWhenSwitching() {
+		if ( is_multisite() ) {
+			$admin = self::$testers['super'];
+		} else {
+			$admin = self::$testers['admin'];
+		}
+
+		// Set up the admin session manager with a session
+		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
+		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
+
+		// Set up the author session manager, but with no session
+		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
+
+		// Set up the admin user state
+		wp_set_current_user( $admin->ID );
+		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
+
+		// Switch user
+		$user         = $this->switch_to_user( self::$users['author']->ID );
+		$author_token = wp_get_session_token();
+		$cookie       = user_switching_get_auth_cookie();
+		$parts        = wp_parse_auth_cookie( end( $cookie ) );
+
+		// Verify the original user session information is stored against the new user session
+		$author_session = $author_manager->get( $author_token );
+		$this->assertSame( $admin->ID, $author_session['switched_from_id'] );
+		$this->assertSame( $admin_token, $author_session['switched_from_session'] );
+		$this->assertSame( $admin_token, $parts['token'] );
+
+		// Switch back
+		$user = $this->switch_to_user( $admin->ID, false, false );
+
+		// Verify the original session token was reused
+		$this->assertCount( 1, $admin_manager->get_all() );
+		$this->assertNotNull( $admin_manager->get( $admin_token ) );
+
+		// Verify the session for the switched to user was destroyed
+		$this->assertCount( 0, $author_manager->get_all() );
+		$this->assertNull( $author_manager->get( $author_token ) );
+	}
+
 }
