@@ -70,7 +70,7 @@ class user_switching {
 	}
 
 	/**
-	 * Defines the names of our cookies.
+	 * Defines the names of the cookies used by User Switching.
 	 */
 	public function action_plugins_loaded() {
 		// User Switching's auth_cookie

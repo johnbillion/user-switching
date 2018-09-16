@@ -147,3 +147,9 @@ When a user switches off, the `switch_off_user` hook is called:
  * @param string $old_token   The token of the session of the user switching off.
  */
 ```
+
+In addition, User Switching respects the following filters from WordPress core when appropriate:
+
+* `login_redirect` when switching to another user.
+* `logout_redirect` when switching off.
+* `send_auth_cookies` before setting any cookies.
