@@ -159,7 +159,6 @@ class user_switching {
 				// Switch user:
 				$user = switch_to_user( $user_id, self::remember() );
 				if ( $user ) {
-
 					$redirect_to = self::get_redirect( $user, $current_user );
 
 					// Redirect to the dashboard or the home URL depending on capabilities:
@@ -175,7 +174,6 @@ class user_switching {
 						wp_safe_redirect( add_query_arg( $args, admin_url() ), 302, self::$application );
 					}
 					exit;
-
 				} else {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
 				}
@@ -291,7 +289,6 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user ) {
-
 			?>
 			<div id="user_switching" class="updated notice is-dismissible">
 				<p><span class="dashicons dashicons-admin-users" style="color:#56c234"></span>
@@ -338,9 +335,7 @@ class user_switching {
 				</p>
 			</div>
 			<?php
-
 		} elseif ( isset( $_GET['user_switched'] ) ) {
-
 			?>
 			<div id="user_switching" class="updated notice is-dismissible">
 				<p>
@@ -364,7 +359,6 @@ class user_switching {
 				</p>
 			</div>
 			<?php
-
 		}
 	}
 
@@ -394,7 +388,6 @@ class user_switching {
 	public static function authenticate_old_user( WP_User $user ) {
 		$cookie = user_switching_get_auth_cookie();
 		if ( ! empty( $cookie ) ) {
-
 			if ( self::secure_auth_cookie() ) {
 				$scheme = 'secure_auth';
 			} else {
@@ -438,7 +431,6 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user ) {
-
 			$wp_admin_bar->add_menu( array(
 				'parent' => $parent,
 				'id'     => 'switch-back',
@@ -452,11 +444,9 @@ class user_switching {
 					'redirect_to' => urlencode( self::current_url() ),
 				), self::switch_back_url( $old_user ) ),
 			) );
-
 		}
 
 		if ( current_user_can( 'switch_off' ) ) {
-
 			$url = self::switch_off_url( wp_get_current_user() );
 			if ( ! is_admin() ) {
 				$url = add_query_arg( array(
@@ -471,7 +461,6 @@ class user_switching {
 				'title'  => esc_html__( 'Switch Off', 'user-switching' ),
 				'href'   => $url,
 			) );
-
 		}
 	}
 
@@ -934,7 +923,6 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 			array_pop( $auth_cookie );
 		}
 		if ( $clear_all || empty( $auth_cookie ) ) {
-
 			/**
 			 * Fires just before the user switching cookies are cleared.
 			 *
@@ -952,7 +940,6 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 			setcookie( USER_SWITCHING_SECURE_COOKIE,  ' ', $expire, SITECOOKIEPATH, COOKIE_DOMAIN );
 			setcookie( USER_SWITCHING_OLDUSER_COOKIE, ' ', $expire, COOKIEPATH, COOKIE_DOMAIN );
 		} else {
-
 			if ( user_switching::secure_auth_cookie() ) {
 				$scheme = 'secure_auth';
 			} else {
