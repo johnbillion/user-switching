@@ -8,15 +8,15 @@
  * @copyright 2009-2018 John Blackbourn
  * @license   GPL v2 or later
  *
- * Plugin Name: User Switching
- * Description: Instant switching between user accounts in WordPress
- * Version:     1.3.1
- * Plugin URI:  https://johnblackbourn.com/wordpress-plugin-user-switching/
- * Author:      John Blackbourn & contributors
- * Author URI:  https://github.com/johnbillion/user-switching/graphs/contributors
- * Text Domain: user-switching
- * Domain Path: /languages/
- * Network:     true
+ * Plugin Name:  User Switching
+ * Description:  Instant switching between user accounts in WordPress
+ * Version:      1.3.1
+ * Plugin URI:   https://johnblackbourn.com/wordpress-plugin-user-switching/
+ * Author:       John Blackbourn & contributors
+ * Author URI:   https://github.com/johnbillion/user-switching/graphs/contributors
+ * Text Domain:  user-switching
+ * Domain Path:  /languages/
+ * Network:      true
  * Requires PHP: 5.3
  *
  * This program is free software; you can redistribute it and/or modify
