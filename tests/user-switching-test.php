@@ -91,12 +91,4 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 		unset( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] );
 	}
 
-	protected function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
-		return switch_to_user( $user_id, $remember, $set_old_user );
-	}
-
-	protected function switch_off_user() {
-		return switch_off_user();
-	}
-
 }

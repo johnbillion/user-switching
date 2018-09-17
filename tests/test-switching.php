@@ -25,7 +25,7 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 
 		// Switch user
-		$user = $this->switch_to_user( self::$users['author']->ID, true );
+		$user = switch_to_user( self::$users['author']->ID, true );
 
 		// Check that we've switched
 		$this->assertInstanceOf( 'WP_User', $user );
@@ -48,7 +48,7 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 
 		// Switch user again
-		$user = $this->switch_to_user( self::$users['editor']->ID, true );
+		$user = switch_to_user( self::$users['editor']->ID, true );
 
 		// Check that we've switched
 		$this->assertInstanceOf( 'WP_User', $user );
@@ -71,7 +71,7 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 
 		// Switch back
-		$user = $this->switch_to_user( self::$users['author']->ID, false, false );
+		$user = switch_to_user( self::$users['author']->ID, false, false );
 
 		// Check that we've switched
 		$this->assertInstanceOf( 'WP_User', $user );
@@ -94,7 +94,7 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 
 
 		// Switch back again
-		$user = $this->switch_to_user( $admin->ID, false, false );
+		$user = switch_to_user( $admin->ID, false, false );
 
 		// Check that we've switched
 		$this->assertInstanceOf( 'WP_User', $user );
@@ -127,7 +127,7 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 		wp_set_current_user( $admin->ID );
 
 		// Switch off
-		$user = $this->switch_off_user();
+		$user = switch_off_user();
 
 		// Check that we've switched off
 		$this->assertTrue( $user );
@@ -147,7 +147,7 @@ class User_Switching_Test_Switching extends User_Switching_Test {
 		$this->assertSame( 1, did_action( 'clear_auth_cookie' ) );
 
 		// Switch back
-		$user = $this->switch_to_user( $admin->ID, false, false );
+		$user = switch_to_user( $admin->ID, false, false );
 
 		// Check that we've switched back
 		$this->assertInstanceOf( 'WP_User', $user );

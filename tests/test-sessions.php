@@ -27,7 +27,7 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 		$this->assertCount( 0, $author_before );
 
 		// Switch user
-		$user = $this->switch_to_user( self::$users['author']->ID );
+		$user = switch_to_user( self::$users['author']->ID );
 
 		// Verify no new sessions were created for the old user
 		$this->assertCount( 1, $admin_manager->get_all() );
@@ -56,7 +56,7 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 		$this->assertCount( 1, $admin_before );
 
 		// Switch off
-		$switched = $this->switch_off_user();
+		$switched = switch_off_user();
 
 		// Verify no new sessions were created for the old user
 		$this->assertCount( 1, $admin_manager->get_all() );
@@ -85,13 +85,13 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 		$this->assertCount( 1, $admin_before );
 
 		// Switch user
-		$user = $this->switch_to_user( self::$users['author']->ID );
+		$user = switch_to_user( self::$users['author']->ID );
 
 		// Verify no new sessions were created for the old user
 		$this->assertCount( 1, $admin_manager->get_all() );
 
 		// Switch back
-		$user = $this->switch_to_user( $admin->ID, false, false );
+		$user = switch_to_user( $admin->ID, false, false );
 
 		// Verify no new sessions were created for the original user
 		$this->assertCount( 1, $admin_manager->get_all() );
@@ -125,7 +125,7 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 		$this->assertCount( 0, $author_before );
 
 		// Switch user
-		$user = $this->switch_to_user( self::$users['author']->ID );
+		$user = switch_to_user( self::$users['author']->ID );
 
 		// Verify no new sessions were created for the old user
 		$this->assertCount( 1, $admin_manager->get_all() );
@@ -143,7 +143,7 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 		$this->assertFalse( user_switching::get_old_user() );
 
 		// Attempt to switch back
-		$user = $this->switch_to_user( $admin->ID, false, false );
+		$user = switch_to_user( $admin->ID, false, false );
 
 		// Verify no new session was created for the original user
 		$this->assertCount( 0, $admin_manager->get_all() );
@@ -171,7 +171,7 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
 
 		// Switch user
-		$user         = $this->switch_to_user( self::$users['author']->ID );
+		$user         = switch_to_user( self::$users['author']->ID );
 		$author_token = wp_get_session_token();
 		$cookie       = user_switching_get_auth_cookie();
 		$parts        = wp_parse_auth_cookie( end( $cookie ) );
@@ -183,7 +183,7 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 		$this->assertSame( $admin_token, $parts['token'] );
 
 		// Switch back
-		$user = $this->switch_to_user( $admin->ID, false, false );
+		$user = switch_to_user( $admin->ID, false, false );
 
 		// Verify the original session token was reused
 		$this->assertCount( 1, $admin_manager->get_all() );
