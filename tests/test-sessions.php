@@ -98,6 +98,18 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 
 		// Verify the session for the switched to user was destroyed
 		$this->assertCount( 0, $author_manager->get_all() );
+
+		// Switch off
+		$off = switch_off_user();
+
+		// Verify no new sessions were created for the old user
+		$this->assertCount( 1, $admin_manager->get_all() );
+
+		// Switch back on again
+		$user = switch_to_user( $admin->ID, false, false );
+
+		// Verify no new sessions were created for the original user
+		$this->assertCount( 1, $admin_manager->get_all() );
 	}
 
 	public function testExpiredSessionPreventsUserFromSwitchingBack() {
@@ -176,7 +188,7 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 		$cookie       = user_switching_get_auth_cookie();
 		$parts        = wp_parse_auth_cookie( end( $cookie ) );
 
-		// Verify the original user session information is stored against the new user session
+		// Verify the original user session information is stored in the switch stack and against the new user session
 		$author_session = $author_manager->get( $author_token );
 		$this->assertSame( $admin->ID, $author_session['switched_from_id'] );
 		$this->assertSame( $admin_token, $author_session['switched_from_session'] );
@@ -192,6 +204,21 @@ class User_Switching_Test_Sessions extends User_Switching_Test {
 		// Verify the session for the switched to user was destroyed
 		$this->assertCount( 0, $author_manager->get_all() );
 		$this->assertNull( $author_manager->get( $author_token ) );
+
+		// Switch off
+		$off    = switch_off_user();
+		$cookie = user_switching_get_auth_cookie();
+		$parts  = wp_parse_auth_cookie( end( $cookie ) );
+
+		// Verify the original user session information is stored in the switch stack
+		$this->assertSame( $admin_token, $parts['token'] );
+
+		// Switch back on again
+		$user = switch_to_user( $admin->ID, false, false );
+
+		// Verify the original session token was reused
+		$this->assertCount( 1, $admin_manager->get_all() );
+		$this->assertNotNull( $admin_manager->get( $admin_token ) );
 	}
 
 }
