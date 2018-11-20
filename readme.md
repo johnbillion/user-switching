@@ -139,6 +139,7 @@ When a user switches back to their originating account, the `switch_back_user` h
  *                               or a token for a session that may or may not still be valid.
  * @param string    $old_token   The token of the session of the user being switched from.
  */
+do_action( 'switch_back_user', $user_id, $old_user_id, $new_token, $old_token );
 ```
 
 When a user switches off, the `switch_off_user` hook is called:
@@ -153,6 +154,7 @@ When a user switches off, the `switch_off_user` hook is called:
  * @param int    $old_user_id The ID of the user switching off.
  * @param string $old_token   The token of the session of the user switching off.
  */
+do_action( 'switch_off_user', $old_user_id, $old_token );
 ```
 
 In addition, User Switching respects the following filters from WordPress core when appropriate:

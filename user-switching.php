@@ -404,7 +404,7 @@ class user_switching {
 	}
 
 	/**
-	 * Adds a 'Switch back to {user}' link to the account menu in WordPress' admin bar.
+	 * Adds a 'Switch back to {user}' link to the account menu, and a `Switch To` link to the user edit menu.
 	 *
 	 * @param WP_Admin_Bar $wp_admin_bar The admin bar object.
 	 */
