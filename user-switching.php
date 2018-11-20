@@ -460,18 +460,31 @@ class user_switching {
 			) );
 		}
 
-		if ( is_author() && current_user_can( 'switch_to_user', get_queried_object_id() ) ) {
-			$url = self::switch_to_url( get_queried_object() );
-			$url = add_query_arg( array(
-				'redirect_to' => urlencode( self::current_url() ),
-			), $url );
-
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'edit',
-				'id'     => 'switch-to',
-				'title'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
-				'href'   => $url,
-			) );
+		if ( is_author() ) {
+			if ( $old_user ) {
+				$wp_admin_bar->add_menu( array(
+					'parent' => 'edit',
+					'id'     => 'author-switch-back',
+					'title'  => esc_html( sprintf(
+						/* Translators: 1: user display name; 2: username; */
+						__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
+						$old_user->display_name,
+						$old_user->user_login
+					) ),
+					'href'   => add_query_arg( array(
+						'redirect_to' => urlencode( self::current_url() ),
+					), self::switch_back_url( $old_user ) ),
+				) );
+			} elseif ( current_user_can( 'switch_to_user', get_queried_object_id() ) ) {
+				$wp_admin_bar->add_menu( array(
+					'parent' => 'edit',
+					'id'     => 'author-switch-to',
+					'title'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
+					'href'   => add_query_arg( array(
+						'redirect_to' => urlencode( self::current_url() ),
+					), self::switch_to_url( get_queried_object() ) ),
+				) );
+			}
 		}
 	}
 
