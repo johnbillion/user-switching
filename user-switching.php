@@ -459,6 +459,20 @@ class user_switching {
 				'href'   => $url,
 			) );
 		}
+
+		if ( is_author() && current_user_can( 'switch_to_user', get_queried_object_id() ) ) {
+			$url = self::switch_to_url( get_queried_object() );
+			$url = add_query_arg( array(
+				'redirect_to' => urlencode( self::current_url() ),
+			), $url );
+
+			$wp_admin_bar->add_menu( array(
+				'parent' => 'edit',
+				'id'     => 'switch-to',
+				'title'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
+				'href'   => $url,
+			) );
+		}
 	}
 
 	/**
