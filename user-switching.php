@@ -409,9 +409,6 @@ class user_switching {
 	 * @param WP_Admin_Bar $wp_admin_bar The admin bar object.
 	 */
 	public function action_admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
-		if ( ! function_exists( 'is_admin_bar_showing' ) ) {
-			return;
-		}
 		if ( ! is_admin_bar_showing() ) {
 			return;
 		}
