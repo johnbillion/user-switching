@@ -47,26 +47,27 @@ class user_switching {
 	 */
 	public function init_hooks() {
 		// Required functionality:
-		add_filter( 'user_has_cap',                    array( $this, 'filter_user_has_cap' ), 10, 4 );
-		add_filter( 'map_meta_cap',                    array( $this, 'filter_map_meta_cap' ), 10, 4 );
-		add_filter( 'user_row_actions',                array( $this, 'filter_user_row_actions' ), 10, 2 );
-		add_action( 'plugins_loaded',                  array( $this, 'action_plugins_loaded' ) );
-		add_action( 'init',                            array( $this, 'action_init' ) );
-		add_action( 'all_admin_notices',               array( $this, 'action_admin_notices' ), 1 );
-		add_action( 'wp_logout',                       'user_switching_clear_olduser_cookie' );
-		add_action( 'wp_login',                        'user_switching_clear_olduser_cookie' );
+		add_filter( 'user_has_cap',                                        array( $this, 'filter_user_has_cap' ), 10, 4 );
+		add_filter( 'map_meta_cap',                                        array( $this, 'filter_map_meta_cap' ), 10, 4 );
+		add_filter( 'user_row_actions',                                    array( $this, 'filter_user_row_actions' ), 10, 2 );
+		add_action( 'plugins_loaded',                                      array( $this, 'action_plugins_loaded' ) );
+		add_action( 'init',                                                array( $this, 'action_init' ) );
+		add_action( 'all_admin_notices',                                   array( $this, 'action_admin_notices' ), 1 );
+		add_action( 'wp_logout',                                           'user_switching_clear_olduser_cookie' );
+		add_action( 'wp_login',                                            'user_switching_clear_olduser_cookie' );
 
 		// Nice-to-haves:
-		add_filter( 'ms_user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
-		add_filter( 'login_message',                   array( $this, 'filter_login_message' ), 1 );
-		add_filter( 'removable_query_args',            array( $this, 'filter_removable_query_args' ) );
-		add_action( 'wp_meta',                         array( $this, 'action_wp_meta' ) );
-		add_action( 'wp_footer',                       array( $this, 'action_wp_footer' ) );
-		add_action( 'personal_options',                array( $this, 'action_personal_options' ) );
-		add_action( 'admin_bar_menu',                  array( $this, 'action_admin_bar_menu' ), 11 );
-		add_action( 'bp_member_header_actions',        array( $this, 'action_bp_button' ), 11 );
-		add_action( 'bp_directory_members_actions',    array( $this, 'action_bp_button' ), 11 );
-		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ) );
+		add_filter( 'ms_user_row_actions',                                 array( $this, 'filter_user_row_actions' ), 10, 2 );
+		add_filter( 'login_message',                                       array( $this, 'filter_login_message' ), 1 );
+		add_filter( 'removable_query_args',                                array( $this, 'filter_removable_query_args' ) );
+		add_action( 'wp_meta',                                             array( $this, 'action_wp_meta' ) );
+		add_action( 'wp_footer',                                           array( $this, 'action_wp_footer' ) );
+		add_action( 'personal_options',                                    array( $this, 'action_personal_options' ) );
+		add_action( 'admin_bar_menu',                                      array( $this, 'action_admin_bar_menu' ), 11 );
+		add_action( 'bp_member_header_actions',                            array( $this, 'action_bp_button' ), 11 );
+		add_action( 'bp_directory_members_actions',                        array( $this, 'action_bp_button' ), 11 );
+		add_action( 'bbp_template_after_user_details',                     array( $this, 'action_bbpress_button' ) );
+		add_action( 'wc_memberships_after_user_membership_member_details', array( $this, 'action_wc_membership_button' ) );
 	}
 
 	/**
@@ -619,6 +620,35 @@ class user_switching {
 
 		$link = add_query_arg( array(
 			'redirect_to' => urlencode( bbp_get_user_profile_url( $user->ID ) ),
+		), $link );
+
+		?>
+		<ul id="user_switching_switch_to">
+			<li><a href="<?php echo esc_url( $link ); ?>"><?php esc_html_e( 'Switch&nbsp;To', 'user-switching' ); ?></a></li>
+		</ul>
+		<?php
+	}
+	
+	/**
+	 * Adds a 'Switch To' link to user's membership screen in WooCommerce Memberships.
+	 *
+	 * @param int $user_id The user's ID.
+	 */
+	public function action_wc_membership_button( $user_id ) {
+		$user = get_userdata( $user_id );
+
+		if ( ! $user ) {
+			return;
+		}
+
+		$link = self::maybe_switch_url( $user );
+
+		if ( ! $link ) {
+			return;
+		}
+
+		$link = add_query_arg( array(
+			'redirect_to' => urlencode( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ),
 		), $link );
 
 		?>
