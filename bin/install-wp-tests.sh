@@ -79,8 +79,6 @@ install_wp() {
 		tar --strip-components=1 -zxmf $TMPDIR/wordpress.tar.gz -C $WP_CORE_DIR
 	fi
 
-	download https://raw.github.com/markoheijnen/wp-mysqli/master/db.php $WP_CORE_DIR/wp-content/db.php
-
 	cp "$WP_CORE_DIR"/wp-config-sample.php "$WP_CORE_DIR"/wp-config.php
 	sed $ioption "s/database_name_here/$DB_NAME/" "$WP_CORE_DIR"/wp-config.php
 	sed $ioption "s/username_here/$DB_USER/" "$WP_CORE_DIR"/wp-config.php
@@ -103,7 +101,6 @@ install_test_suite() {
 		# set up testing suite
 		mkdir -p $WP_TESTS_DIR
 		svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/includes/ $WP_TESTS_DIR/includes
-		svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/data/ $WP_TESTS_DIR/data
 	fi
 
 	if [ ! -f wp-tests-config.php ]; then
