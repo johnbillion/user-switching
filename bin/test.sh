@@ -14,6 +14,11 @@ if [ -z "$WP_TESTS_DIR" ]; then
 	WP_TESTS_DIR="${TMPDIR}/wordpress-tests-lib"
 fi
 
+# Specify the directory where the WordPress installation lives:
+if [ -z "$WP_CORE_DIR" ]; then
+	WP_CORE_DIR="${TMPDIR}/wordpress"
+fi
+
 # Nicer error message if the setup script hasn't been run:
 if [ ! -d "$WP_TESTS_DIR" ]; then
 	echo "Please install the test suite with the following command:"
@@ -42,6 +47,6 @@ export WP_MULTISITE=1
 profile=${1:-default}
 
 # Run functional tests:
-php -S localhost:8000 -t vendor/wordpress -d disable_functions=mail &
+php -S localhost:8000 -t "$WP_CORE_DIR" -d disable_functions=mail &
 ./vendor/bin/behat --profile="$profile"
 kill $!
