@@ -27,8 +27,8 @@
 		"genesis/behat-fail-aid": "^2.0",
 		"johnbillion/php-docs-standards": "^1.2",
 		"paulgibbs/behat-wordpress-extension": "^3.1",
+		"phpcompatibility/php-compatibility": "^9",
 		"phpunit/phpunit": "^5",
-		"wimg/php-compatibility": "^8",
 		"wp-cli/wp-cli-bundle": "^2.1",
 		"wp-coding-standards/wpcs": "1.0"
     }
