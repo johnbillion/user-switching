@@ -22,13 +22,14 @@
 		"composer/installers": "^1"
 	},
 	"require-dev" : {
-		"behat/behat": "^3",
-		"behat/mink-extension": "^2",
-		"behat/mink-goutte-driver": "^1.1",
+		"behat/mink-goutte-driver": "^1.2",
+		"behat/mink-selenium2-driver": "^1.3",
+		"genesis/behat-fail-aid": "^2.0",
 		"johnbillion/php-docs-standards": "^1.2",
-		"johnbillion/wordpress-behat-extension": "^0.1.5",
+		"paulgibbs/behat-wordpress-extension": "^3.1",
 		"phpunit/phpunit": "^5",
 		"wimg/php-compatibility": "^8",
+		"wp-cli/wp-cli-bundle": "^2.1",
 		"wp-coding-standards/wpcs": "1.0"
     }
 }

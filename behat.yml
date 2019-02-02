@@ -3,39 +3,38 @@ default:
     default:
       contexts:
         - UserSwitchingContext
-  extensions:
-    Johnbillion\WordPressExtension:
-      path: '%paths.base%/vendor/wordpress'
-      connection:
-        db: 'wordpress_test'
-        username: 'root'
-        password: 'root'
-      symlink:
-        from: '%paths.base%'
-        to: '%paths.base%/vendor/wordpress/wp-content/plugins/user-switching'
-    Behat\MinkExtension:
-      base_url:    'http://localhost:8000'
-      sessions:
-        default:
-          goutte: ~
+        - PaulGibbs\WordpressBehatExtension\Context\WordpressContext
+        - Behat\MinkExtension\Context\MinkContext
+        - PaulGibbs\WordpressBehatExtension\Context\DashboardContext
+        - PaulGibbs\WordpressBehatExtension\Context\SiteContext
+        - PaulGibbs\WordpressBehatExtension\Context\UserContext
+        - FailAid\Context\FailureContext
 
-travis:
-  suites:
-    default:
-      contexts:
-        - UserSwitchingContext
   extensions:
-    Johnbillion\WordPressExtension:
-      path: '%paths.base%/vendor/wordpress'
-      connection:
-        db: 'wordpress_test'
-        username: 'root'
-        password: ''
-      symlink:
-        from: '%paths.base%'
-        to: '%paths.base%/vendor/wordpress/wp-content/plugins/user-switching'
     Behat\MinkExtension:
       base_url:    'http://localhost:8000'
+      browser_name: chrome
+      default_session: default
+      javascript_session: selenium2
       sessions:
         default:
-          goutte: ~
+          goutte:
+            guzzle_parameters:
+              verify: false  # Allow self-signed SSL certificates
+        selenium2:
+          selenium2: ~
+
+    PaulGibbs\WordpressBehatExtension:
+      default_driver: wpcli
+      users:
+        -
+          roles:
+            - administrator
+          username: admin
+          password: admin
+      database:
+        restore_after_test: true
+      wpcli:
+          binary: ./vendor/bin/wp
+
+    FailAid\Extension: ~
