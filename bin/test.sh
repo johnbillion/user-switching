@@ -44,8 +44,6 @@ export WP_MULTISITE=1
 # Run the code sniffer:
 ./vendor/bin/phpcs -p -s --colors user-switching.php
 
-profile=${1:-default}
-
 # Run functional tests:
 php -S localhost:8000 -t "$WP_CORE_DIR" -d disable_functions=mail &
 
@@ -53,6 +51,6 @@ php -S localhost:8000 -t "$WP_CORE_DIR" -d disable_functions=mail &
 ./vendor/bin/wp core install --path="$WP_CORE_DIR" --url='http://localhost:8000' \
 	--title="Example" --admin_user="admin" --admin_password="admin" --admin_email="admin@example.com"
 BEHAT_PARAMS='{"extensions" : {"PaulGibbs\\WordpressBehatExtension" : {"path" : "'$WP_CORE_DIR'"}}}' \
-	./vendor/bin/behat --profile="$profile"
+	./vendor/bin/behat
 
 kill $!
