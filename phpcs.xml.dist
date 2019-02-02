@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="User Switching">
 
-	<config name="installed_paths" value="../../wp-coding-standards/wpcs,../../wimg/php-compatibility" />
 	<config name="testVersion" value="5.3-"/>
 
 	<exclude-pattern>*/features/*</exclude-pattern>
