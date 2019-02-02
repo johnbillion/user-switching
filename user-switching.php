@@ -263,8 +263,8 @@ class user_switching {
 	 */
 	protected static function get_redirect( WP_User $new_user = null, WP_User $old_user = null ) {
 		if ( ! empty( $_REQUEST['redirect_to'] ) ) {
-			$redirect_to           = self::remove_query_args( wp_unslash( $_REQUEST['redirect_to'] ) ); // WPCS: sanitization ok
-			$requested_redirect_to = wp_unslash( $_REQUEST['redirect_to'] ); // WPCS: sanitization ok
+			$redirect_to           = self::remove_query_args( wp_unslash( $_REQUEST['redirect_to'] ) );
+			$requested_redirect_to = wp_unslash( $_REQUEST['redirect_to'] );
 		} else {
 			$redirect_to           = '';
 			$requested_redirect_to = '';
@@ -330,7 +330,8 @@ class user_switching {
 					 * @param bool    $just_switched   Whether the user made the switch on this page request.
 					 */
 					$message = apply_filters( 'user_switching_switched_message', $message, $user, $old_user, $switch_back_url, $just_switched );
-					echo $message; // WPCS: XSS ok.
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo $message;
 				?>
 				</p>
 			</div>
@@ -556,7 +557,7 @@ class user_switching {
 				), $url );
 			} elseif ( ! empty( $_REQUEST['redirect_to'] ) ) {
 				$url = add_query_arg( array(
-					'redirect_to' => urlencode( wp_unslash( $_REQUEST['redirect_to'] ) ), // WPCS: sanitization ok
+					'redirect_to' => urlencode( wp_unslash( $_REQUEST['redirect_to'] ) ),
 				), $url );
 			}
 
@@ -989,7 +990,7 @@ if ( ! function_exists( 'user_switching_get_olduser_cookie' ) ) {
 	 */
 	function user_switching_get_olduser_cookie() {
 		if ( isset( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] ) ) {
-			return wp_unslash( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] ); // WPCS: sanitization ok
+			return wp_unslash( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] );
 		} else {
 			return false;
 		}
@@ -1010,7 +1011,7 @@ if ( ! function_exists( 'user_switching_get_auth_cookie' ) ) {
 		}
 
 		if ( isset( $_COOKIE[ $auth_cookie_name ] ) && is_string( $_COOKIE[ $auth_cookie_name ] ) ) {
-			$cookie = json_decode( wp_unslash( $_COOKIE[ $auth_cookie_name ] ) ); // WPCS: sanitization ok
+			$cookie = json_decode( wp_unslash( $_COOKIE[ $auth_cookie_name ] ) );
 		}
 		if ( ! isset( $cookie ) || ! is_array( $cookie ) ) {
 			$cookie = array();

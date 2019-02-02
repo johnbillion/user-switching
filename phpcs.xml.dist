@@ -24,9 +24,12 @@
 		<exclude name="Generic.WhiteSpace.ScopeIndent" />
 		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
 
 		<!-- These are all false positives: -->
-		<exclude name="WordPress.Security.NonceVerification.NoNonceVerification" />
+		<exclude name="WordPress.Security.NonceVerification.Recommended" />
 
 	</rule>
 
