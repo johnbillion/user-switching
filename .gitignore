@@ -3,4 +3,4 @@
 /svn
 /vendor
 /composer.lock
-/readme.txt
+/package-lock.json

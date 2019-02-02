@@ -1,0 +1,19 @@
+{
+  "name": "user-switching",
+  "version": "1.4.0",
+  "description": "WordPress plugin that provides instant switching between user accounts.",
+  "license": "GPL-2.0-or-later",
+  "author": "John Blackbourn",
+  "repository": "johnbillion/user-switching",
+  "readme_badges": [
+    "[![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/<%= pkg.name %>.svg)](https://wordpress.org/plugins/<%= pkg.name %>/)",
+    "[![License](https://img.shields.io/badge/license-GPL_v2%2B-blue.svg)](http://opensource.org/licenses/GPL-2.0)",
+    "[![WordPress Tested](https://img.shields.io/wordpress/v/<%= pkg.name %>.svg)](https://wordpress.org/plugins/<%= pkg.name %>/)",
+    "[![Build Status](https://img.shields.io/travis/<%= pkg.repository %>/master.svg)](https://travis-ci.org/<%= pkg.repository %>)"
+  ],
+  "devDependencies": {
+    "grunt": "^1",
+    "grunt-wp-readme-to-markdown": "^2.0.1",
+    "load-grunt-tasks": "^4"
+  }
+}
