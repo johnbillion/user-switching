@@ -2,11 +2,55 @@ module.exports = function(grunt) {
     'use strict';
 
     var pkg = grunt.file.readJSON('package.json');
+	var parse = require('gitignore-globs');
+	var ignore = parse('.gitignore', { negate: true } ).map(function(value) {
+		return value.replace(/^!\//,'!');
+	});
 
     require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
         pkg: pkg,
+
+		clean: {
+			main: [
+				'<%= wp_deploy.deploy.options.build_dir %>'
+			]
+        },
+
+		copy: {
+			main: {
+				src: [
+					'**',
+					'!.*',
+					'!.git/**',
+					'!<%= wp_deploy.deploy.options.assets_dir %>/**',
+					'!<%= wp_deploy.deploy.options.build_dir %>/**',
+					'!CONTRIBUTING.md',
+					'!Gruntfile.js',
+					'!readme.md',
+					'!behat.yml',
+					'!bin/**',
+					'!features/**',
+					'!package.json',
+					'!phpcs.xml.dist',
+					'!phpunit.xml.dist',
+					'!tests/**',
+					ignore
+				],
+				dest: '<%= wp_deploy.deploy.options.build_dir %>/'
+			}
+        },
+
+		wp_deploy: {
+			deploy: {
+				options: {
+					plugin_slug: '<%= pkg.name %>',
+					build_dir: 'build',
+					assets_dir: 'assets-wp-repo'
+				}
+			}
+        },
 
         wp_readme_to_markdown: {
             convert: {
