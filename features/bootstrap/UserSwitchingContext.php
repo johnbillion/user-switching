@@ -1,7 +1,4 @@
 <?php
-use Behat\Behat\Context\Context,
-	Behat\Behat\Context\SnippetAcceptingContext,
-	Behat\Gherkin\Node\TableNode;
 
 use PaulGibbs\WordpressBehatExtension\Context\RawWordpressContext as WordPressContext;
 use PaulGibbs\WordpressBehatExtension\Context\Traits\UserAwareContextTrait as UserContext;
@@ -9,7 +6,7 @@ use PaulGibbs\WordpressBehatExtension\Context\Traits\UserAwareContextTrait as Us
 /**
  * Defines application features from the specific context.
  */
-class UserSwitchingContext extends WordPressContext implements Context, SnippetAcceptingContext {
+class UserSwitchingContext extends WordPressContext {
     use UserContext;
 
 	/**
