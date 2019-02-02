@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 
     var pkg = grunt.file.readJSON('package.json');
 	var parse = require('gitignore-globs');
-	var ignore = parse('.gitignore', { negate: true } ).map(function(value) {
+	var ignored_gitignore = parse('.gitignore', { negate: true } ).map(function(value) {
 		return value.replace(/^!\//,'!');
 	});
 
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
 					'!phpcs.xml.dist',
 					'!phpunit.xml.dist',
 					'!tests/**',
-					ignore
+					ignored_gitignore
 				],
 				dest: '<%= wp_deploy.deploy.options.build_dir %>/'
 			}
