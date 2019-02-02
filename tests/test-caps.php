@@ -2,176 +2,70 @@
 
 class User_Switching_Test_Caps extends User_Switching_Test {
 
+	public function data_roles() {
+		$roles = [
+			[
+				'admin',
+				! is_multisite(),
+			],
+			[
+				'editor',
+				false,
+			],
+			[
+				'author',
+				false,
+			],
+			[
+				'contributor',
+				false,
+			],
+			[
+				'subscriber',
+				false,
+			],
+			[
+				'no_role',
+				false,
+			],
+		];
+
+		if ( is_multisite() ) {
+			$roles[] = [
+				'super',
+				true,
+			];
+		}
+
+		return $roles;
+	}
+
+	public function testAllRolesAreTested() {
+		$tested_roles = array_column( $this->data_roles(), 0 );
+
+		$this->assertSame( array_keys( self::$testers ), $tested_roles );
+		$this->assertSame( array_keys( self::$users ), $tested_roles );
+	}
+
 	/**
-	 * @group multisite
-	 * @group ms-required
+	 * @dataProvider data_roles
 	 */
-	function testSuperAdminCaps() {
-
-		# Super Admins can switch to all users:
-		$this->assertTrue( user_can( self::$testers['super']->ID, 'switch_to_user', self::$users['super']->ID ) );
-		$this->assertTrue( user_can( self::$testers['super']->ID, 'switch_to_user', self::$users['admin']->ID ) );
-		$this->assertTrue( user_can( self::$testers['super']->ID, 'switch_to_user', self::$users['editor']->ID ) );
-		$this->assertTrue( user_can( self::$testers['super']->ID, 'switch_to_user', self::$users['author']->ID ) );
-		$this->assertTrue( user_can( self::$testers['super']->ID, 'switch_to_user', self::$users['contributor']->ID ) );
-		$this->assertTrue( user_can( self::$testers['super']->ID, 'switch_to_user', self::$users['subscriber']->ID ) );
-		$this->assertTrue( user_can( self::$testers['super']->ID, 'switch_to_user', self::$users['no_role']->ID ) );
-
-		# Super Admins cannot switch to themselves:
-		$this->assertFalse( user_can( self::$testers['super']->ID, 'switch_to_user', self::$testers['super']->ID ) );
-
-		# Super Admins can switch off:
-		$this->assertTrue( user_can( self::$testers['super']->ID, 'switch_off' ) );
-
-	}
-
-	function testAdminCaps() {
-
-		if ( is_multisite() ) {
-
-			# Admins cannot switch to other users:
-			$this->assertFalse( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['super']->ID ) );
-			$this->assertFalse( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['admin']->ID ) );
-			$this->assertFalse( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['editor']->ID ) );
-			$this->assertFalse( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID ) );
-			$this->assertFalse( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['contributor']->ID ) );
-			$this->assertFalse( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['subscriber']->ID ) );
-			$this->assertFalse( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['no_role']->ID ) );
-
-			# Admins cannot switch to themselves:
-			$this->assertFalse( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$testers['admin']->ID ) );
-
-			# Admins cannot switch off:
-			$this->assertFalse( user_can( self::$testers['admin']->ID, 'switch_off' ) );
-
-		} else {
-
-			# Admins can switch to all users:
-			$this->assertTrue( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['admin']->ID ) );
-			$this->assertTrue( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['editor']->ID ) );
-			$this->assertTrue( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID ) );
-			$this->assertTrue( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['contributor']->ID ) );
-			$this->assertTrue( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['subscriber']->ID ) );
-			$this->assertTrue( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['no_role']->ID ) );
-
-			# Admins cannot switch to themselves:
-			$this->assertFalse( user_can( self::$testers['admin']->ID, 'switch_to_user', self::$testers['admin']->ID ) );
-
-			# Admins can switch off:
-			$this->assertTrue( user_can( self::$testers['admin']->ID, 'switch_off' ) );
-
+	public function testUserCanOrCannotSwitchAccordingToRole( string $role, bool $can_switch ) {
+		foreach ( self::$users as $user_role => $user ) {
+			if ( self::$testers[ $role ]->ID === $user->ID ) {
+				# No user can switch to themselves:
+				$this->assertFalse( user_can( self::$testers[ $role ]->ID, 'switch_to_user', $user->ID ), 'User should not be able to switch to themselves' );
+			} else {
+				# Can the user switch?
+				$this->assertSame( $can_switch, user_can( self::$testers[ $role ]->ID, 'switch_to_user', $user->ID ), sprintf(
+					'Broken user switching capability. Destination role: %s',
+					$user_role
+				) );
+			}
 		}
 
-	}
-
-	function testEditorCaps() {
-
-		# Editors cannot switch to other users:
-		$this->assertFalse( user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['admin']->ID ) );
-		$this->assertFalse( user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['editor']->ID ) );
-		$this->assertFalse( user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['author']->ID ) );
-		$this->assertFalse( user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['contributor']->ID ) );
-		$this->assertFalse( user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['subscriber']->ID ) );
-		$this->assertFalse( user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['no_role']->ID ) );
-
-		if ( is_multisite() ) {
-			$this->assertFalse( user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['super']->ID ) );
-		}
-
-		# Editors cannot switch to themselves:
-		$this->assertFalse( user_can( self::$testers['editor']->ID, 'switch_to_user', self::$testers['editor']->ID ) );
-
-		# Editors cannot switch off:
-		$this->assertFalse( user_can( self::$testers['editor']->ID, 'switch_off' ) );
-
-	}
-
-	function testAuthorCaps() {
-
-		# Authors cannot switch to other users:
-		$this->assertFalse( user_can( self::$testers['author']->ID, 'switch_to_user', self::$users['admin']->ID ) );
-		$this->assertFalse( user_can( self::$testers['author']->ID, 'switch_to_user', self::$users['editor']->ID ) );
-		$this->assertFalse( user_can( self::$testers['author']->ID, 'switch_to_user', self::$users['author']->ID ) );
-		$this->assertFalse( user_can( self::$testers['author']->ID, 'switch_to_user', self::$users['contributor']->ID ) );
-		$this->assertFalse( user_can( self::$testers['author']->ID, 'switch_to_user', self::$users['subscriber']->ID ) );
-		$this->assertFalse( user_can( self::$testers['author']->ID, 'switch_to_user', self::$users['no_role']->ID ) );
-
-		if ( is_multisite() ) {
-			$this->assertFalse( user_can( self::$testers['author']->ID, 'switch_to_user', self::$users['super']->ID ) );
-		}
-
-		# Authors cannot switch to themselves:
-		$this->assertFalse( user_can( self::$testers['author']->ID, 'switch_to_user', self::$testers['author']->ID ) );
-
-		# Authors cannot switch off:
-		$this->assertFalse( user_can( self::$testers['author']->ID, 'switch_off' ) );
-
-	}
-
-	function testContributorCaps() {
-
-		# Contributors cannot switch to other users:
-		$this->assertFalse( user_can( self::$testers['contributor']->ID, 'switch_to_user', self::$users['admin']->ID ) );
-		$this->assertFalse( user_can( self::$testers['contributor']->ID, 'switch_to_user', self::$users['editor']->ID ) );
-		$this->assertFalse( user_can( self::$testers['contributor']->ID, 'switch_to_user', self::$users['author']->ID ) );
-		$this->assertFalse( user_can( self::$testers['contributor']->ID, 'switch_to_user', self::$users['contributor']->ID ) );
-		$this->assertFalse( user_can( self::$testers['contributor']->ID, 'switch_to_user', self::$users['subscriber']->ID ) );
-		$this->assertFalse( user_can( self::$testers['contributor']->ID, 'switch_to_user', self::$users['no_role']->ID ) );
-
-		if ( is_multisite() ) {
-			$this->assertFalse( user_can( self::$testers['contributor']->ID, 'switch_to_user', self::$users['super']->ID ) );
-		}
-
-		# Contributors cannot switch to themselves:
-		$this->assertFalse( user_can( self::$testers['contributor']->ID, 'switch_to_user', self::$testers['contributor']->ID ) );
-
-		# Contributors cannot switch off:
-		$this->assertFalse( user_can( self::$testers['contributor']->ID, 'switch_off' ) );
-
-	}
-
-	function testSubscriberCaps() {
-
-		# Subscribers cannot switch to other users:
-		$this->assertFalse( user_can( self::$testers['subscriber']->ID, 'switch_to_user', self::$users['admin']->ID ) );
-		$this->assertFalse( user_can( self::$testers['subscriber']->ID, 'switch_to_user', self::$users['editor']->ID ) );
-		$this->assertFalse( user_can( self::$testers['subscriber']->ID, 'switch_to_user', self::$users['author']->ID ) );
-		$this->assertFalse( user_can( self::$testers['subscriber']->ID, 'switch_to_user', self::$users['contributor']->ID ) );
-		$this->assertFalse( user_can( self::$testers['subscriber']->ID, 'switch_to_user', self::$users['subscriber']->ID ) );
-		$this->assertFalse( user_can( self::$testers['subscriber']->ID, 'switch_to_user', self::$users['no_role']->ID ) );
-
-		if ( is_multisite() ) {
-			$this->assertFalse( user_can( self::$testers['subscriber']->ID, 'switch_to_user', self::$users['super']->ID ) );
-		}
-
-		# Subscribers cannot switch to themselves:
-		$this->assertFalse( user_can( self::$testers['subscriber']->ID, 'switch_to_user', self::$testers['subscriber']->ID ) );
-
-		# Subscribers cannot switch off:
-		$this->assertFalse( user_can( self::$testers['subscriber']->ID, 'switch_off' ) );
-
-	}
-
-	function testNoRoleCaps() {
-
-		# Users with no role cannot switch to other users:
-		$this->assertFalse( user_can( self::$testers['no_role']->ID, 'switch_to_user', self::$users['admin']->ID ) );
-		$this->assertFalse( user_can( self::$testers['no_role']->ID, 'switch_to_user', self::$users['editor']->ID ) );
-		$this->assertFalse( user_can( self::$testers['no_role']->ID, 'switch_to_user', self::$users['author']->ID ) );
-		$this->assertFalse( user_can( self::$testers['no_role']->ID, 'switch_to_user', self::$users['contributor']->ID ) );
-		$this->assertFalse( user_can( self::$testers['no_role']->ID, 'switch_to_user', self::$users['subscriber']->ID ) );
-		$this->assertFalse( user_can( self::$testers['no_role']->ID, 'switch_to_user', self::$users['no_role']->ID ) );
-
-		if ( is_multisite() ) {
-			$this->assertFalse( user_can( self::$testers['no_role']->ID, 'switch_to_user', self::$users['super']->ID ) );
-		}
-
-		# Users with no role cannot switch to themselves:
-		$this->assertFalse( user_can( self::$testers['no_role']->ID, 'switch_to_user', self::$testers['no_role']->ID ) );
-
-		# Users with no role cannot switch off:
-		$this->assertFalse( user_can( self::$testers['no_role']->ID, 'switch_off' ) );
-
+		# Can the user switch off?
+		$this->assertSame( $can_switch, user_can( self::$testers[ $role ]->ID, 'switch_off' ) );
 	}
 
 	public function testAbilityToSwitchUsersCanBeGrantedToUser() {
