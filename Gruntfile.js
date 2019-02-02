@@ -7,6 +7,36 @@ module.exports = function(grunt) {
 		return value.replace(/^!\//,'!');
 	});
 
+    // Parse a .gitattributes file and return its glob patterns as an array.
+    function parse_list(file, options) {
+        var options = options || {};
+        options.negate = options.negate || false;
+
+        var fs = require('fs');
+        var content = fs.readFileSync(file).toString();
+        var patterns = content.split('\n');
+
+        patterns = patterns.filter(function(pattern) {
+            return / export-ignore$/.test( pattern.trim() );
+        });
+
+        patterns = patterns.map(function(pattern) {
+            return pattern.trim().replace( / export-ignore$/, '' ).trim();
+        });
+
+        patterns = parse._prepare(patterns);
+        var globs = parse._map(patterns);
+        if (options.negate) {
+            globs = parse._negate(globs);
+        }
+
+        return globs;
+    }
+
+    var ignored_gitattributes = parse_list( '.gitattributes', { negate: true } ).map(function(value) {
+		return value.replace(/^!\//,'!');
+    });
+
     require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
@@ -26,17 +56,9 @@ module.exports = function(grunt) {
 					'!.git/**',
 					'!<%= wp_deploy.deploy.options.assets_dir %>/**',
 					'!<%= wp_deploy.deploy.options.build_dir %>/**',
-					'!CONTRIBUTING.md',
-					'!Gruntfile.js',
 					'!readme.md',
-					'!behat.yml',
-					'!bin/**',
-					'!features/**',
-					'!package.json',
-					'!phpcs.xml.dist',
-					'!phpunit.xml.dist',
-					'!tests/**',
-					ignored_gitignore
+					ignored_gitignore,
+					ignored_gitattributes
 				],
 				dest: '<%= wp_deploy.deploy.options.build_dir %>/'
 			}
