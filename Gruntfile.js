@@ -3,37 +3,11 @@ module.exports = function(grunt) {
 
     var pkg = grunt.file.readJSON('package.json');
 	var parse = require('gitignore-globs');
+	var ga = require('gitattributes-globs');
 	var ignored_gitignore = parse('.gitignore', { negate: true } ).map(function(value) {
 		return value.replace(/^!\//,'!');
 	});
-
-    // Parse a .gitattributes file and return its glob patterns as an array.
-    function parse_list(file, options) {
-        var options = options || {};
-        options.negate = options.negate || false;
-
-        var fs = require('fs');
-        var content = fs.readFileSync(file).toString();
-        var patterns = content.split('\n');
-
-        patterns = patterns.filter(function(pattern) {
-            return / export-ignore$/.test( pattern.trim() );
-        });
-
-        patterns = patterns.map(function(pattern) {
-            return pattern.trim().replace( / export-ignore$/, '' ).trim();
-        });
-
-        patterns = parse._prepare(patterns);
-        var globs = parse._map(patterns);
-        if (options.negate) {
-            globs = parse._negate(globs);
-        }
-
-        return globs;
-    }
-
-    var ignored_gitattributes = parse_list( '.gitattributes', { negate: true } ).map(function(value) {
+    var ignored_gitattributes = ga( '.gitattributes', { negate: true } ).map(function(value) {
 		return value.replace(/^!\//,'!');
     });
 
