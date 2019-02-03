@@ -58,7 +58,7 @@ module.exports = function(grunt) {
                     'post_convert': function( readme ) {
                         // Banner
                         if ( grunt.file.exists( 'assets-wp-repo/banner-1544x500.png' ) ) {
-                            readme = readme.replace( '**Contributors:**', '![Banner Image](assets-wp-repo/banner-1544x500.png)\r\n\r\n**Contributors:**' );
+                            readme = readme.replace( '**Contributors:**', '![Banner Image](assets-wp-repo/banner-1544x500.png)\n\n**Contributors:**' );
                         }
 
                         // Badges
