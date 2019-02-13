@@ -461,7 +461,7 @@ class user_switching {
 			) );
 		}
 
-		if ( is_author() ) {
+		if ( ! is_admin() && is_author() ) {
 			if ( $old_user ) {
 				$wp_admin_bar->add_menu( array(
 					'parent' => 'edit',
