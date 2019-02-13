@@ -149,4 +149,14 @@ module.exports = function(grunt) {
 		]);
 	});
 
+	grunt.registerTask('build', [
+		'clean',
+		'copy'
+	]);
+
+	grunt.registerTask('deploy', [
+		'build',
+		'wp_deploy'
+	]);
+
 };
