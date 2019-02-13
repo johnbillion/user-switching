@@ -10,19 +10,17 @@ module.exports = function(grunt) {
     var ignored_gitattributes = ga( '.gitattributes', { negate: true } ).map(function(value) {
 		return value.replace(/^!\//,'!');
     });
+	var config = {};
 
-    require('load-grunt-tasks')(grunt);
+    config.pkg = pkg;
 
-    grunt.initConfig({
-        pkg: pkg,
-
-		clean: {
+	config.clean = {
 			main: [
 				'<%= wp_deploy.deploy.options.build_dir %>'
 			]
-        },
+	};
 
-		copy: {
+	config.copy = {
 			main: {
 				src: [
 					'**',
@@ -36,9 +34,9 @@ module.exports = function(grunt) {
 				],
 				dest: '<%= wp_deploy.deploy.options.build_dir %>/'
 			}
-        },
+	};
 
-		gitstatus: {
+	config.gitstatus = {
 			require_clean: {
 				options: {
 					callback: function( result ) {
@@ -50,9 +48,9 @@ module.exports = function(grunt) {
 					}
 				}
 			}
-		},
+	};
 
-		version: {
+	config.version = {
 			main: {
 				options: {
 					prefix: 'Version:[\\s]+'
@@ -74,9 +72,9 @@ module.exports = function(grunt) {
 					'package.json'
 				]
 			}
-		},
+	};
 
-		wp_deploy: {
+	config.wp_deploy = {
 			deploy: {
 				options: {
 					svn_user: 'johnbillion',
@@ -85,9 +83,9 @@ module.exports = function(grunt) {
 					assets_dir: 'assets-wp-repo'
 				}
 			}
-        },
+	};
 
-        wp_readme_to_markdown: {
+    config.wp_readme_to_markdown = {
             convert: {
                 files: {
                     'readme.md': 'readme.txt'
@@ -107,8 +105,11 @@ module.exports = function(grunt) {
                     }
                 }
             }
-        }
-	});
+	};
+
+    require('load-grunt-tasks')(grunt);
+
+	grunt.initConfig(config);
 
 	grunt.registerTask('bump', function(version) {
 		if ( ! version ) {
