@@ -107,6 +107,22 @@ module.exports = function(grunt) {
 		}
 	};
 
+	config.gitcommit = {
+		version: {
+			options: {
+				message: 'Version <%= grunt.file.readJSON("package.json").version %>'
+			},
+			files: {
+				src: [
+					Object.keys(config.version).map(function(key){
+						return config.version[ key ].src;
+					}),
+					'readme.md'
+				]
+			}
+		}
+	};
+
     require('load-grunt-tasks')(grunt);
 
 	grunt.initConfig(config);
@@ -119,7 +135,8 @@ module.exports = function(grunt) {
 		grunt.task.run([
 			'gitstatus:require_clean',
 			'version::' + version,
-			'wp_readme_to_markdown'
+			'wp_readme_to_markdown',
+			'gitcommit:version'
 		]);
 	});
 
