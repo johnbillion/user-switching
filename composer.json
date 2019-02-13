@@ -32,5 +32,10 @@
 		"phpunit/phpunit": "^5",
 		"wp-cli/wp-cli-bundle": "^2.1",
 		"wp-coding-standards/wpcs": "^2"
-    }
+	},
+	"scripts": {
+		"test": [
+			"bin/test.sh"
+		]
+	}
 }

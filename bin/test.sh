@@ -29,11 +29,11 @@ fi
 
 # Run single-site unit tests:
 export WP_MULTISITE=0
-./vendor/bin/phpunit -v --exclude-group=ms-required
+./vendor/bin/phpunit -v --colors=always --exclude-group=ms-required
 
 # Run Multisite unit tests:
 export WP_MULTISITE=1
-./vendor/bin/phpunit -v --exclude-group=ms-excluded
+./vendor/bin/phpunit -v --colors=always --exclude-group=ms-excluded
 
 # Run the code sniffer:
 ./vendor/bin/phpcs -p -s --colors user-switching.php
@@ -41,10 +41,10 @@ export WP_MULTISITE=1
 # Run functional tests:
 php -S localhost:8000 -t "$WP_CORE_DIR" -d disable_functions=mail &
 
-./vendor/bin/wp db reset --yes --path="$WP_CORE_DIR"
-./vendor/bin/wp core install --path="$WP_CORE_DIR" --url='http://localhost:8000' \
+./vendor/bin/wp db reset --yes --color --path="$WP_CORE_DIR"
+./vendor/bin/wp core install --color --path="$WP_CORE_DIR" --url='http://localhost:8000' \
 	--title="Example" --admin_user="admin" --admin_password="admin" --admin_email="admin@example.com"
 BEHAT_PARAMS='{"extensions" : {"PaulGibbs\\WordpressBehatExtension" : {"path" : "'$WP_CORE_DIR'"}}}' \
-	./vendor/bin/behat
+	./vendor/bin/behat --colors
 
 kill $!
