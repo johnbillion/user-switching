@@ -53,11 +53,6 @@ module.exports = function(grunt) {
 		},
 
 		version: {
-			pkg: {
-				src: [
-					'package.json'
-				]
-			},
 			main: {
 				options: {
 					prefix: 'Version:[\\s]+'
@@ -72,6 +67,11 @@ module.exports = function(grunt) {
 				},
 				src: [
 					'readme.txt'
+				]
+			},
+			pkg: {
+				src: [
+					'package.json'
 				]
 			}
 		},
