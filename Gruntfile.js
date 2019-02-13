@@ -38,6 +38,44 @@ module.exports = function(grunt) {
 			}
         },
 
+		gitstatus: {
+			require_clean: {
+				options: {
+					callback: function( result ) {
+						result.forEach(function(status){
+							if ( 'M' === status.code[1] ) {
+								grunt.fail.fatal('Git working directory not clean.');
+							}
+						});
+					}
+				}
+			}
+		},
+
+		version: {
+			pkg: {
+				src: [
+					'package.json'
+				]
+			},
+			main: {
+				options: {
+					prefix: 'Version:[\\s]+'
+				},
+				src: [
+					'<%= pkg.name %>.php'
+				]
+			},
+			readme: {
+				options: {
+					prefix: 'Stable tag:[\\s]+'
+				},
+				src: [
+					'readme.txt'
+				]
+			}
+		},
+
 		wp_deploy: {
 			deploy: {
 				options: {
@@ -70,5 +108,18 @@ module.exports = function(grunt) {
                 }
             }
         }
-    });
+	});
+
+	grunt.registerTask('bump', function(version) {
+		if ( ! version ) {
+			grunt.fail.fatal( 'No version specified. Usage: bump:major, bump:minor, bump:patch, bump:x.y.z' );
+		}
+
+		grunt.task.run([
+			'gitstatus:require_clean',
+			'version::' + version,
+			'wp_readme_to_markdown'
+		]);
+	});
+
 };
