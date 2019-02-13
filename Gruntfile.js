@@ -15,96 +15,96 @@ module.exports = function(grunt) {
     config.pkg = pkg;
 
 	config.clean = {
-			main: [
-				'<%= wp_deploy.deploy.options.build_dir %>'
-			]
+		main: [
+			'<%= wp_deploy.deploy.options.build_dir %>'
+		]
 	};
 
 	config.copy = {
-			main: {
-				src: [
-					'**',
-					'!.*',
-					'!.git/**',
-					'!<%= wp_deploy.deploy.options.assets_dir %>/**',
-					'!<%= wp_deploy.deploy.options.build_dir %>/**',
-					'!readme.md',
-					ignored_gitignore,
-					ignored_gitattributes
-				],
-				dest: '<%= wp_deploy.deploy.options.build_dir %>/'
-			}
+		main: {
+			src: [
+				'**',
+				'!.*',
+				'!.git/**',
+				'!<%= wp_deploy.deploy.options.assets_dir %>/**',
+				'!<%= wp_deploy.deploy.options.build_dir %>/**',
+				'!readme.md',
+				ignored_gitignore,
+				ignored_gitattributes
+			],
+			dest: '<%= wp_deploy.deploy.options.build_dir %>/'
+		}
 	};
 
 	config.gitstatus = {
-			require_clean: {
-				options: {
-					callback: function( result ) {
-						result.forEach(function(status){
-							if ( 'M' === status.code[1] ) {
-								grunt.fail.fatal('Git working directory not clean.');
-							}
-						});
-					}
+		require_clean: {
+			options: {
+				callback: function( result ) {
+					result.forEach(function(status){
+						if ( 'M' === status.code[1] ) {
+							grunt.fail.fatal('Git working directory not clean.');
+						}
+					});
 				}
 			}
+		}
 	};
 
 	config.version = {
-			main: {
-				options: {
-					prefix: 'Version:[\\s]+'
-				},
-				src: [
-					'<%= pkg.name %>.php'
-				]
+		main: {
+			options: {
+				prefix: 'Version:[\\s]+'
 			},
-			readme: {
-				options: {
-					prefix: 'Stable tag:[\\s]+'
-				},
-				src: [
-					'readme.txt'
-				]
+			src: [
+				'<%= pkg.name %>.php'
+			]
+		},
+		readme: {
+			options: {
+				prefix: 'Stable tag:[\\s]+'
 			},
-			pkg: {
-				src: [
-					'package.json'
-				]
-			}
+			src: [
+				'readme.txt'
+			]
+		},
+		pkg: {
+			src: [
+				'package.json'
+			]
+		}
 	};
 
 	config.wp_deploy = {
-			deploy: {
-				options: {
-					svn_user: 'johnbillion',
-					plugin_slug: '<%= pkg.name %>',
-					build_dir: 'build',
-					assets_dir: 'assets-wp-repo'
-				}
+		deploy: {
+			options: {
+				svn_user: 'johnbillion',
+				plugin_slug: '<%= pkg.name %>',
+				build_dir: 'build',
+				assets_dir: 'assets-wp-repo'
 			}
+		}
 	};
 
     config.wp_readme_to_markdown = {
-            convert: {
-                files: {
-                    'readme.md': 'readme.txt'
-                },
-                options: {
-                    'screenshot_url': 'assets-wp-repo/{screenshot}.png',
-                    'post_convert': function( readme ) {
-                        // Banner
-                        if ( grunt.file.exists( 'assets-wp-repo/banner-1544x500.png' ) ) {
-                            readme = readme.replace( '**Contributors:**', '![Banner Image](assets-wp-repo/banner-1544x500.png)\n\n**Contributors:**' );
-                        }
+		convert: {
+			files: {
+				'readme.md': 'readme.txt'
+			},
+			options: {
+				'screenshot_url': 'assets-wp-repo/{screenshot}.png',
+				'post_convert': function( readme ) {
+					// Banner
+					if ( grunt.file.exists( 'assets-wp-repo/banner-1544x500.png' ) ) {
+						readme = readme.replace( '**Contributors:**', '![Banner Image](assets-wp-repo/banner-1544x500.png)\n\n**Contributors:**' );
+					}
 
-                        // Badges
-                        readme = grunt.template.process( pkg.readme_badges.join( '\n' ) ) + '\n\n' + readme;
+					// Badges
+					readme = grunt.template.process( pkg.readme_badges.join( '\n' ) ) + '\n\n' + readme;
 
-                        return readme;
-                    }
-                }
-            }
+					return readme;
+				}
+			}
+		}
 	};
 
     require('load-grunt-tasks')(grunt);
