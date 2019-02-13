@@ -123,6 +123,14 @@ module.exports = function(grunt) {
 		}
 	};
 
+	config.gittag = {
+		version: {
+			options: {
+				tag: '<%= grunt.file.readJSON("package.json").version %>'
+			}
+		}
+	};
+
     require('load-grunt-tasks')(grunt);
 
 	grunt.initConfig(config);
@@ -136,7 +144,8 @@ module.exports = function(grunt) {
 			'gitstatus:require_clean',
 			'version::' + version,
 			'wp_readme_to_markdown',
-			'gitcommit:version'
+			'gitcommit:version',
+			'gittag:version'
 		]);
 	});
 
