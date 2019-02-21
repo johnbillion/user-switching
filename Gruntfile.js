@@ -20,6 +20,42 @@ module.exports = function(grunt) {
 		]
 	};
 
+	config['convert-svg-to-png'] = {
+		normal: {
+			options: {
+				size: {
+					w: '128px',
+					h: '128px'
+				}
+			},
+			files: [
+				{
+					expand: true,
+					src: [
+						'assets-wp-repo/icon.svg'
+					],
+					dest: 'assets-wp-repo/128'
+				}
+			]
+		},
+		retina: {
+			options: {
+				size: {
+					w: '256px',
+					h: '256px'
+				}
+			},
+			files: [
+				{
+					src: [
+						'assets-wp-repo/icon.svg'
+					],
+					dest: 'assets-wp-repo/256'
+				}
+			]
+		}
+	};
+
 	config.copy = {
 		main: {
 			src: [
@@ -46,6 +82,18 @@ module.exports = function(grunt) {
 						}
 					});
 				}
+			}
+		}
+	};
+
+	config.rename = {
+		icons:{
+			expand: true,
+			src: [
+				'assets-wp-repo/*/icon.png'
+			],
+			rename: function (dest,src) {
+				return src.replace(/assets-wp-repo\/(\d+)\/icon.png/,'assets-wp-repo/icon-$1x$1.png');
 			}
 		}
 	};
@@ -148,6 +196,11 @@ module.exports = function(grunt) {
 			'gittag:version'
 		]);
 	});
+
+	grunt.registerTask('icons', [
+		'convert-svg-to-png',
+		'rename:icons'
+	]);
 
 	grunt.registerTask('build', [
 		'clean',
