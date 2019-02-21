@@ -1,13 +1,15 @@
 module.exports = function(grunt) {
     'use strict';
 
+	require('load-grunt-tasks')(grunt);
+
     var pkg = grunt.file.readJSON('package.json');
-	var parse = require('gitignore-globs');
-	var ga = require('gitattributes-globs');
-	var ignored_gitignore = parse('.gitignore', { negate: true } ).map(function(value) {
+	var gig = require('gitignore-globs');
+	var gag = require('gitattributes-globs');
+	var ignored_gitignore = gig('.gitignore', { negate: true } ).map(function(value) {
 		return value.replace(/^!\//,'!');
 	});
-    var ignored_gitattributes = ga( '.gitattributes', { negate: true } ).map(function(value) {
+    var ignored_gitattributes = gag( '.gitattributes', { negate: true } ).map(function(value) {
 		return value.replace(/^!\//,'!');
     });
 	var config = {};
@@ -130,8 +132,6 @@ module.exports = function(grunt) {
 			}
 		}
 	};
-
-    require('load-grunt-tasks')(grunt);
 
 	grunt.initConfig(config);
 
