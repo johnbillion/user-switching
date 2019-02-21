@@ -775,6 +775,23 @@ class user_switching {
 	}
 
 	/**
+	 * Instructs WooCommerce to forget the session for the current user, without deleting it.
+	 *
+	 * @param WooCommerce $wc The WooCommerce instance.
+	 */
+	public static function forget_woocommerce_session( WooCommerce $wc ) {
+		if ( ! property_exists( $wc, 'session' ) ) {
+			return false;
+		}
+
+		if ( ! method_exists( $wc->session, 'forget_session' ) ) {
+			return false;
+		}
+
+		$wc->session->forget_session();
+	}
+
+	/**
 	 * Filters a user's capabilities so they can be altered at runtime.
 	 *
 	 * This is used to:
@@ -1107,6 +1124,11 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 			// When switching back, destroy the session for the old user
 			$manager = WP_Session_Tokens::get_instance( $old_user_id );
 			$manager->destroy( $old_token );
+		}
+
+		// When switching, instruct WooCommerce to forget about the current user's session
+		if ( function_exists( 'WC' ) ) {
+			user_switching::forget_woocommerce_session( WC() );
 		}
 
 		return $user;
