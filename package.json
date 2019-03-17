@@ -1,7 +1,7 @@
 {
   "name": "user-switching",
   "version": "1.4.2",
-  "description": "WordPress plugin that provides instant switching between user accounts.",
+  "description": "Instant switching between user accounts in WordPress.",
   "license": "GPL-2.0-or-later",
   "author": "John Blackbourn",
   "repository": "johnbillion/user-switching",
@@ -21,7 +21,7 @@
     "grunt-git": "^1",
     "grunt-rename-util": "^1",
     "grunt-version": "^1",
-    "grunt-wp-deploy": "git+ssh://git@github.com:johnbillion/grunt-wp-deploy.git#feature/remote-tag-copy",
+    "grunt-wp-deploy": "git+https://github.com/johnbillion/grunt-wp-deploy.git#master",
     "grunt-wp-readme-to-markdown": "^2",
     "load-grunt-tasks": "^4"
   }

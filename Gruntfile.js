@@ -1,13 +1,15 @@
 module.exports = function(grunt) {
     'use strict';
 
+	require('load-grunt-tasks')(grunt);
+
     var pkg = grunt.file.readJSON('package.json');
-	var parse = require('gitignore-globs');
-	var ga = require('gitattributes-globs');
-	var ignored_gitignore = parse('.gitignore', { negate: true } ).map(function(value) {
+	var gig = require('gitignore-globs');
+	var gag = require('gitattributes-globs');
+	var ignored_gitignore = gig('.gitignore', { negate: true } ).map(function(value) {
 		return value.replace(/^!\//,'!');
 	});
-    var ignored_gitattributes = ga( '.gitattributes', { negate: true } ).map(function(value) {
+    var ignored_gitattributes = gag( '.gitattributes', { negate: true } ).map(function(value) {
 		return value.replace(/^!\//,'!');
     });
 	var config = {};
@@ -125,10 +127,32 @@ module.exports = function(grunt) {
 	config.wp_deploy = {
 		deploy: {
 			options: {
-				svn_user: 'johnbillion',
+				deploy_trunk: true,
+				deploy_tag: true,
 				plugin_slug: '<%= pkg.name %>',
 				build_dir: 'build',
 				assets_dir: 'assets-wp-repo'
+			}
+		},
+		assets: {
+			options: {
+				deploy_trunk: false,
+				deploy_tag: false,
+				plugin_slug: '<%= pkg.name %>',
+				build_dir: '<%= wp_deploy.deploy.options.build_dir %>',
+				assets_dir: '<%= wp_deploy.deploy.options.assets_dir %>'
+			}
+		},
+		ci: {
+			options: {
+				skip_confirmation: true,
+				force_interactive: false,
+				deploy_trunk: true,
+				deploy_tag: true,
+				svn_user: 'johnbillion',
+				plugin_slug: '<%= pkg.name %>',
+				build_dir: '<%= wp_deploy.deploy.options.build_dir %>',
+				assets_dir: '<%= wp_deploy.deploy.options.assets_dir %>'
 			}
 		}
 	};
@@ -179,8 +203,6 @@ module.exports = function(grunt) {
 		}
 	};
 
-    require('load-grunt-tasks')(grunt);
-
 	grunt.initConfig(config);
 
 	grunt.registerTask('bump', function(version) {
@@ -210,6 +232,16 @@ module.exports = function(grunt) {
 	grunt.registerTask('deploy', [
 		'build',
 		'wp_deploy'
+	]);
+
+	grunt.registerTask('deploy:assets', [
+		'build',
+		'wp_deploy:assets'
+	]);
+
+	grunt.registerTask('deploy:ci', [
+		'build',
+		'wp_deploy:ci'
 	]);
 
 };

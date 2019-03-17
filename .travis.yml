@@ -16,10 +16,28 @@ php:
     - 7.2
 
 env:
+  global:
+    # WPORG_PASSWORD
+    - secure: "EqtfI7W2K0H1Zpx8Kb0qTQAz6HNnJj6fupjXJkWhlzt4z79VM8TRuSn3fzbSwJtkHWNwp2jfR/wTu4SVCmlNwMUWSV5fpMGDXBxksWm6SqGjWw8rF2L746btfgoqnAVie1Vw2q6Y7A1opNnwTA29cgEZmoZjHV1DvED4BtXyxdE="
+  matrix:
     # nightly:
     - WP_VERSION=nightly
     # latest stable:
     - WP_VERSION=latest
+jobs:
+  include:
+    - stage: deploy
+      if: tag IS present
+      before_script:
+        - npm install -g grunt-cli
+        - npm install
+      script: skip
+      deploy:
+        - provider: script
+          skip_cleanup: true
+          script: grunt deploy:ci
+          on:
+            tags: true
 
 matrix:
     fast_finish: true
@@ -31,10 +49,7 @@ before_install:
       fi
 
 install:
-    - travis_retry composer install
-
-before_script:
-    - php --version
+    - travis_retry composer install --no-suggest
     - travis_retry bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 script:
