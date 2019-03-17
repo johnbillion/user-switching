@@ -16,12 +16,6 @@ module.exports = function(grunt) {
 
     config.pkg = pkg;
 
-	config.clean = {
-		main: [
-			'<%= wp_deploy.deploy.options.build_dir %>'
-		]
-	};
-
 	config['convert-svg-to-png'] = {
 		normal: {
 			options: {
@@ -56,6 +50,15 @@ module.exports = function(grunt) {
 				}
 			]
 		}
+	};
+
+	config.clean = {
+		main: [
+			'<%= wp_deploy.deploy.options.build_dir %>'
+		],
+		icons: Object.keys(config['convert-svg-to-png']).map(function(key){
+			return config['convert-svg-to-png'][ key ].files[0].dest;
+		})
 	};
 
 	config.copy = {
@@ -221,7 +224,8 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('icons', [
 		'convert-svg-to-png',
-		'rename:icons'
+		'rename:icons',
+		'clean:icons'
 	]);
 
 	grunt.registerTask('build', [
