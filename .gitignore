@@ -1,6 +1,8 @@
 /build
 /node_modules
 /svn
+/tests/wordpress
 /vendor
+
 /composer.lock
 /package-lock.json

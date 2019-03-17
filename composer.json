@@ -19,7 +19,7 @@
 		"sort-packages": true
 	},
 	"extra": {
-		"wordpress-install-dir": "vendor/wordpress/wordpress"
+		"wordpress-install-dir": "tests/wordpress"
 	},
 	"require": {
 		"composer/installers": "^1"
