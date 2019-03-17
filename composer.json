@@ -40,8 +40,20 @@
 		"wp-phpunit/wp-phpunit": "*"
 	},
 	"scripts": {
-		"test": [
+		"test:cs": [
+			"vendor/bin/phpcs -nps --colors --report-code --report-summary --report-width=80 ."
+		],
+		"test:ut": [
+			"export WP_MULTISITE=0 && vendor/bin/phpunit --verbose --colors=always --exclude-group=ms-required",
+			"export WP_MULTISITE=1 && vendor/bin/phpunit --verbose --colors=always --exclude-group=ms-excluded"
+		],
+		"test:ft": [
 			"bin/test.sh"
+		],
+		"test": [
+			"@test:cs",
+			"@test:ut",
+			"@test:ft"
 		]
 	}
 }
