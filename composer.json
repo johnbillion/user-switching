@@ -18,6 +18,9 @@
 	"config": {
 		"sort-packages": true
 	},
+	"extra": {
+		"wordpress-install-dir": "vendor/wordpress/wordpress"
+	},
 	"require": {
 		"composer/installers": "^1"
 	},
@@ -30,8 +33,11 @@
 		"paulgibbs/behat-wordpress-extension": "^3.1",
 		"phpcompatibility/php-compatibility": "^9",
 		"phpunit/phpunit": "^5",
+		"roots/wordpress": "*",
+		"vlucas/phpdotenv": "^3",
 		"wp-cli/wp-cli-bundle": "^2.1",
-		"wp-coding-standards/wpcs": "^2"
+		"wp-coding-standards/wpcs": "^2",
+		"wp-phpunit/wp-phpunit": "*"
 	},
 	"scripts": {
 		"test": [
