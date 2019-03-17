@@ -178,6 +178,11 @@ module.exports = function(grunt) {
 		'wp_deploy'
 	]);
 
+	grunt.registerTask('deploy:assets', [
+		'build',
+		'wp_deploy:assets'
+	]);
+
 	grunt.registerTask('deploy:ci', [
 		'build',
 		'wp_deploy:ci'
