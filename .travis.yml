@@ -31,7 +31,7 @@ before_install:
       fi
 
 install:
-    - travis_retry composer install
+    - travis_retry composer install --no-suggest
 
 before_script:
     - php --version
