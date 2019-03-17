@@ -20,10 +20,11 @@ env:
     # WPORG_PASSWORD
     - secure: "EqtfI7W2K0H1Zpx8Kb0qTQAz6HNnJj6fupjXJkWhlzt4z79VM8TRuSn3fzbSwJtkHWNwp2jfR/wTu4SVCmlNwMUWSV5fpMGDXBxksWm6SqGjWw8rF2L746btfgoqnAVie1Vw2q6Y7A1opNnwTA29cgEZmoZjHV1DvED4BtXyxdE="
   matrix:
-    # nightly:
-    - WP_VERSION=nightly
-    # latest stable:
-    - WP_VERSION=latest
+    # WP latest stable:
+    - WP_VERSION=*
+    # WP nightly:
+    - WP_VERSION=dev-nightly
+
 jobs:
   include:
     - stage: deploy
@@ -50,7 +51,8 @@ before_install:
 
 install:
     - travis_retry composer install --no-suggest
-    - travis_retry bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+    - travis_retry composer require --dev --update-with-dependencies --no-suggest roots/wordpress="${WP_VERSION} || *" wp-phpunit/wp-phpunit="${WP_VERSION} || *"
+    - mysqladmin create wordpress_test -u root
 
 script:
     - composer test
