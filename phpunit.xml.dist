@@ -16,18 +16,4 @@
 			<directory prefix="test-" suffix=".php">./tests/</directory>
 		</testsuite>
 	</testsuites>
-	<filter>
-		<whitelist addUncoveredFilesFromWhitelist="true">
-			<directory suffix=".php">./</directory>
-			<exclude>
-				<directory>./bin</directory>
-				<directory>./features</directory>
-				<directory>./languages</directory>
-				<directory>./node_modules</directory>
-				<directory>./svn</directory>
-				<directory>./tests</directory>
-				<directory>./vendor</directory>
-			</exclude>
-		</whitelist>
-	</filter>
 </phpunit>
