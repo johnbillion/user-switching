@@ -1,34 +1,39 @@
-[![Build Status](https://travis-ci.org/johnbillion/user-switching.svg?branch=master)](https://travis-ci.org/johnbillion/user-switching)
+[![Build Status](https://travis-ci.org/johnbillion/user-switching.svg?branch=develop)](https://travis-ci.org/johnbillion/user-switching)
 
 # User Switching Tests
 
+## Prerequisites
+
+* [Composer](https://getcomposer.org/)
+
 ## Setup
 
-1. Clone this git repository on your local machine.
-2. Install [Composer](https://getcomposer.org/) if you don't already have it.
-3. Run `composer install` to fetch all the dependencies.
-4. Install the test environment by executing:
+1. Install the PHP dependencies:
 
-        ./bin/install-wp-tests.sh <db-name> <db-user> <db-pass>
+       composer install
 
-   Ensure you use a separate test database (eg. `wordpress_test`) because, just like the WordPress test suite, the database will be wiped clean with every test run.
+2. Check the MySQL database credentials in the `tests/.env.example` file. If your database details differ, copy this file to `tests/.env` and amend them as necessary.
 
-## Running the Unit Tests
+2. Create the test database if it doesn't already exist:
 
-To run the tests, execute the following:
+       mysqladmin create wordpress_test -u root -p
 
-    ./vendor/bin/phpunit
+**Important:** Ensure you use a separate test database (eg. `wordpress_test`) because, just like the WordPress test suite, the database will be wiped clean with every test run.
 
-## Running the Functional Tests
+## Running the Tests
 
-User Switching uses [Behat](http://behat.org) for functional testing. This requires a web server to be running and able to accept requests.
+To run the whole test suite which includes PHPUnit unit tests, PHPCS code sniffs, and WordHat functional tests:
 
-First, edit `behat.yml` and change the database connection `db`, `username`, and `password` fields in the `default` block as appropriate.
+	composer test
 
-Start PHP's built-in web server by executing the following:
+To run just the unit tests:
 
-    php -S localhost:8000 -t vendor/wordpress -d disable_functions=mail &
+	composer test:ut
 
-To run the tests, execute the following:
+To run just the code sniffs:
 
-    ./bin/behat --profile=default
+	composer test:cs
+
+To run just the functional tests:
+
+    composer test:ft
