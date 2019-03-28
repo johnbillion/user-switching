@@ -74,6 +74,10 @@ Yes, and you'll also be able to switch users from member profile screens and the
 
 Yes, and you'll also be able to switch users from member profile screens.
 
+= Does this plugin work with WooCommerce? =
+
+Yes, but for maximum compatibility you should use WooCommerce version 3.6 or later.
+
 = Does this plugin work if my site is using a two-factor authentication plugin? =
 
 Yes, mostly.
