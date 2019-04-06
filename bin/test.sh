@@ -6,7 +6,7 @@ set -e
 WP_CORE_DIR="${PWD}/tests/wordpress"
 
 # Run functional tests:
-php -S localhost:8000 -t "$WP_CORE_DIR" -d disable_functions=mail &
+php -S localhost:8000 -t "$WP_CORE_DIR" -d disable_functions=mail 2>/dev/null &
 
 ./vendor/bin/wp db reset --yes --color --path="$WP_CORE_DIR"
 ./vendor/bin/wp core install --color --path="$WP_CORE_DIR" --url='http://localhost:8000' \
