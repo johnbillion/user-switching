@@ -14,10 +14,6 @@
 
 2. Check the MySQL database credentials in the `tests/.env.example` file. If your database details differ, copy this file to `tests/.env` and amend them as necessary.
 
-2. Create the test database if it doesn't already exist:
-
-       mysqladmin create wordpress_test -u root -p
-
 **Important:** Ensure you use a separate test database (eg. `wordpress_test`) because, just like the WordPress test suite, the database will be wiped clean with every test run.
 
 ## Running the Tests
