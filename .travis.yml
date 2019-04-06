@@ -18,7 +18,7 @@ php:
 env:
   global:
     # WPORG_PASSWORD
-    - secure: "EqtfI7W2K0H1Zpx8Kb0qTQAz6HNnJj6fupjXJkWhlzt4z79VM8TRuSn3fzbSwJtkHWNwp2jfR/wTu4SVCmlNwMUWSV5fpMGDXBxksWm6SqGjWw8rF2L746btfgoqnAVie1Vw2q6Y7A1opNnwTA29cgEZmoZjHV1DvED4BtXyxdE="
+    - secure: "OBRXJmLZFp3moLc+qH9N130p+TGWeFHlVCcBsx7DJTP4gkBN8Gtwt7EvGXnh+BhYQ1OtAHA4idr6rnN3udY9xFH2zWBGHpHIiD25oY3soeU2wrCq5kEtk5I80tb6LqYutApuNLh4KlUo0EnJ0WCkxSbImHcvjvZIAIfNqC0h8+0="
   matrix:
     # WP latest stable:
     - WP_VERSION=*
