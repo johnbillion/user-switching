@@ -19,7 +19,6 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 ### Prerequisites
 
 * [Composer](https://getcomposer.org/)
-* [Node](https://nodejs.org/)
 
 ### Setup
 
