@@ -26,6 +26,27 @@ class UserSwitchingContext extends WordPressContext {
 	}
 
 	/**
+	 * Switch back to the original user
+	 *
+	 * @param string $user_id
+	 *
+	 * @When /^(?:|I )switch back to "(?P<user_id>[^"]+)"$/
+	 */
+	public function switch_back( $user_id ) {
+		$display_name = $this->getUserDataFromUsername( 'display_name', $user_id );
+
+		PHPUnit_Framework_Assert::assertNotEmpty( $user_id );
+		PHPUnit_Framework_Assert::assertNotEmpty( $display_name );
+
+		$this->visitPath( '/' );
+		$this->getSession()->getPage()->clickLink( sprintf(
+			'Switch back to %1$s (%2$s)',
+			$user_id,
+			$display_name
+		) );
+	}
+
+	/**
 	 * Verify that the user is logged in as the specified user
 	 *
 	 * @param string $user_id

@@ -13,7 +13,9 @@ Feature: Switch users
 			| subscriber    | Subscriber   | subscriber@example.com    | password  | subscriber    |
 			| none          | None         | none@example.com          | password  |               |
 
-	Scenario: Switch to editor
+	Scenario: Switch to editor and back
 		Given I am logged in as admin
 		When I switch to user "editor"
 		Then I should be logged in as "editor"
+		When I switch back to "admin"
+		Then I should be logged in as "admin"
