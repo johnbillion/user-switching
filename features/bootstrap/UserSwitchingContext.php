@@ -26,6 +26,16 @@ class UserSwitchingContext extends WordPressContext {
 	}
 
 	/**
+	 * Switch off
+	 *
+	 * @When /^(?:|I )switch off$/
+	 */
+	public function switch_off() {
+		$this->visitPath( '/' );
+		$this->getSession()->getPage()->clickLink( "Switch Off" );
+	}
+
+	/**
 	 * Switch back to the original user
 	 *
 	 * @param string $user_id
@@ -61,6 +71,17 @@ class UserSwitchingContext extends WordPressContext {
 		$this->visitPath( '/' );
 
 		PHPUnit_Framework_Assert::assertTrue( $this->getSession()->getPage()->hasContent( sprintf( 'Howdy, %s', $display_name ) ) );
+	}
+
+	/**
+	 * Verify that the user is logged out
+	 *
+	 * @Then /^(?:|I )should be logged out$/
+	 */
+	public function logged_out() {
+		$this->visitPath( '/' );
+
+		PHPUnit_Framework_Assert::assertFalse( $this->getSession()->getPage()->hasContent( 'Howdy' ) );
 	}
 
 }

@@ -19,3 +19,10 @@ Feature: Switch users
 		Then I should be logged in as "editor"
 		When I switch back to "admin"
 		Then I should be logged in as "admin"
+
+	Scenario: Switch off and back
+		Given I am logged in as admin
+		When I switch off
+		Then I should be logged out
+		When I switch back to "admin"
+		Then I should be logged in as "admin"
