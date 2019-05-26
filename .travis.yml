@@ -30,13 +30,12 @@ jobs:
     - stage: deploy
       if: tag IS present
       before_script:
-        - npm install -g grunt-cli
         - npm install
       script: skip
       deploy:
         - provider: script
           skip_cleanup: true
-          script: grunt deploy:ci
+          script: npm run grunt deploy:ci
           on:
             tags: true
 
