@@ -15,14 +15,11 @@ default:
       base_url:    'http://localhost:8000'
       browser_name: chrome
       default_session: default
-      javascript_session: selenium2
       sessions:
         default:
           goutte:
             guzzle_parameters:
               verify: false  # Allow self-signed SSL certificates
-        selenium2:
-          selenium2: ~
 
     PaulGibbs\WordpressBehatExtension:
       default_driver: wpcli
