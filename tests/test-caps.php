@@ -49,6 +49,7 @@ class TestCapabilities extends User_Switching_Test {
 
 	/**
 	 * @dataProvider data_roles
+	 * @testdox User with role of $role can or cannot switch according to role
 	 */
 	public function testUserCanOrCannotSwitchAccordingToRole( string $role, bool $can_switch ) {
 		foreach ( self::$users as $user_role => $user ) {
@@ -111,7 +112,7 @@ class TestCapabilities extends User_Switching_Test {
 	/**
 	 * @group ms-excluded
 	 */
-	public function testAbiliityToSwitchUsersCanBeDeniedFromUser() {
+	public function testAbilityToSwitchUsersCanBeDeniedFromUser() {
 		# Admins can switch to other users:
 		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
 
@@ -134,7 +135,7 @@ class TestCapabilities extends User_Switching_Test {
 	/**
 	 * @group ms-excluded
 	 */
-	public function testAbiliityToSwitchUsersCanBeDeniedFromRole() {
+	public function testAbilityToSwitchUsersCanBeDeniedFromRole() {
 		# Admins can switch to other users:
 		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
 
@@ -158,7 +159,7 @@ class TestCapabilities extends User_Switching_Test {
 	 * @group multisite
 	 * @group ms-required
 	 */
-	public function testAbiliityToSwitchUsersCanBeGrantedToAdministratorRoleOnMultisite() {
+	public function testAbilityToSwitchUsersCanBeGrantedToAdministratorRoleOnMultisite() {
 		# Admins on Multisite cannot switch to other users:
 		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
 
@@ -182,7 +183,7 @@ class TestCapabilities extends User_Switching_Test {
 	 * @group multisite
 	 * @group ms-required
 	 */
-	public function testAbiliityToSwitchUsersCanBeGrantedToAdministratorUserOnMultisite() {
+	public function testAbilityToSwitchUsersCanBeGrantedToAdministratorUserOnMultisite() {
 		# Admins on Multisite cannot switch to other users:
 		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
 

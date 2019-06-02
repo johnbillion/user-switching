@@ -170,6 +170,9 @@ class TestSwitching extends User_Switching_Test {
 
 	}
 
+	/**
+	 * @testdox Current URL is detected correctly
+	 */
 	function testCurrentUrl() {
 
 		$url = add_query_arg( 'foo', 'bar', home_url( 'baz' ) );

@@ -3,7 +3,7 @@
 class TestReadme extends WP_UnitTestCase {
 	private $readme_data;
 
-	public function test_stable_tag() {
+	public function testStableTagMatchesVersion() {
 		if ( ! $readme_data = $this->get_readme() ) {
 			$this->fail( 'There is no readme file' );
 		}
