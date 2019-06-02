@@ -1,6 +1,6 @@
 <?php
 
-class User_Switching_Test_Auth extends User_Switching_Test {
+class TestAuthentication extends User_Switching_Test {
 
 	function testOldUserCookieAuthentication() {
 		$expiry = time() + 172800;

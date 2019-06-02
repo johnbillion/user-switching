@@ -1,6 +1,6 @@
 <?php
 
-class User_Switching_Test_Sessions extends User_Switching_Test {
+class TestSessions extends User_Switching_Test {
 
 	public function testExtraSessionsAreNotCreatedForUsersWhenSwitching() {
 		if ( is_multisite() ) {

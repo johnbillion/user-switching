@@ -1,6 +1,6 @@
 <?php
 
-class Test_Docs extends \Johnbillion\DocsStandards\TestCase {
+class TestDocumentation extends \Johnbillion\DocsStandards\TestCase {
 
 	protected function getTestFunctions() {
 		return array(

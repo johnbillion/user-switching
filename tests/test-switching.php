@@ -1,6 +1,6 @@
 <?php
 
-class User_Switching_Test_Switching extends User_Switching_Test {
+class TestSwitching extends User_Switching_Test {
 
 	function setUp() {
 

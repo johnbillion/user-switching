@@ -1,6 +1,6 @@
 <?php
 
-class User_Switching_Test_Caps extends User_Switching_Test {
+class TestCapabilities extends User_Switching_Test {
 
 	public function data_roles() {
 		$roles = [
