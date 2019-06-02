@@ -2,6 +2,7 @@
 
 use PaulGibbs\WordpressBehatExtension\Context\RawWordpressContext as WordPressContext;
 use PaulGibbs\WordpressBehatExtension\Context\Traits\UserAwareContextTrait as UserContext;
+use PHPUnit\Framework\Assert;
 
 /**
  * Defines application features from the specific context.
@@ -19,7 +20,7 @@ class UserSwitchingContext extends WordPressContext {
 	public function switch_to_user( $user_id ) {
 		$user_id = $this->getUserIdFromLogin( $user_id );
 
-		PHPUnit_Framework_Assert::assertNotEmpty( $user_id );
+		Assert::assertNotEmpty( $user_id );
 
 		$this->visitPath( sprintf( 'wp-admin/user-edit.php?user_id=%d', $user_id ) );
 		$this->getSession()->getPage()->clickLink( "Switch\xc2\xa0To" );
@@ -45,8 +46,8 @@ class UserSwitchingContext extends WordPressContext {
 	public function switch_back( $user_id ) {
 		$display_name = $this->getUserDataFromUsername( 'display_name', $user_id );
 
-		PHPUnit_Framework_Assert::assertNotEmpty( $user_id );
-		PHPUnit_Framework_Assert::assertNotEmpty( $display_name );
+		Assert::assertNotEmpty( $user_id );
+		Assert::assertNotEmpty( $display_name );
 
 		$this->visitPath( '/' );
 		$this->getSession()->getPage()->clickLink( sprintf(
@@ -66,11 +67,11 @@ class UserSwitchingContext extends WordPressContext {
 	public function logged_in_as( $user_id ) {
 		$display_name = $this->getUserDataFromUsername( 'display_name', $user_id );
 
-		PHPUnit_Framework_Assert::assertNotEmpty( $display_name );
+		Assert::assertNotEmpty( $display_name );
 
 		$this->visitPath( '/' );
 
-		PHPUnit_Framework_Assert::assertTrue( $this->getSession()->getPage()->hasContent( sprintf( 'Howdy, %s', $display_name ) ) );
+		Assert::assertTrue( $this->getSession()->getPage()->hasContent( sprintf( 'Howdy, %s', $display_name ) ) );
 	}
 
 	/**
@@ -81,7 +82,7 @@ class UserSwitchingContext extends WordPressContext {
 	public function logged_out() {
 		$this->visitPath( '/' );
 
-		PHPUnit_Framework_Assert::assertFalse( $this->getSession()->getPage()->hasContent( 'Howdy' ) );
+		Assert::assertFalse( $this->getSession()->getPage()->hasContent( 'Howdy' ) );
 	}
 
 }
