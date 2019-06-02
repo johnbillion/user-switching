@@ -573,9 +573,9 @@ class user_switching {
 	/**
 	 * Adds a 'Switch To' link to each list of user actions on the Users screen.
 	 *
-	 * @param string[] $actions The actions to display for this user row.
+	 * @param string[] $actions Array of actions to display for this user row.
 	 * @param WP_User  $user    The user object displayed in this row.
-	 * @return string[] The actions to display for this user row.
+	 * @return string[] Array of actions to display for this user row.
 	 */
 	public function filter_user_row_actions( array $actions, WP_User $user ) {
 		$link = self::maybe_switch_url( $user );
@@ -658,8 +658,8 @@ class user_switching {
 	 *
 	 * @link https://core.trac.wordpress.org/ticket/23367
 	 *
-	 * @param string[] $args List of removable query arguments.
-	 * @return string[] Updated list of removable query arguments.
+	 * @param string[] $args Array of removable query arguments.
+	 * @return string[] Updated array of removable query arguments.
 	 */
 	public function filter_removable_query_args( array $args ) {
 		return array_merge( $args, array(
@@ -803,7 +803,7 @@ class user_switching {
 	 *
 	 * @param bool[]   $user_caps     Array of key/value pairs where keys represent a capability name and boolean values
 	 *                                represent whether the user has that capability.
-	 * @param string[] $required_caps Required primitive capabilities for the requested capability.
+	 * @param string[] $required_caps Array of required primitive capabilities for the requested capability.
 	 * @param array    $args {
 	 *     Arguments that accompany the requested capability check.
 	 *
@@ -812,7 +812,7 @@ class user_switching {
 	 *     @type mixed  ...$2 Optional second and further parameters.
 	 * }
 	 * @param WP_User  $user          Concerned user object.
-	 * @return bool[] Concerned user's capabilities.
+	 * @return bool[] Array of concerned user's capabilities.
 	 */
 	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args, WP_User $user ) {
 		if ( 'switch_to_user' === $args[0] ) {
@@ -847,7 +847,7 @@ class user_switching {
 	 *
 	 * It affects nothing else as Super Admins can do everything by default.
 	 *
-	 * @param string[] $required_caps Required primitive capabilities for the requested capability.
+	 * @param string[] $required_caps Array of required primitive capabilities for the requested capability.
 	 * @param string   $cap           Capability or meta capability being checked.
 	 * @param int      $user_id       Concerned user ID.
 	 * @param array    $args {
@@ -855,7 +855,7 @@ class user_switching {
 	 *
 	 *     @type mixed ...$0 Optional second and further parameters.
 	 * }
-	 * @return string[] Required capabilities for the requested action.
+	 * @return string[] Array of required capabilities for the requested action.
 	 */
 	public function filter_map_meta_cap( array $required_caps, $cap, $user_id, array $args ) {
 		if ( 'switch_to_user' === $cap ) {
