@@ -190,6 +190,8 @@ class TestSessions extends User_Switching_Test {
 
 		// Verify the original user session information is stored in the switch stack and against the new user session
 		$author_session = $author_manager->get( $author_token );
+		$this->assertArrayHasKey( 'switched_from_id', $author_session );
+		$this->assertArrayHasKey( 'switched_from_session', $author_session );
 		$this->assertSame( $admin->ID, $author_session['switched_from_id'] );
 		$this->assertSame( $admin_token, $author_session['switched_from_session'] );
 		$this->assertSame( $admin_token, $parts['token'] );
