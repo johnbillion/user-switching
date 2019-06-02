@@ -505,7 +505,11 @@ class user_switching {
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
-			echo '<li id="user_switching_switch_on"><a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></li>';
+			printf(
+				'<li id="user_switching_switch_on"><a href="%s">%s</a></li>',
+				esc_url( $url ),
+				esc_html( $link )
+			);
 		}
 	}
 
@@ -529,7 +533,11 @@ class user_switching {
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
-			echo '<p id="user_switching_switch_on"><a href="' . esc_url( $url ) . '">' . esc_html( $link ) . '</a></p>';
+			printf(
+				'<p id="user_switching_switch_on"><a href="%s">%s</a></p>',
+				esc_url( $url ),
+				esc_html( $link )
+			);
 		}
 	}
 
@@ -563,7 +571,11 @@ class user_switching {
 
 			$message .= '<p class="message" id="user_switching_switch_on">';
 			$message .= '<span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span> ';
-			$message .= '<a href="' . esc_url( $url ) . '" onclick="window.location.href=\'' . esc_url( $url ) . '\';return false;">' . esc_html( $link ) . '</a>';
+			$message .= sprintf(
+				'<a href="%1$s" onclick="window.location.href=\'%1$s\';return false;">%2$s</a>',
+				esc_url( $url ),
+				esc_html( $link )
+			);
 			$message .= '</p>';
 		}
 
@@ -584,7 +596,11 @@ class user_switching {
 			return $actions;
 		}
 
-		$actions['switch_to_user'] = '<a href="' . esc_url( $link ) . '">' . esc_html__( 'Switch&nbsp;To', 'user-switching' ) . '</a>';
+		$actions['switch_to_user'] = sprintf(
+			'<a href="%s">%s</a>',
+			esc_url( $link ),
+			esc_html__( 'Switch&nbsp;To', 'user-switching' )
+		);
 
 		return $actions;
 	}
@@ -646,11 +662,13 @@ class user_switching {
 			'redirect_to' => urlencode( bbp_get_user_profile_url( $user->ID ) ),
 		), $link );
 
-		?>
-		<ul id="user_switching_switch_to">
-			<li><a href="<?php echo esc_url( $link ); ?>"><?php esc_html_e( 'Switch&nbsp;To', 'user-switching' ); ?></a></li>
-		</ul>
-		<?php
+		echo '<ul id="user_switching_switch_to">';
+		printf(
+			'<li><a href="%s">%s</a></li>',
+			esc_url( $link ),
+			esc_html__( 'Switch&nbsp;To', 'user-switching' )
+		);
+		echo '</ul>';
 	}
 
 	/**
