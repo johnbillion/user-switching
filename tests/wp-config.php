@@ -1,4 +1,7 @@
 <?php
+/**
+ * This is the configuration file that's used for the Wordhat functional tests.
+ */
 
 // Test with WordPress debug mode (default).
 define( 'WP_DEBUG', true );

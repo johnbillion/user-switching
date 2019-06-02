@@ -1,4 +1,7 @@
 <?php
+/**
+ * This is the configuration file that's used for the PHPUnit unit tests.
+ */
 
 $root     = dirname( __DIR__ );
 $composer = json_decode( file_get_contents( $root . '/composer.json' ), true );
