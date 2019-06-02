@@ -461,7 +461,7 @@ class user_switching {
 			) );
 		}
 
-		if ( ! is_admin() && is_author() ) {
+		if ( ! is_admin() && is_author() && ( get_queried_object() instanceof WP_User ) ) {
 			if ( $old_user ) {
 				$wp_admin_bar->add_menu( array(
 					'parent' => 'edit',
@@ -816,6 +816,10 @@ class user_switching {
 	 */
 	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args, WP_User $user ) {
 		if ( 'switch_to_user' === $args[0] ) {
+			if ( empty( $args[2] ) ) {
+				$user_caps['switch_to_user'] = false;
+				return $user_caps;
+			}
 			if ( array_key_exists( 'switch_users', $user_caps ) ) {
 				$user_caps['switch_to_user'] = $user_caps['switch_users'];
 				return $user_caps;
@@ -854,8 +858,10 @@ class user_switching {
 	 * @return string[] Required capabilities for the requested action.
 	 */
 	public function filter_map_meta_cap( array $required_caps, $cap, $user_id, array $args ) {
-		if ( ( 'switch_to_user' === $cap ) && ( $args[0] === $user_id ) ) {
-			$required_caps[] = 'do_not_allow';
+		if ( 'switch_to_user' === $cap ) {
+			if ( empty( $args[0] ) || $args[0] === $user_id ) {
+				$required_caps[] = 'do_not_allow';
+			}
 		}
 		return $required_caps;
 	}

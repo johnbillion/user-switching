@@ -203,4 +203,12 @@ class TestCapabilities extends User_Switching_Test {
 		$this->assertTrue( $can_switch_off );
 	}
 
+	/**
+	 * @dataProvider data_roles
+	 * @testdox User with role of $role cannot switch to no user
+	 */
+	public function testSwitchingToNoUserIsNotAllowed( string $role ) {
+		$this->assertFalse( user_can( self::$testers[ $role ]->ID, 'switch_to_user', 0 ) );
+	}
+
 }
