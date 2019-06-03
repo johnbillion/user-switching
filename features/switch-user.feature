@@ -9,9 +9,6 @@ Feature: Switch users
 			| user_login    | display_name | user_email                | user_pass | role          |
 			| editor        | Editor       | editor@example.com        | password  | editor        |
 			| author        | Author       | author@example.com        | password  | author        |
-			| contributor   | Contributor  | contributor@example.com   | password  | contributor   |
-			| subscriber    | Subscriber   | subscriber@example.com    | password  | subscriber    |
-			| none          | None         | none@example.com          | password  |               |
 
 	Scenario: Switch to editor and back
 		Given I am logged in as admin
