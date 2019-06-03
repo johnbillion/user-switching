@@ -50,7 +50,7 @@ class user_switching {
 		add_filter( 'user_has_cap',                    array( $this, 'filter_user_has_cap' ), 10, 4 );
 		add_filter( 'map_meta_cap',                    array( $this, 'filter_map_meta_cap' ), 10, 4 );
 		add_filter( 'user_row_actions',                array( $this, 'filter_user_row_actions' ), 10, 2 );
-		add_action( 'plugins_loaded',                  array( $this, 'action_plugins_loaded' ) );
+		add_action( 'plugins_loaded',                  array( $this, 'action_plugins_loaded' ), 1 );
 		add_action( 'init',                            array( $this, 'action_init' ) );
 		add_action( 'all_admin_notices',               array( $this, 'action_admin_notices' ), 1 );
 		add_action( 'wp_logout',                       'user_switching_clear_olduser_cookie' );
