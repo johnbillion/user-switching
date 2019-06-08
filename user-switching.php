@@ -884,7 +884,7 @@ class user_switching {
 
 if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 	/**
-	 * Sets authorisation cookies containing the originating user information.
+	 * Sets authorization cookies containing the originating user information.
 	 *
 	 * @since 1.4.0 The `$token` parameter was added.
 	 *
