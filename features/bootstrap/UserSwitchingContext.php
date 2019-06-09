@@ -32,7 +32,6 @@ class UserSwitchingContext extends WordPressContext {
 	 * @When /^(?:|I )switch off$/
 	 */
 	public function switch_off() {
-		$this->visitPath( '/' );
 		$this->getSession()->getPage()->clickLink( "Switch Off" );
 	}
 
@@ -49,7 +48,6 @@ class UserSwitchingContext extends WordPressContext {
 		Assert::assertNotEmpty( $user_id );
 		Assert::assertNotEmpty( $display_name );
 
-		$this->visitPath( '/' );
 		$this->getSession()->getPage()->clickLink( sprintf(
 			'Switch back to %1$s (%2$s)',
 			$user_id,
