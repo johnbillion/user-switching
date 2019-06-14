@@ -50,8 +50,8 @@ class UserSwitchingContext extends WordPressContext {
 
 		$this->getSession()->getPage()->clickLink( sprintf(
 			'Switch back to %1$s (%2$s)',
-			$user_id,
-			$display_name
+			$display_name,
+			$user_id
 		) );
 	}
 
