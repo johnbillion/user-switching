@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 # Specify the directory where the WordPress installation lives:
 WP_CORE_DIR="${PWD}/tests/wordpress"
 
