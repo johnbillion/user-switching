@@ -1,5 +1,7 @@
 <?php
 
+use Behat\Mink\Exception\ElementNotFoundException;
+use Behat\Mink\Exception\ElementTextException;
 use PaulGibbs\WordpressBehatExtension\Context\RawWordpressContext as WordPressContext;
 use PaulGibbs\WordpressBehatExtension\Context\Traits\UserAwareContextTrait as UserContext;
 use PHPUnit\Framework\Assert;
@@ -61,6 +63,9 @@ class UserSwitchingContext extends WordPressContext {
 	 * @param string $user_id
 	 *
 	 * @Then /^(?:|I )should be logged in as [user ]?"(?P<user_id>[^"]+)"$/
+	 *
+	 * @throws ElementNotFoundException If the display name could not be found.
+	 * @throws ElementTextException     If the display name is incorrect.
 	 */
 	public function logged_in_as( $user_id ) {
 		$display_name = $this->getUserDataFromUsername( 'display_name', $user_id );
@@ -69,7 +74,29 @@ class UserSwitchingContext extends WordPressContext {
 
 		$this->visitPath( '/' );
 
-		Assert::assertTrue( $this->getSession()->getPage()->hasContent( sprintf( 'Howdy, %s', $display_name ) ) );
+		$browser  = $this->getSession();
+		$selector = '#wpadminbar .display-name';
+		$element  = $browser->getPage()->find( 'css', $selector );
+
+		if ( ! $element ) {
+			throw new ElementNotFoundException(
+				$browser->getDriver(),
+				'element',
+				'css',
+				$selector
+			);
+		}
+
+		if ( $display_name !== $element->getText() ) {
+			throw new ElementTextException(
+				sprintf(
+					'The user is logged in as "%s"',
+					$element->getText()
+				),
+				$browser->getDriver(),
+				$element
+			);
+		}
 	}
 
 	/**
