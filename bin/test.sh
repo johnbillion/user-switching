@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # Specify the directory where the WordPress installation lives:
-WP_CORE_DIR="${PWD}/tests/wordpress"
+WP_INSTALL_DIR=$(npm run --silent jq '.extra ."wordpress-install-dir"' composer.json -- -r)
+WP_CORE_DIR="${PWD}/${WP_INSTALL_DIR}"
 
 # Specify the URL for the site:
 WP_URL="localhost:8000"
