@@ -14,10 +14,8 @@ Feature: Locale support
 		When I switch to user "autore"
         Then the page language should be "it-IT"
 		But I should see a status message that says "Switched to Autore"
-		And I should be logged in as "autore"
 
 		When I go to the dashboard
 		And I switch back to "admin"
         Then the page language should be "en-US"
 		And I should see a status message that says "Switched back to admin"
-		And I should be logged in as "admin"
