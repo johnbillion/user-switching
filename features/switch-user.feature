@@ -8,7 +8,6 @@ Feature: Switch users
 		And there are users:
 			| user_login    | display_name | user_email                | user_pass | role          |
 			| editor        | Editor       | editor@example.com        | password  | editor        |
-			| author        | Author       | author@example.com        | password  | author        |
 
 	Scenario: Switch to editor and back
 		Given I am logged in as admin
