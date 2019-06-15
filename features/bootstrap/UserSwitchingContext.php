@@ -63,7 +63,7 @@ class UserSwitchingContext extends WordPressContext {
 	 *
 	 * @param string $user_id
 	 *
-	 * @Then /^(?:|I )should be logged in as [user ]?"(?P<user_id>[^"]+)"$/
+	 * @Then /^(?:|I )should be logged in as "(?P<user_id>[^"]+)"$/
 	 *
 	 * @throws ElementNotFoundException If the display name could not be found.
 	 * @throws ElementTextException     If the display name is incorrect.
