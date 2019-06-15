@@ -1,6 +1,7 @@
 <?php
 
 use Behat\Mink\Exception\ElementNotFoundException;
+use Behat\Mink\Exception\ElementHtmlException;
 use Behat\Mink\Exception\ElementTextException;
 use Behat\Mink\Exception\ExpectationException;
 use PaulGibbs\WordpressBehatExtension\Context\RawWordpressContext as WordPressContext;
@@ -122,4 +123,39 @@ class UserSwitchingContext extends WordPressContext {
 		}
 	}
 
+	/**
+	 * Verify the page language
+	 *
+	 * @param string $user_id
+	 *
+	 * @Then /^the page language should be "(?P<lang>[^"]+)"$/
+	 *
+	 * @throws ElementHtmlException If the display name is incorrect.
+     */
+    public function thePageLanguageShouldBe( $lang ) {
+		$browser  = $this->getSession();
+		$selector = 'html';
+		$element  = $browser->getPage()->find( 'css', $selector );
+
+		if ( ! $element ) {
+			throw new ElementNotFoundException(
+				$browser->getDriver(),
+				'element',
+				'css',
+				$selector
+			);
+		}
+
+		if ( $lang !== $element->getAttribute( 'lang' ) ) {
+			throw new ElementHtmlException(
+				sprintf(
+					'The page language is "%s" instead of "%s"',
+					$element->getAttribute( 'lang' ),
+					$lang
+				),
+				$browser->getDriver(),
+				$element
+			);
+		}
+    }
 }

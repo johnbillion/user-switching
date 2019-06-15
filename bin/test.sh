@@ -19,6 +19,10 @@ $WP db reset --yes
 # Install WordPress:
 $WP core install --title="Example" --admin_user="admin" --admin_password="admin" --admin_email="admin@example.com"
 
+# Install language files:
+$WP language core install it_IT
+$WP language plugin install user-switching it_IT
+
 # Run the functional tests:
 BEHAT_PARAMS='{"extensions" : {"PaulGibbs\\WordpressBehatExtension" : {"path" : "'$WP_CORE_DIR'"}}}' \
 	./vendor/bin/behat --colors
