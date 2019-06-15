@@ -289,6 +289,10 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user ) {
+			$switched_locale = false;
+			if ( function_exists( 'get_user_locale' ) ) {
+				$switched_locale = switch_to_locale( get_user_locale( $old_user ) );
+			}
 			?>
 			<div id="user_switching" class="updated notice is-dismissible">
 				<p><span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span>
@@ -336,6 +340,9 @@ class user_switching {
 				</p>
 			</div>
 			<?php
+			if ( $switched_locale ) {
+				restore_previous_locale();
+			}
 		} elseif ( isset( $_GET['user_switched'] ) ) {
 			?>
 			<div id="user_switching" class="updated notice is-dismissible">
