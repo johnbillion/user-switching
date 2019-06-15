@@ -2,6 +2,7 @@
 
 use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\ElementTextException;
+use Behat\Mink\Exception\ExpectationException;
 use PaulGibbs\WordpressBehatExtension\Context\RawWordpressContext as WordPressContext;
 use PaulGibbs\WordpressBehatExtension\Context\Traits\UserAwareContextTrait as UserContext;
 use PHPUnit\Framework\Assert;
@@ -103,11 +104,22 @@ class UserSwitchingContext extends WordPressContext {
 	 * Verify that the user is logged out
 	 *
 	 * @Then /^(?:|I )should be logged out$/
+	 *
+	 * @throws ExpectationException If the user is not logged out.
 	 */
 	public function logged_out() {
 		$this->visitPath( '/' );
 
-		Assert::assertFalse( $this->getSession()->getPage()->hasContent( 'Howdy' ) );
+		$browser  = $this->getSession();
+		$selector = '#wpadminbar .display-name';
+		$element  = $browser->getPage()->find( 'css', $selector );
+
+		if ( $element ) {
+			throw new ExpectationException(
+				'The user is not logged out',
+				$browser->getDriver()
+			);
+		}
 	}
 
 }
