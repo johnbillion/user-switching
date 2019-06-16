@@ -31,7 +31,7 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 
        npm install
 
-3. Check the MySQL database credentials in the `tests/.env.example` file. If your database details differ, copy this file to `tests/.env` and amend them as necessary.
+3. Check the MySQL database credentials in the `tests/.env` file and amend them as necessary.
 
 **Important:** Ensure you use a separate test database (eg. `wordpress_test`) because, just like the WordPress test suite, the database will be wiped clean with every test run.
 
