@@ -22,7 +22,7 @@ default:
               verify: false  # Allow self-signed SSL certificates
 
     PaulGibbs\WordpressBehatExtension:
-      default_driver: wpcli
+      default_driver: wpphp
       users:
         -
           roles:
@@ -31,7 +31,5 @@ default:
           password: admin
       database:
         restore_after_test: true
-      wpcli:
-          binary: ./vendor/bin/wp
 
     FailAid\Extension: ~
