@@ -11,7 +11,7 @@
 **Tags:** users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 **Requires at least:** 3.7  
 **Tested up to:** 5.2  
-**Stable tag:** 1.5.0  
+**Stable tag:** 1.5.1  
 **Requires PHP:** 5.3  
 **License:** GPL v2 or later  
 
@@ -84,6 +84,10 @@ Yes, and you'll also be able to switch users from member profile screens and the
 ### Does this plugin work with bbPress? ###
 
 Yes, and you'll also be able to switch users from member profile screens.
+
+### Does this plugin work with WooCommerce? ###
+
+Yes, but for maximum compatibility you should use WooCommerce version 3.6 or later.
 
 ### Does this plugin work if my site is using a two-factor authentication plugin? ###
 
