@@ -25,7 +25,7 @@ $WP language plugin install user-switching it_IT
 
 # Run the functional tests:
 BEHAT_PARAMS='{"extensions" : {"PaulGibbs\\WordpressBehatExtension" : {"path" : "'$WP_CORE_DIR'"}}}' \
-	./vendor/bin/behat --colors
+	./vendor/bin/behat --colors "$1"
 
 # Stop the PHP web server:
 kill $!
