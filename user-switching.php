@@ -150,7 +150,7 @@ class user_switching {
 
 				// Check authentication:
 				if ( ! current_user_can( 'switch_to_user', $user_id ) ) {
-					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ), 403 );
 				}
 
 				// Check intent:
@@ -175,7 +175,7 @@ class user_switching {
 					}
 					exit;
 				} else {
-					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ), 404 );
 				}
 				break;
 
@@ -184,12 +184,12 @@ class user_switching {
 				// Fetch the originating user data:
 				$old_user = self::get_old_user();
 				if ( ! $old_user ) {
-					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ), 400 );
 				}
 
 				// Check authentication:
 				if ( ! self::authenticate_old_user( $old_user ) ) {
-					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ), 403 );
 				}
 
 				// Check intent:
@@ -217,7 +217,7 @@ class user_switching {
 					}
 					exit;
 				} else {
-					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ), 404 );
 				}
 				break;
 
