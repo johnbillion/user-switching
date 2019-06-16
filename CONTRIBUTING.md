@@ -19,6 +19,7 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 ### Prerequisites
 
 * [Composer](https://getcomposer.org/)
+* [Node](https://nodejs.org/)
 
 ### Setup
 
@@ -26,7 +27,11 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 
        composer install
 
-2. Check the MySQL database credentials in the `tests/.env.example` file. If your database details differ, copy this file to `tests/.env` and amend them as necessary.
+2. Install the Node dependencies:
+
+       npm install
+
+3. Check the MySQL database credentials in the `tests/.env.example` file. If your database details differ, copy this file to `tests/.env` and amend them as necessary.
 
 **Important:** Ensure you use a separate test database (eg. `wordpress_test`) because, just like the WordPress test suite, the database will be wiped clean with every test run.
 
