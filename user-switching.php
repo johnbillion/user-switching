@@ -334,8 +334,12 @@ class user_switching {
 					 * @param bool    $just_switched   Whether the user made the switch on this page request.
 					 */
 					$message = apply_filters( 'user_switching_switched_message', $message, $user, $old_user, $switch_back_url, $just_switched );
-					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					echo $message;
+
+					echo wp_kses( $message, array(
+						'a' => array(
+							'href' => array(),
+						),
+					) );
 				?>
 				</p>
 			</div>
