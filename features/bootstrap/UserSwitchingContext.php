@@ -126,11 +126,11 @@ class UserSwitchingContext extends WordPressContext {
 	/**
 	 * Verify the page language
 	 *
-	 * @param string $user_id
+	 * @param string $lang
 	 *
 	 * @Then /^the page language should be "(?P<lang>[^"]+)"$/
 	 *
-	 * @throws ElementHtmlException If the display name is incorrect.
+	 * @throws ElementHtmlException If the language is incorrect.
      */
     public function thePageLanguageShouldBe( $lang ) {
 		$browser  = $this->getSession();
