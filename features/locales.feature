@@ -1,6 +1,6 @@
 Feature: Locale support
 	As an administrator of a site which uses more than one language
-	I need to be able to switch between users
+	I need to be able to switch to user accounts that use a different language
 	And see User Switching's output in my original language
 
 	Background:
@@ -9,7 +9,7 @@ Feature: Locale support
 			| user_login    | display_name | user_email                | user_pass | role          | locale |
 			| autore        | Autore       | autore@example.com        | password  | author        | it_IT  |
 
-	Scenario: Switch to author and back
+	Scenario: Switch from English admin to Italian author and back
 		Given I am logged in as admin
 		When I switch to user "autore"
         Then the page language should be "it-IT"
