@@ -27,7 +27,7 @@ class UserSwitchingContext extends WordPressContext {
 		Assert::assertNotEmpty( $user_id );
 
 		$this->visitPath( sprintf( 'wp-admin/user-edit.php?user_id=%d', $user_id ) );
-		$this->getSession()->getPage()->clickLink( "Switch\xc2\xa0To" );
+		$this->getSession()->getPage()->clickLink( 'user_switching_switcher' );
 	}
 
 	/**
