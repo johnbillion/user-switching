@@ -67,6 +67,8 @@ class user_switching {
 		add_action( 'bp_member_header_actions',        array( $this, 'action_bp_button' ), 11 );
 		add_action( 'bp_directory_members_actions',    array( $this, 'action_bp_button' ), 11 );
 		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ) );
+		add_action( 'switch_to_user',                  array( $this, 'forget_woocommerce_session' ) );
+		add_action( 'switch_back_user',                array( $this, 'forget_woocommerce_session' ) );
 	}
 
 	/**
@@ -805,16 +807,20 @@ class user_switching {
 
 	/**
 	 * Instructs WooCommerce to forget the session for the current user, without deleting it.
-	 *
-	 * @param WooCommerce $wc The WooCommerce instance.
 	 */
-	public static function forget_woocommerce_session( WooCommerce $wc ) {
+	public function forget_woocommerce_session() {
+		if ( ! function_exists( 'WC' ) ) {
+			return;
+		}
+
+		$wc = WC();
+
 		if ( ! property_exists( $wc, 'session' ) ) {
-			return false;
+			return;
 		}
 
 		if ( ! method_exists( $wc->session, 'forget_session' ) ) {
-			return false;
+			return;
 		}
 
 		$wc->session->forget_session();
@@ -1159,11 +1165,6 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 			// When switching back, destroy the session for the old user
 			$manager = WP_Session_Tokens::get_instance( $old_user_id );
 			$manager->destroy( $old_token );
-		}
-
-		// When switching, instruct WooCommerce to forget about the current user's session
-		if ( function_exists( 'WC' ) ) {
-			user_switching::forget_woocommerce_session( WC() );
 		}
 
 		return $user;
