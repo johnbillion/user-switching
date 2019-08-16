@@ -23,17 +23,17 @@ class TestSessions extends User_Switching_Test {
 		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
 
 		// Verify the initial state
-		$this->assertCount( 1, $admin_before );
-		$this->assertCount( 0, $author_before );
+		self::assertCount( 1, $admin_before );
+		self::assertCount( 0, $author_before );
 
 		// Switch user
 		$user = switch_to_user( self::$users['author']->ID );
 
 		// Verify no new sessions were created for the old user
-		$this->assertCount( 1, $admin_manager->get_all() );
+		self::assertCount( 1, $admin_manager->get_all() );
 
 		// Verify only one new session was created for the new user
-		$this->assertCount( 1, $author_manager->get_all() );
+		self::assertCount( 1, $author_manager->get_all() );
 	}
 
 	public function testExtraSessionsAreNotCreatedForUserWhenSwitchingOff() {
@@ -53,13 +53,13 @@ class TestSessions extends User_Switching_Test {
 		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
 
 		// Verify the initial state
-		$this->assertCount( 1, $admin_before );
+		self::assertCount( 1, $admin_before );
 
 		// Switch off
 		$switched = switch_off_user();
 
 		// Verify no new sessions were created for the old user
-		$this->assertCount( 1, $admin_manager->get_all() );
+		self::assertCount( 1, $admin_manager->get_all() );
 	}
 
 	public function testPreviousSessionForUserIsReusedWhenSwitchingBack() {
@@ -82,34 +82,34 @@ class TestSessions extends User_Switching_Test {
 		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
 
 		// Verify the initial state
-		$this->assertCount( 1, $admin_before );
+		self::assertCount( 1, $admin_before );
 
 		// Switch user
 		$user = switch_to_user( self::$users['author']->ID );
 
 		// Verify no new sessions were created for the old user
-		$this->assertCount( 1, $admin_manager->get_all() );
+		self::assertCount( 1, $admin_manager->get_all() );
 
 		// Switch back
 		$user = switch_to_user( $admin->ID, false, false );
 
 		// Verify no new sessions were created for the original user
-		$this->assertCount( 1, $admin_manager->get_all() );
+		self::assertCount( 1, $admin_manager->get_all() );
 
 		// Verify the session for the switched to user was destroyed
-		$this->assertCount( 0, $author_manager->get_all() );
+		self::assertCount( 0, $author_manager->get_all() );
 
 		// Switch off
 		$off = switch_off_user();
 
 		// Verify no new sessions were created for the old user
-		$this->assertCount( 1, $admin_manager->get_all() );
+		self::assertCount( 1, $admin_manager->get_all() );
 
 		// Switch back on again
 		$user = switch_to_user( $admin->ID, false, false );
 
 		// Verify no new sessions were created for the original user
-		$this->assertCount( 1, $admin_manager->get_all() );
+		self::assertCount( 1, $admin_manager->get_all() );
 	}
 
 	public function testExpiredSessionPreventsUserFromSwitchingBack() {
@@ -133,17 +133,17 @@ class TestSessions extends User_Switching_Test {
 		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
 
 		// Verify the initial state
-		$this->assertCount( 1, $admin_before );
-		$this->assertCount( 0, $author_before );
+		self::assertCount( 1, $admin_before );
+		self::assertCount( 0, $author_before );
 
 		// Switch user
 		$user = switch_to_user( self::$users['author']->ID );
 
 		// Verify no new sessions were created for the old user
-		$this->assertCount( 1, $admin_manager->get_all() );
+		self::assertCount( 1, $admin_manager->get_all() );
 
 		// Verify a session was created for the switched to user
-		$this->assertCount( 1, $author_manager->get_all() );
+		self::assertCount( 1, $author_manager->get_all() );
 
 		// Invalidate the session that the user switched from, to mock its expiry while switched
 		$existing = $admin_manager->get( $admin_token );
@@ -151,17 +151,17 @@ class TestSessions extends User_Switching_Test {
 		$admin_manager->update( $admin_token, $existing );
 
 		// Verify the old session has been invalidated
-		$this->assertNull( $admin_manager->get( $admin_token ) );
-		$this->assertFalse( user_switching::get_old_user() );
+		self::assertNull( $admin_manager->get( $admin_token ) );
+		self::assertFalse( user_switching::get_old_user() );
 
 		// Attempt to switch back
 		$user = switch_to_user( $admin->ID, false, false );
 
 		// Verify no new session was created for the original user
-		$this->assertCount( 0, $admin_manager->get_all() );
+		self::assertCount( 0, $admin_manager->get_all() );
 
 		// Verify the session for the switched to user was destroyed
-		$this->assertCount( 0, $author_manager->get_all() );
+		self::assertCount( 0, $author_manager->get_all() );
 	}
 
 	public function testSessionTokensAreCorrectlyReusedWhenSwitching() {
@@ -190,22 +190,22 @@ class TestSessions extends User_Switching_Test {
 
 		// Verify the original user session information is stored in the switch stack and against the new user session
 		$author_session = $author_manager->get( $author_token );
-		$this->assertArrayHasKey( 'switched_from_id', $author_session );
-		$this->assertArrayHasKey( 'switched_from_session', $author_session );
-		$this->assertSame( $admin->ID, $author_session['switched_from_id'] );
-		$this->assertSame( $admin_token, $author_session['switched_from_session'] );
-		$this->assertSame( $admin_token, $parts['token'] );
+		self::assertArrayHasKey( 'switched_from_id', $author_session );
+		self::assertArrayHasKey( 'switched_from_session', $author_session );
+		self::assertSame( $admin->ID, $author_session['switched_from_id'] );
+		self::assertSame( $admin_token, $author_session['switched_from_session'] );
+		self::assertSame( $admin_token, $parts['token'] );
 
 		// Switch back
 		$user = switch_to_user( $admin->ID, false, false );
 
 		// Verify the original session token was reused
-		$this->assertCount( 1, $admin_manager->get_all() );
-		$this->assertNotNull( $admin_manager->get( $admin_token ) );
+		self::assertCount( 1, $admin_manager->get_all() );
+		self::assertNotNull( $admin_manager->get( $admin_token ) );
 
 		// Verify the session for the switched to user was destroyed
-		$this->assertCount( 0, $author_manager->get_all() );
-		$this->assertNull( $author_manager->get( $author_token ) );
+		self::assertCount( 0, $author_manager->get_all() );
+		self::assertNull( $author_manager->get( $author_token ) );
 
 		// Switch off
 		$off    = switch_off_user();
@@ -213,14 +213,14 @@ class TestSessions extends User_Switching_Test {
 		$parts  = wp_parse_auth_cookie( end( $cookie ) );
 
 		// Verify the original user session information is stored in the switch stack
-		$this->assertSame( $admin_token, $parts['token'] );
+		self::assertSame( $admin_token, $parts['token'] );
 
 		// Switch back on again
 		$user = switch_to_user( $admin->ID, false, false );
 
 		// Verify the original session token was reused
-		$this->assertCount( 1, $admin_manager->get_all() );
-		$this->assertNotNull( $admin_manager->get( $admin_token ) );
+		self::assertCount( 1, $admin_manager->get_all() );
+		self::assertNotNull( $admin_manager->get( $admin_token ) );
 	}
 
 }
