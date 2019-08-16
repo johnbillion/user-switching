@@ -133,8 +133,21 @@ class UserSwitchingContext extends WordPressContext {
 	 * @throws ElementHtmlException If the language is incorrect.
      */
     public function thePageLanguageShouldBe( $lang ) {
+		$this->theElementLanguageShouldBe( 'html', $lang );
+	}
+
+	/**
+	 * Verify the language of an element
+	 *
+	 * @param string $selector
+	 * @param string $lang
+	 *
+	 * @Then /^the "(?P<selector>[^"]+)" element language should be "(?P<lang>[^"]+)"$/
+	 *
+	 * @throws ElementHtmlException If the language is incorrect.
+     */
+    public function theElementLanguageShouldBe( $selector, $lang ) {
 		$browser  = $this->getSession();
-		$selector = 'html';
 		$element  = $browser->getPage()->find( 'css', $selector );
 
 		if ( ! $element ) {
@@ -149,7 +162,7 @@ class UserSwitchingContext extends WordPressContext {
 		if ( $lang !== $element->getAttribute( 'lang' ) ) {
 			throw new ElementHtmlException(
 				sprintf(
-					'The page language is "%s" instead of "%s"',
+					'The language is "%s" instead of "%s"',
 					$element->getAttribute( 'lang' ),
 					$lang
 				),

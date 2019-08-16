@@ -292,12 +292,27 @@ class user_switching {
 
 		if ( $old_user ) {
 			$switched_locale = false;
+			$lang_attr       = '';
+
 			if ( function_exists( 'get_user_locale' ) ) {
-				$switched_locale = switch_to_locale( get_user_locale( $old_user ) );
+				$locale          = get_user_locale( $old_user );
+				$switched_locale = switch_to_locale( $locale );
+				$lang_attr       = str_replace( '_', '-', $locale );
 			}
+
 			?>
 			<div id="user_switching" class="updated notice is-dismissible">
-				<p><span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span>
+				<?php
+					if ( $lang_attr ) {
+						printf(
+							'<p lang="%s">',
+							esc_attr( $lang_attr )
+						);
+					} else {
+						echo '<p>';
+					}
+				?>
+				<span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span>
 				<?php
 					$message       = '';
 					$just_switched = isset( $_GET['user_switched'] );
