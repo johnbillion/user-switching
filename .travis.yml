@@ -5,18 +5,18 @@ services:
   - mysql
 
 cache:
-    directories:
-        - $HOME/.composer/cache/files
+  directories:
+    - $HOME/.composer/cache/files
 
 language: php
 
 notifications:
-    email:
-        on_success: change
-        on_failure: always
+  email:
+    on_success: change
+    on_failure: always
 
 php:
-    - 7.2
+  - 7.2
 
 env:
   global:
@@ -43,17 +43,17 @@ jobs:
             tags: true
 
 matrix:
-    fast_finish: true
+  fast_finish: true
 
 before_install:
-    - |
-      if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
-        phpenv config-rm xdebug.ini
-      fi
+  - |
+    if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
+      phpenv config-rm xdebug.ini
+    fi
 
 install:
-    - travis_retry composer install --no-suggest
-    - travis_retry composer require --dev --update-with-dependencies --no-suggest roots/wordpress="${WP_VERSION} || *" wp-phpunit/wp-phpunit="${WP_VERSION} || *"
+  - travis_retry composer install --no-suggest
+  - travis_retry composer require --dev --update-with-dependencies --no-suggest roots/wordpress="${WP_VERSION} || *" wp-phpunit/wp-phpunit="${WP_VERSION} || *"
 
 script:
-    - composer test
+  - composer test
