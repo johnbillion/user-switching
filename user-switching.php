@@ -985,6 +985,8 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 		 */
 		do_action( 'set_user_switching_cookie', $auth_cookie, $expiration, $old_user_id, $scheme, $token );
 
+		$scheme = 'logged_in';
+
 		/**
 		 * Fires immediately before the User Switching old user cookie is set.
 		 *
@@ -997,7 +999,7 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 		 * @param string $scheme         Authentication scheme. Default 'logged_in'.
 		 * @param string $token          User's session token to use for this cookie.
 		 */
-		do_action( 'set_olduser_cookie', $olduser_cookie, $expiration, $old_user_id, 'logged_in', $token );
+		do_action( 'set_olduser_cookie', $olduser_cookie, $expiration, $old_user_id, $scheme, $token );
 
 		/** This filter is documented in wp-includes/pluggable.php */
 		if ( ! apply_filters( 'send_auth_cookies', true ) ) {
