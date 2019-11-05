@@ -51,4 +51,4 @@ To run just the code sniffs:
 
 To run just the functional tests:
 
-    composer test:ft
+	composer test:ft
