@@ -10,7 +10,7 @@
  *
  * Plugin Name:  User Switching
  * Description:  Instant switching between user accounts in WordPress
- * Version:      1.5.2
+ * Version:      1.5.3
  * Plugin URI:   https://johnblackbourn.com/wordpress-plugin-user-switching/
  * Author:       John Blackbourn & contributors
  * Author URI:   https://github.com/johnbillion/user-switching/graphs/contributors
