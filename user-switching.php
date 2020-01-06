@@ -151,7 +151,7 @@ class user_switching {
 				}
 
 				// Check authentication:
-				if ( ! current_user_can( 'switch_to_user', $user_id ) ) {
+				if ( ! apply_filters( 'user_switching_allow_switch', current_user_can( 'switch_to_user', $user_id ), $user_id ) ) {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ), 403 );
 				}
 
