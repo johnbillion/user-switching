@@ -154,7 +154,6 @@ In addition, User Switching respects the following filters from WordPress core w
 
 * `login_redirect` when switching to another user.
 * `logout_redirect` when switching off.
-* `send_auth_cookies` before setting any cookies.
 
 == Changelog ==
 
