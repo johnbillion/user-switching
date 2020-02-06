@@ -1001,8 +1001,14 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 		 */
 		do_action( 'set_olduser_cookie', $olduser_cookie, $expiration, $old_user_id, $scheme, $token );
 
-		/** This filter is documented in wp-includes/pluggable.php */
-		if ( ! apply_filters( 'send_auth_cookies', true ) ) {
+		/**
+		 * Allows preventing auth cookies from actually being sent to the client.
+		 *
+		 * @since 1.5.4
+		 *
+		 * @param bool $send Whether to send auth cookies to the client.
+		 */
+		if ( ! apply_filters( 'user_switching_send_auth_cookies', true ) ) {
 			return;
 		}
 
@@ -1030,8 +1036,8 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 			 */
 			do_action( 'clear_olduser_cookie' );
 
-			/** This filter is documented in wp-includes/pluggable.php */
-			if ( ! apply_filters( 'send_auth_cookies', true ) ) {
+			/** This filter is documented in user-switching.php */
+			if ( ! apply_filters( 'user_switching_send_auth_cookies', true ) ) {
 				return;
 			}
 
