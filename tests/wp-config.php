@@ -3,6 +3,16 @@
  * This is the configuration file that's used for the WordHat functional tests and WP-CLI commands.
  */
 
+$_root_dir = dirname( __DIR__ );
+$_env_dir  = __DIR__;
+
+require_once $_root_dir . '/vendor/autoload.php';
+
+if ( is_readable( $_env_dir . '/.env' ) ) {
+	$dotenv = Dotenv\Dotenv::create( $_env_dir );
+	$dotenv->load();
+}
+
 // Test with WordPress debug mode (default).
 define( 'WP_DEBUG', true );
 

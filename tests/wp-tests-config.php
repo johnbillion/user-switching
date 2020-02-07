@@ -5,6 +5,14 @@
 
 $root     = dirname( __DIR__ );
 $composer = json_decode( file_get_contents( $root . '/composer.json' ), true );
+$_env_dir = __DIR__;
+
+require_once $root . '/vendor/autoload.php';
+
+if ( is_readable( $_env_dir . '/.env' ) ) {
+	$dotenv = Dotenv\Dotenv::create( $_env_dir );
+	$dotenv->load();
+}
 
 // Path to the WordPress codebase to test.
 define( 'ABSPATH', $root . '/' . $composer['extra']['wordpress-install-dir'] . '/' );
