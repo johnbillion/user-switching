@@ -1,6 +1,6 @@
 <?php
 /**
- * This is the configuration file that's used for the Wordhat functional tests.
+ * This is the configuration file that's used for the WordHat functional tests and WP-CLI commands.
  */
 
 // Test with WordPress debug mode (default).
@@ -9,7 +9,6 @@ define( 'WP_DEBUG', true );
 // Prevent WP-Cron doing its thing during testing.
 define( 'DISABLE_WP_CRON', true );
 
-// define( 'WP_CONTENT_DIR', $root . '/content-dir' );
 define( 'WP_PLUGIN_DIR', dirname( dirname( __DIR__ ) ) );
 
 // WARNING WARNING WARNING!
