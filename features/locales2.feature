@@ -13,11 +13,11 @@ Feature: Locale support
 	Scenario: Switch from Italian admin to English author and back
 		Given I am logged in as admin_it
 		When I switch to user "author_en"
-        Then the page language should be "en-US"
+		Then the page language should be "en-US"
 		But I should see a status message that says "Cambiato a Author EN"
 		And the "#user_switching p" element language should be "it-IT"
 
 		When I go to the dashboard
 		And I switch back to "admin_it"
-        Then the page language should be "it-IT"
+		Then the page language should be "it-IT"
 		And I should see a status message that says "Tornato a Admin IT"
