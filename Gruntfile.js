@@ -69,7 +69,6 @@ module.exports = function(grunt) {
 				'!.git/**',
 				'!<%= wp_deploy.deploy.options.assets_dir %>/**',
 				'!<%= wp_deploy.deploy.options.build_dir %>/**',
-				'!readme.md',
 				ignored_gitignore,
 				ignored_gitattributes
 			],
@@ -117,7 +116,7 @@ module.exports = function(grunt) {
 				prefix: 'Stable tag:[\\s]+'
 			},
 			src: [
-				'readme.txt'
+				'readme.md'
 			]
 		},
 		pkg: {
@@ -160,28 +159,6 @@ module.exports = function(grunt) {
 		}
 	};
 
-    config.wp_readme_to_markdown = {
-		convert: {
-			files: {
-				'readme.md': 'readme.txt'
-			},
-			options: {
-				'screenshot_url': 'assets-wp-repo/{screenshot}.png',
-				'post_convert': function( readme ) {
-					// Banner
-					if ( grunt.file.exists( 'assets-wp-repo/banner-1544x500.png' ) ) {
-						readme = readme.replace( '**Contributors:**', '![Banner Image](assets-wp-repo/banner-1544x500.png)\n\n**Contributors:**' );
-					}
-
-					// Badges
-					readme = grunt.template.process( pkg.readme_badges.join( '\n' ) ) + '\n\n' + readme;
-
-					return readme;
-				}
-			}
-		}
-	};
-
 	config.gitcommit = {
 		version: {
 			options: {
@@ -191,8 +168,7 @@ module.exports = function(grunt) {
 				src: [
 					Object.keys(config.version).map(function(key){
 						return config.version[ key ].src;
-					}),
-					'readme.md'
+					})
 				]
 			}
 		}
@@ -216,7 +192,6 @@ module.exports = function(grunt) {
 		grunt.task.run([
 			'gitstatus:require_clean',
 			'version::' + version,
-			'wp_readme_to_markdown',
 			'gitcommit:version',
 			'gittag:version'
 		]);

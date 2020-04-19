@@ -1,21 +1,18 @@
-[![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/user-switching.svg)](https://wordpress.org/plugins/user-switching/)
-[![License](https://img.shields.io/badge/license-GPL_v2%2B-blue.svg)](http://opensource.org/licenses/GPL-2.0)
-[![WordPress Tested](https://img.shields.io/wordpress/v/user-switching.svg)](https://wordpress.org/plugins/user-switching/)
-[![Build Status](https://img.shields.io/travis/johnbillion/user-switching/master.svg)](https://travis-ci.org/johnbillion/user-switching)
-
 # User Switching #
 
-![Banner Image](assets-wp-repo/banner-1544x500.png)
+Stable tag: 1.5.4  
+Requires at least: 3.7  
+Tested up to: 5.3  
+Requires PHP: 5.3  
+License: GPL v2 or later  
+Tags: users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
+Contributors: johnbillion  
 
-**Contributors:** [johnbillion](https://profiles.wordpress.org/johnbillion)  
-**Tags:** users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
-**Requires at least:** 3.7  
-**Tested up to:** 5.3  
-**Stable tag:** 1.5.4  
-**Requires PHP:** 5.3  
-**License:** GPL v2 or later  
+![](assets-wp-repo/banner-1544x500.png)
 
 Instant switching between user accounts in WordPress.
+
+[![](https://img.shields.io/travis/johnbillion/user-switching/master.svg)](https://travis-ci.org/johnbillion/user-switching)
 
 ## Description ##
 
@@ -58,12 +55,9 @@ User Switching does not send data to any third party, nor does it include any th
 
 ## Screenshots ##
 
-### 1. The *Switch To* link on the Users screen ###
-![The *Switch To* link on the Users screen](assets-wp-repo/screenshot-1.png)
+1. The *Switch To* link on the Users screen ![The Switch To link on the Users screen](assets-wp-repo/screenshot-1.png)
 
-### 2. The *Switch To* link on a user's profile ###
-![The *Switch To* link on a user's profile](assets-wp-repo/screenshot-2.png)
-
+2. The *Switch To* link on a user's profile ![The Switch To link on a user's profile](assets-wp-repo/screenshot-2.png)
 
 ## Frequently Asked Questions ##
 
