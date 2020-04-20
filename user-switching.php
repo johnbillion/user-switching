@@ -740,11 +740,24 @@ class user_switching {
 	 * @return string The required URL.
 	 */
 	public static function switch_to_url( WP_User $user ) {
-		return wp_nonce_url( add_query_arg( array(
+		$link wp_nonce_url( add_query_arg( array(
 			'action'  => 'switch_to_user',
 			'user_id' => $user->ID,
 			'nr'      => 1,
 		), wp_login_url() ), "switch_to_user_{$user->ID}" );
+
+		/**
+		 * Filtet to update the switch user.
+		 *
+		 * @since 1.5.5
+		 *
+		 * @param bool $link Link for swtich user to particular account.
+		 * @param  int $user->ID The user ID to be switched to.
+		 * @param  WP_User $user The user to be switched to.
+		 * 
+		 * @return string $link The required URL.
+		 */
+		return apply_filters( 'user_switching_swtich_to_user_link', $link, $user->ID, $user );
 	}
 
 	/**
