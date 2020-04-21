@@ -8,6 +8,7 @@ jobs:
         php: ['7.3']
         wp: ['*', 'dev-nightly']
       fail-fast: false
+    # Testing
     name: WP ${{ matrix.wp }} / PHP ${{ matrix.php }} // ${{ github.repository }}
     runs-on: ubuntu-18.04
     services:
