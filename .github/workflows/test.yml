@@ -9,7 +9,7 @@ jobs:
         wp: ['*', 'dev-nightly']
       fail-fast: false
     # Testing
-    name: WP ${{ matrix.wp }} / PHP ${{ matrix.php }} // ${{ github.repository }}
+    name: WP ${{ matrix.wp }} / PHP ${{ matrix.php }} // ${{ github.repository }} // ${{ github.event.pull_request.head.repo.full_name }}
     runs-on: ubuntu-18.04
     services:
       mysql:
