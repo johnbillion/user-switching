@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/johnbillion/user-switching.svg?branch=develop)](https://travis-ci.org/johnbillion/user-switching)
+[![Build Status](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=flat-square)](https://github.com/johnbillion/user-switching/actions)
 
 # Contributing to User Switching
 

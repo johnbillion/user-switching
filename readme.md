@@ -12,7 +12,7 @@ Contributors: johnbillion
 
 Instant switching between user accounts in WordPress.
 
-[![](https://img.shields.io/travis/johnbillion/user-switching/master.svg)](https://travis-ci.org/johnbillion/user-switching)
+[![Build Status](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=flat-square)](https://github.com/johnbillion/user-switching/actions)
 
 ## Description ##
 
