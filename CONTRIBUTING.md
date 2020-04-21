@@ -52,3 +52,9 @@ To run just the code sniffs:
 To run just the functional tests:
 
 	composer test:ft
+
+### Releasing a New Version
+
+User Switching gets automatically deployed to the WordPress.org Plugin Directory whenever a new release is published on GitHub.
+
+Assets such as screenshots and banners are stored in the `.wordpress-org` directory. These get deployed as part of the automated release process too, but will be deployed separately if they're the only changes in the master branch since the last release. This allows for the "Tested up to" value to be bumped as well as assets to be updated in between releases.
