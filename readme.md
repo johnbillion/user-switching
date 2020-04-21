@@ -8,7 +8,7 @@ License: GPL v2 or later
 Tags: users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 Contributors: johnbillion  
 
-![](assets-wp-repo/banner-1544x500.png)
+![](.wordpress-org/banner-1544x500.png)
 
 Instant switching between user accounts in WordPress.
 
@@ -55,9 +55,9 @@ User Switching does not send data to any third party, nor does it include any th
 
 ## Screenshots ##
 
-1. The *Switch To* link on the Users screen ![The Switch To link on the Users screen](assets-wp-repo/screenshot-1.png)
+1. The *Switch To* link on the Users screen ![The Switch To link on the Users screen](.wordpress-org/screenshot-1.png)
 
-2. The *Switch To* link on a user's profile ![The Switch To link on a user's profile](assets-wp-repo/screenshot-2.png)
+2. The *Switch To* link on a user's profile ![The Switch To link on a user's profile](.wordpress-org/screenshot-2.png)
 
 ## Frequently Asked Questions ##
 

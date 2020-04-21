@@ -1,6 +1,6 @@
 * text=auto
 
-/assets-wp-repo export-ignore
+/.wordpress-org export-ignore
 /bin export-ignore
 /features export-ignore
 /tests export-ignore
