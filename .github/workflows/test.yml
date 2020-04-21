@@ -3,13 +3,12 @@ on: [push, pull_request]
 
 jobs:
   build:
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     strategy:
       matrix:
         php: ['7.3']
         wp: ['*', 'dev-nightly']
       fail-fast: false
-    name: WP ${{ matrix.wp }} / PHP ${{ matrix.php }} // ${{ github.repository }}
+    name: WP ${{ matrix.wp }} / PHP ${{ matrix.php }} // ${{ github.repository }} // ${{ github.event_name }}
     runs-on: ubuntu-18.04
     services:
       mysql:
