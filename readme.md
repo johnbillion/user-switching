@@ -12,7 +12,7 @@ Contributors: johnbillion
 
 Instant switching between user accounts in WordPress.
 
-[![Build Status](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=flat-square)](https://github.com/johnbillion/user-switching/actions)
+[![](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=flat-square)](https://github.com/johnbillion/user-switching/actions)
 
 ## Description ##
 
@@ -55,9 +55,9 @@ User Switching does not send data to any third party, nor does it include any th
 
 ## Screenshots ##
 
-1. The *Switch To* link on the Users screen ![The Switch To link on the Users screen](.wordpress-org/screenshot-1.png)
+1. The *Switch To* link on the Users screen<br>![The Switch To link on the Users screen](.wordpress-org/screenshot-1.png)
 
-2. The *Switch To* link on a user's profile ![The Switch To link on a user's profile](.wordpress-org/screenshot-2.png)
+2. The *Switch To* link on a user's profile<br>![The Switch To link on a user's profile](.wordpress-org/screenshot-2.png)
 
 ## Frequently Asked Questions ##
 
@@ -160,6 +160,4 @@ In addition, User Switching respects the following filters from WordPress core w
 * `login_redirect` when switching to another user.
 * `logout_redirect` when switching off.
 
-## Changelog ##
-
-For User Switching's changelog, please see [the Releases page on GitHub](https://github.com/johnbillion/user-switching/releases).
+<!-- changelog -->
