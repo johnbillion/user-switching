@@ -26,11 +26,21 @@ async function run() {
 ${release.body}`
 	, '## Changelog ##' );
 
-	const results = await replace( {
-		files: filename,
-		from: '<!-- changelog -->',
-		to: changelog,
-	} );
+	try {
+		const results = await replace( {
+			files: filename,
+			from: '<!-- changelog -->',
+			to: changelog,
+		} );
+
+		if ( results.filter( result => ! result.hasChanged ).length ) {
+			console.error( 'No replacements made' );
+			process.exitCode = 1;
+		}
+	} catch( exception ) {
+		console.error( exception );
+		process.exitCode = 1;
+	}
 }
 
 run();
