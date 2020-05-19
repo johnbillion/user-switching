@@ -548,11 +548,11 @@ class user_switching {
 		if ( is_admin_bar_showing() || did_action( 'wp_meta' ) ) {
 			return;
     }
-    
-    // Allow developers to disable this feature.
-    if ( ! apply_filters( 'user_switching_in_footer', true ) ) {
-      return;
-    }
+
+		// Allow developers to disable this feature.
+		if ( ! apply_filters( 'user_switching_in_footer', true ) ) {
+			return;
+		}
 
 		$old_user = self::get_old_user();
 
