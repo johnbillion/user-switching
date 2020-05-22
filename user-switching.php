@@ -547,7 +547,7 @@ class user_switching {
 	public function action_wp_footer() {
 		if ( is_admin_bar_showing() || did_action( 'wp_meta' ) ) {
 			return;
-    }
+		}
 
 		// Allow developers to disable this feature.
 		if ( ! apply_filters( 'user_switching_in_footer', true ) ) {
