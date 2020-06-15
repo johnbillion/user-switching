@@ -550,7 +550,7 @@ class user_switching {
 		}
 
 		/**
-		 * Allow developers to disable the 'Switch back to {user}' link in WordPress footer.
+		 * Allows the 'Switch back to {user}' link in the WordPress footer to be disabled.
 		 *
 		 * @since 1.5.5
 		 *
