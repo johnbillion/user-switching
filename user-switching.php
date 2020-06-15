@@ -554,7 +554,7 @@ class user_switching {
 		 *
 		 * @since 1.5.5
 		 *
-		 * @param bool    $show_in_footer   Whether to show the 'Switch back to {user}' link in footer.
+		 * @param bool $show_in_footer Whether to show the 'Switch back to {user}' link in footer.
 		 */
 		if ( ! apply_filters( 'user_switching_in_footer', true ) ) {
 			return;
