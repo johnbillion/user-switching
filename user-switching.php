@@ -549,6 +549,17 @@ class user_switching {
 			return;
 		}
 
+		/**
+		 * Allows the 'Switch back to {user}' link in the WordPress footer to be disabled.
+		 *
+		 * @since 1.5.5
+		 *
+		 * @param bool $show_in_footer Whether to show the 'Switch back to {user}' link in footer.
+		 */
+		if ( ! apply_filters( 'user_switching_in_footer', true ) ) {
+			return;
+		}
+
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
