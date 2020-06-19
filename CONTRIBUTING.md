@@ -4,13 +4,19 @@
 
 # Contributing to User Switching
 
-Code contributions and bug reports are very welcome. These should be submitted through [the GitHub repository](https://github.com/johnbillion/user-switching). Development happens in the `develop` branch, and any pull requests should be made against that branch please.
+Bug reports, code contributions, and general feedback are very welcome. These should be submitted through [the GitHub repository](https://github.com/johnbillion/user-switching). Development happens in the `develop` branch, and any pull requests should be made against that branch please.
 
+* [Reviews on WordPress.org](#reviews-on-wordpressorg)
 * [Reporting Security Issues](#reporting-security-issues)
 * [Inclusivity and Code of Conduct](#inclusivity-and-code-of-conduct)
 * [Setting up Locally](#setting-up-locally)
 * [Running the Tests](#running-the-tests)
+* [Releasing a New Version](#releasing-a-new-version)
 * [Ethical Open Source](#ethical-open-source)
+
+## Reviews on WordPress.org
+
+If you enjoy using User Switching I would greatly appreciate it <a href="https://wordpress.org/support/plugin/user-switching/reviews/">if you left a positive review on the WordPress.org Plugin Directory</a>. This is the fastest and easiest way to contribute to User Switching 😄.
 
 ## Reporting Security Issues
 
@@ -30,6 +36,7 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 
 * [Composer](https://getcomposer.org/)
 * [Node](https://nodejs.org/)
+* A local web server running WordPress
 
 ### Setup
 
@@ -63,7 +70,7 @@ To run just the functional tests:
 
 	composer test:ft
 
-### Releasing a New Version
+## Releasing a New Version
 
 User Switching gets automatically deployed to the WordPress.org Plugin Directory whenever a new release is published on GitHub.
 

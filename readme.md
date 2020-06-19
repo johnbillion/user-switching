@@ -24,8 +24,8 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Switch user: Instantly switch to any user account from the *Users* screen.
  * Switch back: Instantly switch back to your originating account.
  * Switch off: Log out of your account but retain the ability to instantly switch back in again.
- * It's completely secure (see the *Security* section below).
- * Compatible with WordPress, WordPress Multisite, WooCommerce, BuddyPress, and bbPress.
+ * Switching between users is secure (see the *Security* section below).
+ * Compatible with WordPress, WordPress Multisite, WooCommerce, BuddyPress, bbPress, and most two-factor authentication plugins.
 
 ### Security ###
 
