@@ -1,16 +1,24 @@
 [![Build Status](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=flat-square)](https://github.com/johnbillion/user-switching/actions)
+[![](https://img.shields.io/badge/contributor-code%20of%20conduct-5e0d73.svg?style=flat-square)](https://github.com/johnbillion/user-switching/blob/develop/CODE_OF_CONDUCT.md)
 
 # Contributing to User Switching
 
 Code contributions and bug reports are very welcome. These should be submitted through [the GitHub repository](https://github.com/johnbillion/user-switching). Development happens in the `develop` branch, and any pull requests should be made against that branch please.
 
 * [Reporting Security Issues](#reporting-security-issues)
+* [Inclusivity and Code of Conduct](#inclusivity-and-code-of-conduct)
 * [Setting up Locally](#setting-up-locally)
 * [Running the Tests](#running-the-tests)
 
 ## Reporting Security Issues
 
 If you discover a security issue in User Switching, please report it to [the security program on HackerOne](https://hackerone.com/johnblackbourn). Do not report security issues on GitHub or the WordPress.org support forums. Thank you.
+
+## Inclusivity and Code of Conduct
+
+Contributions to User Switching are welcome from anyone. Whether you are new to Open Source or a seasoned veteran, all constructive contribution is welcome and I'll endeavour to support you when I can.
+
+This project is released with <a href="https://github.com/johnbillion/user-switching/blob/develop/CODE_OF_CONDUCT.md">a contributor code of conduct</a> and by participating in this project you agree to abide by its terms. The code of conduct is nothing to worry about, if you are a respectful human being then all will be good.
 
 ## Setting up Locally
 
