@@ -54,6 +54,8 @@ User Switching makes use of browser cookies in order to allow users to switch to
 
 User Switching does not send data to any third party, nor does it include any third party resources, nor will it ever do so.
 
+See also the FAQ for some questions relating to privacy and safety when switching between users.
+
 ### Ethical Open Source
 
 User Switching is considered **Ethical Open Source** because it meets all of the criteria of [The Ethical Source Definition (ESD)](https://ethicalsource.dev/definition/):
@@ -111,6 +113,19 @@ A user needs the `edit_users` capability in order to switch user accounts. By de
 Yes. The `switch_users` meta capability can be explicitly granted to a user or a role to allow them to switch users regardless of whether or not they have the `edit_users` capability. For practical purposes, the user or role will also need the `list_users` capability so they can access the Users menu in the WordPress admin area.
 
 If you know what you're doing with user capabilities, this capability can also be denied from a user or role to prevent the ability to switch users, regardless of whether or not they have the `edit_users` capability.
+
+### Does this plugin allow a user to frame another user for an action?
+
+Potentially yes, but User Switching includes some safety protections for this and there are further precautions you can take as a site administrator:
+
+* User Switching stores the ID of the originating user in the new session for the user they switch to. Although this session does not persist by default when they subsequently switch back, there will be a record of this ID if your MySQL server has query logging enabled.
+* User Switching stores the login name of the originating user in an authentication cookie (see the Privacy Statement for more information). If your server access logs store cookie data, there will be a record of this login name (along with the IP address) for each access request.
+* You can install an audit trail plugin such as Simple History, WP Activity Log, or Stream, all of which have built-in support for User Switching and all of which log an entry when a user switches into another account.
+* User Switching triggers an action when a user switches account, switches off, or switches back (see below). You can use these actions to perform additional logging for safety purposes depending on your requirements.
+
+One or more of the above should allow you to correlate an action with the originating user when a user switches account, should you need to.
+
+Bear in mind that even without the User Switching plugin in use, any user who has the ability to edit another user can still frame another user for an action by, for example, changing their password and manually logging into that account. If you are concerned about users abusing others, you should take great care when granting users administrative rights.
 
 ### Can regular admins on Multisite installations switch accounts?
 
