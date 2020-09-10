@@ -104,7 +104,7 @@ class user_switching {
 		}
 
 		?>
-		<tr>
+		<tr class="user-switching-wrap">
 			<th scope="row"><?php echo esc_html_x( 'User Switching', 'User Switching title on user profile screen', 'user-switching' ); ?></th>
 			<td><a id="user_switching_switcher" href="<?php echo esc_url( $link ); ?>"><?php esc_html_e( 'Switch&nbsp;To', 'user-switching' ); ?></a></td>
 		</tr>
