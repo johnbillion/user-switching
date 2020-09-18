@@ -989,7 +989,6 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 		 *
 		 * @param string $auth_cookie JSON-encoded array of authentication cookie values.
 		 * @param int    $expiration  The time when the authentication cookie expires as a UNIX timestamp.
-		 *                            Default is 48 hours from now.
 		 * @param int    $old_user_id User ID.
 		 * @param string $scheme      Authentication scheme. Values include 'auth' or 'secure_auth'.
 		 * @param string $token       User's session token to use for the latest cookie.
@@ -1005,9 +1004,8 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 		 *
 		 * @param string $olduser_cookie The old user cookie value.
 		 * @param int    $expiration     The time when the logged-in authentication cookie expires as a UNIX timestamp.
-		 *                               Default is 48 hours from now.
 		 * @param int    $old_user_id    User ID.
-		 * @param string $scheme         Authentication scheme. Default 'logged_in'.
+		 * @param string $scheme         Authentication scheme. Values include 'auth' or 'secure_auth'.
 		 * @param string $token          User's session token to use for this cookie.
 		 */
 		do_action( 'set_olduser_cookie', $olduser_cookie, $expiration, $old_user_id, $scheme, $token );
