@@ -112,11 +112,11 @@ class user_switching {
 	}
 
 	/**
-	 * Returns whether or not the current logged in user is being remembered in the form of a persistent browser cookie
+	 * Returns whether the current logged in user is being remembered in the form of a persistent browser cookie
 	 * (ie. they checked the 'Remember Me' check box when they logged in). This is used to persist the 'remember me'
 	 * value when the user switches to another user.
 	 *
-	 * @return bool Whether the current user is being 'remembered' or not.
+	 * @return bool Whether the current user is being 'remembered'.
 	 */
 	public static function remember() {
 		/** This filter is documented in wp-includes/pluggable.php */
@@ -808,7 +808,7 @@ class user_switching {
 	}
 
 	/**
-	 * Returns whether or not User Switching's equivalent of the 'logged_in' cookie should be secure.
+	 * Returns whether User Switching's equivalent of the 'logged_in' cookie should be secure.
 	 *
 	 * This is used to set the 'secure' flag on the old user cookie, for enhanced security.
 	 *
@@ -821,11 +821,11 @@ class user_switching {
 	}
 
 	/**
-	 * Returns whether or not User Switching's equivalent of the 'auth' cookie should be secure.
+	 * Returns whether User Switching's equivalent of the 'auth' cookie should be secure.
 	 *
-	 * This is used to determine whether to set a secure auth cookie or not.
+	 * This is used to determine whether to set a secure auth cookie.
 	 *
-	 * @return bool Should the auth cookie be secure?
+	 * @return bool Whether the auth cookie should be secure.
 	 */
 	public static function secure_auth_cookie() {
 		return ( is_ssl() && ( 'https' === parse_url( wp_login_url(), PHP_URL_SCHEME ) ) );
@@ -1242,7 +1242,7 @@ if ( ! function_exists( 'switch_off_user' ) ) {
 
 if ( ! function_exists( 'current_user_switched' ) ) {
 	/**
-	 * Returns whether or not the current user switched into their account.
+	 * Returns whether the current user switched into their account.
 	 *
 	 * @return false|WP_User False if the user isn't logged in or they didn't switch in; old user object (which evaluates to
 	 *                       true) if the user switched into the current user account.
