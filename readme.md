@@ -114,6 +114,33 @@ Yes. The `switch_users` meta capability can be explicitly granted to a user or a
 
 If you know what you're doing with user capabilities, this capability can also be denied from a user or role to prevent the ability to switch users, regardless of whether or not they have the `edit_users` capability.
 
+### Can I add a custom "Switch To" link to my own plugin or theme?
+
+Yes. Use the `user_switching::maybe_switch_url()` method for this. It takes care of authentication and returns a nonce-protected URL for the current user to switch into the provided user account.
+
+    if ( method_exists( 'user_switching', 'maybe_switch_url' ) ) {
+        $url = user_switching::maybe_switch_url( $target_user );
+        if ( $url ) {
+            printf(
+                '<a href="%1$s">Switch to %2$s</a>',
+                $url,
+                $target_user->display_name
+            );
+        }
+    }
+
+### Can I determine whether the current user switched into their account?
+
+Yes. Use the `current_user_switched()` function for this.
+
+    if ( function_exists( 'current_user_switched' ) ) {
+        $switched_user = current_user_switched();
+        if ( $switched_user ) {
+            // User is logged in and has switched into their account.
+            // $switched_user is the WP_User object for their originating user.
+        }
+    }
+
 ### Does this plugin allow a user to frame another user for an action?
 
 Potentially yes, but User Switching includes some safety protections for this and there are further precautions you can take as a site administrator:
