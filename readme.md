@@ -112,7 +112,21 @@ A user needs the `edit_users` capability in order to switch user accounts. By de
 
 Yes. The `switch_users` meta capability can be explicitly granted to a user or a role to allow them to switch users regardless of whether or not they have the `edit_users` capability. For practical purposes, the user or role will also need the `list_users` capability so they can access the Users menu in the WordPress admin area.
 
-If you know what you're doing with user capabilities, this capability can also be denied from a user or role to prevent the ability to switch users, regardless of whether or not they have the `edit_users` capability.
+### Can the ability to switch accounts be denied from users?
+
+Yes. User capabilities in WordPress can be set to `false` to deny them from a user. Denying the `switch_users` capability prevents the user from switching users, even if they have the `edit_users` capability.
+
+add_filter( 'user_has_cap', function( array $allcaps, array $caps, array $args, WP_User $user ) {
+    if ( 'switch_to_user' === $args[0] ) {
+        if ( my_condition() ) {
+            $allcaps['switch_users'] = false;
+        }
+    }
+
+    return $allcaps;
+}, 9, 4 );
+
+Note that this needs to happen before User Switching's own capability filtering, hence the priority of `9`.
 
 ### Can I add a custom "Switch To" link to my own plugin or theme?
 
