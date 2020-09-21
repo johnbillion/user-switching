@@ -117,15 +117,14 @@ Yes. The `switch_users` meta capability can be explicitly granted to a user or a
 
 Yes. User capabilities in WordPress can be set to `false` to deny them from a user. Denying the `switch_users` capability prevents the user from switching users, even if they have the `edit_users` capability.
 
-	add_filter( 'user_has_cap', function( array $allcaps, array $caps, array $args, WP_User $user ) {
-	    if ( 'switch_to_user' === $args[0] ) {
-	        if ( my_condition() ) {
-	            $allcaps['switch_users'] = false;
-	        }
-	    }
-
-	    return $allcaps;
-	}, 9, 4 );
+    add_filter( 'user_has_cap', function( array $allcaps, array $caps, array $args, WP_User $user ) {
+        if ( 'switch_to_user' === $args[0] ) {
+            if ( my_condition() ) {
+                $allcaps['switch_users'] = false;
+            }
+        }
+        return $allcaps;
+    }, 9, 4 );
 
 Note that this needs to happen before User Switching's own capability filtering, hence the priority of `9`.
 
