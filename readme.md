@@ -7,6 +7,7 @@ Requires PHP: 5.3
 License: GPL v2 or later  
 Tags: users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 Contributors: johnbillion  
+Donate link: https://johnblackbourn.com/donations/
 
 ![](.wordpress-org/banner-1544x500.png)
 
@@ -228,5 +229,9 @@ In addition, User Switching respects the following filters from WordPress core w
 
 * `login_redirect` when switching to another user.
 * `logout_redirect` when switching off.
+
+### Do you accept donations?
+
+[I am accepting sponsorships via the GitHub Sponsors program](https://johnblackbourn.com/donations/) and any support you can give will help me maintain this plugin and keep it free for everyone.
 
 <!-- changelog -->
