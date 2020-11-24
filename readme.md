@@ -46,6 +46,13 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
 
 See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information about the *Switch Off* feature.
 
+### Other Plugins
+
+I maintain several other plugins for developers. Check them out:
+
+* [Query Monitor](https://wordpress.org/plugins/query-monitor/) is the developer tools panel for WordPress
+* [WP Crontrol](https://wordpress.org/plugins/wp-crontrol/) lets you view and control what's happening in the WP-Cron system
+
 ### Privacy Statement
 
 User Switching makes use of browser cookies in order to allow users to switch to another account. Its cookies operate using the same mechanism as the authentication cookies in WordPress core, therefore their values contain the user's `user_login` field in plain text which should be treated as potentially personally identifiable information. The names of the cookies are:
