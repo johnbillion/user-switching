@@ -74,7 +74,9 @@ To run just the functional tests:
 
 User Switching gets automatically deployed to the WordPress.org Plugin Directory whenever a new release is published on GitHub.
 
-Assets such as screenshots and banners are stored in the `.wordpress-org` directory. These get deployed as part of the automated release process too, but will be deployed separately if they're the only changes in the master branch since the last release. This allows for the "Tested up to" value to be bumped as well as assets to be updated in between releases.
+Assets such as screenshots and banners are stored in the `.wordpress-org` directory. These get deployed as part of the automated release process too.
+
+In order to deploy only changes to assets, push the change to the `deploy` branch and they will be deployed if they're the only changes in the branch since the last release. This allows for the "Tested up to" value to be bumped as well as assets to be updated in between releases.
 
 ## Ethical Open Source
 
