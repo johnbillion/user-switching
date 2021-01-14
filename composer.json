@@ -46,7 +46,7 @@
 			"phpcs -nps --colors --report-code --report-summary --report-width=80 ."
 		],
 		"test:ut": [
-			"wp db reset --yes --path=$(npm run --silent jq '.extra .\"wordpress-install-dir\"' composer.json -- -r) #",
+			"wp db reset --yes --path=tests/wordpress #",
 			"export WP_MULTISITE=0 && phpunit --verbose --colors=always --exclude-group=ms-required",
 			"export WP_MULTISITE=1 && phpunit --verbose --colors=always --exclude-group=ms-excluded"
 		],
