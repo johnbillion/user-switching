@@ -105,7 +105,7 @@ Yes, and you'll also be able to switch users from member profile screens.
 
 ### Does this plugin work with WooCommerce?
 
-Yes, but for maximum compatibility you should use WooCommerce version 3.6 or later.
+Yes. For maximum compatibility you should use WooCommerce version 3.6 or later.
 
 ### Does this plugin work if my site is using a two-factor authentication plugin?
 
@@ -145,8 +145,21 @@ Yes. Use the `user_switching::maybe_switch_url()` method for this. It takes care
         if ( $url ) {
             printf(
                 '<a href="%1$s">Switch to %2$s</a>',
-                $url,
-                $target_user->display_name
+                esc_url( $url ),
+                esc_html( $target_user->display_name )
+            );
+        }
+    }
+
+This link also works for switching back to the original user, but if you want an explicit link for this you can use the following code:
+
+    if ( method_exists( 'user_switching', 'get_old_user' ) ) {
+        $old_user = user_switching::get_old_user();
+        if ( $old_user ) {
+            printf(
+                '<a href="%1$s">Switch back to %2$s</a>',
+                esc_url( user_switching::switch_back_url( $old_user ) ),
+                esc_html( $old_user->display_name )
             );
         }
     }
