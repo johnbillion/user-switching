@@ -26,7 +26,7 @@
 	},
 	"require-dev" : {
 		"behat/mink-goutte-driver": "^1.2",
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.5",
+		"dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
 		"genesis/behat-fail-aid": "^2.0",
 		"johnbillion/php-docs-standards": "^1.2",
 		"paulgibbs/behat-wordpress-extension": "^3.3",
@@ -58,5 +58,11 @@
 			"@test:ut",
 			"@test:ft"
 		]
-	}
+	},
+	"funding": [
+		{
+			"type": "github",
+			"url": "https://github.com/sponsors/johnbillion"
+		}
+	]
 }
