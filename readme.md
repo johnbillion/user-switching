@@ -2,12 +2,12 @@
 
 Stable tag: 1.5.6  
 Requires at least: 3.7  
-Tested up to: 5.6  
+Tested up to: 5.7  
 Requires PHP: 5.3  
 License: GPL v2 or later  
 Tags: users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 Contributors: johnbillion  
-Donate link: https://johnblackbourn.com/donations/
+Donate link: https://github.com/sponsors/johnbillion
 
 ![](.wordpress-org/banner-1544x500.png)
 
