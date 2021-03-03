@@ -27,7 +27,7 @@ class UserSwitchingContext extends WordPressContext {
 		Assert::assertNotEmpty( $user_id );
 
 		$this->visitPath( sprintf( 'wp-admin/user-edit.php?user_id=%d', $user_id ) );
-		$this->getSession()->getPage()->clickLink( "Switch\xc2\xa0To" );
+		$this->getSession()->getPage()->clickLink( 'user_switching_switcher' );
 	}
 
 	/**
@@ -126,15 +126,28 @@ class UserSwitchingContext extends WordPressContext {
 	/**
 	 * Verify the page language
 	 *
-	 * @param string $user_id
+	 * @param string $lang
 	 *
 	 * @Then /^the page language should be "(?P<lang>[^"]+)"$/
 	 *
-	 * @throws ElementHtmlException If the display name is incorrect.
+	 * @throws ElementHtmlException If the language is incorrect.
      */
     public function thePageLanguageShouldBe( $lang ) {
+		$this->theElementLanguageShouldBe( 'html', $lang );
+	}
+
+	/**
+	 * Verify the language of an element
+	 *
+	 * @param string $selector
+	 * @param string $lang
+	 *
+	 * @Then /^the "(?P<selector>[^"]+)" element language should be "(?P<lang>[^"]+)"$/
+	 *
+	 * @throws ElementHtmlException If the language is incorrect.
+     */
+    public function theElementLanguageShouldBe( $selector, $lang ) {
 		$browser  = $this->getSession();
-		$selector = 'html';
 		$element  = $browser->getPage()->find( 'css', $selector );
 
 		if ( ! $element ) {
@@ -149,7 +162,7 @@ class UserSwitchingContext extends WordPressContext {
 		if ( $lang !== $element->getAttribute( 'lang' ) ) {
 			throw new ElementHtmlException(
 				sprintf(
-					'The page language is "%s" instead of "%s"',
+					'The language is "%s" instead of "%s"',
 					$element->getAttribute( 'lang' ),
 					$lang
 				),

@@ -1,0 +1,23 @@
+# Directories
+.git
+.github
+.wordpress-org
+bin
+features
+node_modules
+tests
+vendor
+
+# Files
+.distignore
+.gitignore
+behat.yml
+composer.json
+composer.lock
+CONTRIBUTING.md
+Gruntfile.js
+package-lock.json
+package.json
+phpcs.xml.dist
+phpunit.xml.dist
+SECURITY.md

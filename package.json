@@ -1,33 +1,22 @@
 {
   "name": "user-switching",
-  "version": "1.5.0",
+  "version": "1.5.6",
   "description": "Instant switching between user accounts in WordPress.",
   "license": "GPL-2.0-or-later",
   "author": "John Blackbourn",
   "repository": "johnbillion/user-switching",
-  "readme_badges": [
-    "[![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/<%= pkg.name %>.svg)](https://wordpress.org/plugins/<%= pkg.name %>/)",
-    "[![License](https://img.shields.io/badge/license-GPL_v2%2B-blue.svg)](http://opensource.org/licenses/GPL-2.0)",
-    "[![WordPress Tested](https://img.shields.io/wordpress/v/<%= pkg.name %>.svg)](https://wordpress.org/plugins/<%= pkg.name %>/)",
-    "[![Build Status](https://img.shields.io/travis/<%= pkg.repository %>/master.svg)](https://travis-ci.org/<%= pkg.repository %>)"
-  ],
   "devDependencies": {
-    "gitattributes-globs": "^1",
-    "gitignore-globs": "^0.1",
+    "@actions/github": "^2",
     "grunt": "^1",
     "grunt-contrib-clean": "^2",
-    "grunt-contrib-copy": "^1",
     "grunt-convert-svg-to-png": "^1",
-    "grunt-git": "^1",
     "grunt-rename-util": "^1",
     "grunt-version": "^1",
-    "grunt-wp-deploy": "git+https://github.com/johnbillion/grunt-wp-deploy.git#master",
-    "grunt-wp-readme-to-markdown": "^2",
     "load-grunt-tasks": "^4",
-    "node-jq": "^1"
+    "replace-in-file": "^5",
+    "semver": "^7"
   },
   "scripts": {
-    "grunt": "grunt",
-    "jq": "jq"
+    "grunt": "grunt"
   }
 }

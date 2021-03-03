@@ -9,7 +9,7 @@ class TestReadme extends WP_UnitTestCase {
 		}
 		$plugin_data = get_plugin_data( dirname( dirname( __FILE__ ) ) . '/user-switching.php' );
 
-		$this->assertEquals( $readme_data['stable_tag'], $plugin_data['Version'] );
+		self::assertEquals( $readme_data['stable_tag'], $plugin_data['Version'] );
 	}
 
 	private function get_readme() {

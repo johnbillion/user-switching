@@ -2,15 +2,6 @@
 
 $_root_dir = getcwd();
 
-require_once $_root_dir . '/vendor/autoload.php';
-
-$_env_dir = dirname( dirname( __DIR__ ) );
-
-if ( is_readable( $_env_dir . '/.env' ) ) {
-	$dotenv = Dotenv\Dotenv::create( $_env_dir );
-	$dotenv->load();
-}
-
 $_tests_dir = getenv( 'WP_PHPUNIT__DIR' );
 
 require_once $_tests_dir . '/includes/functions.php';

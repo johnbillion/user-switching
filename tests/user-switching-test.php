@@ -45,7 +45,7 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 			grant_super_admin( self::$testers['super']->ID );
 		}
 
-		add_filter( 'send_auth_cookies', '__return_false' );
+		add_filter( 'user_switching_send_auth_cookies', '__return_false' );
 	}
 
 	public function setUp() {

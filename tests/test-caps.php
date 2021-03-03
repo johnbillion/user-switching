@@ -43,8 +43,8 @@ class TestCapabilities extends User_Switching_Test {
 	public function testAllRolesAreTested() {
 		$tested_roles = array_column( $this->data_roles(), 0 );
 
-		$this->assertSame( array_keys( self::$testers ), $tested_roles );
-		$this->assertSame( array_keys( self::$users ), $tested_roles );
+		self::assertSame( array_keys( self::$testers ), $tested_roles );
+		self::assertSame( array_keys( self::$users ), $tested_roles );
 	}
 
 	/**
@@ -55,10 +55,10 @@ class TestCapabilities extends User_Switching_Test {
 		foreach ( self::$users as $user_role => $user ) {
 			if ( self::$testers[ $role ]->ID === $user->ID ) {
 				# No user can switch to themselves:
-				$this->assertFalse( user_can( self::$testers[ $role ]->ID, 'switch_to_user', $user->ID ), 'User should not be able to switch to themselves' );
+				self::assertFalse( user_can( self::$testers[ $role ]->ID, 'switch_to_user', $user->ID ), 'User should not be able to switch to themselves' );
 			} else {
 				# Can the user switch?
-				$this->assertSame( $can_switch, user_can( self::$testers[ $role ]->ID, 'switch_to_user', $user->ID ), sprintf(
+				self::assertSame( $can_switch, user_can( self::$testers[ $role ]->ID, 'switch_to_user', $user->ID ), sprintf(
 					'Broken user switching capability. Destination role: %s',
 					$user_role
 				) );
@@ -66,7 +66,7 @@ class TestCapabilities extends User_Switching_Test {
 		}
 
 		# Can the user switch off?
-		$this->assertSame( $can_switch, user_can( self::$testers[ $role ]->ID, 'switch_off' ) );
+		self::assertSame( $can_switch, user_can( self::$testers[ $role ]->ID, 'switch_off' ) );
 	}
 
 	public function testAbilityToSwitchUsersCanBeGrantedToUser() {
@@ -84,9 +84,9 @@ class TestCapabilities extends User_Switching_Test {
 		self::$testers['editor']->remove_cap( 'switch_users' );
 
 		# Assert:
-		$this->assertFalse( $can_already_switch );
-		$this->assertTrue( $can_switch_user );
-		$this->assertTrue( $can_switch_off );
+		self::assertFalse( $can_already_switch );
+		self::assertTrue( $can_switch_user );
+		self::assertTrue( $can_switch_off );
 	}
 
 	public function testAbilityToSwitchUsersCanBeGrantedToRole() {
@@ -104,9 +104,9 @@ class TestCapabilities extends User_Switching_Test {
 		get_role( 'editor' )->remove_cap( 'switch_users' );
 
 		# Assert:
-		$this->assertFalse( $can_already_switch );
-		$this->assertTrue( $can_switch_user );
-		$this->assertTrue( $can_switch_off );
+		self::assertFalse( $can_already_switch );
+		self::assertTrue( $can_switch_user );
+		self::assertTrue( $can_switch_off );
 	}
 
 	/**
@@ -127,9 +127,9 @@ class TestCapabilities extends User_Switching_Test {
 		self::$testers['admin']->remove_cap( 'switch_users' );
 
 		# Assert:
-		$this->assertTrue( $can_already_switch );
-		$this->assertFalse( $can_switch_user );
-		$this->assertFalse( $can_switch_off );
+		self::assertTrue( $can_already_switch );
+		self::assertFalse( $can_switch_user );
+		self::assertFalse( $can_switch_off );
 	}
 
 	/**
@@ -150,9 +150,9 @@ class TestCapabilities extends User_Switching_Test {
 		get_role( 'administrator' )->remove_cap( 'switch_users' );
 
 		# Assert:
-		$this->assertTrue( $can_already_switch );
-		$this->assertFalse( $can_switch_user );
-		$this->assertFalse( $can_switch_off );
+		self::assertTrue( $can_already_switch );
+		self::assertFalse( $can_switch_user );
+		self::assertFalse( $can_switch_off );
 	}
 
 	/**
@@ -174,9 +174,9 @@ class TestCapabilities extends User_Switching_Test {
 		get_role( 'administrator' )->remove_cap( 'switch_users' );
 
 		# Assert:
-		$this->assertFalse( $can_already_switch );
-		$this->assertTrue( $can_switch_user );
-		$this->assertTrue( $can_switch_off );
+		self::assertFalse( $can_already_switch );
+		self::assertTrue( $can_switch_user );
+		self::assertTrue( $can_switch_off );
 	}
 
 	/**
@@ -198,9 +198,9 @@ class TestCapabilities extends User_Switching_Test {
 		self::$testers['admin']->remove_cap( 'switch_users' );
 
 		# Assert:
-		$this->assertFalse( $can_already_switch );
-		$this->assertTrue( $can_switch_user );
-		$this->assertTrue( $can_switch_off );
+		self::assertFalse( $can_already_switch );
+		self::assertTrue( $can_switch_user );
+		self::assertTrue( $can_switch_off );
 	}
 
 	/**
@@ -208,7 +208,7 @@ class TestCapabilities extends User_Switching_Test {
 	 * @testdox User with role of $role cannot switch to no user
 	 */
 	public function testSwitchingToNoUserIsNotAllowed( string $role ) {
-		$this->assertFalse( user_can( self::$testers[ $role ]->ID, 'switch_to_user', 0 ) );
+		self::assertFalse( user_can( self::$testers[ $role ]->ID, 'switch_to_user', 0 ) );
 	}
 
 }

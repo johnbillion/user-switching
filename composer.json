@@ -26,10 +26,10 @@
 	},
 	"require-dev" : {
 		"behat/mink-goutte-driver": "^1.2",
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.5",
+		"dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
 		"genesis/behat-fail-aid": "^2.0",
 		"johnbillion/php-docs-standards": "^1.2",
-		"paulgibbs/behat-wordpress-extension": "dev-master",
+		"paulgibbs/behat-wordpress-extension": "^3.3",
 		"phpcompatibility/php-compatibility": "^9",
 		"phpunit/phpunit": "^7",
 		"roots/wordpress": "*",
@@ -39,13 +39,16 @@
 		"wp-phpunit/wp-phpunit": "*"
 	},
 	"scripts": {
+		"post-update-cmd": [
+			"@php -r \"! file_exists( 'tests/.env' ) && copy( 'tests/.env.dist', 'tests/.env' );\""
+		],
 		"test:cs": [
-			"vendor/bin/phpcs -nps --colors --report-code --report-summary --report-width=80 ."
+			"phpcs -nps --colors --report-code --report-summary --report-width=80 ."
 		],
 		"test:ut": [
-			"vendor/bin/wp db reset --yes --path=tests/wordpress #",
-			"export WP_MULTISITE=0 && vendor/bin/phpunit --verbose --colors=always --exclude-group=ms-required",
-			"export WP_MULTISITE=1 && vendor/bin/phpunit --verbose --colors=always --exclude-group=ms-excluded"
+			"wp db reset --yes --path=tests/wordpress #",
+			"export WP_MULTISITE=0 && phpunit --verbose --colors=always --exclude-group=ms-required",
+			"export WP_MULTISITE=1 && phpunit --verbose --colors=always --exclude-group=ms-excluded"
 		],
 		"test:ft": [
 			"bin/test.sh"
@@ -55,5 +58,11 @@
 			"@test:ut",
 			"@test:ft"
 		]
-	}
+	},
+	"funding": [
+		{
+			"type": "github",
+			"url": "https://github.com/sponsors/johnbillion"
+		}
+	]
 }

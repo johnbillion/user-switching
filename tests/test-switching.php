@@ -28,22 +28,22 @@ class TestSwitching extends User_Switching_Test {
 		$user = switch_to_user( self::$users['author']->ID, true );
 
 		// Check that we've switched
-		$this->assertInstanceOf( 'WP_User', $user );
-		$this->assertSame( self::$users['author']->ID, $user->ID );
-		$this->assertSame( self::$users['author']->ID, get_current_user_id() );
+		self::assertInstanceOf( 'WP_User', $user );
+		self::assertSame( self::$users['author']->ID, $user->ID );
+		self::assertSame( self::$users['author']->ID, get_current_user_id() );
 
 		// Check the `switch_*` actions were fired
-		$this->assertSame( 1, did_action( 'switch_to_user' ) );
-		$this->assertSame( 0, did_action( 'switch_back_user' ) );
-		$this->assertSame( 0, did_action( 'switch_off_user' ) );
+		self::assertSame( 1, did_action( 'switch_to_user' ) );
+		self::assertSame( 0, did_action( 'switch_back_user' ) );
+		self::assertSame( 0, did_action( 'switch_off_user' ) );
 
 		// Check the `switch_*` actions' parameters
-		$this->assertSame( self::$users['author']->ID, $this->test_switching_user_id );
-		$this->assertSame( $admin->ID,                 $this->test_switching_old_user_id );
+		self::assertSame( self::$users['author']->ID, $this->test_switching_user_id );
+		self::assertSame( $admin->ID,                 $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
-		$this->assertSame( self::$users['author']->ID, $this->test_switching_auth_cookie_user_id );
-		$this->assertTrue( $this->test_switching_auth_cookie_remember );
+		self::assertSame( self::$users['author']->ID, $this->test_switching_auth_cookie_user_id );
+		self::assertTrue( $this->test_switching_auth_cookie_remember );
 
 
 
@@ -51,22 +51,22 @@ class TestSwitching extends User_Switching_Test {
 		$user = switch_to_user( self::$users['editor']->ID, true );
 
 		// Check that we've switched
-		$this->assertInstanceOf( 'WP_User', $user );
-		$this->assertSame( self::$users['editor']->ID, $user->ID );
-		$this->assertSame( self::$users['editor']->ID, get_current_user_id() );
+		self::assertInstanceOf( 'WP_User', $user );
+		self::assertSame( self::$users['editor']->ID, $user->ID );
+		self::assertSame( self::$users['editor']->ID, get_current_user_id() );
 
 		// Check the `switch_*` actions were fired
-		$this->assertSame( 2, did_action( 'switch_to_user' ) );
-		$this->assertSame( 0, did_action( 'switch_back_user' ) );
-		$this->assertSame( 0, did_action( 'switch_off_user' ) );
+		self::assertSame( 2, did_action( 'switch_to_user' ) );
+		self::assertSame( 0, did_action( 'switch_back_user' ) );
+		self::assertSame( 0, did_action( 'switch_off_user' ) );
 
 		// Check the `switch_*` actions' parameters
-		$this->assertSame( self::$users['editor']->ID, $this->test_switching_user_id );
-		$this->assertSame( self::$users['author']->ID, $this->test_switching_old_user_id );
+		self::assertSame( self::$users['editor']->ID, $this->test_switching_user_id );
+		self::assertSame( self::$users['author']->ID, $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
-		$this->assertSame( self::$users['editor']->ID, $this->test_switching_auth_cookie_user_id );
-		$this->assertTrue( $this->test_switching_auth_cookie_remember );
+		self::assertSame( self::$users['editor']->ID, $this->test_switching_auth_cookie_user_id );
+		self::assertTrue( $this->test_switching_auth_cookie_remember );
 
 
 
@@ -74,22 +74,22 @@ class TestSwitching extends User_Switching_Test {
 		$user = switch_to_user( self::$users['author']->ID, false, false );
 
 		// Check that we've switched
-		$this->assertInstanceOf( 'WP_User', $user );
-		$this->assertSame( self::$users['author']->ID, $user->ID );
-		$this->assertSame( self::$users['author']->ID, get_current_user_id() );
+		self::assertInstanceOf( 'WP_User', $user );
+		self::assertSame( self::$users['author']->ID, $user->ID );
+		self::assertSame( self::$users['author']->ID, get_current_user_id() );
 
 		// Check the `switch_*` actions were fired
-		$this->assertSame( 2, did_action( 'switch_to_user' ) );
-		$this->assertSame( 1, did_action( 'switch_back_user' ) );
-		$this->assertSame( 0, did_action( 'switch_off_user' ) );
+		self::assertSame( 2, did_action( 'switch_to_user' ) );
+		self::assertSame( 1, did_action( 'switch_back_user' ) );
+		self::assertSame( 0, did_action( 'switch_off_user' ) );
 
 		// Check the `switch_*` actions' parameters
-		$this->assertSame( self::$users['author']->ID, $this->test_switching_user_id );
-		$this->assertSame( self::$users['editor']->ID, $this->test_switching_old_user_id );
+		self::assertSame( self::$users['author']->ID, $this->test_switching_user_id );
+		self::assertSame( self::$users['editor']->ID, $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
-		$this->assertSame( self::$users['author']->ID, $this->test_switching_auth_cookie_user_id );
-		$this->assertFalse( $this->test_switching_auth_cookie_remember );
+		self::assertSame( self::$users['author']->ID, $this->test_switching_auth_cookie_user_id );
+		self::assertFalse( $this->test_switching_auth_cookie_remember );
 
 
 
@@ -97,22 +97,22 @@ class TestSwitching extends User_Switching_Test {
 		$user = switch_to_user( $admin->ID, false, false );
 
 		// Check that we've switched
-		$this->assertInstanceOf( 'WP_User', $user );
-		$this->assertSame( $admin->ID, $user->ID );
-		$this->assertSame( $admin->ID, get_current_user_id() );
+		self::assertInstanceOf( 'WP_User', $user );
+		self::assertSame( $admin->ID, $user->ID );
+		self::assertSame( $admin->ID, get_current_user_id() );
 
 		// Check the `switch_*` actions were fired
-		$this->assertSame( 2, did_action( 'switch_to_user' ) );
-		$this->assertSame( 2, did_action( 'switch_back_user' ) );
-		$this->assertSame( 0, did_action( 'switch_off_user' ) );
+		self::assertSame( 2, did_action( 'switch_to_user' ) );
+		self::assertSame( 2, did_action( 'switch_back_user' ) );
+		self::assertSame( 0, did_action( 'switch_off_user' ) );
 
 		// Check the `switch_*` actions' parameters
-		$this->assertSame( $admin->ID,                 $this->test_switching_user_id );
-		$this->assertSame( self::$users['author']->ID, $this->test_switching_old_user_id );
+		self::assertSame( $admin->ID,                 $this->test_switching_user_id );
+		self::assertSame( self::$users['author']->ID, $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
-		$this->assertSame( $admin->ID, $this->test_switching_auth_cookie_user_id );
-		$this->assertFalse( $this->test_switching_auth_cookie_remember );
+		self::assertSame( $admin->ID, $this->test_switching_auth_cookie_user_id );
+		self::assertFalse( $this->test_switching_auth_cookie_remember );
 
 	}
 
@@ -130,43 +130,43 @@ class TestSwitching extends User_Switching_Test {
 		$user = switch_off_user();
 
 		// Check that we've switched off
-		$this->assertTrue( $user );
-		$this->assertFalse( is_user_logged_in() );
-		$this->assertSame( 0, get_current_user_id() );
+		self::assertTrue( $user );
+		self::assertFalse( is_user_logged_in() );
+		self::assertSame( 0, get_current_user_id() );
 
 		// Check the `switch_*` actions were fired
-		$this->assertSame( 0, did_action( 'switch_to_user' ) );
-		$this->assertSame( 0, did_action( 'switch_back_user' ) );
-		$this->assertSame( 1, did_action( 'switch_off_user' ) );
+		self::assertSame( 0, did_action( 'switch_to_user' ) );
+		self::assertSame( 0, did_action( 'switch_back_user' ) );
+		self::assertSame( 1, did_action( 'switch_off_user' ) );
 
 		// Check the `switch_*` actions' parameters
-		$this->assertFalse( $this->test_switching_user_id );
-		$this->assertSame( $admin->ID, $this->test_switching_old_user_id );
+		self::assertFalse( $this->test_switching_user_id );
+		self::assertSame( $admin->ID, $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
-		$this->assertSame( 1, did_action( 'clear_auth_cookie' ) );
+		self::assertSame( 1, did_action( 'clear_auth_cookie' ) );
 
 		// Switch back
 		$user = switch_to_user( $admin->ID, false, false );
 
 		// Check that we've switched back
-		$this->assertInstanceOf( 'WP_User', $user );
-		$this->assertTrue( is_user_logged_in() );
-		$this->assertSame( $admin->ID, $user->ID );
-		$this->assertSame( $admin->ID, get_current_user_id() );
+		self::assertInstanceOf( 'WP_User', $user );
+		self::assertTrue( is_user_logged_in() );
+		self::assertSame( $admin->ID, $user->ID );
+		self::assertSame( $admin->ID, get_current_user_id() );
 
 		// Check the `switch_*` actions were fired
-		$this->assertSame( 0, did_action( 'switch_to_user' ) );
-		$this->assertSame( 1, did_action( 'switch_back_user' ) );
-		$this->assertSame( 1, did_action( 'switch_off_user' ) );
+		self::assertSame( 0, did_action( 'switch_to_user' ) );
+		self::assertSame( 1, did_action( 'switch_back_user' ) );
+		self::assertSame( 1, did_action( 'switch_off_user' ) );
 
 		// Check the `switch_*` actions' parameters
-		$this->assertSame( $admin->ID, $this->test_switching_user_id );
-		$this->assertFalse( $this->test_switching_old_user_id );
+		self::assertSame( $admin->ID, $this->test_switching_user_id );
+		self::assertFalse( $this->test_switching_old_user_id );
 
 		// Check the auth cookie behaviour
-		$this->assertSame( $admin->ID, $this->test_switching_auth_cookie_user_id );
-		$this->assertFalse( $this->test_switching_auth_cookie_remember );
+		self::assertSame( $admin->ID, $this->test_switching_auth_cookie_user_id );
+		self::assertFalse( $this->test_switching_auth_cookie_remember );
 
 	}
 
@@ -177,7 +177,7 @@ class TestSwitching extends User_Switching_Test {
 
 		$url = add_query_arg( 'foo', 'bar', home_url( 'baz' ) );
 		$this->go_to( $url );
-		$this->assertSame( user_switching::current_url(), $url );
+		self::assertSame( user_switching::current_url(), $url );
 
 	}
 

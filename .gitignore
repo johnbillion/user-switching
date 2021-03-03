@@ -1,9 +1,11 @@
+# Directories
 /build
 /node_modules
 /svn
 /tests/wordpress
 /vendor
 
+# Files
 /composer.lock
 /package-lock.json
 /tests/.env
