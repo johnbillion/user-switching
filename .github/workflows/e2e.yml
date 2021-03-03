@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Functional Tests
 on:
   push:
     branches:
@@ -48,10 +48,10 @@ jobs:
       run: |
         sudo systemctl start mysql.service
         composer install --prefer-dist
-        composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="${{ matrix.wp }} || *" wp-phpunit/wp-phpunit="${{ matrix.wp }} || *"
+        composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="${{ matrix.wp }} || *"
 
     - name: Run the tests
-      run: composer test:ut
+      run: composer test:ft
       env:
         MYSQL_DATABASE: wordpress
         WP_TESTS_DB_PASS: root
