@@ -3,14 +3,12 @@
 class TestSwitching extends User_Switching_Test {
 
 	function setUp() {
+		parent::setUp();
 
 		add_action( 'switch_to_user',         array( $this, '_action_switch_user' ), 10, 2 );
 		add_action( 'switch_back_user',       array( $this, '_action_switch_user' ), 10, 2 );
 		add_action( 'switch_off_user',        array( $this, '_action_switch_off' ), 10 );
 		add_filter( 'auth_cookie_expiration', array( $this, '_filter_auth_cookie_expiration' ), 10, 3 );
-
-		parent::setUp();
-
 	}
 
 	/**
