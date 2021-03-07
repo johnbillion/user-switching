@@ -178,6 +178,16 @@ class TestSwitching extends User_Switching_Test {
 	}
 
 	/**
+	 * @covers \switch_to_user
+	 */
+	function testSwitchToNonExistentUserFails() {
+		// Switch user
+		$user = switch_to_user( 0 );
+
+		self::assertFalse( $user );
+	}
+
+	/**
 	 * @testdox Current URL is detected correctly
 	 * @covers \user_switching::current_url
 	 */
