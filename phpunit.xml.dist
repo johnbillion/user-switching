@@ -16,4 +16,9 @@
 			<directory prefix="test-" suffix=".php">./tests/</directory>
 		</testsuite>
 	</testsuites>
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<file>user-switching.php</file>
+		</whitelist>
+	</filter>
 </phpunit>

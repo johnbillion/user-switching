@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @covers \user_switching::filter_user_has_cap
+ * @covers \user_switching::filter_map_meta_cap
+ */
 class TestCapabilities extends User_Switching_Test {
 
 	public function data_roles() {

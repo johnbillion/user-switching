@@ -13,6 +13,9 @@ class TestSwitching extends User_Switching_Test {
 
 	}
 
+	/**
+	 * @covers \switch_to_user
+	 */
 	function testSwitchUserAndBack() {
 
 		if ( is_multisite() ) {
@@ -116,6 +119,10 @@ class TestSwitching extends User_Switching_Test {
 
 	}
 
+	/**
+	 * @covers \switch_to_user
+	 * @covers \switch_off_user
+	 */
 	function testSwitchOffAndBack() {
 
 		if ( is_multisite() ) {
@@ -172,6 +179,7 @@ class TestSwitching extends User_Switching_Test {
 
 	/**
 	 * @testdox Current URL is detected correctly
+	 * @covers \user_switching::current_url
 	 */
 	function testCurrentUrl() {
 

@@ -2,6 +2,9 @@
 
 class TestSessions extends User_Switching_Test {
 
+	/**
+	 * @covers \switch_to_user
+	 */
 	public function testExtraSessionsAreNotCreatedForUsersWhenSwitching() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
@@ -36,6 +39,9 @@ class TestSessions extends User_Switching_Test {
 		self::assertCount( 1, $author_manager->get_all() );
 	}
 
+	/**
+	 * @covers \switch_off_user
+	 */
 	public function testExtraSessionsAreNotCreatedForUserWhenSwitchingOff() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
@@ -62,6 +68,10 @@ class TestSessions extends User_Switching_Test {
 		self::assertCount( 1, $admin_manager->get_all() );
 	}
 
+	/**
+	 * @covers \switch_to_user
+	 * @covers \switch_off_user
+	 */
 	public function testPreviousSessionForUserIsReusedWhenSwitchingBack() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
@@ -112,6 +122,9 @@ class TestSessions extends User_Switching_Test {
 		self::assertCount( 1, $admin_manager->get_all() );
 	}
 
+	/**
+	 * @covers \switch_to_user
+	 */
 	public function testExpiredSessionPreventsUserFromSwitchingBack() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
@@ -164,6 +177,10 @@ class TestSessions extends User_Switching_Test {
 		self::assertCount( 0, $author_manager->get_all() );
 	}
 
+	/**
+	 * @covers \switch_to_user
+	 * @covers \switch_off_user
+	 */
 	public function testSessionTokensAreCorrectlyReusedWhenSwitching() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];

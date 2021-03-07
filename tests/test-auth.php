@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @covers \user_switching::authenticate_old_user
+ */
 class TestAuthentication extends User_Switching_Test {
 
 	function testValidCookiePassesAuthentication() {
