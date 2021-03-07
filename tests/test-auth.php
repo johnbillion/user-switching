@@ -5,7 +5,7 @@
  */
 class TestAuthentication extends User_Switching_Test {
 
-	function testValidCookiePassesAuthentication() {
+	public function testValidCookiePassesAuthentication() {
 		$expiry = time() + 172800;
 
 		$auth_cookie = wp_generate_auth_cookie( self::$testers['editor']->ID, $expiry, 'auth' );

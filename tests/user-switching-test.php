@@ -15,7 +15,6 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 	protected $sessions = array();
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ) {
-
 		$roles = array(
 			'admin'       => 'administrator',
 			'editor'      => 'editor',
