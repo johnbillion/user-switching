@@ -1,9 +1,12 @@
 <?php
 
 // WP core constants:
+define( 'AUTH_COOKIE', '' );
 define( 'COOKIE_DOMAIN', '' );
 define( 'COOKIEHASH', '' );
 define( 'COOKIEPATH', '' );
+define( 'LOGGED_IN_COOKIE', '' );
+define( 'SECURE_AUTH_COOKIE', '' );
 define( 'SITECOOKIEPATH', '' );
 
 // User Switching constants:
