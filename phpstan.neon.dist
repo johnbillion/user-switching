@@ -1,10 +1,20 @@
 includes:
+  - vendor/phpstan/phpstan-phpunit/extension.neon
   - vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
   level: max
   implicitThrows: false
   paths:
     - user-switching.php
+    - tests
+  excludePaths:
+    analyse:
+      - tests/stubs.php
+      - tests/wordpress
+      - tests/wp-config.php
+      - tests/wp-tests-config.php
+  scanDirectories:
+    - vendor/wp-phpunit/wp-phpunit/includes
   bootstrapFiles:
     - tests/stubs.php
   ignoreErrors:
