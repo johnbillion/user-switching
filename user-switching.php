@@ -5,7 +5,7 @@
  * @package   user-switching
  * @link      https://github.com/johnbillion/user-switching
  * @author    John Blackbourn <john@johnblackbourn.com>
- * @copyright 2009-2020 John Blackbourn
+ * @copyright 2009-2021 John Blackbourn
  * @license   GPL v2 or later
  *
  * Plugin Name:  User Switching
@@ -31,7 +31,7 @@
  */
 
 /**
- * Main container class for the User Switching plugin.
+ * Main singleton class for the User Switching plugin.
  */
 class user_switching {
 
