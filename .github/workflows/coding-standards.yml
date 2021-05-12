@@ -50,4 +50,6 @@ jobs:
         composer install --prefer-dist
 
     - name: Run the tests
-      run: composer test:cs
+      run: |
+        composer test:cs
+        composer test:phpstan

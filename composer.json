@@ -50,6 +50,9 @@
 		"test:cs": [
 			"phpcs -nps --colors --report-code --report-summary --report-width=80 ."
 		],
+		"test:phpstan": [
+			"phpstan analyze"
+		],
 		"test:ut": [
 			"wp db reset --yes --path=tests/wordpress #",
 			"export WP_MULTISITE=0 && phpunit --verbose --colors=always --exclude-group=ms-required",
