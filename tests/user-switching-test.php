@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 abstract class User_Switching_Test extends WP_UnitTestCase {
 
 	/**

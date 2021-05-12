@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 class TestReadme extends WP_UnitTestCase {
 	private $readme_data;
 

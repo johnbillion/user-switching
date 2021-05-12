@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 class TestDocumentation extends \Johnbillion\DocsStandards\TestCase {
 
 	protected function getTestFunctions() : array {

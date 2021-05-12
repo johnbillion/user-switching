@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 class TestSessions extends User_Switching_Test {
 
 	/**

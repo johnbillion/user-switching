@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * @covers \user_switching::authenticate_old_user
  */

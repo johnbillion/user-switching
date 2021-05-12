@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * @covers \user_switching::filter_user_has_cap
  * @covers \user_switching::filter_map_meta_cap
