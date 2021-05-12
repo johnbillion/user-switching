@@ -8,6 +8,9 @@ declare(strict_types = 1);
  */
 class TestCapabilities extends User_Switching_Test {
 
+	/**
+	 * @return array<int, array<int, string|bool>>
+	 */
 	public function data_roles() : array {
 		$roles = [
 			[
