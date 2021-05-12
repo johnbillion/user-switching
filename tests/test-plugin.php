@@ -10,8 +10,8 @@ class TestReadme extends WP_UnitTestCase {
 
 	public function testStableTagMatchesVersion() : void {
 		$readme_data = $this->get_readme();
-		if ( ! $readme_data ) {
-			$this->fail( 'There is no readme file' );
+		if ( null === $readme_data ) {
+			self::fail( 'There is no readme file' );
 		}
 
 		$plugin_data = get_plugin_data( dirname( dirname( __FILE__ ) ) . '/user-switching.php' );
