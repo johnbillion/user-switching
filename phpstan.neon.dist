@@ -16,6 +16,8 @@ parameters:
   scanDirectories:
     - tests
     - vendor/wp-phpunit/wp-phpunit/includes
+  scanFiles:
+    - user-switching.php
   bootstrapFiles:
     - tests/stubs.php
   ignoreErrors:
