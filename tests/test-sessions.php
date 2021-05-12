@@ -204,11 +204,20 @@ class TestSessions extends User_Switching_Test {
 		// Switch user
 		$user         = switch_to_user( self::$users['author']->ID );
 		$author_token = wp_get_session_token();
-		$cookie       = user_switching_get_auth_cookie();
-		$parts        = wp_parse_auth_cookie( end( $cookie ) );
+		$cookies      = user_switching_get_auth_cookie();
+		$cookie       = end( $cookies );
+
+		self::assertIsString( $cookie );
+
+		$parts = wp_parse_auth_cookie( $cookie );
+
+		self::assertIsArray( $parts );
 
 		// Verify the original user session information is stored in the switch stack and against the new user session
 		$author_session = $author_manager->get( $author_token );
+
+		self::assertIsArray( $author_session );
+
 		self::assertArrayHasKey( 'switched_from_id', $author_session );
 		self::assertArrayHasKey( 'switched_from_session', $author_session );
 		self::assertSame( $admin->ID, $author_session['switched_from_id'] );
@@ -227,9 +236,15 @@ class TestSessions extends User_Switching_Test {
 		self::assertNull( $author_manager->get( $author_token ) );
 
 		// Switch off
-		$off    = switch_off_user();
-		$cookie = user_switching_get_auth_cookie();
-		$parts  = wp_parse_auth_cookie( end( $cookie ) );
+		$off     = switch_off_user();
+		$cookies = user_switching_get_auth_cookie();
+		$cookie  = end( $cookies );
+
+		self::assertIsString( $cookie );
+
+		$parts = wp_parse_auth_cookie( $cookie );
+
+		self::assertIsArray( $parts );
 
 		// Verify the original user session information is stored in the switch stack
 		self::assertSame( $admin_token, $parts['token'] );
