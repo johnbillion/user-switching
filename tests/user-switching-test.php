@@ -12,6 +12,9 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 	 */
 	protected static $testers = array();
 
+	/**
+	 * @var array<int, string>
+	 */
 	protected $sessions = array();
 
 	/**

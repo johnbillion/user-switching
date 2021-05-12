@@ -2,6 +2,26 @@
 
 class TestSwitching extends User_Switching_Test {
 
+	/**
+	 * @var int|false
+	 */
+	public $test_switching_user_id;
+
+	/**
+	 * @var int|false
+	 */
+	public $test_switching_old_user_id;
+
+	/**
+	 * @var int
+	 */
+	public $test_switching_auth_cookie_user_id;
+
+	/**
+	 * @var bool
+	 */
+	public $test_switching_auth_cookie_remember;
+
 	public function setUp() {
 		parent::setUp();
 

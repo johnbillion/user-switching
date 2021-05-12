@@ -6,7 +6,7 @@
  */
 class TestCapabilities extends User_Switching_Test {
 
-	public function data_roles() {
+	public function data_roles() : array {
 		$roles = [
 			[
 				'admin',
