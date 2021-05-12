@@ -4,7 +4,7 @@ parameters:
   level: max
   paths:
     - user-switching.php
-  scanFiles:
+  bootstrapFiles:
     - tests/stubs.php
   ignoreErrors:
     # Uses func_get_args()
