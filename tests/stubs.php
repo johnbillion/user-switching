@@ -40,3 +40,35 @@ function bp_get_member_user_id() {
  */
 function bp_core_get_user_domain( int $user_id ) {
 }
+
+/**
+ * @return string
+ */
+function bp_get_button( array $args ) {
+}
+
+/**
+ * @return \BuddyPress
+ */
+function buddypress() {
+}
+
+class BuddyPress {
+
+	/**
+	 * @var array<string, string>
+	 */
+	public $active_components = [];
+}
+
+/**
+ * @return int
+ */
+function bbp_get_user_id() {
+}
+
+/**
+ * @return string
+ */
+function bbp_get_user_profile_url( int $user_id ) {
+}
