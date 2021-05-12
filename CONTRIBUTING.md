@@ -54,7 +54,7 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 
 ## Running the Tests
 
-To run the whole test suite which includes PHPUnit unit tests, PHPCS code sniffs, and WordHat functional tests:
+To run the whole test suite which includes PHPUnit unit tests, PHPCS code sniffs, PHPStan static anlysis, and WordHat functional tests:
 
 	composer test
 
@@ -65,6 +65,10 @@ To run just the unit tests:
 To run just the code sniffs:
 
 	composer test:cs
+
+To run just the static analysis:
+
+	composer test:phpstan
 
 To run just the functional tests:
 
