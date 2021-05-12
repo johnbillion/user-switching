@@ -14,44 +14,37 @@ define( 'USER_SWITCHING_SECURE_COOKIE', '' );
 /**
  * @return bool
  */
-function bp_is_user() {
-}
+function bp_is_user() {}
 
 /**
  * @return int
  */
-function bp_displayed_user_id() {
-}
+function bp_displayed_user_id() {}
 
 /**
  * @return bool
  */
-function bp_is_members_directory() {
-}
+function bp_is_members_directory() {}
 
 /**
  * @return int
  */
-function bp_get_member_user_id() {
-}
+function bp_get_member_user_id() {}
 
 /**
  * @return string
  */
-function bp_core_get_user_domain( int $user_id ) {
-}
+function bp_core_get_user_domain( int $user_id ) {}
 
 /**
  * @return string
  */
-function bp_get_button( array $args ) {
-}
+function bp_get_button( array $args ) {}
 
 /**
  * @return \BuddyPress
  */
-function buddypress() {
-}
+function buddypress() {}
 
 class BuddyPress {
 
@@ -64,11 +57,9 @@ class BuddyPress {
 /**
  * @return int
  */
-function bbp_get_user_id() {
-}
+function bbp_get_user_id() {}
 
 /**
  * @return string
  */
-function bbp_get_user_profile_url( int $user_id ) {
-}
+function bbp_get_user_profile_url( int $user_id ) {}
