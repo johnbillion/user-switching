@@ -19,7 +19,7 @@ class TestReadme extends WP_UnitTestCase {
 			$file = dirname( dirname( __FILE__ ) ) . '/readme.md';
 
 			if ( ! is_file( $file ) ) {
-				return false;
+				return null;
 			}
 
 			$file_contents = implode( '', file( $file ) );
