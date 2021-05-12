@@ -1,4 +1,5 @@
 includes:
+  - vendor/phpstan/phpstan-deprecation-rules/rules.neon
   - vendor/phpstan/phpstan-phpunit/extension.neon
   - vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:

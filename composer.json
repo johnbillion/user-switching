@@ -33,6 +33,7 @@
 		"php-stubs/wordpress-stubs": "^5.7",
 		"phpcompatibility/php-compatibility": "^9",
 		"phpstan/phpstan": "0.12.87",
+		"phpstan/phpstan-deprecation-rules": "0.12.6",
 		"phpstan/phpstan-phpunit": "0.12.19",
 		"phpunit/phpunit": "^7",
 		"roots/wordpress": "*",
