@@ -44,6 +44,8 @@ class user_switching {
 
 	/**
 	 * Sets up all the filters and actions.
+	 *
+	 * @return void
 	 */
 	public function init_hooks() {
 		// Required functionality:
@@ -73,6 +75,8 @@ class user_switching {
 
 	/**
 	 * Defines the names of the cookies used by User Switching.
+	 *
+	 * @return void
 	 */
 	public function action_plugins_loaded() {
 		// User Switching's auth_cookie
@@ -95,6 +99,7 @@ class user_switching {
 	 * Outputs the 'Switch To' link on the user editing screen if the current user has permission to switch to them.
 	 *
 	 * @param WP_User $user User object for this screen.
+	 * @return void
 	 */
 	public function action_personal_options( WP_User $user ) {
 		$link = self::maybe_switch_url( $user );
@@ -130,6 +135,8 @@ class user_switching {
 
 	/**
 	 * Loads localisation files and routes actions depending on the 'action' query var.
+	 *
+	 * @return void
 	 */
 	public function action_init() {
 		load_plugin_textdomain( 'user-switching', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
@@ -285,6 +292,8 @@ class user_switching {
 
 	/**
 	 * Displays the 'Switched to {user}' and 'Switch back to {user}' messages in the admin area.
+	 *
+	 * @return void
 	 */
 	public function action_admin_notices() {
 		$user     = wp_get_current_user();
@@ -436,6 +445,7 @@ class user_switching {
 	 * Adds a 'Switch back to {user}' link to the account menu, and a `Switch To` link to the user edit menu.
 	 *
 	 * @param WP_Admin_Bar $wp_admin_bar The admin bar object.
+	 * @return void
 	 */
 	public function action_admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! is_admin_bar_showing() ) {
@@ -519,6 +529,8 @@ class user_switching {
 
 	/**
 	 * Adds a 'Switch back to {user}' link to the Meta sidebar widget.
+	 *
+	 * @return void
 	 */
 	public function action_wp_meta() {
 		$old_user = self::get_old_user();
@@ -543,6 +555,8 @@ class user_switching {
 
 	/**
 	 * Adds a 'Switch back to {user}' link to the WordPress footer if the admin toolbar isn't showing.
+	 *
+	 * @return void
 	 */
 	public function action_wp_footer() {
 		if ( is_admin_bar_showing() || did_action( 'wp_meta' ) ) {
@@ -646,6 +660,8 @@ class user_switching {
 
 	/**
 	 * Adds a 'Switch To' link to each member's profile page and profile listings in BuddyPress.
+	 *
+	 * @return void
 	 */
 	public function action_bp_button() {
 		$user = null;
@@ -683,6 +699,8 @@ class user_switching {
 
 	/**
 	 * Adds a 'Switch To' link to each member's profile page in bbPress.
+	 *
+	 * @return void
 	 */
 	public function action_bbpress_button() {
 		$user = get_userdata( bbp_get_user_id() );
@@ -833,6 +851,8 @@ class user_switching {
 
 	/**
 	 * Instructs WooCommerce to forget the session for the current user, without deleting it.
+	 *
+	 * @return void
 	 */
 	public function forget_woocommerce_session() {
 		if ( ! function_exists( 'WC' ) ) {
