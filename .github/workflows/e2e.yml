@@ -47,7 +47,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo systemctl start mysql.service
-        composer install --prefer-dist
+        composer install --prefer-dist --ignore-platform-reqs
         composer require --dev --update-with-dependencies --prefer-dist --ignore-platform-reqs roots/wordpress="${{ matrix.wp }} || *"
 
     - name: Run the tests
