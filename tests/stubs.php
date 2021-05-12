@@ -51,7 +51,7 @@ class BuddyPress {
 	/**
 	 * @var array<string, string>
 	 */
-	public $active_components = [];
+	public $active_components;
 }
 
 /**
@@ -63,3 +63,23 @@ function bbp_get_user_id() {}
  * @return string
  */
 function bbp_get_user_profile_url( int $user_id ) {}
+
+class WooCommerce {
+
+	/**
+	 * @var \WC_Session
+	 */
+	public $session;
+}
+
+class WC_Session {
+	/**
+	 * @return void
+	 */
+	public function forget_session() {}
+}
+
+/**
+ * @return \WooCommerce
+ */
+function WC() {}
