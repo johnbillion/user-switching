@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 class TestDocumentation extends \Johnbillion\DocsStandards\TestCase {
 
+	/**
+	 * @return array<int, string>
+	 */
 	protected function getTestFunctions() : array {
 		return array(
 			'user_switching_set_olduser_cookie',
@@ -16,6 +19,9 @@ class TestDocumentation extends \Johnbillion\DocsStandards\TestCase {
 		);
 	}
 
+	/**
+	 * @return array<int, string>
+	 */
 	protected function getTestClasses() : array {
 		return array(
 			'user_switching',
