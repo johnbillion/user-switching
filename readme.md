@@ -85,6 +85,10 @@ User Switching is considered **Ethical Open Source** because it meets all of the
 
 ## Frequently Asked Questions
 
+### Does this plugin work with PHP 8?
+
+Yes.
+
 ### What does "Switch off" mean?
 
 Switching off logs you out of your account but retains your user ID in an authentication cookie so you can switch straight back without having to log in again manually. It's akin to switching to no user, and being able to switch back.
