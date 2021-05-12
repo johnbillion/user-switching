@@ -3,6 +3,9 @@
 declare(strict_types = 1);
 
 class TestReadme extends WP_UnitTestCase {
+	/**
+	 * @var array<string, string>
+	 */
 	private $readme_data;
 
 	public function testStableTagMatchesVersion() : void {
@@ -16,6 +19,9 @@ class TestReadme extends WP_UnitTestCase {
 		self::assertEquals( $readme_data['stable_tag'], $plugin_data['Version'] );
 	}
 
+	/**
+	 * @return array<string, string>
+	 */
 	private function get_readme() :? array {
 		if ( ! isset( $this->readme_data ) ) {
 			$file = dirname( dirname( __FILE__ ) ) . '/readme.md';

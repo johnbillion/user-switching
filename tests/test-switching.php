@@ -213,6 +213,10 @@ class TestSwitching extends User_Switching_Test {
 		self::assertSame( user_switching::current_url(), $url );
 	}
 
+	/**
+	 * @param int       $user_id
+	 * @param int|false $old_user_id
+	 */
 	public function _action_switch_user( int $user_id, $old_user_id ) : void {
 		$this->test_switching_user_id     = $user_id;
 		$this->test_switching_old_user_id = $old_user_id;

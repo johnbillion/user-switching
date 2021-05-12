@@ -15,6 +15,7 @@ parameters:
       - tests/wp-tests-config.php
   scanDirectories:
     - tests
+    - vendor/johnbillion/php-docs-standards
     - vendor/wp-phpunit/wp-phpunit/includes
   scanFiles:
     - user-switching.php
