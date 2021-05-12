@@ -24,7 +24,13 @@ class TestReadme extends WP_UnitTestCase {
 				return null;
 			}
 
-			$file_contents = implode( '', file( $file ) );
+			$file_array = file( $file );
+
+			if ( false === $file_array ) {
+				return null;
+			}
+
+			$file_contents = implode( '', $file_array );
 
 			preg_match( '|Stable tag:(.*)|i', $file_contents, $_stable_tag );
 
