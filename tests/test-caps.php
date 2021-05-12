@@ -44,7 +44,7 @@ class TestCapabilities extends User_Switching_Test {
 		return $roles;
 	}
 
-	public function testAllRolesAreTested() {
+	public function testAllRolesAreTested() : void {
 		$tested_roles = array_column( $this->data_roles(), 0 );
 
 		self::assertSame( array_keys( self::$testers ), $tested_roles );
@@ -55,7 +55,7 @@ class TestCapabilities extends User_Switching_Test {
 	 * @dataProvider data_roles
 	 * @testdox User with role of $role can or cannot switch according to role
 	 */
-	public function testUserCanOrCannotSwitchAccordingToRole( string $role, bool $can_switch ) {
+	public function testUserCanOrCannotSwitchAccordingToRole( string $role, bool $can_switch ) : void {
 		foreach ( self::$users as $user_role => $user ) {
 			if ( self::$testers[ $role ]->ID === $user->ID ) {
 				# No user can switch to themselves:
@@ -73,7 +73,7 @@ class TestCapabilities extends User_Switching_Test {
 		self::assertSame( $can_switch, user_can( self::$testers[ $role ]->ID, 'switch_off' ) );
 	}
 
-	public function testAbilityToSwitchUsersCanBeGrantedToUser() {
+	public function testAbilityToSwitchUsersCanBeGrantedToUser() : void {
 		# Editors cannot switch to other users:
 		$can_already_switch = user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['admin']->ID );
 
@@ -93,7 +93,7 @@ class TestCapabilities extends User_Switching_Test {
 		self::assertTrue( $can_switch_off );
 	}
 
-	public function testAbilityToSwitchUsersCanBeGrantedToRole() {
+	public function testAbilityToSwitchUsersCanBeGrantedToRole() : void {
 		# Editors cannot switch to other users:
 		$can_already_switch = user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['admin']->ID );
 
@@ -116,7 +116,7 @@ class TestCapabilities extends User_Switching_Test {
 	/**
 	 * @group ms-excluded
 	 */
-	public function testAbilityToSwitchUsersCanBeDeniedFromUser() {
+	public function testAbilityToSwitchUsersCanBeDeniedFromUser() : void {
 		# Admins can switch to other users:
 		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
 
@@ -139,7 +139,7 @@ class TestCapabilities extends User_Switching_Test {
 	/**
 	 * @group ms-excluded
 	 */
-	public function testAbilityToSwitchUsersCanBeDeniedFromRole() {
+	public function testAbilityToSwitchUsersCanBeDeniedFromRole() : void {
 		# Admins can switch to other users:
 		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
 
@@ -163,7 +163,7 @@ class TestCapabilities extends User_Switching_Test {
 	 * @group multisite
 	 * @group ms-required
 	 */
-	public function testAbilityToSwitchUsersCanBeGrantedToAdministratorRoleOnMultisite() {
+	public function testAbilityToSwitchUsersCanBeGrantedToAdministratorRoleOnMultisite() : void {
 		# Admins on Multisite cannot switch to other users:
 		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
 
@@ -187,7 +187,7 @@ class TestCapabilities extends User_Switching_Test {
 	 * @group multisite
 	 * @group ms-required
 	 */
-	public function testAbilityToSwitchUsersCanBeGrantedToAdministratorUserOnMultisite() {
+	public function testAbilityToSwitchUsersCanBeGrantedToAdministratorUserOnMultisite() : void {
 		# Admins on Multisite cannot switch to other users:
 		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
 
@@ -211,7 +211,7 @@ class TestCapabilities extends User_Switching_Test {
 	 * @dataProvider data_roles
 	 * @testdox User with role of $role cannot switch to no user
 	 */
-	public function testSwitchingToNoUserIsNotAllowed( string $role ) {
+	public function testSwitchingToNoUserIsNotAllowed( string $role ) : void {
 		self::assertFalse( user_can( self::$testers[ $role ]->ID, 'switch_to_user', 0 ) );
 	}
 

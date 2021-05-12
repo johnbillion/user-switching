@@ -2,7 +2,7 @@
 
 class TestDocumentation extends \Johnbillion\DocsStandards\TestCase {
 
-	protected function getTestFunctions() {
+	protected function getTestFunctions() : array {
 		return array(
 			'user_switching_set_olduser_cookie',
 			'user_switching_clear_olduser_cookie',
@@ -14,7 +14,7 @@ class TestDocumentation extends \Johnbillion\DocsStandards\TestCase {
 		);
 	}
 
-	protected function getTestClasses() {
+	protected function getTestClasses() : array {
 		return array(
 			'user_switching',
 		);

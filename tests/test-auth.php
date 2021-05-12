@@ -5,7 +5,7 @@
  */
 class TestAuthentication extends User_Switching_Test {
 
-	public function testValidCookiePassesAuthentication() {
+	public function testValidCookiePassesAuthentication() : void {
 		$expiry = time() + 172800;
 
 		$auth_cookie = wp_generate_auth_cookie( self::$testers['editor']->ID, $expiry, 'auth' );
@@ -14,14 +14,14 @@ class TestAuthentication extends User_Switching_Test {
 		self::assertFalse( user_switching::authenticate_old_user( self::$testers['admin'] ) );
 	}
 
-	public function testExpiredCookieDoesNotPassAuthentication() {
+	public function testExpiredCookieDoesNotPassAuthentication() : void {
 		$auth_cookie = wp_generate_auth_cookie( self::$testers['editor']->ID, time() - 1000, 'auth' );
 		$_COOKIE[ USER_SWITCHING_COOKIE ] = json_encode( array( $auth_cookie ) );
 		self::assertFalse( user_switching::authenticate_old_user( self::$testers['editor'] ) );
 		self::assertFalse( user_switching::authenticate_old_user( self::$testers['admin'] ) );
 	}
 
-	public function testValidCookieWithIncorrectSchemeDoesNotPassAuthentication() {
+	public function testValidCookieWithIncorrectSchemeDoesNotPassAuthentication() : void {
 		$expiry = time() + 172800;
 
 		$logged_in_cookie = wp_generate_auth_cookie( self::$testers['editor']->ID, $expiry, 'logged_in' );
@@ -34,7 +34,7 @@ class TestAuthentication extends User_Switching_Test {
 		self::assertFalse( user_switching::authenticate_old_user( self::$testers['admin'] ) );
 	}
 
-	public function testMalformedCookieDoesNotPassAuthentication() {
+	public function testMalformedCookieDoesNotPassAuthentication() : void {
 		$_COOKIE[ USER_SWITCHING_COOKIE ] = 'hello';
 		self::assertFalse( user_switching::authenticate_old_user( self::$testers['editor'] ) );
 		self::assertFalse( user_switching::authenticate_old_user( self::$testers['admin'] ) );
@@ -43,7 +43,7 @@ class TestAuthentication extends User_Switching_Test {
 	/**
 	 * @testdox A non-JSON encoded cookie does not pass authentication
 	 */
-	public function testANonJsonEncodedCookieDoesNotPassAuthentication() {
+	public function testANonJsonEncodedCookieDoesNotPassAuthentication() : void {
 		$expiry = time() + 172800;
 
 		$auth_cookie = wp_generate_auth_cookie( self::$testers['editor']->ID, $expiry, 'auth' );
@@ -52,7 +52,7 @@ class TestAuthentication extends User_Switching_Test {
 		self::assertFalse( user_switching::authenticate_old_user( self::$testers['admin'] ) );
 	}
 
-	public function testNoCookieDoesNotPassAuthentication() {
+	public function testNoCookieDoesNotPassAuthentication() : void {
 		unset( $_COOKIE[ USER_SWITCHING_COOKIE ] );
 		self::assertFalse( user_switching::authenticate_old_user( self::$testers['editor'] ) );
 		self::assertFalse( user_switching::authenticate_old_user( self::$testers['admin'] ) );

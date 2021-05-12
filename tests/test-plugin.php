@@ -3,7 +3,7 @@
 class TestReadme extends WP_UnitTestCase {
 	private $readme_data;
 
-	public function testStableTagMatchesVersion() {
+	public function testStableTagMatchesVersion() : void {
 		$readme_data = $this->get_readme();
 		if ( ! $readme_data ) {
 			$this->fail( 'There is no readme file' );
@@ -14,7 +14,7 @@ class TestReadme extends WP_UnitTestCase {
 		self::assertEquals( $readme_data['stable_tag'], $plugin_data['Version'] );
 	}
 
-	private function get_readme() {
+	private function get_readme() :? array {
 		if ( ! isset( $this->readme_data ) ) {
 			$file = dirname( dirname( __FILE__ ) ) . '/readme.md';
 

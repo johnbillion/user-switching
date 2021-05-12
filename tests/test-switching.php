@@ -14,7 +14,7 @@ class TestSwitching extends User_Switching_Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testSwitchUserAndBack() {
+	public function testSwitchUserAndBack() : void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -119,7 +119,7 @@ class TestSwitching extends User_Switching_Test {
 	 * @covers \switch_to_user
 	 * @covers \switch_off_user
 	 */
-	public function testSwitchOffAndBack() {
+	public function testSwitchOffAndBack() : void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -174,7 +174,7 @@ class TestSwitching extends User_Switching_Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testSwitchToNonExistentUserFails() {
+	public function testSwitchToNonExistentUserFails() : void {
 		// Switch user
 		$user = switch_to_user( 0 );
 
@@ -185,23 +185,23 @@ class TestSwitching extends User_Switching_Test {
 	 * @testdox Current URL is detected correctly
 	 * @covers \user_switching::current_url
 	 */
-	public function testCurrentUrl() {
+	public function testCurrentUrl() : void {
 		$url = add_query_arg( 'foo', 'bar', home_url( 'baz' ) );
 		$this->go_to( $url );
 		self::assertSame( user_switching::current_url(), $url );
 	}
 
-	public function _action_switch_user( $user_id, $old_user_id ) {
+	public function _action_switch_user( int $user_id, $old_user_id ) : void {
 		$this->test_switching_user_id     = $user_id;
 		$this->test_switching_old_user_id = $old_user_id;
 	}
 
-	public function _action_switch_off( $old_user_id ) {
+	public function _action_switch_off( int $old_user_id ) : void {
 		$this->test_switching_user_id     = false;
 		$this->test_switching_old_user_id = $old_user_id;
 	}
 
-	public function _filter_auth_cookie_expiration( $length, $user_id, $remember ) {
+	public function _filter_auth_cookie_expiration( int $length, int $user_id, bool $remember ) : int {
 		$this->test_switching_auth_cookie_user_id  = $user_id;
 		$this->test_switching_auth_cookie_remember = $remember;
 		return $length;
