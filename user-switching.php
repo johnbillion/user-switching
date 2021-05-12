@@ -885,7 +885,7 @@ class user_switching {
 	 * @param bool[]   $user_caps     Array of key/value pairs where keys represent a capability name and boolean values
 	 *                                represent whether the user has that capability.
 	 * @param string[] $required_caps Array of required primitive capabilities for the requested capability.
-	 * @param array    $args {
+	 * @param mixed[]  $args {
 	 *     Arguments that accompany the requested capability check.
 	 *
 	 *     @type string    $0 Requested capability.
@@ -931,7 +931,7 @@ class user_switching {
 	 * @param string[] $required_caps Array of required primitive capabilities for the requested capability.
 	 * @param string   $cap           Capability or meta capability being checked.
 	 * @param int      $user_id       Concerned user ID.
-	 * @param array    $args {
+	 * @param mixed[]  $args {
 	 *     Arguments that accompany the requested capability check.
 	 *
 	 *     @type mixed ...$0 Optional second and further parameters.
@@ -978,6 +978,7 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 	 * @param int    $old_user_id The ID of the originating user, usually the current logged in user.
 	 * @param bool   $pop         Optional. Pop the latest user off the auth cookie, instead of appending the new one. Default false.
 	 * @param string $token       Optional. The old user's session token to store for later reuse. Default empty string.
+	 * @return void
 	 */
 	function user_switching_set_olduser_cookie( $old_user_id, $pop = false, $token = '' ) {
 		$secure_auth_cookie    = user_switching::secure_auth_cookie();
@@ -1051,6 +1052,7 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 	 * Clears the cookies containing the originating user, or pops the latest item off the end if there's more than one.
 	 *
 	 * @param bool $clear_all Optional. Whether to clear the cookies (as opposed to just popping the last user off the end). Default true.
+	 * @return void
 	 */
 	function user_switching_clear_olduser_cookie( $clear_all = true ) {
 		$auth_cookie = user_switching_get_auth_cookie();
