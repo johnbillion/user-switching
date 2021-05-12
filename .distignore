@@ -19,5 +19,6 @@ Gruntfile.js
 package-lock.json
 package.json
 phpcs.xml.dist
+phpstan.neon.dist
 phpunit.xml.dist
 SECURITY.md
