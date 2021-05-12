@@ -171,26 +171,25 @@ class user_switching {
 
 				// Switch user:
 				$user = switch_to_user( $user_id, self::remember() );
-				if ( $user ) {
-					$redirect_to = self::get_redirect( $user, $current_user );
-
-					// Redirect to the dashboard or the home URL depending on capabilities:
-					$args = array(
-						'user_switched' => 'true',
-					);
-
-					if ( $redirect_to ) {
-						wp_safe_redirect( add_query_arg( $args, $redirect_to ), 302, self::$application );
-					} elseif ( ! current_user_can( 'read' ) ) {
-						wp_safe_redirect( add_query_arg( $args, home_url() ), 302, self::$application );
-					} else {
-						wp_safe_redirect( add_query_arg( $args, admin_url() ), 302, self::$application );
-					}
-					exit;
-				} else {
+				if ( ! $user ) {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ), 404 );
 				}
-				break;
+
+				$redirect_to = self::get_redirect( $user, $current_user );
+
+				// Redirect to the dashboard or the home URL depending on capabilities:
+				$args = array(
+					'user_switched' => 'true',
+				);
+
+				if ( $redirect_to ) {
+					wp_safe_redirect( add_query_arg( $args, $redirect_to ), 302, self::$application );
+				} elseif ( ! current_user_can( 'read' ) ) {
+					wp_safe_redirect( add_query_arg( $args, home_url() ), 302, self::$application );
+				} else {
+					wp_safe_redirect( add_query_arg( $args, admin_url() ), 302, self::$application );
+				}
+				exit;
 
 			// We're attempting to switch back to the originating user:
 			case 'switch_to_olduser':
@@ -209,30 +208,28 @@ class user_switching {
 				check_admin_referer( "switch_to_olduser_{$old_user->ID}" );
 
 				// Switch user:
-				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
-
-					if ( ! empty( $_REQUEST['interim-login'] ) ) {
-						$GLOBALS['interim_login'] = 'success'; // @codingStandardsIgnoreLine
-						login_header( '', '' );
-						exit;
-					}
-
-					$redirect_to = self::get_redirect( $old_user, $current_user );
-					$args        = array(
-						'user_switched' => 'true',
-						'switched_back' => 'true',
-					);
-
-					if ( $redirect_to ) {
-						wp_safe_redirect( add_query_arg( $args, $redirect_to ), 302, self::$application );
-					} else {
-						wp_safe_redirect( add_query_arg( $args, admin_url( 'users.php' ) ), 302, self::$application );
-					}
-					exit;
-				} else {
+				if ( ! switch_to_user( $old_user->ID, self::remember(), false ) ) {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ), 404 );
 				}
-				break;
+
+				if ( ! empty( $_REQUEST['interim-login'] ) ) {
+					$GLOBALS['interim_login'] = 'success'; // @codingStandardsIgnoreLine
+					login_header( '', '' );
+					exit;
+				}
+
+				$redirect_to = self::get_redirect( $old_user, $current_user );
+				$args        = array(
+					'user_switched' => 'true',
+					'switched_back' => 'true',
+				);
+
+				if ( $redirect_to ) {
+					wp_safe_redirect( add_query_arg( $args, $redirect_to ), 302, self::$application );
+				} else {
+					wp_safe_redirect( add_query_arg( $args, admin_url( 'users.php' ) ), 302, self::$application );
+				}
+				exit;
 
 			// We're attempting to switch off the current user:
 			case 'switch_off':
@@ -246,23 +243,22 @@ class user_switching {
 				check_admin_referer( "switch_off_{$current_user->ID}" );
 
 				// Switch off:
-				if ( switch_off_user() ) {
-					$redirect_to = self::get_redirect( null, $current_user );
-					$args        = array(
-						'switched_off' => 'true',
-					);
-
-					if ( $redirect_to ) {
-						wp_safe_redirect( add_query_arg( $args, $redirect_to ), 302, self::$application );
-					} else {
-						wp_safe_redirect( add_query_arg( $args, home_url() ), 302, self::$application );
-					}
-					exit;
-				} else {
+				if ( ! switch_off_user() ) {
 					/* Translators: "switch off" means to temporarily log out */
 					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ) );
 				}
-				break;
+
+				$redirect_to = self::get_redirect( null, $current_user );
+				$args        = array(
+					'switched_off' => 'true',
+				);
+
+				if ( $redirect_to ) {
+					wp_safe_redirect( add_query_arg( $args, $redirect_to ), 302, self::$application );
+				} else {
+					wp_safe_redirect( add_query_arg( $args, home_url() ), 302, self::$application );
+				}
+				exit;
 
 		}
 	}
