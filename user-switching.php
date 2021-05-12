@@ -128,9 +128,13 @@ class user_switching {
 		$cookie_life = apply_filters( 'auth_cookie_expiration', 172800, get_current_user_id(), false );
 		$current     = wp_parse_auth_cookie( '', 'logged_in' );
 
+		if ( ! $current ) {
+			return false;
+		}
+
 		// Here we calculate the expiration length of the current auth cookie and compare it to the default expiration.
 		// If it's greater than this, then we know the user checked 'Remember Me' when they logged in.
-		return ( ( $current['expiration'] - time() ) > $cookie_life );
+		return ( intval( $current['expiration'] ) - time() > $cookie_life );
 	}
 
 	/**
@@ -233,7 +237,7 @@ class user_switching {
 			// We're attempting to switch off the current user:
 			case 'switch_off':
 				// Check authentication:
-				if ( ! current_user_can( 'switch_off' ) ) {
+				if ( ! $current_user || ! current_user_can( 'switch_off' ) ) {
 					/* Translators: "switch off" means to temporarily log out */
 					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ) );
 				}
@@ -1003,6 +1007,10 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 
 		$auth_cookie = json_encode( $auth_cookie );
 
+		if ( false === $auth_cookie ) {
+			return;
+		}
+
 		/**
 		 * Fires immediately before the User Switching authentication cookie is set.
 		 *
@@ -1088,7 +1096,10 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 			$old_user_id = wp_validate_auth_cookie( $old_cookie, $scheme );
 			if ( $old_user_id ) {
 				$parts = wp_parse_auth_cookie( $old_cookie, $scheme );
-				user_switching_set_olduser_cookie( $old_user_id, true, $parts['token'] );
+
+				if ( false !== $parts ) {
+					user_switching_set_olduser_cookie( $old_user_id, true, $parts['token'] );
+				}
 			}
 		}
 	}
@@ -1150,8 +1161,9 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 
 		$old_user_id  = ( is_user_logged_in() ) ? get_current_user_id() : false;
 		$old_token    = function_exists( 'wp_get_session_token' ) ? wp_get_session_token() : '';
-		$auth_cookie  = user_switching_get_auth_cookie();
-		$cookie_parts = wp_parse_auth_cookie( end( $auth_cookie ) );
+		$auth_cookies = user_switching_get_auth_cookie();
+		$auth_cookie  = end( $auth_cookies );
+		$cookie_parts = $auth_cookie ? wp_parse_auth_cookie( $auth_cookie ) : false;
 
 		if ( $set_old_user && $old_user_id ) {
 			// Switching to another user
@@ -1159,7 +1171,7 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 			user_switching_set_olduser_cookie( $old_user_id, false, $old_token );
 		} else {
 			// Switching back, either after being switched off or after being switched to another user
-			$new_token = isset( $cookie_parts['token'] ) ? $cookie_parts['token'] : '';
+			$new_token = ( $cookie_parts && isset( $cookie_parts['token'] ) ) ? $cookie_parts['token'] : '';
 			user_switching_clear_olduser_cookie( false );
 		}
 
