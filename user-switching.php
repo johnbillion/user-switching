@@ -211,7 +211,7 @@ class user_switching {
 				// Switch user:
 				if ( switch_to_user( $old_user->ID, self::remember(), false ) ) {
 
-					if ( ! empty( $_REQUEST['interim-login'] ) ) {
+					if ( ! empty( $_REQUEST['interim-login'] ) && function_exists( 'login_header' ) ) {
 						$GLOBALS['interim_login'] = 'success'; // @codingStandardsIgnoreLine
 						login_header( '', '' );
 						exit;
