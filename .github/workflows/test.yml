@@ -8,6 +8,10 @@ on:
   pull_request:
     branches:
       - '**'
+  # Once weekly on Wednesdays at 05:00 UTC.
+  schedule:
+    - cron: '0 5 * * 3'
+  workflow_dispatch:
 
 jobs:
   build:
