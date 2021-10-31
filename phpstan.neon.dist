@@ -4,12 +4,14 @@ includes:
   - vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
   level: 8
+  tmpDir: tests/cache
   implicitThrows: false
   paths:
     - user-switching.php
     - tests
   excludePaths:
     analyse:
+      - tests/cache
       - tests/stubs.php
       - tests/wordpress
       - tests/wp-config.php

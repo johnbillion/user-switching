@@ -2,6 +2,7 @@
 /build
 /node_modules
 /svn
+/tests/cache
 /tests/wordpress
 /vendor
 

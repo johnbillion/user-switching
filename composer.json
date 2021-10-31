@@ -51,7 +51,7 @@
 			"@php -r \"! file_exists( 'tests/.env' ) && copy( 'tests/.env.dist', 'tests/.env' );\""
 		],
 		"test:cs": [
-			"phpcs -nps --colors --report-code --report-summary --report-width=80 ."
+			"phpcs -nps --colors --report-code --report-summary --report-width=80 --cache=tests/cache/phpcs.json ."
 		],
 		"test:phpstan": [
 			"phpstan analyze"
