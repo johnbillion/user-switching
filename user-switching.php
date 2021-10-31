@@ -642,9 +642,9 @@ class user_switching {
 	/**
 	 * Adds a 'Switch To' link to each list of user actions on the Users screen.
 	 *
-	 * @param string[] $actions Array of actions to display for this user row.
-	 * @param WP_User  $user    The user object displayed in this row.
-	 * @return string[] Array of actions to display for this user row.
+	 * @param array<string,string> $actions Array of actions to display for this user row.
+	 * @param WP_User              $user    The user object displayed in this row.
+	 * @return array<string,string> Array of actions to display for this user row.
 	 */
 	public function filter_user_row_actions( array $actions, WP_User $user ) {
 		$link = self::maybe_switch_url( $user );
@@ -737,8 +737,8 @@ class user_switching {
 	 *
 	 * @link https://core.trac.wordpress.org/ticket/23367
 	 *
-	 * @param string[] $args Array of removable query arguments.
-	 * @return string[] Updated array of removable query arguments.
+	 * @param array<int,string> $args Array of removable query arguments.
+	 * @return array<int,string> Updated array of removable query arguments.
 	 */
 	public function filter_removable_query_args( array $args ) {
 		return array_merge( $args, array(
@@ -940,7 +940,7 @@ class user_switching {
 	 *
 	 *     @type mixed ...$0 Optional second and further parameters.
 	 * }
-	 * @return string[] Array of required capabilities for the requested action.
+	 * @return array<int,string> Array of required capabilities for the requested action.
 	 */
 	public function filter_map_meta_cap( array $required_caps, $cap, $user_id, array $args ) {
 		if ( 'switch_to_user' === $cap ) {
@@ -1124,7 +1124,7 @@ if ( ! function_exists( 'user_switching_get_auth_cookie' ) ) {
 	/**
 	 * Gets the value of the auth cookie containing the list of originating users.
 	 *
-	 * @return string[] Array of originating user authentication cookie values. Empty array if there are none.
+	 * @return array<int,string> Array of originating user authentication cookie values. Empty array if there are none.
 	 */
 	function user_switching_get_auth_cookie() {
 		if ( user_switching::secure_auth_cookie() ) {
