@@ -5,9 +5,21 @@ on:
       - 'develop'
       - 'trunk'
       - 'master'
+    paths:
+      - '.github/workflows/coding-standards.yml'
+      - 'composer.json'
+      - 'phpcs.xml.dist'
+      - 'phpstan.neon.dist'
+      - 'user-switching.php'
   pull_request:
     branches:
       - '**'
+    paths:
+      - '.github/workflows/coding-standards.yml'
+      - 'composer.json'
+      - 'phpcs.xml.dist'
+      - 'phpstan.neon.dist'
+      - 'user-switching.php'
 
 jobs:
   build:
