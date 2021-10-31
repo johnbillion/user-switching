@@ -886,18 +886,18 @@ class user_switching {
 	 *
 	 * Important: This does not get called for Super Admins. See filter_map_meta_cap() below.
 	 *
-	 * @param bool[]   $user_caps     Array of key/value pairs where keys represent a capability name and boolean values
-	 *                                represent whether the user has that capability.
-	 * @param string[] $required_caps Array of required primitive capabilities for the requested capability.
-	 * @param mixed[]  $args {
+	 * @param array<string,bool> $user_caps     Array of key/value pairs where keys represent a capability name and boolean values
+	 *                                          represent whether the user has that capability.
+	 * @param array<int,string>  $required_caps Array of required primitive capabilities for the requested capability.
+	 * @param array<int,mixed>   $args {
 	 *     Arguments that accompany the requested capability check.
 	 *
 	 *     @type string    $0 Requested capability.
 	 *     @type int       $1 Concerned user ID.
 	 *     @type mixed  ...$2 Optional second and further parameters.
 	 * }
-	 * @param WP_User  $user          Concerned user object.
-	 * @return bool[] Array of concerned user's capabilities.
+	 * @param WP_User            $user          Concerned user object.
+	 * @return array<string,bool> Array of concerned user's capabilities.
 	 */
 	public function filter_user_has_cap( array $user_caps, array $required_caps, array $args, WP_User $user ) {
 		if ( 'switch_to_user' === $args[0] ) {
@@ -932,10 +932,10 @@ class user_switching {
 	 *
 	 * It affects nothing else as Super Admins can do everything by default.
 	 *
-	 * @param string[] $required_caps Array of required primitive capabilities for the requested capability.
-	 * @param string   $cap           Capability or meta capability being checked.
-	 * @param int      $user_id       Concerned user ID.
-	 * @param mixed[]  $args {
+	 * @param array<int,string> $required_caps Array of required primitive capabilities for the requested capability.
+	 * @param string            $cap           Capability or meta capability being checked.
+	 * @param int               $user_id       Concerned user ID.
+	 * @param array<int,mixed>  $args {
 	 *     Arguments that accompany the requested capability check.
 	 *
 	 *     @type mixed ...$0 Optional second and further parameters.
