@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 class TestReadme extends WP_UnitTestCase {
 	/**
-	 * @var array<string, string>
+	 * @var ?array<string, string>
 	 */
 	private $readme_data;
 
