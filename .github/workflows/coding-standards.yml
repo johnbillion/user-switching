@@ -66,6 +66,9 @@ jobs:
         php --version
         composer --version
 
+    - name: Validate composer.json
+      run: composer validate --strict --no-check-lock
+
     - name: Install dependencies
       run: |
         composer install --prefer-dist
