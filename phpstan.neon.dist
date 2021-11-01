@@ -5,7 +5,6 @@ includes:
 parameters:
   level: 8
   tmpDir: tests/cache
-  implicitThrows: false
   paths:
     - user-switching.php
     - tests
