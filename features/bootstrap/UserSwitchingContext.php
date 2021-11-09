@@ -12,7 +12,7 @@ use PHPUnit\Framework\Assert;
  * Defines application features from the specific context.
  */
 class UserSwitchingContext extends WordPressContext {
-    use UserContext;
+	use UserContext;
 
 	/**
 	 * Switch to the specified user
