@@ -4,8 +4,8 @@ use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\Mink\Exception\ElementHtmlException;
 use Behat\Mink\Exception\ElementTextException;
 use Behat\Mink\Exception\ExpectationException;
-use PaulGibbs\WordpressBehatExtension\Context\RawWordpressContext as WordPressContext;
-use PaulGibbs\WordpressBehatExtension\Context\Traits\UserAwareContextTrait as UserContext;
+use WordHat\Extension\Context\RawWordpressContext as WordPressContext;
+use WordHat\Extension\Context\Traits\UserAwareContextTrait as UserContext;
 use PHPUnit\Framework\Assert;
 
 /**

@@ -3,11 +3,11 @@ default:
     default:
       contexts:
         - UserSwitchingContext
-        - PaulGibbs\WordpressBehatExtension\Context\WordpressContext
+        - WordHat\Extension\Context\WordpressContext
         - Behat\MinkExtension\Context\MinkContext
-        - PaulGibbs\WordpressBehatExtension\Context\DashboardContext
-        - PaulGibbs\WordpressBehatExtension\Context\SiteContext
-        - PaulGibbs\WordpressBehatExtension\Context\UserContext
+        - WordHat\Extension\Context\DashboardContext
+        - WordHat\Extension\Context\SiteContext
+        - WordHat\Extension\Context\UserContext
         - FailAid\Context\FailureContext
 
   extensions:
@@ -21,7 +21,7 @@ default:
             guzzle_parameters:
               verify: false  # Allow self-signed SSL certificates
 
-    PaulGibbs\WordpressBehatExtension:
+    WordHat\Extension:
       default_driver: wpphp
       users:
         -
