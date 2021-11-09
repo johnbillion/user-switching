@@ -30,7 +30,7 @@
 		"dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
 		"genesis/behat-fail-aid": "^2.0",
 		"johnbillion/php-docs-standards": "*",
-		"paulgibbs/behat-wordpress-extension": "^3.3",
+		"johnbillion/wordhat": "dev-develop",
 		"php-stubs/wordpress-stubs": "^5.7",
 		"phpcompatibility/php-compatibility": "^9",
 		"phpstan/phpstan": "1.0.0",
