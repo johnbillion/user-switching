@@ -29,7 +29,7 @@
 		"behat/mink-goutte-driver": "^1.2",
 		"dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
 		"genesis/behat-fail-aid": "^2.0",
-		"johnbillion/php-docs-standards": "^2",
+		"johnbillion/php-docs-standards": "*",
 		"paulgibbs/behat-wordpress-extension": "^3.3",
 		"php-stubs/wordpress-stubs": "^5.7",
 		"phpcompatibility/php-compatibility": "^9",
