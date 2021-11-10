@@ -28,7 +28,8 @@ $WP language plugin install user-switching it_IT
 
 # Run the functional tests:
 BEHAT_PARAMS='{"extensions" : {"WordHat\\Extension" : {"path" : "'$WP_CORE_DIR'"}}}' \
-	./vendor/bin/behat --colors --strict "$1"
+	./vendor/bin/behat --colors --strict "$1" \
+	|| BEHAT_EXIT_CODE=$? && kill $! && exit $BEHAT_EXIT_CODE
 
 # Stop the PHP web server:
 kill $!
