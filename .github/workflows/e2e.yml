@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/e2e.yml'
       - 'behat.yml'
+      - 'bin/test.sh'
       - 'composer.json'
       - 'features/**'
       - 'user-switching.php'
@@ -17,6 +18,7 @@ on:
     paths:
       - '.github/workflows/e2e.yml'
       - 'behat.yml'
+      - 'bin/test.sh'
       - 'composer.json'
       - 'features/**'
       - 'user-switching.php'
