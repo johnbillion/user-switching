@@ -969,7 +969,7 @@ class user_switching {
 	/**
 	 * Private class constructor. Use `get_instance()` to get the instance.
 	 */
-	final private function __construct() {}
+	private function __construct() {}
 
 }
 
