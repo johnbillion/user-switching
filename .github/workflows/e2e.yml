@@ -63,7 +63,7 @@ jobs:
       env:
         cache-name: cache-wp-cli-assets
       with:
-        path: $WP_CLI_CACHE_DIR
+        path: ${{ env.WP_CLI_CACHE_DIR }}
         key: wp-cli-${{ hashFiles('composer.json') }}
 
     - name: Install PHP
