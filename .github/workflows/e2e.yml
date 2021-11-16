@@ -24,9 +24,9 @@ on:
       - 'composer.json'
       - 'features/**'
       - 'user-switching.php'
-  # Once weekly on Wednesdays at 06:00 UTC.
+  # Once weekly on Wednesdays at 07:00 UTC.
   schedule:
-    - cron: '0 6 * * 3'
+    - cron: '0 7 * * 3'
   workflow_dispatch:
 
 env:
