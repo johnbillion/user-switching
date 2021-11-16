@@ -44,7 +44,7 @@
 		"wp-cli/db-command": "^2",
 		"wp-cli/language-command": "^2",
 		"wp-coding-standards/wpcs": "^2",
-		"wp-phpunit/wp-phpunit": "*"
+		"wp-phpunit/wp-phpunit": "^5.7"
 	},
 	"scripts": {
 		"post-update-cmd": [
