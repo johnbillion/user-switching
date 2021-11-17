@@ -1,6 +1,6 @@
-[![Build Status](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=for-the-badge)](https://github.com/johnbillion/user-switching/actions)
-[![](https://img.shields.io/badge/contributor-code%20of%20conduct-5e0d73.svg?style=for-the-badge)](https://github.com/johnbillion/user-switching/blob/develop/CODE_OF_CONDUCT.md)
-[![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=for-the-badge)](#ethical-open-source)
+[![Build Status](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=flat-square)](https://github.com/johnbillion/user-switching/actions)
+[![](https://img.shields.io/badge/contributor-code%20of%20conduct-5e0d73.svg?style=flat-square)](https://github.com/johnbillion/user-switching/blob/develop/CODE_OF_CONDUCT.md)
+[![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=flat-square)](#ethical-open-source)
 
 # Contributing to User Switching
 
