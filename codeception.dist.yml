@@ -8,5 +8,11 @@ actor_suffix: Tester
 extensions:
   enabled:
     - Codeception\Extension\RunFailed
+    - tad\WPBrowser\Extension\Symlinker
+  config:
+    tad\WPBrowser\Extension\Symlinker:
+      mode: plugin
+      destination:
+        default: tests/wordpress/wp-content/plugins
 params:
   - tests/.env
