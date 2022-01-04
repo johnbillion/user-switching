@@ -7,12 +7,12 @@ namespace UserSwitching\Tests;
 abstract class Test extends \Codeception\TestCase\WPTestCase {
 
 	/**
-	 * @var WP_User[]
+	 * @var \WP_User[]
 	 */
 	protected static $users = array();
 
 	/**
-	 * @var WP_User[]
+	 * @var \WP_User[]
 	 */
 	protected static $testers = array();
 
