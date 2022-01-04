@@ -11,38 +11,38 @@ namespace UserSwitching\Tests;
 class Capabilities extends Test {
 
 	/**
-	 * @return array<int, array<int, string|bool>>
+	 * @return array<string, array<int, string|bool>>
 	 */
 	public function data_roles() : array {
 		$roles = [
-			[
+			'admin' => [
 				'admin',
 				! is_multisite(),
 			],
-			[
+			'editor' => [
 				'editor',
 				false,
 			],
-			[
+			'author' => [
 				'author',
 				false,
 			],
-			[
+			'contributor' => [
 				'contributor',
 				false,
 			],
-			[
+			'subscriber' => [
 				'subscriber',
 				false,
 			],
-			[
+			'none' => [
 				'no_role',
 				false,
 			],
 		];
 
 		if ( is_multisite() ) {
-			$roles[] = [
+			$roles['super admin'] = [
 				'super',
 				true,
 			];
