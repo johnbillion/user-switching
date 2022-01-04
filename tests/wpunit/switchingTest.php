@@ -28,7 +28,7 @@ class Switching extends Test {
 	 */
 	public $test_switching_auth_cookie_remember;
 
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		add_action( 'switch_to_user',         array( $this, '_action_switch_user' ), 10, 2 );
