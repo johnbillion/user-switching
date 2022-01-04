@@ -11,7 +11,6 @@ vendor
 # Files
 .distignore
 .gitignore
-behat.yml
 codeception.dist.yml
 composer.json
 composer.lock

@@ -38,10 +38,8 @@
 		"composer/installers": "^1 || ^2"
 	},
 	"require-dev": {
-		"behat/mink-goutte-driver": "^1.2",
+		"codeception/module-phpbrowser": "^1.0",
 		"dealerdirect/phpcodesniffer-composer-installer": "*",
-		"genesis/behat-fail-aid": "^2.0",
-		"johnbillion/wordhat": "dev-develop",
 		"cweagans/composer-patches": "^1.7",
 		"lucatume/wp-browser": "3.0.17",
 		"phpcompatibility/php-compatibility": "^9",

@@ -26,10 +26,13 @@ $WP core install --title="Example" --admin_user="admin" --admin_password="admin"
 $WP language core install it_IT
 $WP language plugin install user-switching it_IT
 
+# Run the acceptance tests:
+TEST_SITE_WP_URL=$WP_URL \
+	./vendor/bin/codecept run acceptance --steps "$1"
+
 # Run the functional tests:
-BEHAT_PARAMS='{"extensions" : {"WordHat\\Extension" : {"path" : "'$WP_CORE_DIR'"}}}' \
-	./vendor/bin/behat --colors --strict "$1" \
-	|| BEHAT_EXIT_CODE=$? && kill $! && exit $BEHAT_EXIT_CODE
+TEST_SITE_WP_URL=$WP_URL \
+	./vendor/bin/codecept run functional --steps "$1"
 
 # Stop the PHP web server:
 kill $!

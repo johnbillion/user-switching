@@ -9,7 +9,7 @@ on:
       - 'master'
     paths:
       - '.github/workflows/e2e.yml'
-      - 'behat.yml'
+      - 'codeception.dist.yml'
       - 'bin/test.sh'
       - 'composer.json'
       - 'features/**'
@@ -19,7 +19,7 @@ on:
       - '**'
     paths:
       - '.github/workflows/e2e.yml'
-      - 'behat.yml'
+      - 'codeception.dist.yml'
       - 'bin/test.sh'
       - 'composer.json'
       - 'features/**'
