@@ -13,10 +13,7 @@
  * @method void comment($description)
  * @method void pause()
  */
-class AcceptanceTester extends \Codeception\Actor {
+class AcceptanceTester extends FunctionalTester {
 	use _generated\AcceptanceTesterActions;
 
-	/**
-	 * Define custom actions here
-	 */
 }

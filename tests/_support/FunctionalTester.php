@@ -17,6 +17,62 @@ class FunctionalTester extends \Codeception\Actor {
 	use _generated\FunctionalTesterActions;
 
 	/**
-	 * Define custom actions here
+	 * Switch to the specified user
+	 *
+	 * @param string $user_id
 	 */
+	public function switchToUser( $user_id ) {
+		throw new \Exception( 'Not implemented' );
+	}
+
+	/**
+	 * Switch off
+	 */
+	public function switchOff() {
+		throw new \Exception( 'Not implemented' );
+	}
+
+	/**
+	 * Switch back to the original user
+	 *
+	 * @param string $user_id
+	 */
+	public function switchBack( $user_id ) {
+		throw new \Exception( 'Not implemented' );
+	}
+
+	/**
+	 * Verify that the user is logged in as the specified user
+	 *
+	 * @param string $user_id
+	 */
+	public function loggedInAs( $user_id ) {
+		throw new \Exception( 'Not implemented' );
+	}
+
+	/**
+	 * Verify that the user is logged out
+	 */
+	public function loggedOut() {
+		throw new \Exception( 'Not implemented' );
+	}
+
+	/**
+	 * Verify the page language
+	 *
+	 * @param string $lang
+	 */
+	public function thePageLanguageShouldBe( $lang ) {
+		throw new \Exception( 'Not implemented' );
+	}
+
+	/**
+	 * Verify the language of an element
+	 *
+	 * @param string $selector
+	 * @param string $lang
+	 */
+	public function theElementLanguageShouldBe( $selector, $lang ) {
+		throw new \Exception( 'Not implemented' );
+	}
 }
