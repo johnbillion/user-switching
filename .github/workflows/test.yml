@@ -74,8 +74,7 @@ jobs:
         sudo systemctl start mysql.service
         composer install --prefer-dist
         composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="${{ matrix.wp }} || *" wp-phpunit/wp-phpunit="${{ matrix.wp }} || *"
+        mysqladmin -uroot -proot create wordpress_test
 
     - name: Run the tests
       run: composer test:ut
-      env:
-        WP_TESTS_DB_PASS: root

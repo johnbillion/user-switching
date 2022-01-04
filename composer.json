@@ -76,9 +76,7 @@
 			"phpstan analyze"
 		],
 		"test:ut": [
-			"wp db reset --yes --path=tests/wordpress #",
-			"export WP_MULTISITE=0 && phpunit --verbose --colors=always --exclude-group=ms-required",
-			"export WP_MULTISITE=1 && phpunit --verbose --colors=always --exclude-group=ms-excluded"
+			"codecept run wpunit"
 		],
 		"test:ft": [
 			"bin/test.sh"
