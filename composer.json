@@ -1,12 +1,12 @@
 {
-	"name"       : "johnbillion/user-switching",
+	"name": "johnbillion/user-switching",
 	"description": "Instant switching between user accounts in WordPress.",
-	"homepage"   : "https://github.com/johnbillion/user-switching",
-	"type"       : "wordpress-plugin",
-	"license"    : "GPL-2.0-or-later",
-	"authors"    : [
+	"homepage": "https://github.com/johnbillion/user-switching",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"authors": [
 		{
-			"name"    : "John Blackbourn",
+			"name": "John Blackbourn",
 			"homepage": "https://johnblackbourn.com/"
 		}
 	],
