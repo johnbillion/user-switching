@@ -75,7 +75,8 @@
 			"phpstan analyze"
 		],
 		"test:ut": [
-			"codecept run wpunit"
+			"codecept run wpunit --env singlesite --skip-group ms-required",
+			"codecept run wpunit --env multisite --skip-group ms-excluded"
 		],
 		"test:ft": [
 			"bin/test.sh"

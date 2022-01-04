@@ -16,3 +16,14 @@ modules:
       dbPassword: "%WP_TESTS_DB_PASS%"
       plugins: ['user-switching/user-switching.php']
       activatePlugins: ['user-switching/user-switching.php']
+env:
+  singlesite:
+    modules:
+      config:
+        WPLoader:
+          multisite: false
+  multisite:
+    modules:
+      config:
+        WPLoader:
+          multisite: true
