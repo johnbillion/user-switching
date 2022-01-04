@@ -35,7 +35,6 @@
 		"behat/mink-goutte-driver": "^1.2",
 		"dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
 		"genesis/behat-fail-aid": "^2.0",
-		"johnbillion/php-docs-standards": "*",
 		"johnbillion/wordhat": "dev-develop",
 		"codeception/module-asserts": "^1.0",
 		"codeception/module-cli": "^1.0",
