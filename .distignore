@@ -12,6 +12,7 @@ vendor
 .distignore
 .gitignore
 behat.yml
+codeception.dist.yml
 composer.json
 composer.lock
 CONTRIBUTING.md
@@ -20,5 +21,4 @@ package-lock.json
 package.json
 phpcs.xml.dist
 phpstan.neon.dist
-phpunit.xml.dist
 SECURITY.md
