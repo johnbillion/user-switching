@@ -37,6 +37,14 @@
 		"genesis/behat-fail-aid": "^2.0",
 		"johnbillion/php-docs-standards": "*",
 		"johnbillion/wordhat": "dev-develop",
+		"codeception/module-asserts": "^1.0",
+		"codeception/module-cli": "^1.0",
+		"codeception/module-db": "^1.0",
+		"codeception/module-filesystem": "^1.0",
+		"codeception/module-phpbrowser": "^1.0",
+		"codeception/module-webdriver": "^1.0",
+		"codeception/util-universalframework": "^1.0",
+		"lucatume/wp-browser": "^3.0",
 		"php-stubs/wordpress-stubs": "*",
 		"phpcompatibility/php-compatibility": "^9",
 		"phpstan/phpstan": "^1.0",
@@ -49,9 +57,7 @@
 		"wp-cli/core-command": "^2",
 		"wp-cli/db-command": "^2",
 		"wp-cli/language-command": "^2",
-		"wp-coding-standards/wpcs": "^2",
-		"wp-phpunit/wp-phpunit": "*",
-		"yoast/phpunit-polyfills": "^1.0"
+		"wp-coding-standards/wpcs": "^2"
 	},
 	"scripts": {
 		"post-update-cmd": [
