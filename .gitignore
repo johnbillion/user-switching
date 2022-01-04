@@ -2,6 +2,8 @@
 /build
 /node_modules
 /svn
+/tests/_output/
+/tests/_support/_generated
 /tests/cache
 /tests/wordpress
 /vendor

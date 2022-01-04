@@ -59,8 +59,14 @@
 		"wp-cli/language-command": "^2",
 		"wp-coding-standards/wpcs": "^2"
 	},
+	"autoload": {
+		"psr-4": {
+			"UserSwitching\\Tests\\": "tests/wpunit"
+		}
+	},
 	"scripts": {
 		"post-update-cmd": [
+			"@php -r \"! file_exists( __DIR__ . '/tests/wordpress/wp-content/plugins/user-switching' ) && symlink( __DIR__, __DIR__ . '/tests/wordpress/wp-content/plugins/user-switching' );\"",
 			"@php -r \"! file_exists( 'tests/.env' ) && copy( 'tests/.env.dist', 'tests/.env' );\""
 		],
 		"test:cs": [
