@@ -7,10 +7,6 @@ parameters:
 	tmpDir: tests/cache
 	paths:
 		- user-switching.php
-		- tests/wpunit
-	excludePaths:
-		analyseAndScan:
-			- tests/wordpress
 	bootstrapFiles:
 		- tests/stubs.php
 	ignoreErrors:
