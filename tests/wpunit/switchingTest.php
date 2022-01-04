@@ -2,7 +2,11 @@
 
 declare(strict_types = 1);
 
-class TestSwitching extends User_Switching_Test {
+namespace UserSwitching\Tests;
+
+use user_switching;
+
+class Switching extends Test {
 
 	/**
 	 * @var int|false

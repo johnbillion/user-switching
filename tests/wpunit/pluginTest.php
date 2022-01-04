@@ -2,7 +2,9 @@
 
 declare(strict_types = 1);
 
-class TestReadme extends WP_UnitTestCase {
+namespace UserSwitching\Tests;
+
+class Readme extends Test {
 	/**
 	 * @var ?array<string, string>
 	 */
@@ -14,7 +16,7 @@ class TestReadme extends WP_UnitTestCase {
 			self::fail( 'There is no readme file' );
 		}
 
-		$plugin_data = get_plugin_data( dirname( dirname( __FILE__ ) ) . '/user-switching.php' );
+		$plugin_data = get_plugin_data( dirname( dirname( __DIR__ ) ) . '/user-switching.php' );
 
 		self::assertEquals( $readme_data['stable_tag'], $plugin_data['Version'] );
 	}
@@ -24,7 +26,7 @@ class TestReadme extends WP_UnitTestCase {
 	 */
 	private function get_readme() :? array {
 		if ( ! isset( $this->readme_data ) ) {
-			$file = dirname( dirname( __FILE__ ) ) . '/readme.md';
+			$file = dirname( dirname( __DIR__ ) ) . '/readme.md';
 
 			if ( ! is_file( $file ) ) {
 				return null;

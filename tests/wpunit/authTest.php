@@ -2,10 +2,14 @@
 
 declare(strict_types = 1);
 
+namespace UserSwitching\Tests;
+
+use user_switching;
+
 /**
  * @covers \user_switching::authenticate_old_user
  */
-class TestAuthentication extends User_Switching_Test {
+class Authentication extends Test {
 
 	public function testValidCookiePassesAuthentication() : void {
 		$expiry = time() + 172800;

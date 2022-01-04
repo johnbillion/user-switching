@@ -2,11 +2,13 @@
 
 declare(strict_types = 1);
 
+namespace UserSwitching\Tests;
+
 /**
  * @covers \user_switching::filter_user_has_cap
  * @covers \user_switching::filter_map_meta_cap
  */
-class TestCapabilities extends User_Switching_Test {
+class Capabilities extends Test {
 
 	/**
 	 * @return array<int, array<int, string|bool>>

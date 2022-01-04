@@ -2,7 +2,11 @@
 
 declare(strict_types = 1);
 
-class TestSessions extends User_Switching_Test {
+namespace UserSwitching\Tests;
+
+use user_switching;
+
+class Sessions extends Test {
 
 	/**
 	 * @covers \switch_to_user

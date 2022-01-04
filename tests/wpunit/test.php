@@ -2,7 +2,9 @@
 
 declare(strict_types = 1);
 
-abstract class User_Switching_Test extends WP_UnitTestCase {
+namespace UserSwitching\Tests;
+
+abstract class Test extends \Codeception\TestCase\WPTestCase {
 
 	/**
 	 * @var WP_User[]
@@ -22,7 +24,7 @@ abstract class User_Switching_Test extends WP_UnitTestCase {
 	/**
 	 * @return void
 	 */
-	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ) {
+	public static function wpSetUpBeforeClass( \WP_UnitTest_Factory $factory ) {
 		$roles = array(
 			'admin'       => 'administrator',
 			'editor'      => 'editor',
