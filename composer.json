@@ -35,16 +35,15 @@
 	},
 	"require": {
 		"php": ">=5.3",
-		"composer/installers": "^1"
+		"composer/installers": "*"
 	},
 	"require-dev": {
 		"behat/mink-goutte-driver": "^1.2",
-		"dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
+		"dealerdirect/phpcodesniffer-composer-installer": "*",
 		"genesis/behat-fail-aid": "^2.0",
 		"johnbillion/wordhat": "dev-develop",
 		"cweagans/composer-patches": "^1.7",
 		"lucatume/wp-browser": "3.0.17",
-		"php-stubs/wordpress-stubs": "*",
 		"phpcompatibility/php-compatibility": "^9",
 		"phpstan/phpstan": "^1.0",
 		"phpstan/phpstan-deprecation-rules": "^1.0",
