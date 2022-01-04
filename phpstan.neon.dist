@@ -1,33 +1,33 @@
 includes:
-  - vendor/phpstan/phpstan-deprecation-rules/rules.neon
-  - vendor/phpstan/phpstan-phpunit/extension.neon
-  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+	- vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- vendor/phpstan/phpstan-phpunit/extension.neon
+	- vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
-  level: 8
-  tmpDir: tests/cache
-  paths:
-    - user-switching.php
-    - tests
-  excludePaths:
-    analyse:
-      - tests/cache
-      - tests/stubs.php
-      - tests/wordpress
-      - tests/wp-config.php
-      - tests/wp-tests-config.php
-  scanDirectories:
-    - tests
-    - vendor/johnbillion/php-docs-standards
-    - vendor/wp-phpunit/wp-phpunit/includes
-  scanFiles:
-    - user-switching.php
-  bootstrapFiles:
-    - tests/stubs.php
-  ignoreErrors:
-    # Uses func_get_args()
-    - '#^Function apply_filters invoked with [34567] parameters, 2 required\.$#'
-    # Covers the breaks after exits in user_switching::action_init()
-    -
-      message: '#^Unreachable statement#'
-      path: user-switching.php
-      count: 3
+	level: 8
+	tmpDir: tests/cache
+	paths:
+		- user-switching.php
+		- tests
+	excludePaths:
+		analyse:
+			- tests/cache
+			- tests/stubs.php
+			- tests/wordpress
+			- tests/wp-config.php
+			- tests/wp-tests-config.php
+	scanDirectories:
+		- tests
+		- vendor/johnbillion/php-docs-standards
+		- vendor/wp-phpunit/wp-phpunit/includes
+	scanFiles:
+		- user-switching.php
+	bootstrapFiles:
+		- tests/stubs.php
+	ignoreErrors:
+		# Uses func_get_args()
+		- '#^Function apply_filters invoked with [34567] parameters, 2 required\.$#'
+		# Covers the breaks after exits in user_switching::action_init()
+		-
+			message: '#^Unreachable statement#'
+			path: user-switching.php
+			count: 3
