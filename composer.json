@@ -35,7 +35,7 @@
 	},
 	"require": {
 		"php": ">=5.3",
-		"composer/installers": "*"
+		"composer/installers": "^1 || ^2"
 	},
 	"require-dev": {
 		"behat/mink-goutte-driver": "^1.2",
