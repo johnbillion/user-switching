@@ -44,7 +44,7 @@
 		"codeception/module-phpbrowser": "^1.0",
 		"codeception/module-webdriver": "^1.0",
 		"codeception/util-universalframework": "^1.0",
-		"lucatume/wp-browser": "^3.0",
+		"lucatume/wp-browser": "dev-master",
 		"php-stubs/wordpress-stubs": "*",
 		"phpcompatibility/php-compatibility": "^9",
 		"phpstan/phpstan": "^1.0",
