@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace UserSwitching\Tests;
 
 use user_switching;
+use WP_Session_Tokens;
 
 class Sessions extends Test {
 
