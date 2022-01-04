@@ -51,7 +51,7 @@ jobs:
         cache-name: cache-composer-dependencies
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}-v2
+        key: ${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
     - name: Install PHP
       uses: shivammathur/setup-php@2.7.0

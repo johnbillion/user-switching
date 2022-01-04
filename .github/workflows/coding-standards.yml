@@ -42,7 +42,7 @@ jobs:
         cache-name: cache-composer-dependencies
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: 7.3-composer-${{ hashFiles('composer.json') }}-v2
+        key: 7.3-composer-${{ hashFiles('composer.json') }}
 
     - name: PHPCS and PHPStan cache
       uses: actions/cache@v2
