@@ -21,7 +21,7 @@ PHP_SERVER_PROCESS_ID=$!
 $WP db reset --yes
 
 # Install WordPress:
-$WP core install --title="Example" --admin_user="admin" --admin_password="admin" --admin_email="admin@example.com"
+$WP core install --title="Example" --admin_user="admin" --admin_password="admin" --admin_email="admin@example.com" --skip-email
 
 # Activate the plugin:
 $WP plugin activate user-switching
