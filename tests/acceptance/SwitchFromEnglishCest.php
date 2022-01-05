@@ -14,7 +14,9 @@ class SwitchFromEnglishCest {
 
 		$I->haveUserInDatabase( 'autore', 'author', [
 			'display_name' => 'Autore',
-			'locale' => 'it_IT',
+			'meta' => [
+				'locale' => 'it_IT',
+			],
 		] );
 	}
 
@@ -28,7 +30,7 @@ class SwitchFromEnglishCest {
 		// But I should see a status message that says "Switched to Autore"
 		$I->seeAdminSuccessNotice( 'Switched to Autore' );
 		// And the "#user_switching p" element language should be "en-US"
-		// @TODO
+		$I->theElementLanguageShouldBe( '#user_switching p', 'en-US' );
 
 		// When I go to the dashboard
 		$I->amOnAdminPage( '/' );

@@ -90,7 +90,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * @param string $lang
 	 */
 	public function thePageLanguageShouldBe( $lang ) {
-		throw new \Exception( 'Not implemented' );
+		$this->theElementLanguageShouldBe( 'html', $lang );
 	}
 
 	/**
@@ -100,7 +100,9 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * @param string $lang
 	 */
 	public function theElementLanguageShouldBe( $selector, $lang ) {
-		throw new \Exception( 'Not implemented' );
+		$this->seeElement( $selector, [
+			'lang' => $lang,
+		] );
 	}
 
 	/**
