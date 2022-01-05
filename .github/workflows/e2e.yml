@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 
-name: Functional Tests
+name: Acceptance Tests
 on:
   push:
     branches:
@@ -79,13 +79,11 @@ jobs:
         mysqladmin -uroot -proot create wordpress_test
 
     - name: Run the tests
-      run: composer test:ft
-      env:
-        WP_TESTS_DB_PASS: root
+      run: composer test:acceptance
 
     - name: Upload test artifacts
       if: failure()
       uses: actions/upload-artifact@v2
       with:
-        name: "test-wp-${{ matrix.wp == '*' && 'latest' || matrix.wp }}-php-${{ matrix.php }}"
+        name: "acceptance-wp-${{ matrix.wp == '*' && 'latest' || matrix.wp }}-php-${{ matrix.php }}"
         path: tests/_output

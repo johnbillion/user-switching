@@ -58,21 +58,21 @@ To run the whole test suite:
 
 	composer test
 
-To run just the unit tests:
+To run just the integration tests:
 
-	composer test:ut
+	composer test:integration
 
-To run just the code sniffs:
+To run just the coding standards checks:
 
-	composer test:cs
+	composer test:phpcs
 
 To run just the static analysis:
 
 	composer test:phpstan
 
-To run just the functional tests:
+To run just the acceptance tests:
 
-	composer test:ft
+	composer test:acceptance
 
 ## Releasing a New Version
 

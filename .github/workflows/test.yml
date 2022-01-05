@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 
-name: Unit Tests
+name: Integration Tests
 on:
   push:
     branches:
@@ -77,4 +77,4 @@ jobs:
         mysqladmin -uroot -proot create wordpress_test
 
     - name: Run the tests
-      run: composer test:ut
+      run: composer test:integration

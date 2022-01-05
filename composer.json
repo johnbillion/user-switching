@@ -60,24 +60,28 @@
 		"post-update-cmd": [
 			"@php -r \"! file_exists( 'tests/.env' ) && copy( 'tests/.env.dist', 'tests/.env' );\""
 		],
-		"test:cs": [
+		"test:phpcs": [
 			"phpcs -nps --colors --report-code --report-summary --report-width=80 --cache=tests/cache/phpcs.json ."
 		],
 		"test:phpstan": [
 			"phpstan analyze"
 		],
-		"test:ut": [
-			"codecept run wpunit --env singlesite --skip-group ms-required",
-			"codecept run wpunit --env multisite --skip-group ms-excluded"
+		"test:integration": [
+			"codecept run integration --env singlesite --skip-group ms-required",
+			"codecept run integration --env multisite --skip-group ms-excluded"
 		],
-		"test:ft": [
+		"test:acceptance": [
 			"bin/test.sh"
 		],
+		"test:composer": [
+			"@composer validate --strict --no-check-lock"
+		],
 		"test": [
-			"@test:cs",
+			"@test:composer",
+			"@test:phpcs",
 			"@test:phpstan",
-			"@test:ut",
-			"@test:ft"
+			"@test:integration",
+			"@test:acceptance"
 		]
 	},
 	"funding": [
