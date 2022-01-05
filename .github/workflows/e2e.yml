@@ -12,7 +12,7 @@ on:
       - 'codeception.dist.yml'
       - 'bin/test.sh'
       - 'composer.json'
-      - 'features/**'
+      - 'tests/**'
       - 'user-switching.php'
   pull_request:
     branches:
@@ -22,7 +22,7 @@ on:
       - 'codeception.dist.yml'
       - 'bin/test.sh'
       - 'composer.json'
-      - 'features/**'
+      - 'tests/**'
       - 'user-switching.php'
   # Once weekly on Wednesdays at 06:00 UTC.
   schedule:
