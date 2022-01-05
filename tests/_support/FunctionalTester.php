@@ -41,7 +41,19 @@ class FunctionalTester extends \Codeception\Actor {
 	 * @param string $user_login
 	 */
 	public function switchBack( $user_login ) {
-		throw new \Exception( 'Not implemented' );
+		$display_name = $this->grabFromDatabase(
+			$this->grabUsersTableName(),
+			'display_name',
+			[
+				'user_login' => $user_login,
+			]
+		);
+
+		$this->click( sprintf(
+			'Switch back to %1$s (%2$s)',
+			$display_name,
+			$user_login
+		) );
 	}
 
 	/**
@@ -50,7 +62,18 @@ class FunctionalTester extends \Codeception\Actor {
 	 * @param string $user_login
 	 */
 	public function loggedInAs( $user_login ) {
-		throw new \Exception( 'Not implemented' );
+		$display_name = $this->grabFromDatabase(
+			$this->grabUsersTableName(),
+			'display_name',
+			[
+				'user_login' => $user_login,
+			]
+		);
+
+		$this->see(
+			$display_name,
+			'#wpadminbar .display-name'
+		);
 	}
 
 	/**
