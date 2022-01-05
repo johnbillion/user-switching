@@ -3,7 +3,6 @@
 .github
 .wordpress-org
 bin
-features
 node_modules
 tests
 vendor
@@ -15,7 +14,6 @@ codeception.dist.yml
 composer.json
 composer.lock
 CONTRIBUTING.md
-Gruntfile.js
 package-lock.json
 package.json
 phpcs.xml.dist
