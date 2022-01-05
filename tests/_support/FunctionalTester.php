@@ -32,7 +32,8 @@ class FunctionalTester extends \Codeception\Actor {
 	 * Switch off
 	 */
 	public function switchOff() {
-		throw new \Exception( 'Not implemented' );
+		$this->amOnAdminPage( '/' );
+		$this->click( 'Switch Off' );
 	}
 
 	/**
@@ -80,7 +81,7 @@ class FunctionalTester extends \Codeception\Actor {
 	 * Verify that the user is logged out
 	 */
 	public function loggedOut() {
-		throw new \Exception( 'Not implemented' );
+		$this->cantSeeElement( '#wpadminbar .display-name' );
 	}
 
 	/**

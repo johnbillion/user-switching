@@ -34,4 +34,18 @@ class AddEventCest {
 		// And I should be logged in as "admin"
 		$I->loggedInAs( 'admin' );
 	}
+
+	public function SwitchOffAndBack( AcceptanceTester $I ) {
+		// Given I am logged in as admin
+		$I->loginAsAdmin();
+		// When I switch off
+		$I->switchOff();
+		// Then I should be logged out
+		$I->loggedOut();
+
+		// When I switch back to "admin"
+		$I->switchBack( 'admin' );
+		// Then I should be logged in as "admin"
+		$I->loggedInAs( 'admin' );
+	}
 }
