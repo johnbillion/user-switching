@@ -314,7 +314,7 @@ class user_switching {
 			}
 
 			?>
-			<div id="user_switching" class="updated notice is-dismissible">
+			<div id="user_switching" class="updated notice notice-success is-dismissible">
 				<?php
 					if ( $lang_attr ) {
 						printf(
@@ -379,7 +379,7 @@ class user_switching {
 			}
 		} elseif ( isset( $_GET['user_switched'] ) ) {
 			?>
-			<div id="user_switching" class="updated notice is-dismissible">
+			<div id="user_switching" class="updated notice notice-success is-dismissible">
 				<p>
 				<?php
 					if ( isset( $_GET['switched_back'] ) ) {
