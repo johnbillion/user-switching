@@ -52,6 +52,7 @@
 		"vlucas/phpdotenv": "^3",
 		"wp-cli/core-command": "^2",
 		"wp-cli/db-command": "^2",
+		"wp-cli/extension-command": "^2",
 		"wp-cli/language-command": "^2",
 		"wp-coding-standards/wpcs": "^2"
 	},

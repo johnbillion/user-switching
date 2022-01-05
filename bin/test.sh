@@ -22,6 +22,9 @@ $WP db reset --yes
 # Install WordPress:
 $WP core install --title="Example" --admin_user="admin" --admin_password="admin" --admin_email="admin@example.com"
 
+# Activate the plugin:
+$WP plugin activate user-switching
+
 # Install language files:
 $WP language core install it_IT
 $WP language plugin install user-switching it_IT
