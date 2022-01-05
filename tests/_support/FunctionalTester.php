@@ -75,4 +75,40 @@ class FunctionalTester extends \Codeception\Actor {
 	public function theElementLanguageShouldBe( $selector, $lang ) {
 		throw new \Exception( 'Not implemented' );
 	}
+
+	/**
+	 * Checks that the current page contains an admin success notice.
+	 *
+	 * @param string $text The message text to search for.
+	 */
+	public function seeAdminSuccessNotice( string $text ) {
+		return $this->see( $text, '.notice-success' );
+	}
+
+	/**
+	 * Checks that the current page contains an admin success notice.
+	 *
+	 * @param string $text The message text to search for.
+	 */
+	public function seeAdminWarningNotice( string $text ) {
+		return $this->see( $text, '.notice-warning' );
+	}
+
+	/**
+	 * Checks that the current page contains an admin success notice.
+	 *
+	 * @param string $text The message text to search for.
+	 */
+	public function seeAdminErrorNotice( string $text ) {
+		return $this->see( $text, '.notice-error' );
+	}
+
+	/**
+	 * Checks that the current page contains an admin success notice.
+	 *
+	 * @param string $text The message text to search for.
+	 */
+	public function seeAdminInfoNotice( string $text ) {
+		return $this->see( $text, '.notice-info' );
+	}
 }
