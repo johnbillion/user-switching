@@ -8,7 +8,7 @@ modules:
     - WPLoader
   config:
     WPLoader:
-      wpRootFolder: '%TEST_SITE_WP_DIR%'
+      wpRootFolder: tests/wordpress
       configFile: 'vendor/autoload.php'
       dbName: '%WP_TESTS_DB_NAME%'
       dbHost: '%WP_TESTS_DB_HOST%'

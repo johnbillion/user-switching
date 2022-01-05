@@ -13,6 +13,6 @@ extensions:
     tad\WPBrowser\Extension\Symlinker:
       mode: plugin
       destination:
-        default: '%TEST_SITE_WP_DIR%/wp-content/plugins'
+        default: tests/wordpress/wp-content/plugins
 params:
   - tests/.env
