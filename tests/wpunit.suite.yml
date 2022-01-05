@@ -8,12 +8,12 @@ modules:
     - WPLoader
   config:
     WPLoader:
-      wpRootFolder: "tests/wordpress"
-      configFile: "vendor/autoload.php"
-      dbName: "%WP_TESTS_DB_NAME%"
-      dbHost: "%WP_TESTS_DB_HOST%"
-      dbUser: "%WP_TESTS_DB_USER%"
-      dbPassword: "%WP_TESTS_DB_PASS%"
+      wpRootFolder: '%TEST_SITE_WP_DIR%'
+      configFile: 'vendor/autoload.php'
+      dbName: '%WP_TESTS_DB_NAME%'
+      dbHost: '%WP_TESTS_DB_HOST%'
+      dbUser: '%WP_TESTS_DB_USER%'
+      dbPassword: '%WP_TESTS_DB_PASS%'
       skipPluggables: true
       plugins: ['user-switching/user-switching.php']
       activatePlugins: ['user-switching/user-switching.php']

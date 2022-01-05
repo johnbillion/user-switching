@@ -19,7 +19,7 @@ modules:
       populate: false
       cleanup: false
     WPCLI:
-      path: tests/wordpress
+      path: '%TEST_SITE_WP_DIR%'
       url: '%TEST_SITE_WP_URL%'
     WPBrowser:
       url: '%TEST_SITE_WP_URL%'
