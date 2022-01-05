@@ -22,7 +22,10 @@ class FunctionalTester extends \Codeception\Actor {
 	 * @param string $user_id
 	 */
 	public function switchToUser( $user_id ) {
-		throw new \Exception( 'Not implemented' );
+		$user_id = $this->grabUserIdFromDatabase( $user_id );
+
+		$this->amOnAdminPage( sprintf( 'user-edit.php?user_id=%d', $user_id ) );
+		$this->click( '#user_switching_switcher' );
 	}
 
 	/**
