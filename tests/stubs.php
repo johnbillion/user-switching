@@ -86,5 +86,3 @@ class WC_Session {
  * @return \WooCommerce
  */
 function WC() {}
-
-class PHPUnit_Framework_TestCase {}

@@ -10,7 +10,7 @@ on:
     paths:
       - '.github/workflows/test.yml'
       - 'composer.json'
-      - 'phpunit.xml.dist'
+      - 'codeception.dist.yml'
       - 'tests/**'
       - 'user-switching.php'
   pull_request:
@@ -19,7 +19,7 @@ on:
     paths:
       - '.github/workflows/test.yml'
       - 'composer.json'
-      - 'phpunit.xml.dist'
+      - 'codeception.dist.yml'
       - 'tests/**'
       - 'user-switching.php'
   # Once weekly on Wednesdays at 05:00 UTC.
@@ -73,7 +73,7 @@ jobs:
       run: |
         sudo systemctl start mysql.service
         composer install --prefer-dist
-        composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="${{ matrix.wp }} || *" wp-phpunit/wp-phpunit="${{ matrix.wp }} || *"
+        composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="${{ matrix.wp }} || *"
         mysqladmin -uroot -proot create wordpress_test
 
     - name: Run the tests
