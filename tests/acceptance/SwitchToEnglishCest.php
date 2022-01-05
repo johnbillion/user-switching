@@ -25,13 +25,13 @@ class SwitchToEnglishCest extends Cest {
 	public function SwitchFromItalianAdminToEnglishAuthorAndBack( AcceptanceTester $I ) {
 		$I->loginAs( 'admin_it', 'admin_it' );
 		$I->switchToUser( 'author_en' );
-		$I->thePageLanguageShouldBe( 'en-US' );
+		$I->canSeeThePageInLanguage( 'en-US' );
 		$I->seeAdminSuccessNotice( 'Cambiato a Author EN' );
-		$I->theElementLanguageShouldBe( '#user_switching p', 'it-IT' );
+		$I->canSeeTheElementInLanguage( '#user_switching p', 'it-IT' );
 
 		$I->amOnAdminPage( '/' );
 		$I->switchBack( 'admin_it' );
-		$I->thePageLanguageShouldBe( 'it-IT' );
+		$I->canSeeThePageInLanguage( 'it-IT' );
 		$I->seeAdminSuccessNotice( 'Tornato a Admin IT' );
 	}
 }

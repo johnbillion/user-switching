@@ -62,7 +62,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 *
 	 * @param string $user_login
 	 */
-	public function loggedInAs( $user_login ) {
+	public function amLoggedInAs( $user_login ) {
 		$display_name = $this->grabFromDatabase(
 			$this->grabUsersTableName(),
 			'display_name',
@@ -80,7 +80,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	/**
 	 * Verify that the user is logged out
 	 */
-	public function loggedOut() {
+	public function amLoggedOut() {
 		$this->cantSeeElement( '#wpadminbar .display-name' );
 	}
 
@@ -89,8 +89,8 @@ class AcceptanceTester extends \Codeception\Actor {
 	 *
 	 * @param string $lang
 	 */
-	public function thePageLanguageShouldBe( $lang ) {
-		$this->theElementLanguageShouldBe( 'html', $lang );
+	public function canSeeThePageInLanguage( $lang ) {
+		$this->canSeeTheElementInLanguage( 'html', $lang );
 	}
 
 	/**
@@ -99,7 +99,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * @param string $selector
 	 * @param string $lang
 	 */
-	public function theElementLanguageShouldBe( $selector, $lang ) {
+	public function canSeeTheElementInLanguage( $selector, $lang ) {
 		$this->seeElement( $selector, [
 			'lang' => $lang,
 		] );

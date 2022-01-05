@@ -18,20 +18,20 @@ class SwitchUserCest extends Cest {
 		$I->loginAsAdmin();
 		$I->switchToUser( 'editor' );
 		$I->seeAdminSuccessNotice( 'Switched to editor' );
-		$I->loggedInAs( 'editor' );
+		$I->amLoggedInAs( 'editor' );
 
 		$I->amOnAdminPage( '/' );
 		$I->switchBack( 'admin' );
 		$I->seeAdminSuccessNotice( 'Switched back to admin' );
-		$I->loggedInAs( 'admin' );
+		$I->amLoggedInAs( 'admin' );
 	}
 
 	public function SwitchOffAndBack( AcceptanceTester $I ) {
 		$I->loginAsAdmin();
 		$I->switchOff();
-		$I->loggedOut();
+		$I->amLoggedOut();
 
 		$I->switchBack( 'admin' );
-		$I->loggedInAs( 'admin' );
+		$I->amLoggedInAs( 'admin' );
 	}
 }
