@@ -78,10 +78,3 @@ jobs:
 
     - name: Run the tests
       run: composer test:ut
-
-    - name: Upload test artifacts
-      if: failure()
-      uses: actions/upload-artifact@v2
-      with:
-        name: "test-wp-${{ matrix.wp == '*' ? 'latest' : matrix.wp }}-php-${{ matrix.php }}"
-        path: tests/_output
