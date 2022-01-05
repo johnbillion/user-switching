@@ -33,12 +33,12 @@ $WP language plugin install user-switching it_IT
 # Run the functional tests:
 TEST_SITE_WP_URL=$WP_URL \
 	./vendor/bin/codecept run functional --steps "$1" \
-	|| TESTS_EXIT_CODE=$? && kill $PHP_SERVER_PROCESS_ID && exit $TESTS_EXIT_CODE
+	|| ( TESTS_EXIT_CODE=$? && kill $PHP_SERVER_PROCESS_ID && exit $TESTS_EXIT_CODE )
 
 # Run the acceptance tests:
 TEST_SITE_WP_URL=$WP_URL \
 	./vendor/bin/codecept run acceptance --steps "$1" \
-	|| TESTS_EXIT_CODE=$? && kill $PHP_SERVER_PROCESS_ID && exit $TESTS_EXIT_CODE
+	|| ( TESTS_EXIT_CODE=$? && kill $PHP_SERVER_PROCESS_ID && exit $TESTS_EXIT_CODE )
 
 # Stop the PHP web server:
 kill $PHP_SERVER_PROCESS_ID
