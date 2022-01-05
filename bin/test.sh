@@ -15,6 +15,7 @@ WP="./vendor/bin/wp --color --path=$WP_CORE_DIR --url=http://$WP_URL"
 
 # Start the PHP server:
 php -S "$WP_URL" -t "$WP_CORE_DIR" -d disable_functions=mail 2>/dev/null &
+PHP_SERVER_PROCESS_ID=$!
 
 # Reset or install the test database:
 $WP db reset --yes
@@ -31,11 +32,13 @@ $WP language plugin install user-switching it_IT
 
 # Run the acceptance tests:
 TEST_SITE_WP_URL=$WP_URL \
-	./vendor/bin/codecept run acceptance --steps "$1"
+	./vendor/bin/codecept run acceptance --steps "$1" \
+	|| TESTS_EXIT_CODE=$? && kill $PHP_SERVER_PROCESS_ID && exit $TESTS_EXIT_CODE
 
 # Run the functional tests:
 TEST_SITE_WP_URL=$WP_URL \
-	./vendor/bin/codecept run functional --steps "$1"
+	./vendor/bin/codecept run functional --steps "$1" \
+	|| TESTS_EXIT_CODE=$? && kill $PHP_SERVER_PROCESS_ID && exit $TESTS_EXIT_CODE
 
 # Stop the PHP web server:
-kill $!
+kill $PHP_SERVER_PROCESS_ID
