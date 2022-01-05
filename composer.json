@@ -20,17 +20,11 @@
 		"allow-plugins": {
 			"composer/installers": true,
 			"composer/package-versions-deprecated": true,
-			"cweagans/composer-patches": true,
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"roots/wordpress-core-installer": true
 		}
 	},
 	"extra": {
-		"patches": {
-			"lucatume/wp-browser": {
-				"Remove pluggable function definitions": "tests/patches/wp-browser.patch"
-			}
-		},
 		"wordpress-install-dir": "tests/wordpress"
 	},
 	"require": {
@@ -42,8 +36,7 @@
 		"dealerdirect/phpcodesniffer-composer-installer": "*",
 		"genesis/behat-fail-aid": "^2.0",
 		"johnbillion/wordhat": "dev-develop",
-		"cweagans/composer-patches": "^1.7",
-		"lucatume/wp-browser": "3.0.17",
+		"lucatume/wp-browser": "^3.0",
 		"phpcompatibility/php-compatibility": "^9",
 		"phpstan/phpstan": "^1.0",
 		"phpstan/phpstan-deprecation-rules": "^1.0",
