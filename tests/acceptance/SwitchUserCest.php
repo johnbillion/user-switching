@@ -1,12 +1,12 @@
 <?php
 /**
- * Acceptance tests for adding cron events.
+ * Acceptance tests for switching users.
  */
 
 /**
  * Test class.
  */
-class AddEventCest {
+class SwitchUserCest {
 	public function _before( AcceptanceTester $I ) {
 		$I->comment( 'As an administrator' );
 		$I->comment( 'I need to be able to switch between users' );
