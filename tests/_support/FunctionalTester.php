@@ -19,10 +19,10 @@ class FunctionalTester extends \Codeception\Actor {
 	/**
 	 * Switch to the specified user
 	 *
-	 * @param string $user_id
+	 * @param string $user_login
 	 */
-	public function switchToUser( $user_id ) {
-		$user_id = $this->grabUserIdFromDatabase( $user_id );
+	public function switchToUser( $user_login ) {
+		$user_id = $this->grabUserIdFromDatabase( $user_login );
 
 		$this->amOnAdminPage( sprintf( 'user-edit.php?user_id=%d', $user_id ) );
 		$this->click( '#user_switching_switcher' );
@@ -38,18 +38,18 @@ class FunctionalTester extends \Codeception\Actor {
 	/**
 	 * Switch back to the original user
 	 *
-	 * @param string $user_id
+	 * @param string $user_login
 	 */
-	public function switchBack( $user_id ) {
+	public function switchBack( $user_login ) {
 		throw new \Exception( 'Not implemented' );
 	}
 
 	/**
 	 * Verify that the user is logged in as the specified user
 	 *
-	 * @param string $user_id
+	 * @param string $user_login
 	 */
-	public function loggedInAs( $user_id ) {
+	public function loggedInAs( $user_login ) {
 		throw new \Exception( 'Not implemented' );
 	}
 
