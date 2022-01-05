@@ -3,8 +3,10 @@
  * Acceptance tests for switching users.
  */
 
-class SwitchUserCest {
+class SwitchUserCest extends Cest {
 	public function _before( AcceptanceTester $I ) {
+		parent::_before( $I );
+
 		$I->comment( 'As an administrator' );
 		$I->comment( 'I need to be able to switch between users' );
 		$I->comment( 'In order to access different user accounts' );

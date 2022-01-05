@@ -7,6 +7,7 @@ actor: AcceptanceTester
 modules:
   enabled:
     - WPDb
+    - WPCLI
     - WPBrowser
   config:
     WPDb:
@@ -17,6 +18,9 @@ modules:
       dump: false
       populate: false
       cleanup: false
+    WPCLI:
+      path: tests/wordpress
+      url: '%TEST_SITE_WP_URL%'
     WPBrowser:
       url: '%TEST_SITE_WP_URL%'
       adminUsername: 'admin'

@@ -3,8 +3,10 @@
  * Acceptance tests for switching from a user who doesn't use English to a user who does
  */
 
-class SwitchToEnglishCest {
+class SwitchToEnglishCest extends Cest {
 	public function _before( AcceptanceTester $I ) {
+		parent::_before( $I );
+
 		$I->comment( 'As an administrator of a site which uses more than one language' );
 		$I->comment( 'I need to be able to switch between users' );
 		$I->comment( 'And see the output of User Switching in my original language' );
