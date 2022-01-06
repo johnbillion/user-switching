@@ -110,8 +110,14 @@ class user_switching {
 
 		?>
 		<tr class="user-switching-wrap">
-			<th scope="row"><?php echo esc_html_x( 'User Switching', 'User Switching title on user profile screen', 'user-switching' ); ?></th>
-			<td><a id="user_switching_switcher" href="<?php echo esc_url( $link ); ?>"><?php esc_html_e( 'Switch&nbsp;To', 'user-switching' ); ?></a></td>
+			<th scope="row">
+				<?php echo esc_html_x( 'User Switching', 'User Switching title on user profile screen', 'user-switching' ); ?>
+			</th>
+			<td>
+				<a id="user_switching_switcher" href="<?php echo esc_url( $link ); ?>">
+					<?php esc_html_e( 'Switch&nbsp;To', 'user-switching' ); ?>
+				</a>
+			</td>
 		</tr>
 		<?php
 	}
@@ -880,6 +886,7 @@ class user_switching {
 	 * Filters a user's capabilities so they can be altered at runtime.
 	 *
 	 * This is used to:
+	 *
 	 *  - Grant the 'switch_to_user' capability to the user if they have the ability to edit the user they're trying to
 	 *    switch to (and that user is not themselves).
 	 *  - Grant the 'switch_off' capability to the user if they can edit other users.
@@ -927,6 +934,7 @@ class user_switching {
 	 * Filters the required primitive capabilities for the given primitive or meta capability.
 	 *
 	 * This is used to:
+	 *
 	 *  - Add the 'do_not_allow' capability to the list of required capabilities when a Super Admin is trying to switch
 	 *    to themselves.
 	 *
