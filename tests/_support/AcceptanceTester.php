@@ -110,7 +110,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 *
 	 * @param string $text The message text to search for.
 	 */
-	public function seeAdminSuccessNotice( string $text ) {
+	public function seeAdminSuccessNotice( $text ) {
 		return $this->see( $text, '.notice-success' );
 	}
 
@@ -119,7 +119,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 *
 	 * @param string $text The message text to search for.
 	 */
-	public function seeAdminWarningNotice( string $text ) {
+	public function seeAdminWarningNotice( $text ) {
 		return $this->see( $text, '.notice-warning' );
 	}
 
@@ -128,7 +128,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 *
 	 * @param string $text The message text to search for.
 	 */
-	public function seeAdminErrorNotice( string $text ) {
+	public function seeAdminErrorNotice( $text ) {
 		return $this->see( $text, '.notice-error' );
 	}
 
@@ -137,7 +137,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 *
 	 * @param string $text The message text to search for.
 	 */
-	public function seeAdminInfoNotice( string $text ) {
+	public function seeAdminInfoNotice( $text ) {
 		return $this->see( $text, '.notice-info' );
 	}
 }
