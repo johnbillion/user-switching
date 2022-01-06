@@ -60,9 +60,7 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @return void
 	 */
-	public function setUp(): void {
-		parent::setUp();
-
+	public function _before() {
 		add_action( 'set_auth_cookie',           array( $this, 'action_set_auth_cookie' ), 10, 6 );
 		add_action( 'set_logged_in_cookie',      array( $this, 'action_set_logged_in_cookie' ), 10, 6 );
 		add_action( 'clear_auth_cookie',         array( $this, 'action_clear_auth_cookie' ) );

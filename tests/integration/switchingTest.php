@@ -28,8 +28,8 @@ class Switching extends Test {
 	 */
 	public $test_switching_auth_cookie_remember;
 
-	public function setUp(): void {
-		parent::setUp();
+	public function _before() {
+		parent::_before();
 
 		add_action( 'switch_to_user',         array( $this, '_action_switch_user' ), 10, 2 );
 		add_action( 'switch_back_user',       array( $this, '_action_switch_user' ), 10, 2 );
