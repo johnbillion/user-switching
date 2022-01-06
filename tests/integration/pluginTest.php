@@ -22,9 +22,9 @@ class Readme extends Test {
 	}
 
 	/**
-	 * @return array<string, string>
+	 * @return ?array<string, string>
 	 */
-	private function get_readme() :? array {
+	private function get_readme() {
 		if ( ! isset( $this->readme_data ) ) {
 			$file = dirname( dirname( __DIR__ ) ) . '/readme.md';
 

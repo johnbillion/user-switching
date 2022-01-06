@@ -13,7 +13,7 @@ class Capabilities extends Test {
 	/**
 	 * @return array<string, array<int, string|bool>>
 	 */
-	public function data_roles() : array {
+	public function data_roles() {
 		$roles = [
 			'admin' => [
 				'admin',

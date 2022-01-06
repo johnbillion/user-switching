@@ -231,7 +231,10 @@ class Switching extends Test {
 		$this->test_switching_old_user_id = $old_user_id;
 	}
 
-	public function _filter_auth_cookie_expiration( int $length, int $user_id, bool $remember ) : int {
+	/**
+	 * @return int
+	 */
+	public function _filter_auth_cookie_expiration( int $length, int $user_id, bool $remember ) {
 		$this->test_switching_auth_cookie_user_id  = $user_id;
 		$this->test_switching_auth_cookie_remember = $remember;
 		return $length;
