@@ -87,7 +87,7 @@ User Switching is considered **Ethical Open Source** because it meets all of the
 
 ### Does this plugin work with PHP 8?
 
-Yes.
+Yes, it's actively tested and working up to PHP 8.1.
 
 ### What does "Switch off" mean?
 
