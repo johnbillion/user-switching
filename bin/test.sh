@@ -16,7 +16,7 @@ PHP_SERVER_PROCESS_ID=$!
 
 # Run the acceptance tests:
 TEST_SITE_WP_DIR=$WP_CORE_DIR \
-TEST_SITE_WP_URL=$WP_URL \
+TEST_SITE_WP_URL="http://$WP_URL" \
 	./vendor/bin/codecept run acceptance --steps "$1" \
 	|| ( TESTS_EXIT_CODE=$? && kill $PHP_SERVER_PROCESS_ID && exit $TESTS_EXIT_CODE )
 
