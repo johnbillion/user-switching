@@ -41,7 +41,6 @@
 		"phpstan/phpstan": "^1.0",
 		"phpstan/phpstan-deprecation-rules": "^1.0",
 		"phpstan/phpstan-phpunit": "^1.0",
-		"phpunit/phpunit": "^9",
 		"roots/wordpress": "*",
 		"szepeviktor/phpstan-wordpress": "^1.0",
 		"vlucas/phpdotenv": "^3",
