@@ -62,7 +62,7 @@ class Capabilities extends Test {
 	 * @dataProvider data_roles
 	 * @testdox User with role of $role can or cannot switch according to role
 	 */
-	public function testUserCanOrCannotSwitchAccordingToRole( string $role, bool $can_switch ) {
+	public function testUserCanOrCannotSwitchAccordingToRole( $role, $can_switch ) {
 		foreach ( self::$users as $user_role => $user ) {
 			if ( self::$testers[ $role ]->ID === $user->ID ) {
 				# No user can switch to themselves:
@@ -227,7 +227,7 @@ class Capabilities extends Test {
 	 * @dataProvider data_roles
 	 * @testdox User with role of $role cannot switch to no user
 	 */
-	public function testSwitchingToNoUserIsNotAllowed( string $role ) {
+	public function testSwitchingToNoUserIsNotAllowed( $role ) {
 		self::assertFalse( user_can( self::$testers[ $role ]->ID, 'switch_to_user', 0 ) );
 	}
 

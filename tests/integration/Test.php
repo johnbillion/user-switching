@@ -70,13 +70,13 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 		add_action( 'clear_olduser_cookie',      array( $this, 'action_clear_olduser_cookie' ) );
 	}
 
-	public function action_set_auth_cookie( string $cookie, int $expire, int $expiration, int $user_id, string $scheme, string $token ) {
+	public function action_set_auth_cookie( $cookie, $expire, $expiration, $user_id, $scheme, $token ) {
 		$_COOKIE[ SECURE_AUTH_COOKIE ] = $cookie;
 		$_COOKIE[ AUTH_COOKIE ]        = $cookie;
 		$this->sessions[ $user_id ]    = $token;
 	}
 
-	public function action_set_logged_in_cookie( string $cookie, int $expire, int $expiration, int $user_id, string $scheme, string $token ) {
+	public function action_set_logged_in_cookie( $cookie, $expire, $expiration, $user_id, $scheme, $token ) {
 		$_COOKIE[ LOGGED_IN_COOKIE ] = $cookie;
 	}
 
@@ -86,12 +86,12 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 		unset( $_COOKIE[ AUTH_COOKIE ] );
 	}
 
-	public function action_set_user_switching_cookie( string $cookie, int $expiration, int $user_id, string $scheme, string $token ) {
+	public function action_set_user_switching_cookie( $cookie, $expiration, $user_id, $scheme, $token ) {
 		$_COOKIE[ USER_SWITCHING_COOKIE ]        = $cookie;
 		$_COOKIE[ USER_SWITCHING_SECURE_COOKIE ] = $cookie;
 	}
 
-	public function action_set_olduser_cookie( string $cookie, int $expiration, int $user_id, string $scheme, string $token ) {
+	public function action_set_olduser_cookie( $cookie, $expiration, $user_id, $scheme, $token ) {
 		$_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] = $cookie;
 	}
 
