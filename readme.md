@@ -256,6 +256,6 @@ In addition, User Switching respects the following filters from WordPress core w
 
 ### Do you accept donations?
 
-[I am accepting sponsorships via the GitHub Sponsors program](https://johnblackbourn.com/donations/) and any support you can give will help me maintain this plugin and keep it free for everyone.
+[I am accepting sponsorships via the GitHub Sponsors program](https://github.com/sponsors/johnbillion) and any support you can give will help me maintain this plugin and keep it free for everyone.
 
 <!-- changelog -->
