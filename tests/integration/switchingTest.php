@@ -40,7 +40,7 @@ class Switching extends Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testSwitchUserAndBack() : void {
+	public function testSwitchUserAndBack() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -145,7 +145,7 @@ class Switching extends Test {
 	 * @covers \switch_to_user
 	 * @covers \switch_off_user
 	 */
-	public function testSwitchOffAndBack() : void {
+	public function testSwitchOffAndBack() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -200,7 +200,7 @@ class Switching extends Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testSwitchToNonExistentUserFails() : void {
+	public function testSwitchToNonExistentUserFails() {
 		// Switch user
 		$user = switch_to_user( 0 );
 
@@ -211,7 +211,7 @@ class Switching extends Test {
 	 * @testdox Current URL is detected correctly
 	 * @covers \user_switching::current_url
 	 */
-	public function testCurrentUrl() : void {
+	public function testCurrentUrl() {
 		$url = add_query_arg( 'foo', 'bar', home_url( 'baz' ) );
 		$this->go_to( $url );
 		self::assertSame( user_switching::current_url(), $url );
@@ -221,12 +221,12 @@ class Switching extends Test {
 	 * @param int       $user_id
 	 * @param int|false $old_user_id
 	 */
-	public function _action_switch_user( int $user_id, $old_user_id ) : void {
+	public function _action_switch_user( int $user_id, $old_user_id ) {
 		$this->test_switching_user_id     = $user_id;
 		$this->test_switching_old_user_id = $old_user_id;
 	}
 
-	public function _action_switch_off( int $old_user_id ) : void {
+	public function _action_switch_off( int $old_user_id ) {
 		$this->test_switching_user_id     = false;
 		$this->test_switching_old_user_id = $old_user_id;
 	}

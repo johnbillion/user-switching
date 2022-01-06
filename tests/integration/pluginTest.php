@@ -10,7 +10,7 @@ class Readme extends Test {
 	 */
 	private $readme_data;
 
-	public function testStableTagMatchesVersion() : void {
+	public function testStableTagMatchesVersion() {
 		$readme_data = $this->get_readme();
 		if ( null === $readme_data ) {
 			self::fail( 'There is no readme file' );

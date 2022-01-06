@@ -72,32 +72,32 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 		add_action( 'clear_olduser_cookie',      array( $this, 'action_clear_olduser_cookie' ) );
 	}
 
-	public function action_set_auth_cookie( string $cookie, int $expire, int $expiration, int $user_id, string $scheme, string $token ) : void {
+	public function action_set_auth_cookie( string $cookie, int $expire, int $expiration, int $user_id, string $scheme, string $token ) {
 		$_COOKIE[ SECURE_AUTH_COOKIE ] = $cookie;
 		$_COOKIE[ AUTH_COOKIE ]        = $cookie;
 		$this->sessions[ $user_id ]    = $token;
 	}
 
-	public function action_set_logged_in_cookie( string $cookie, int $expire, int $expiration, int $user_id, string $scheme, string $token ) : void {
+	public function action_set_logged_in_cookie( string $cookie, int $expire, int $expiration, int $user_id, string $scheme, string $token ) {
 		$_COOKIE[ LOGGED_IN_COOKIE ] = $cookie;
 	}
 
-	public function action_clear_auth_cookie() : void {
+	public function action_clear_auth_cookie() {
 		unset( $_COOKIE[ LOGGED_IN_COOKIE ] );
 		unset( $_COOKIE[ SECURE_AUTH_COOKIE ] );
 		unset( $_COOKIE[ AUTH_COOKIE ] );
 	}
 
-	public function action_set_user_switching_cookie( string $cookie, int $expiration, int $user_id, string $scheme, string $token ) : void {
+	public function action_set_user_switching_cookie( string $cookie, int $expiration, int $user_id, string $scheme, string $token ) {
 		$_COOKIE[ USER_SWITCHING_COOKIE ]        = $cookie;
 		$_COOKIE[ USER_SWITCHING_SECURE_COOKIE ] = $cookie;
 	}
 
-	public function action_set_olduser_cookie( string $cookie, int $expiration, int $user_id, string $scheme, string $token ) : void {
+	public function action_set_olduser_cookie( string $cookie, int $expiration, int $user_id, string $scheme, string $token ) {
 		$_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] = $cookie;
 	}
 
-	public function action_clear_olduser_cookie() : void {
+	public function action_clear_olduser_cookie() {
 		unset( $_COOKIE[ USER_SWITCHING_COOKIE ] );
 		unset( $_COOKIE[ USER_SWITCHING_SECURE_COOKIE ] );
 		unset( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] );

@@ -12,7 +12,7 @@ class Sessions extends Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testExtraSessionsAreNotCreatedForUsersWhenSwitching() : void {
+	public function testExtraSessionsAreNotCreatedForUsersWhenSwitching() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -49,7 +49,7 @@ class Sessions extends Test {
 	/**
 	 * @covers \switch_off_user
 	 */
-	public function testExtraSessionsAreNotCreatedForUserWhenSwitchingOff() : void {
+	public function testExtraSessionsAreNotCreatedForUserWhenSwitchingOff() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -79,7 +79,7 @@ class Sessions extends Test {
 	 * @covers \switch_to_user
 	 * @covers \switch_off_user
 	 */
-	public function testPreviousSessionForUserIsReusedWhenSwitchingBack() : void {
+	public function testPreviousSessionForUserIsReusedWhenSwitchingBack() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -132,7 +132,7 @@ class Sessions extends Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testExpiredSessionPreventsUserFromSwitchingBack() : void {
+	public function testExpiredSessionPreventsUserFromSwitchingBack() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -188,7 +188,7 @@ class Sessions extends Test {
 	 * @covers \switch_to_user
 	 * @covers \switch_off_user
 	 */
-	public function testSessionTokensAreCorrectlyReusedWhenSwitching() : void {
+	public function testSessionTokensAreCorrectlyReusedWhenSwitching() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
