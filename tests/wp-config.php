@@ -3,6 +3,8 @@
  * This is the configuration file that's used for the functional tests and WP-CLI commands.
  */
 
+mysqli_report( MYSQLI_REPORT_OFF );
+
 $_root_dir = dirname( __DIR__ );
 $_env_dir  = __DIR__;
 
@@ -13,8 +15,8 @@ if ( is_readable( $_env_dir . '/.env' ) ) {
 	$dotenv->load();
 }
 
-// Test with WordPress debug mode (default).
-define( 'WP_DEBUG', true );
+// Disable debug mode as it can cause "headers already sent" if there are deprecations
+define( 'WP_DEBUG', false );
 
 // Prevent WP-Cron doing its thing during testing.
 define( 'DISABLE_WP_CRON', true );

@@ -13,6 +13,7 @@ modules:
       dbHost: '%WP_TESTS_DB_HOST%'
       dbUser: '%WP_TESTS_DB_USER%'
       dbPassword: '%WP_TESTS_DB_PASS%'
+      tablePrefix: wp_
       skipPluggables: true
       plugins: ['user-switching/user-switching.php']
       activatePlugins: ['user-switching/user-switching.php']

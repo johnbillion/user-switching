@@ -15,6 +15,7 @@ modules:
       user: '%WP_TESTS_DB_USER%'
       password: '%WP_TESTS_DB_PASS%'
       url: '%TEST_SITE_WP_URL%'
+      tablePrefix: wp_
       dump: false
       populate: false
       cleanup: false
