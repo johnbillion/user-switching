@@ -36,7 +36,7 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 
 * [Composer](https://getcomposer.org/)
 * [Node](https://nodejs.org/)
-* A local web server running WordPress
+* A local installation of MariaDB or MySQL
 
 ### Setup
 
