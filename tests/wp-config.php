@@ -1,6 +1,6 @@
 <?php
 /**
- * This is the configuration file that's used for the functional tests and WP-CLI commands.
+ * This is the configuration file that's used for the acceptance tests and WP-CLI commands.
  */
 
 mysqli_report( MYSQLI_REPORT_OFF );
