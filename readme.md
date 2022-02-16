@@ -79,9 +79,10 @@ User Switching is considered **Ethical Open Source** because it meets all of the
 
 ## Screenshots
 
-1. The *Switch To* link on the Users screen<br>![The Switch To link on the Users screen](.wordpress-org/screenshot-1.png)
-
-2. The *Switch To* link on a user's profile<br>![The Switch To link on a user's profile](.wordpress-org/screenshot-2.png)
+1. The *Switch To* link on the Users screen  
+   ![The Switch To link on the Users screen](.wordpress-org/screenshot-1.png)
+2. The *Switch To* link on a user's profile  
+   ![The Switch To link on a user's profile](.wordpress-org/screenshot-2.png)
 
 ## Frequently Asked Questions
 
@@ -129,14 +130,16 @@ Yes. The `switch_users` meta capability can be explicitly granted to a user or a
 
 Yes. User capabilities in WordPress can be set to `false` to deny them from a user. Denying the `switch_users` capability prevents the user from switching users, even if they have the `edit_users` capability.
 
-    add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
-        if ( 'switch_to_user' === $args[0] ) {
-            if ( my_condition() ) {
-                $allcaps['switch_users'] = false;
-            }
-        }
-        return $allcaps;
-    }, 9, 4 );
+~~~php
+add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
+	if ( 'switch_to_user' === $args[0] ) {
+		if ( my_condition() ) {
+			$allcaps['switch_users'] = false;
+		}
+	}
+	return $allcaps;
+}, 9, 4 );
+~~~
 
 Note that this needs to happen before User Switching's own capability filtering, hence the priority of `9`.
 
@@ -144,41 +147,47 @@ Note that this needs to happen before User Switching's own capability filtering,
 
 Yes. Use the `user_switching::maybe_switch_url()` method for this. It takes care of authentication and returns a nonce-protected URL for the current user to switch into the provided user account.
 
-    if ( method_exists( 'user_switching', 'maybe_switch_url' ) ) {
-        $url = user_switching::maybe_switch_url( $target_user );
-        if ( $url ) {
-            printf(
-                '<a href="%1$s">Switch to %2$s</a>',
-                esc_url( $url ),
-                esc_html( $target_user->display_name )
-            );
-        }
-    }
+~~~php
+if ( method_exists( 'user_switching', 'maybe_switch_url' ) ) {
+	$url = user_switching::maybe_switch_url( $target_user );
+	if ( $url ) {
+		printf(
+			'<a href="%1$s">Switch to %2$s</a>',
+			esc_url( $url ),
+			esc_html( $target_user->display_name )
+		);
+	}
+}
+~~~
 
 This link also works for switching back to the original user, but if you want an explicit link for this you can use the following code:
 
-    if ( method_exists( 'user_switching', 'get_old_user' ) ) {
-        $old_user = user_switching::get_old_user();
-        if ( $old_user ) {
-            printf(
-                '<a href="%1$s">Switch back to %2$s</a>',
-                esc_url( user_switching::switch_back_url( $old_user ) ),
-                esc_html( $old_user->display_name )
-            );
-        }
-    }
+~~~php
+if ( method_exists( 'user_switching', 'get_old_user' ) ) {
+	$old_user = user_switching::get_old_user();
+	if ( $old_user ) {
+		printf(
+			'<a href="%1$s">Switch back to %2$s</a>',
+			esc_url( user_switching::switch_back_url( $old_user ) ),
+			esc_html( $old_user->display_name )
+		);
+	}
+}
+~~~
 
 ### Can I determine whether the current user switched into their account?
 
 Yes. Use the `current_user_switched()` function for this.
 
-    if ( function_exists( 'current_user_switched' ) ) {
-        $switched_user = current_user_switched();
-        if ( $switched_user ) {
-            // User is logged in and has switched into their account.
-            // $switched_user is the WP_User object for their originating user.
-        }
-    }
+~~~php
+if ( function_exists( 'current_user_switched' ) ) {
+	$switched_user = current_user_switched();
+	if ( $switched_user ) {
+		// User is logged in and has switched into their account.
+		// $switched_user is the WP_User object for their originating user.
+	}
+}
+~~~
 
 ### Does this plugin allow a user to frame another user for an action?
 
@@ -205,49 +214,55 @@ Yes, there's a third party add-on plugin for this: [Admin Bar User Switching](ht
 
 Yes. When a user switches to another account, the `switch_to_user` hook is called:
 
-    /**
-     * Fires when a user switches to another user account.
-     *
-     * @since 0.6.0
-     * @since 1.4.0 The `$new_token` and `$old_token` parameters were added.
-     *
-     * @param int    $user_id     The ID of the user being switched to.
-     * @param int    $old_user_id The ID of the user being switched from.
-     * @param string $new_token   The token of the session of the user being switched to. Can be an empty string
-     *                            or a token for a session that may or may not still be valid.
-     * @param string $old_token   The token of the session of the user being switched from.
-     */
-    do_action( 'switch_to_user', $user_id, $old_user_id, $new_token, $old_token );
+~~~php
+/**
+ * Fires when a user switches to another user account.
+ *
+ * @since 0.6.0
+ * @since 1.4.0 The `$new_token` and `$old_token` parameters were added.
+ *
+ * @param int    $user_id     The ID of the user being switched to.
+ * @param int    $old_user_id The ID of the user being switched from.
+ * @param string $new_token   The token of the session of the user being switched to. Can be an empty string
+ *                            or a token for a session that may or may not still be valid.
+ * @param string $old_token   The token of the session of the user being switched from.
+ */
+do_action( 'switch_to_user', $user_id, $old_user_id, $new_token, $old_token );
+~~~
 
 When a user switches back to their originating account, the `switch_back_user` hook is called:
 
-    /**
-     * Fires when a user switches back to their originating account.
-     *
-     * @since 0.6.0
-     * @since 1.4.0 The `$new_token` and `$old_token` parameters were added.
-     *
-     * @param int       $user_id     The ID of the user being switched back to.
-     * @param int|false $old_user_id The ID of the user being switched from, or false if the user is switching back
-     *                               after having been switched off.
-     * @param string    $new_token   The token of the session of the user being switched to. Can be an empty string
-     *                               or a token for a session that may or may not still be valid.
-     * @param string    $old_token   The token of the session of the user being switched from.
-     */
-    do_action( 'switch_back_user', $user_id, $old_user_id, $new_token, $old_token );
+~~~php
+/**
+ * Fires when a user switches back to their originating account.
+ *
+ * @since 0.6.0
+ * @since 1.4.0 The `$new_token` and `$old_token` parameters were added.
+ *
+ * @param int       $user_id     The ID of the user being switched back to.
+ * @param int|false $old_user_id The ID of the user being switched from, or false if the user is switching back
+ *                               after having been switched off.
+ * @param string    $new_token   The token of the session of the user being switched to. Can be an empty string
+ *                               or a token for a session that may or may not still be valid.
+ * @param string    $old_token   The token of the session of the user being switched from.
+ */
+do_action( 'switch_back_user', $user_id, $old_user_id, $new_token, $old_token );
+~~~
 
 When a user switches off, the `switch_off_user` hook is called:
 
-    /**
-     * Fires when a user switches off.
-     *
-     * @since 0.6.0
-     * @since 1.4.0 The `$old_token` parameter was added.
-     *
-     * @param int    $old_user_id The ID of the user switching off.
-     * @param string $old_token   The token of the session of the user switching off.
-     */
-    do_action( 'switch_off_user', $old_user_id, $old_token );
+~~~php
+/**
+ * Fires when a user switches off.
+ *
+ * @since 0.6.0
+ * @since 1.4.0 The `$old_token` parameter was added.
+ *
+ * @param int    $old_user_id The ID of the user switching off.
+ * @param string $old_token   The token of the session of the user switching off.
+ */
+do_action( 'switch_off_user', $old_user_id, $old_token );
+~~~
 
 In addition, User Switching respects the following filters from WordPress core when appropriate:
 
