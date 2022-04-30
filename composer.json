@@ -50,7 +50,7 @@
 		"wp-cli/language-command": "^2",
 		"wp-coding-standards/wpcs": "^2"
 	},
-	"autoload": {
+	"autoload-dev": {
 		"psr-4": {
 			"UserSwitching\\Tests\\": "tests/wpunit"
 		}
