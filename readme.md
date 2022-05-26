@@ -55,7 +55,7 @@ I maintain several other plugins for developers. Check them out:
 
 ### Privacy Statement
 
-User Switching makes use of browser cookies in order to allow users to switch to another account. Its cookies operate using the same mechanism as the authentication cookies in WordPress core, therefore their values contain the user's `user_login` field in plain text which should be treated as potentially personally identifiable information. The names of the cookies are:
+User Switching makes use of browser cookies in order to allow users to switch to another account. Its cookies operate using the same mechanism as the authentication cookies in WordPress core, which means their values contain the user's `user_login` field in plain text which should be treated as potentially personally identifiable information (PII) for privacy and regulatory reasons (GDPR, CCPA, etc). The names of the cookies are:
 
 * `wordpress_user_sw_{COOKIEHASH}`
 * `wordpress_user_sw_secure_{COOKIEHASH}`
@@ -126,6 +126,17 @@ A user needs the `edit_users` capability in order to switch user accounts. By de
 
 Yes. The `switch_users` meta capability can be explicitly granted to a user or a role to allow them to switch users regardless of whether or not they have the `edit_users` capability. For practical purposes, the user or role will also need the `list_users` capability so they can access the Users menu in the WordPress admin area.
 
+~~~php
+add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
+	if ( 'switch_to_user' === $args[0] ) {
+		if ( my_condition( $user ) ) {
+			$allcaps['switch_users'] = false;
+		}
+	}
+	return $allcaps;
+}, 9, 4 );
+~~~
+
 ### Can the ability to switch accounts be denied from users?
 
 Yes. User capabilities in WordPress can be set to `false` to deny them from a user. Denying the `switch_users` capability prevents the user from switching users, even if they have the `edit_users` capability.
@@ -133,7 +144,7 @@ Yes. User capabilities in WordPress can be set to `false` to deny them from a us
 ~~~php
 add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
 	if ( 'switch_to_user' === $args[0] ) {
-		if ( my_condition() ) {
+		if ( my_condition( $user ) ) {
 			$allcaps['switch_users'] = false;
 		}
 	}
