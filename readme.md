@@ -2,7 +2,7 @@
 
 Stable tag: 1.5.8  
 Requires at least: 3.7  
-Tested up to: 5.9  
+Tested up to: 6.0  
 Requires PHP: 5.3  
 License: GPL v2 or later  
 Tags: users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
