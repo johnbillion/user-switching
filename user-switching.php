@@ -1186,9 +1186,9 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 		/**
 		 * Attaches the original user ID and session token to the new session when a user switches to another user.
 		 *
-		 * @param array $session Array of extra data.
-		 * @param int   $user_id User ID.
-		 * @return array Array of extra data.
+		 * @param array<string, mixed> $session Array of extra data.
+		 * @param int                  $user_id User ID.
+		 * @return array<string, mixed> Array of extra data.
 		 */
 		$session_filter = function( array $session, $user_id ) use ( $old_user_id, $old_token ) {
 			$session['switched_from_id']      = $old_user_id;
