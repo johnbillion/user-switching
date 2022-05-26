@@ -82,7 +82,6 @@ jobs:
           phpstan/phpstan-deprecation-rules \
           phpstan/phpstan-phpunit \
           --dev
-        composer install --prefer-dist
         composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="${{ matrix.wp }}"
         mysqladmin -uroot -proot create wordpress_test
 
