@@ -75,6 +75,7 @@ class user_switching {
 		add_action( 'bp_directory_members_actions',    array( $this, 'action_bp_button' ), 11 );
 		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ) );
 		add_action( 'woocommerce_login_form_start',    array( $this, 'action_woocommerce_login_form_start' ), 10, 0 );
+		add_action( 'woocommerce_admin_order_data_after_order_details', array( $this, 'action_woocommerce_order_details' ), 1 );
 		add_action( 'switch_to_user',                  array( $this, 'forget_woocommerce_session' ) );
 		add_action( 'switch_back_user',                array( $this, 'forget_woocommerce_session' ) );
 	}
@@ -888,6 +889,30 @@ class user_switching {
 	public function action_woocommerce_login_form_start() {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->filter_login_message( '' );
+	}
+
+	/**
+	 * Adds a 'Switch To' link to the WooCommerce order screen.
+	 *
+	 * @param WC_Order $order The WooCommerce order object.
+	 * @return void
+	 */
+	public function action_woocommerce_order_details( WC_Order $order ) {
+		$user = $order->get_user();
+
+		if ( ! $user || ! current_user_can( 'switch_to_user', $user->ID ) ) {
+			return;
+		}
+
+		$url = add_query_arg( array(
+			'redirect_to' => urlencode( $order->get_view_order_url() ),
+		), self::switch_to_url( $user ) );
+
+		printf(
+			'<p class="form-field form-field-wide"><a href="%1$s">%2$s</a></p>',
+			esc_url( $url ),
+			esc_html__( 'Switch&nbsp;To', 'user-switching' )
+		);
 	}
 
 	/**
