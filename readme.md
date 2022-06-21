@@ -87,6 +87,10 @@ The *Switch Off* link can be found in your profile menu in the WordPress toolbar
 
 Yes, and you'll also be able to switch users from the Users screen in Network Admin.
 
+### Does this plugin work with WooCommerce?
+
+Yes, and you'll also be able to switch users from various WooCommerce administration screens.
+
 ### Does this plugin work with BuddyPress?
 
 Yes, and you'll also be able to switch users from member profile screens and the member listing screen.
@@ -94,10 +98,6 @@ Yes, and you'll also be able to switch users from member profile screens and the
 ### Does this plugin work with bbPress?
 
 Yes, and you'll also be able to switch users from member profile screens.
-
-### Does this plugin work with WooCommerce?
-
-Yes. For maximum compatibility you should use WooCommerce version 3.6 or later.
 
 ### Does this plugin work if my site is using a two-factor authentication plugin?
 
