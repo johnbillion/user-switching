@@ -74,6 +74,7 @@ class user_switching {
 		add_action( 'bp_member_header_actions',        array( $this, 'action_bp_button' ), 11 );
 		add_action( 'bp_directory_members_actions',    array( $this, 'action_bp_button' ), 11 );
 		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ) );
+		add_action( 'woocommerce_login_form_start',    array( $this, 'action_woocommerce_login_form_start' ), 10, 0 );
 		add_action( 'switch_to_user',                  array( $this, 'forget_woocommerce_session' ) );
 		add_action( 'switch_back_user',                array( $this, 'forget_woocommerce_session' ) );
 	}
@@ -877,6 +878,16 @@ class user_switching {
 	 */
 	public static function secure_auth_cookie() {
 		return ( is_ssl() && ( 'https' === parse_url( wp_login_url(), PHP_URL_SCHEME ) ) );
+	}
+
+	/**
+	 * Adds a 'Switch back to {user}' link to the WooCommerce login screen.
+	 *
+	 * @return void
+	 */
+	public function action_woocommerce_login_form_start() {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->filter_login_message( '' );
 	}
 
 	/**
