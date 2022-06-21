@@ -76,6 +76,8 @@ class user_switching {
 		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ) );
 		add_action( 'woocommerce_login_form_start',    array( $this, 'action_woocommerce_login_form_start' ), 10, 0 );
 		add_action( 'woocommerce_admin_order_data_after_order_details', array( $this, 'action_woocommerce_order_details' ), 1 );
+		add_filter( 'woocommerce_account_menu_items',  array( $this, 'filter_woocommerce_account_menu_items' ), 999 );
+		add_filter( 'woocommerce_get_endpoint_url',    array( $this, 'filter_woocommerce_get_endpoint_url' ), 10, 2 );
 		add_action( 'switch_to_user',                  array( $this, 'forget_woocommerce_session' ) );
 		add_action( 'switch_back_user',                array( $this, 'forget_woocommerce_session' ) );
 	}
@@ -913,6 +915,50 @@ class user_switching {
 			esc_url( $url ),
 			esc_html__( 'Switch&nbsp;To', 'user-switching' )
 		);
+	}
+
+	/**
+	 * Adds a 'Switch back to {user}' link to the My Account screen in WooCommerce.
+	 *
+	 * @param array<string, string> $items Menu items.
+	 * @return array<string, string> Menu items.
+	 */
+	public function filter_woocommerce_account_menu_items( array $items ) {
+		$old_user = self::get_old_user();
+
+		if ( ! $old_user ) {
+			return $items;
+		}
+
+		$items['user-switching-switch-back'] = sprintf(
+			/* Translators: 1: user display name; 2: username; */
+			__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
+			$old_user->display_name,
+			$old_user->user_login
+		);
+
+		return $items;
+	}
+
+	/**
+	 * Sets the URL of the 'Switch back to {user}' link in the My Account screen in WooCommerce.
+	 *
+	 * @param string $url      The URL for the menu item.
+	 * @param string $endpoint The endpoint slug for the menu item.
+	 * @return string  The URL for the menu item.
+	 */
+	public function filter_woocommerce_get_endpoint_url( $url, $endpoint ) {
+		if ( 'user-switching-switch-back' !== $endpoint ) {
+			return $url;
+		}
+
+		$old_user = self::get_old_user();
+
+		if ( ! $old_user ) {
+			return $url;
+		}
+
+		return self::switch_back_url( $old_user );
 	}
 
 	/**
