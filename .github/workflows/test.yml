@@ -36,7 +36,7 @@ jobs:
         include:
           # Oldest version that passes the `$token` parameter to session actions:
           - php: '7.2'
-            wp: '4.9'
+            wp: '4.9.0'
       fail-fast: false
     name: "WP ${{ matrix.wp == '*' && 'latest' || matrix.wp == 'dev-main' && 'nightly' || matrix.wp }} / PHP ${{ matrix.php }}"
     runs-on: ubuntu-18.04

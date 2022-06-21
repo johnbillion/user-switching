@@ -38,7 +38,7 @@ jobs:
         include:
           # Oldest version that supports user locales:
           - php: '7.1'
-            wp: '4.7'
+            wp: '4.7.0'
       fail-fast: false
     name: "WP ${{ matrix.wp == '*' && 'latest' || matrix.wp == 'dev-main' && 'nightly' || matrix.wp }} / PHP ${{ matrix.php }}"
     runs-on: ubuntu-18.04
