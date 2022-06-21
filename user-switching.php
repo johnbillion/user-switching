@@ -63,6 +63,7 @@ class user_switching {
 		add_filter( 'login_message',                   array( $this, 'filter_login_message' ), 1 );
 		add_filter( 'removable_query_args',            array( $this, 'filter_removable_query_args' ) );
 		add_action( 'wp_meta',                         array( $this, 'action_wp_meta' ) );
+		add_filter( 'plugin_row_meta',                 array( $this, 'filter_plugin_row_meta' ), 10, 4 );
 		add_action( 'wp_footer',                       array( $this, 'action_wp_footer' ) );
 		add_action( 'personal_options',                array( $this, 'action_personal_options' ) );
 		add_action( 'admin_bar_menu',                  array( $this, 'action_admin_bar_menu' ), 11 );
@@ -736,6 +737,27 @@ class user_switching {
 			esc_html__( 'Switch&nbsp;To', 'user-switching' )
 		);
 		echo '</ul>';
+	}
+
+	/**
+	 * Filters the array of row meta for each plugin in the Plugins list table.
+	 *
+	 * @param array<int,string> $plugin_meta An array of the plugin row's meta data.
+	 * @param string            $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @return array<int,string> An array of the plugin row's meta data.
+	 */
+	public function filter_plugin_row_meta( array $plugin_meta, $plugin_file ) {
+		if ( 'user-switching/user-switching.php' !== $plugin_file ) {
+			return $plugin_meta;
+		}
+
+		$plugin_meta[] = sprintf(
+			'<a href="%1$s"><span class="dashicons dashicons-star-filled" aria-hidden="true" style="font-size:14px;line-height:1.3"></span>%2$s</a>',
+			'https://github.com/sponsors/johnbillion',
+			esc_html_x( 'Sponsor', 'verb', 'user-switching' )
+		);
+
+		return $plugin_meta;
 	}
 
 	/**
