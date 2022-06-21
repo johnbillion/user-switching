@@ -30,6 +30,10 @@
  * GNU General Public License for more details.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Main singleton class for the User Switching plugin.
  */
