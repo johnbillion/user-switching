@@ -34,13 +34,13 @@ jobs:
     strategy:
       matrix:
         php: ['8.1','8.0','7.4','5.6']
-        wp: ['*', 'dev-nightly']
+        wp: ['*', 'dev-main']
         include:
           # Oldest version that supports user locales:
           - php: '7.1'
             wp: '4.7'
       fail-fast: false
-    name: "WP ${{ matrix.wp == '*' && 'latest' || matrix.wp }} / PHP ${{ matrix.php }}"
+    name: "WP ${{ matrix.wp == '*' && 'latest' || matrix.wp == 'dev-main' && 'nightly' || matrix.wp }} / PHP ${{ matrix.php }}"
     runs-on: ubuntu-18.04
     timeout-minutes: 10
     steps:
