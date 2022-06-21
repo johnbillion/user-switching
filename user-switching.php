@@ -467,16 +467,10 @@ class user_switching {
 			return;
 		}
 
-		if ( method_exists( $wp_admin_bar, 'get_node' ) ) {
-			if ( $wp_admin_bar->get_node( 'user-actions' ) ) {
-				$parent = 'user-actions';
-			} else {
-				return;
-			}
-		} elseif ( get_option( 'show_avatars' ) ) {
-			$parent = 'my-account-with-avatar';
+		if ( $wp_admin_bar->get_node( 'user-actions' ) ) {
+			$parent = 'user-actions';
 		} else {
-			$parent = 'my-account';
+			return;
 		}
 
 		$old_user = self::get_old_user();
