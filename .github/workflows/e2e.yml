@@ -79,10 +79,8 @@ jobs:
       run: |
         sudo systemctl start mysql.service
         composer remove \
-          phpstan/phpstan \
+          "phpstan/*" \
           szepeviktor/phpstan-wordpress \
-          phpstan/phpstan-deprecation-rules \
-          phpstan/phpstan-phpunit \
           --dev
         composer require --dev --update-with-dependencies --prefer-dist roots/wordpress-full="${{ matrix.wp }}"
         mysqladmin -uroot -proot create wordpress_test
