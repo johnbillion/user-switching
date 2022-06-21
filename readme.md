@@ -5,7 +5,7 @@ Requires at least: 3.7
 Tested up to: 6.0  
 Requires PHP: 5.3  
 License: GPL v2 or later  
-Tags: users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
+Tags: users, user switching, fast user switching, multisite, woocommerce, buddypress, bbpress  
 Contributors: johnbillion  
 Donate link: https://github.com/sponsors/johnbillion
 
@@ -19,15 +19,14 @@ Instant switching between user accounts in WordPress.
 
 ## Description
 
-This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for test environments where you regularly log out and in between different accounts, or for administrators who need to switch between multiple accounts.
+This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for testing environments, for helping customers on WooCommerce sites, or for any site where administrators need to switch between multiple accounts.
 
 ### Features
 
  * Switch user: Instantly switch to any user account from the *Users* screen.
  * Switch back: Instantly switch back to your originating account.
  * Switch off: Log out of your account but retain the ability to instantly switch back in again.
- * Switching between users is secure (see the *Security* section below).
- * Compatible with WordPress, WordPress Multisite, WooCommerce, BuddyPress, bbPress, and most two-factor authentication plugins.
+ * Compatible with Multisite, WooCommerce, BuddyPress, bbPress, and most two-factor authentication plugins.
 
 ### Security
 
@@ -64,18 +63,6 @@ User Switching makes use of browser cookies in order to allow users to switch to
 User Switching does not send data to any third party, nor does it include any third party resources, nor will it ever do so.
 
 See also the FAQ for some questions relating to privacy and safety when switching between users.
-
-### Ethical Open Source
-
-User Switching is considered **Ethical Open Source** because it meets all of the criteria of [The Ethical Source Definition (ESD)](https://ethicalsource.dev/definition/):
-
-1. It benefits the commons.
-2. It is created in the open.
-3. Its community is welcoming and just.
-4. It puts accessibility first.
-5. It prioritizes user safety.
-6. It protects user privacy.
-7. It encourages fair compensation.
 
 ## Screenshots
 
@@ -130,12 +117,14 @@ Yes. The `switch_users` meta capability can be explicitly granted to a user or a
 add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
 	if ( 'switch_to_user' === $args[0] ) {
 		if ( my_condition( $user ) ) {
-			$allcaps['switch_users'] = false;
+			$allcaps['switch_users'] = true;
 		}
 	}
 	return $allcaps;
 }, 9, 4 );
 ~~~
+
+Note that this needs to happen before User Switching's own capability filtering, hence the priority of `9`.
 
 ### Can the ability to switch accounts be denied from users?
 
