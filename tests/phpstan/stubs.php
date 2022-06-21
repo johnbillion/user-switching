@@ -82,6 +82,18 @@ class WC_Session {
 	public function forget_session() {}
 }
 
+class WC_Order {
+	/**
+	 * @return \WP_User|false
+	 */
+	public function get_user() {}
+
+	/**
+	 * @return string
+	 */
+	public function get_view_order_url() {}
+}
+
 /**
  * @return \WooCommerce
  */
