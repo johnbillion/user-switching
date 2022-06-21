@@ -1224,7 +1224,7 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 
 		remove_filter( 'attach_session_information', $session_filter, 99 );
 
-		if ( $set_old_user ) {
+		if ( $set_old_user && $old_user_id ) {
 			/**
 			 * Fires when a user switches to another user account.
 			 *
