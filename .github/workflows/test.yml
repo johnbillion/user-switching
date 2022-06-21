@@ -82,7 +82,7 @@ jobs:
           phpstan/phpstan-deprecation-rules \
           phpstan/phpstan-phpunit \
           --dev
-        composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="${{ matrix.wp }}"
+        composer require --dev --update-with-dependencies --prefer-dist roots/wordpress-full="${{ matrix.wp }}"
         mysqladmin -uroot -proot create wordpress_test
 
     - name: Run the tests
