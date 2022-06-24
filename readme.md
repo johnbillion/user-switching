@@ -1,6 +1,6 @@
 # User Switching
 
-Stable tag: 1.5.8  
+Stable tag: 1.6.0  
 Requires at least: 3.7  
 Tested up to: 6.0  
 Requires PHP: 5.3  
