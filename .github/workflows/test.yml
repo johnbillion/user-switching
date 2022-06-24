@@ -81,7 +81,7 @@ jobs:
           szepeviktor/phpstan-wordpress \
           --dev
         composer require --dev --update-with-dependencies --prefer-dist \
-          roots/wordpress-full="${{ (matrix.wp == 'latest' && '*') || (matrix.wp == 'nightly' && 'dev-main') || format('~{0}.0', matrix.wp) }}"
+          roots/wordpress-full="${{ matrix.wp == 'latest' && '*' || (matrix.wp == 'nightly' && 'dev-main' || format('~{0}.0', matrix.wp)) }}"
         mysqladmin -uroot -proot create wordpress_test
 
     - name: Run the tests
