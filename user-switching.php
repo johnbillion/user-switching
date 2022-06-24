@@ -53,33 +53,33 @@ class user_switching {
 	 */
 	public function init_hooks() {
 		// Required functionality:
-		add_filter( 'user_has_cap',                    array( $this, 'filter_user_has_cap' ), 10, 4 );
-		add_filter( 'map_meta_cap',                    array( $this, 'filter_map_meta_cap' ), 10, 4 );
-		add_filter( 'user_row_actions',                array( $this, 'filter_user_row_actions' ), 10, 2 );
-		add_action( 'plugins_loaded',                  array( $this, 'action_plugins_loaded' ), 1 );
-		add_action( 'init',                            array( $this, 'action_init' ) );
-		add_action( 'all_admin_notices',               array( $this, 'action_admin_notices' ), 1 );
-		add_action( 'wp_logout',                       'user_switching_clear_olduser_cookie' );
-		add_action( 'wp_login',                        'user_switching_clear_olduser_cookie' );
+		add_filter( 'user_has_cap', array( $this, 'filter_user_has_cap' ), 10, 4 );
+		add_filter( 'map_meta_cap', array( $this, 'filter_map_meta_cap' ), 10, 4 );
+		add_filter( 'user_row_actions', array( $this, 'filter_user_row_actions' ), 10, 2 );
+		add_action( 'plugins_loaded', array( $this, 'action_plugins_loaded' ), 1 );
+		add_action( 'init', array( $this, 'action_init' ) );
+		add_action( 'all_admin_notices', array( $this, 'action_admin_notices' ), 1 );
+		add_action( 'wp_logout', 'user_switching_clear_olduser_cookie' );
+		add_action( 'wp_login', 'user_switching_clear_olduser_cookie' );
 
 		// Nice-to-haves:
-		add_filter( 'ms_user_row_actions',             array( $this, 'filter_user_row_actions' ), 10, 2 );
-		add_filter( 'login_message',                   array( $this, 'filter_login_message' ), 1 );
-		add_filter( 'removable_query_args',            array( $this, 'filter_removable_query_args' ) );
-		add_action( 'wp_meta',                         array( $this, 'action_wp_meta' ) );
-		add_filter( 'plugin_row_meta',                 array( $this, 'filter_plugin_row_meta' ), 10, 4 );
-		add_action( 'wp_footer',                       array( $this, 'action_wp_footer' ) );
-		add_action( 'personal_options',                array( $this, 'action_personal_options' ) );
-		add_action( 'admin_bar_menu',                  array( $this, 'action_admin_bar_menu' ), 11 );
-		add_action( 'bp_member_header_actions',        array( $this, 'action_bp_button' ), 11 );
-		add_action( 'bp_directory_members_actions',    array( $this, 'action_bp_button' ), 11 );
+		add_filter( 'ms_user_row_actions', array( $this, 'filter_user_row_actions' ), 10, 2 );
+		add_filter( 'login_message', array( $this, 'filter_login_message' ), 1 );
+		add_filter( 'removable_query_args', array( $this, 'filter_removable_query_args' ) );
+		add_action( 'wp_meta', array( $this, 'action_wp_meta' ) );
+		add_filter( 'plugin_row_meta', array( $this, 'filter_plugin_row_meta' ), 10, 4 );
+		add_action( 'wp_footer', array( $this, 'action_wp_footer' ) );
+		add_action( 'personal_options', array( $this, 'action_personal_options' ) );
+		add_action( 'admin_bar_menu', array( $this, 'action_admin_bar_menu' ), 11 );
+		add_action( 'bp_member_header_actions', array( $this, 'action_bp_button' ), 11 );
+		add_action( 'bp_directory_members_actions', array( $this, 'action_bp_button' ), 11 );
 		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ) );
-		add_action( 'woocommerce_login_form_start',    array( $this, 'action_woocommerce_login_form_start' ), 10, 0 );
+		add_action( 'woocommerce_login_form_start', array( $this, 'action_woocommerce_login_form_start' ), 10, 0 );
 		add_action( 'woocommerce_admin_order_data_after_order_details', array( $this, 'action_woocommerce_order_details' ), 1 );
-		add_filter( 'woocommerce_account_menu_items',  array( $this, 'filter_woocommerce_account_menu_items' ), 999 );
-		add_filter( 'woocommerce_get_endpoint_url',    array( $this, 'filter_woocommerce_get_endpoint_url' ), 10, 2 );
-		add_action( 'switch_to_user',                  array( $this, 'forget_woocommerce_session' ) );
-		add_action( 'switch_back_user',                array( $this, 'forget_woocommerce_session' ) );
+		add_filter( 'woocommerce_account_menu_items', array( $this, 'filter_woocommerce_account_menu_items' ), 999 );
+		add_filter( 'woocommerce_get_endpoint_url', array( $this, 'filter_woocommerce_get_endpoint_url' ), 10, 2 );
+		add_action( 'switch_to_user', array( $this, 'forget_woocommerce_session' ) );
+		add_action( 'switch_back_user', array( $this, 'forget_woocommerce_session' ) );
 	}
 
 	/**
@@ -141,7 +141,7 @@ class user_switching {
 	public static function remember() {
 		/** This filter is documented in wp-includes/pluggable.php */
 		$cookie_life = apply_filters( 'auth_cookie_expiration', 172800, get_current_user_id(), false );
-		$current     = wp_parse_auth_cookie( '', 'logged_in' );
+		$current = wp_parse_auth_cookie( '', 'logged_in' );
 
 		if ( ! $current ) {
 			return false;
@@ -233,7 +233,7 @@ class user_switching {
 					}
 
 					$redirect_to = self::get_redirect( $old_user, $current_user );
-					$args        = array(
+					$args = array(
 						'user_switched' => 'true',
 						'switched_back' => 'true',
 					);
@@ -263,7 +263,7 @@ class user_switching {
 				// Switch off:
 				if ( switch_off_user() ) {
 					$redirect_to = self::get_redirect( null, $current_user );
-					$args        = array(
+					$args = array(
 						'switched_off' => 'true',
 					);
 
@@ -291,10 +291,10 @@ class user_switching {
 	 */
 	protected static function get_redirect( WP_User $new_user = null, WP_User $old_user = null ) {
 		if ( ! empty( $_REQUEST['redirect_to'] ) ) {
-			$redirect_to           = self::remove_query_args( wp_unslash( $_REQUEST['redirect_to'] ) );
+			$redirect_to = self::remove_query_args( wp_unslash( $_REQUEST['redirect_to'] ) );
 			$requested_redirect_to = wp_unslash( $_REQUEST['redirect_to'] );
 		} else {
-			$redirect_to           = '';
+			$redirect_to = '';
 			$requested_redirect_to = '';
 		}
 
@@ -315,17 +315,17 @@ class user_switching {
 	 * @return void
 	 */
 	public function action_admin_notices() {
-		$user     = wp_get_current_user();
+		$user = wp_get_current_user();
 		$old_user = self::get_old_user();
 
 		if ( $old_user ) {
 			$switched_locale = false;
-			$lang_attr       = '';
+			$lang_attr = '';
 
 			if ( function_exists( 'get_user_locale' ) ) {
-				$locale          = get_user_locale( $old_user );
+				$locale = get_user_locale( $old_user );
 				$switched_locale = switch_to_locale( $locale );
-				$lang_attr       = str_replace( '_', '-', $locale );
+				$lang_attr = str_replace( '_', '-', $locale );
 			}
 
 			?>
@@ -342,7 +342,7 @@ class user_switching {
 				?>
 				<span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span>
 				<?php
-					$message       = '';
+					$message = '';
 					$just_switched = isset( $_GET['user_switched'] );
 					if ( $just_switched ) {
 						$message = esc_html( sprintf(
@@ -482,14 +482,14 @@ class user_switching {
 		if ( $old_user ) {
 			$wp_admin_bar->add_node( array(
 				'parent' => $parent,
-				'id'     => 'switch-back',
-				'title'  => esc_html( sprintf(
+				'id' => 'switch-back',
+				'title' => esc_html( sprintf(
 					/* Translators: 1: user display name; 2: username; */
 					__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
 					$old_user->display_name,
 					$old_user->user_login
 				) ),
-				'href'   => add_query_arg( array(
+				'href' => add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() ),
 				), self::switch_back_url( $old_user ) ),
 			) );
@@ -505,10 +505,10 @@ class user_switching {
 
 			$wp_admin_bar->add_node( array(
 				'parent' => $parent,
-				'id'     => 'switch-off',
+				'id' => 'switch-off',
 				/* Translators: "switch off" means to temporarily log out */
-				'title'  => esc_html__( 'Switch Off', 'user-switching' ),
-				'href'   => $url,
+				'title' => esc_html__( 'Switch Off', 'user-switching' ),
+				'href' => $url,
 			) );
 		}
 
@@ -516,23 +516,23 @@ class user_switching {
 			if ( $old_user ) {
 				$wp_admin_bar->add_node( array(
 					'parent' => 'edit',
-					'id'     => 'author-switch-back',
-					'title'  => esc_html( sprintf(
+					'id' => 'author-switch-back',
+					'title' => esc_html( sprintf(
 						/* Translators: 1: user display name; 2: username; */
 						__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
 						$old_user->display_name,
 						$old_user->user_login
 					) ),
-					'href'   => add_query_arg( array(
+					'href' => add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
 					), self::switch_back_url( $old_user ) ),
 				) );
 			} elseif ( current_user_can( 'switch_to_user', get_queried_object_id() ) ) {
 				$wp_admin_bar->add_node( array(
 					'parent' => 'edit',
-					'id'     => 'author-switch-to',
-					'title'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
-					'href'   => add_query_arg( array(
+					'id' => 'author-switch-to',
+					'title' => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
+					'href' => add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
 					), self::switch_to_url( get_queried_object() ) ),
 				) );
@@ -702,10 +702,10 @@ class user_switching {
 		$components = array_keys( buddypress()->active_components );
 
 		echo bp_get_button( array(
-			'id'         => 'user_switching',
-			'component'  => reset( $components ),
-			'link_href'  => esc_url( $link ),
-			'link_text'  => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
+			'id' => 'user_switching',
+			'component' => reset( $components ),
+			'link_href' => esc_url( $link ),
+			'link_text' => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
 			'wrapper_id' => 'user_switching_switch_to',
 		) );
 	}
@@ -804,9 +804,9 @@ class user_switching {
 	 */
 	public static function switch_to_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
-			'action'  => 'switch_to_user',
+			'action' => 'switch_to_user',
 			'user_id' => $user->ID,
-			'nr'      => 1,
+			'nr' => 1,
 		), wp_login_url() ), "switch_to_user_{$user->ID}" );
 	}
 
@@ -819,7 +819,7 @@ class user_switching {
 	public static function switch_back_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
 			'action' => 'switch_to_olduser',
-			'nr'     => 1,
+			'nr' => 1,
 		), wp_login_url() ), "switch_to_olduser_{$user->ID}" );
 	}
 
@@ -832,7 +832,7 @@ class user_switching {
 	public static function switch_off_url( WP_User $user ) {
 		return wp_nonce_url( add_query_arg( array(
 			'action' => 'switch_off',
-			'nr'     => 1,
+			'nr' => 1,
 		), wp_login_url() ), "switch_off_{$user->ID}" );
 	}
 
@@ -1095,18 +1095,18 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 	 * @return void
 	 */
 	function user_switching_set_olduser_cookie( $old_user_id, $pop = false, $token = '' ) {
-		$secure_auth_cookie    = user_switching::secure_auth_cookie();
+		$secure_auth_cookie = user_switching::secure_auth_cookie();
 		$secure_olduser_cookie = user_switching::secure_olduser_cookie();
-		$expiration            = time() + 172800; // 48 hours
-		$auth_cookie           = user_switching_get_auth_cookie();
-		$olduser_cookie        = wp_generate_auth_cookie( $old_user_id, $expiration, 'logged_in', $token );
+		$expiration = time() + 172800; // 48 hours
+		$auth_cookie = user_switching_get_auth_cookie();
+		$olduser_cookie = wp_generate_auth_cookie( $old_user_id, $expiration, 'logged_in', $token );
 
 		if ( $secure_auth_cookie ) {
 			$auth_cookie_name = USER_SWITCHING_SECURE_COOKIE;
-			$scheme           = 'secure_auth';
+			$scheme = 'secure_auth';
 		} else {
 			$auth_cookie_name = USER_SWITCHING_COOKIE;
-			$scheme           = 'auth';
+			$scheme = 'auth';
 		}
 
 		if ( $pop ) {
@@ -1269,10 +1269,10 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 			return false;
 		}
 
-		$old_user_id  = ( is_user_logged_in() ) ? get_current_user_id() : false;
-		$old_token    = function_exists( 'wp_get_session_token' ) ? wp_get_session_token() : '';
+		$old_user_id = ( is_user_logged_in() ) ? get_current_user_id() : false;
+		$old_token = function_exists( 'wp_get_session_token' ) ? wp_get_session_token() : '';
 		$auth_cookies = user_switching_get_auth_cookie();
-		$auth_cookie  = end( $auth_cookies );
+		$auth_cookie = end( $auth_cookies );
 		$cookie_parts = $auth_cookie ? wp_parse_auth_cookie( $auth_cookie ) : false;
 
 		if ( $set_old_user && $old_user_id ) {
@@ -1293,7 +1293,7 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 		 * @return array<string, mixed> Array of extra data.
 		 */
 		$session_filter = function( array $session, $user_id ) use ( $old_user_id, $old_token ) {
-			$session['switched_from_id']      = $old_user_id;
+			$session['switched_from_id'] = $old_user_id;
 			$session['switched_from_session'] = $old_token;
 			return $session;
 		};

@@ -21,12 +21,12 @@ class Sessions extends Test {
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
-		$admin_before  = $admin_manager->get_all();
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_before = $admin_manager->get_all();
 
 		// Set up the author session manager, but with no session
 		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
-		$author_before  = $author_manager->get_all();
+		$author_before = $author_manager->get_all();
 
 		// Set up the admin user state
 		wp_set_current_user( $admin->ID );
@@ -58,8 +58,8 @@ class Sessions extends Test {
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
-		$admin_before  = $admin_manager->get_all();
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_before = $admin_manager->get_all();
 
 		// Set up the admin user state
 		wp_set_current_user( $admin->ID );
@@ -88,8 +88,8 @@ class Sessions extends Test {
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
-		$admin_before  = $admin_manager->get_all();
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_before = $admin_manager->get_all();
 
 		// Set up the author session manager, but with no session
 		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
@@ -141,12 +141,12 @@ class Sessions extends Test {
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
-		$admin_before  = $admin_manager->get_all();
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_before = $admin_manager->get_all();
 
 		// Set up the author session manager, but with no session
 		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
-		$author_before  = $author_manager->get_all();
+		$author_before = $author_manager->get_all();
 
 		// Set up the admin user state
 		wp_set_current_user( $admin->ID );
@@ -197,7 +197,7 @@ class Sessions extends Test {
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
 
 		// Set up the author session manager, but with no session
 		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
@@ -207,10 +207,10 @@ class Sessions extends Test {
 		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
 
 		// Switch user
-		$user         = switch_to_user( self::$users['author']->ID );
+		$user = switch_to_user( self::$users['author']->ID );
 		$author_token = wp_get_session_token();
-		$cookies      = user_switching_get_auth_cookie();
-		$cookie       = end( $cookies );
+		$cookies = user_switching_get_auth_cookie();
+		$cookie = end( $cookies );
 
 		self::assertIsString( $cookie );
 
@@ -241,9 +241,9 @@ class Sessions extends Test {
 		self::assertNull( $author_manager->get( $author_token ) );
 
 		// Switch off
-		$off     = switch_off_user();
+		$off = switch_off_user();
 		$cookies = user_switching_get_auth_cookie();
-		$cookie  = end( $cookies );
+		$cookie = end( $cookies );
 
 		self::assertIsString( $cookie );
 

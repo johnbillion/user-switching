@@ -222,12 +222,12 @@ class Switching extends Test {
 	 * @param int|false $old_user_id
 	 */
 	public function _action_switch_user( $user_id, $old_user_id ) {
-		$this->test_switching_user_id     = $user_id;
+		$this->test_switching_user_id = $user_id;
 		$this->test_switching_old_user_id = $old_user_id;
 	}
 
 	public function _action_switch_off( $old_user_id ) {
-		$this->test_switching_user_id     = false;
+		$this->test_switching_user_id = false;
 		$this->test_switching_old_user_id = $old_user_id;
 	}
 
@@ -235,7 +235,7 @@ class Switching extends Test {
 	 * @return int
 	 */
 	public function _filter_auth_cookie_expiration( $length, $user_id, $remember ) {
-		$this->test_switching_auth_cookie_user_id  = $user_id;
+		$this->test_switching_auth_cookie_user_id = $user_id;
 		$this->test_switching_auth_cookie_remember = $remember;
 		return $length;
 	}

@@ -89,7 +89,7 @@ class Capabilities extends Test {
 
 		# Ensure the user can switch:
 		$can_switch_user = user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['admin']->ID );
-		$can_switch_off  = user_can( self::$testers['editor']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['editor']->ID, 'switch_off' );
 
 		# Revert the cap:
 		self::$testers['editor']->remove_cap( 'switch_users' );
@@ -112,7 +112,7 @@ class Capabilities extends Test {
 
 		# Ensure the user can switch:
 		$can_switch_user = user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['admin']->ID );
-		$can_switch_off  = user_can( self::$testers['editor']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['editor']->ID, 'switch_off' );
 
 		# Revert the cap:
 		$role->remove_cap( 'switch_users' );
@@ -135,7 +135,7 @@ class Capabilities extends Test {
 
 		# Ensure the user can no longer switch:
 		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
-		$can_switch_off  = user_can( self::$testers['admin']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['admin']->ID, 'switch_off' );
 
 		# Revert the cap:
 		self::$testers['admin']->remove_cap( 'switch_users' );
@@ -161,7 +161,7 @@ class Capabilities extends Test {
 
 		# Ensure the user can no longer switch:
 		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
-		$can_switch_off  = user_can( self::$testers['admin']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['admin']->ID, 'switch_off' );
 
 		# Revert the cap:
 		$role->remove_cap( 'switch_users' );
@@ -188,7 +188,7 @@ class Capabilities extends Test {
 
 		# Ensure the user can switch:
 		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
-		$can_switch_off  = user_can( self::$testers['admin']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['admin']->ID, 'switch_off' );
 
 		# Revert the cap:
 		$role->remove_cap( 'switch_users' );
@@ -212,7 +212,7 @@ class Capabilities extends Test {
 
 		# Ensure the user can switch:
 		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
-		$can_switch_off  = user_can( self::$testers['admin']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['admin']->ID, 'switch_off' );
 
 		# Revert the cap:
 		self::$testers['admin']->remove_cap( 'switch_users' );

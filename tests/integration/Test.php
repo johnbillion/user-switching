@@ -26,12 +26,12 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 	 */
 	public static function wpSetUpBeforeClass( \WP_UnitTest_Factory $factory ) {
 		$roles = array(
-			'admin'       => 'administrator',
-			'editor'      => 'editor',
-			'author'      => 'author',
+			'admin' => 'administrator',
+			'editor' => 'editor',
+			'author' => 'author',
 			'contributor' => 'contributor',
-			'subscriber'  => 'subscriber',
-			'no_role'     => '',
+			'subscriber' => 'subscriber',
+			'no_role' => '',
 		);
 
 		foreach ( $roles as $name => $role ) {
@@ -72,8 +72,8 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 
 	public function action_set_auth_cookie( $cookie, $expire, $expiration, $user_id, $scheme, $token ) {
 		$_COOKIE[ SECURE_AUTH_COOKIE ] = $cookie;
-		$_COOKIE[ AUTH_COOKIE ]        = $cookie;
-		$this->sessions[ $user_id ]    = $token;
+		$_COOKIE[ AUTH_COOKIE ] = $cookie;
+		$this->sessions[ $user_id ] = $token;
 	}
 
 	public function action_set_logged_in_cookie( $cookie, $expire, $expiration, $user_id, $scheme, $token ) {
@@ -87,7 +87,7 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 	}
 
 	public function action_set_user_switching_cookie( $cookie, $expiration, $user_id, $scheme, $token ) {
-		$_COOKIE[ USER_SWITCHING_COOKIE ]        = $cookie;
+		$_COOKIE[ USER_SWITCHING_COOKIE ] = $cookie;
 		$_COOKIE[ USER_SWITCHING_SECURE_COOKIE ] = $cookie;
 	}
 
