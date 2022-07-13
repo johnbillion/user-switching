@@ -32,7 +32,6 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * Switch off
 	 */
 	public function switchOff() {
-		$this->amOnAdminPage( '/' );
 		$this->click( 'Switch Off' );
 	}
 

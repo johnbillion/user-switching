@@ -25,13 +25,4 @@ class SwitchUserCest extends Cest {
 		$I->seeAdminSuccessNotice( 'Switched back to admin' );
 		$I->amLoggedInAs( 'admin' );
 	}
-
-	public function SwitchOffAndBack( AcceptanceTester $I ) {
-		$I->loginAsAdmin();
-		$I->switchOff();
-		$I->amLoggedOut();
-
-		$I->switchBack( 'admin' );
-		$I->amLoggedInAs( 'admin' );
-	}
 }
