@@ -16,8 +16,8 @@ class SwitchOffCest extends Cest {
 		$I->loginAsAdmin();
 		$I->amOnAdminPage( '/' );
 		$I->switchOff();
-		$I->amLoggedOut();
 		$I->seeCurrentUrlEquals( '?switched_off=true' );
+		$I->amLoggedOut();
 
 		$I->switchBack( 'admin' );
 		$I->seeCurrentUrlEquals( '/?user_switched=true&switched_back=true' );
@@ -28,8 +28,8 @@ class SwitchOffCest extends Cest {
 		$I->loginAsAdmin();
 		$I->amOnAdminPage( '/' );
 		$I->switchOff();
-		$I->amLoggedOut();
 		$I->seeCurrentUrlEquals( '?switched_off=true' );
+		$I->amLoggedOut();
 
 		$I->amOnPage( 'wp-login.php' );
 		$I->switchBack( 'admin' );
@@ -46,8 +46,8 @@ class SwitchOffCest extends Cest {
 		] );
 		$I->amEditingPostWithId( $id );
 		$I->switchOff();
-		$I->amLoggedOut();
 		$I->seeCurrentUrlEquals( '/hello-world?switched_off=true' );
+		$I->amLoggedOut();
 	}
 
 	public function SwitchOffFromDraftPostEditingScreen( AcceptanceTester $I ) {
@@ -58,7 +58,7 @@ class SwitchOffCest extends Cest {
 		] );
 		$I->amEditingPostWithId( $id );
 		$I->switchOff();
-		$I->amLoggedOut();
 		$I->seeCurrentUrlEquals( '?switched_off=true' );
+		$I->amLoggedOut();
 	}
 }
