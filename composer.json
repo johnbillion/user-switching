@@ -49,6 +49,7 @@
 		"wp-cli/db-command": "^2",
 		"wp-cli/extension-command": "^2",
 		"wp-cli/language-command": "^2",
+		"wp-cli/rewrite-command": "^2",
 		"wp-coding-standards/wpcs": "^2"
 	},
 	"autoload-dev": {
