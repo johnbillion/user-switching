@@ -369,7 +369,17 @@ class user_switching {
 			$redirect_to = apply_filters( 'login_redirect', $redirect_to, $requested_redirect_to, $new_user );
 		}
 
-		return $redirect_to;
+		/**
+		 * Filters the redirect location after a user switches to another account or switches off.
+		 *
+		 * @since x.y.z
+		 *
+		 * @param string       $redirect_to   The target redirect location, or an empty string if none is specified.
+		 * @param string|null  $redirect_type The redirect type, see the `user_switching::REDIRECT_*` constants.
+		 * @param WP_User|null $new_user      The user being switched to, or null if there is none.
+		 * @param WP_User|null $old_user      The user being switched from, or null if there is none.
+		 */
+		return apply_filters( 'user_switching_redirect_to', $redirect_to, $redirect_type, $new_user, $old_user );
 	}
 
 	/**
