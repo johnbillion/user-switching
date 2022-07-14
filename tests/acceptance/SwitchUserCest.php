@@ -10,12 +10,12 @@ class SwitchUserCest extends Cest {
 		$I->comment( 'As an administrator' );
 		$I->comment( 'I need to be able to switch between users' );
 		$I->comment( 'In order to access different user accounts' );
-
-		$I->haveUserInDatabase( 'editor', 'editor' );
 	}
 
 	public function SwitchToEditorAndBack( AcceptanceTester $I ) {
 		$I->loginAsAdmin();
+		$I->haveUserInDatabase( 'editor', 'editor' );
+
 		$I->switchToUser( 'editor' );
 		$I->seeCurrentUrlEquals( '/wp-admin/?user_switched=true' );
 		$I->seeAdminSuccessNotice( 'Switched to editor' );

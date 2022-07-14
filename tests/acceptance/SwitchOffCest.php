@@ -10,8 +10,6 @@ class SwitchOffCest extends Cest {
 		$I->comment( 'As an administrator' );
 		$I->comment( 'I need to be able to switch off' );
 		$I->comment( 'In order to view the site without logging out completely' );
-
-		$I->haveUserInDatabase( 'editor', 'editor' );
 	}
 
 	public function SwitchOffFromDashboardAndBackFromFrontEnd( AcceptanceTester $I ) {
