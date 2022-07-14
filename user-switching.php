@@ -497,9 +497,11 @@ class user_switching {
 
 		if ( current_user_can( 'switch_off' ) ) {
 			$url = self::switch_off_url( wp_get_current_user() );
-			if ( ! is_admin() ) {
+			$redirect_to = is_admin() ? self::get_admin_redirect_to() : self::current_url();
+
+			if ( is_string( $redirect_to ) ) {
 				$url = add_query_arg( array(
-					'redirect_to' => urlencode( self::current_url() ),
+					'redirect_to' => urlencode( $redirect_to ),
 				), $url );
 			}
 
@@ -538,6 +540,48 @@ class user_switching {
 				) );
 			}
 		}
+	}
+
+	/**
+	 * Returns a context-aware redirect URL for use when switching off in the admin area.
+	 *
+	 * This is used to redirect the user to the URL of the item they're editing at the time.
+	 *
+	 * @return ?string
+	 */
+	public static function get_admin_redirect_to() {
+		if ( ! empty( $_GET['post'] ) ) {
+			// Post
+			$post_id = intval( $_GET['post'] );
+
+			if ( function_exists( 'is_post_publicly_viewable' ) && is_post_publicly_viewable( $post_id ) ) {
+				$link = get_permalink( $post_id );
+
+				if ( is_string( $link ) ) {
+					return $link;
+				}
+			}
+		} elseif ( ! empty( $_GET['tag_ID'] ) ) {
+			// Term
+			$term_id = intval( $_GET['tag_ID'] );
+			$term = get_term( $term_id );
+
+			if ( ( $term instanceof WP_Term ) && function_exists( 'is_taxonomy_viewable' ) && is_taxonomy_viewable( $term->taxonomy ) ) {
+				$link = get_term_link( $term );
+
+				if ( is_string( $link ) ) {
+					return $link;
+				}
+			}
+		} elseif ( ! empty( $_GET['user_id'] ) ) {
+			// User
+			return get_author_posts_url( intval( $_GET['user_id'] ) );
+		} elseif ( ! empty( $_GET['c'] ) ) {
+			// Comment
+			return get_comment_link( intval( $_GET['c'] ) );
+		}
+
+		return null;
 	}
 
 	/**

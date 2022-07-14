@@ -39,4 +39,17 @@ class SwitchOffCest extends Cest {
 		$I->seeAdminSuccessNotice( 'Switched back to admin (admin)' );
 		$I->amLoggedInAs( 'admin' );
 	}
+
+	public function SwitchOffFromPublishedPostEditingScreen( AcceptanceTester $I ) {
+		$I->loginAsAdmin();
+		$id = $I->havePostInDatabase( [
+			'post_type' => 'post',
+			'post_status' => 'publish',
+			'post_name' => 'hello-world',
+		] );
+		$I->amEditingPostWithId( $id );
+		$I->switchOff();
+		$I->amLoggedOut();
+		$I->seeCurrentUrlEquals( '/hello-world?switched_off=true' );
+	}
 }
