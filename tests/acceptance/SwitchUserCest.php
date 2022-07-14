@@ -17,11 +17,13 @@ class SwitchUserCest extends Cest {
 	public function SwitchToEditorAndBack( AcceptanceTester $I ) {
 		$I->loginAsAdmin();
 		$I->switchToUser( 'editor' );
+		$I->seeCurrentUrlEquals( '/wp-admin/?user_switched=true' );
 		$I->seeAdminSuccessNotice( 'Switched to editor' );
 		$I->amLoggedInAs( 'editor' );
 
 		$I->amOnAdminPage( '/' );
 		$I->switchBack( 'admin' );
+		$I->seeCurrentUrlEquals( '/wp-admin/?user_switched=true&switched_back=true' );
 		$I->seeAdminSuccessNotice( 'Switched back to admin' );
 		$I->amLoggedInAs( 'admin' );
 	}

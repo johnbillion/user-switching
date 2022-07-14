@@ -19,10 +19,11 @@ class SwitchOffCest extends Cest {
 		$I->amOnAdminPage( '/' );
 		$I->switchOff();
 		$I->amLoggedOut();
+		$I->seeCurrentUrlEquals( '?switched_off=true' );
 
 		$I->switchBack( 'admin' );
+		$I->seeCurrentUrlEquals( '/?user_switched=true&switched_back=true' );
 		$I->amLoggedInAs( 'admin' );
-		$I->dontSeeInCurrentUrl( '/wp-admin' );
 	}
 
 	public function SwitchOffFromDashboardAndBackFromLoginScreen( AcceptanceTester $I ) {
@@ -30,9 +31,11 @@ class SwitchOffCest extends Cest {
 		$I->amOnAdminPage( '/' );
 		$I->switchOff();
 		$I->amLoggedOut();
+		$I->seeCurrentUrlEquals( '?switched_off=true' );
 
-		$I->amOnPage( 'wp-login.php' ); // $I->amOnPage($I->getLoginUrl());
+		$I->amOnPage( 'wp-login.php' );
 		$I->switchBack( 'admin' );
+		$I->seeCurrentUrlEquals( '/wp-admin/users.php?user_switched=true&switched_back=true' );
 		$I->seeAdminSuccessNotice( 'Switched back to admin (admin)' );
 		$I->amLoggedInAs( 'admin' );
 	}
