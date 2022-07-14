@@ -46,6 +46,13 @@ class user_switching {
 	 */
 	public static $application = 'WordPress/User Switching';
 
+	const REDIRECT_TYPE_NONE = null;
+	const REDIRECT_TYPE_URL = 'url';
+	const REDIRECT_TYPE_POST = 'post';
+	const REDIRECT_TYPE_TERM = 'term';
+	const REDIRECT_TYPE_USER = 'user';
+	const REDIRECT_TYPE_COMMENT = 'comment';
+
 	/**
 	 * Sets up all the filters and actions.
 	 *
@@ -290,12 +297,68 @@ class user_switching {
 	 * @return string The URL to redirect to.
 	 */
 	protected static function get_redirect( WP_User $new_user = null, WP_User $old_user = null ) {
+		$redirect_to = '';
+		$requested_redirect_to = '';
+		$redirect_type = self::REDIRECT_TYPE_NONE;
+
 		if ( ! empty( $_REQUEST['redirect_to'] ) ) {
+			// URL
 			$redirect_to = self::remove_query_args( wp_unslash( $_REQUEST['redirect_to'] ) );
 			$requested_redirect_to = wp_unslash( $_REQUEST['redirect_to'] );
-		} else {
-			$redirect_to = '';
-			$requested_redirect_to = '';
+			$redirect_type = self::REDIRECT_TYPE_URL;
+		} elseif ( ! empty( $_GET['redirect_to_post'] ) ) {
+			// Post
+			$post_id = absint( $_GET['redirect_to_post'] );
+
+			if ( function_exists( 'is_post_publicly_viewable' ) && is_post_publicly_viewable( $post_id ) ) {
+				$link = get_permalink( $post_id );
+
+				if ( is_string( $link ) ) {
+					$redirect_to = $link;
+					$requested_redirect_to = $link;
+					$redirect_type = self::REDIRECT_TYPE_POST;
+				}
+			}
+		} elseif ( ! empty( $_GET['redirect_to_term'] ) ) {
+			// Term
+			$term = get_term( absint( $_GET['redirect_to_term'] ) );
+
+			if ( ( $term instanceof WP_Term ) && function_exists( 'is_taxonomy_viewable' ) && is_taxonomy_viewable( $term->taxonomy ) ) {
+				$link = get_term_link( $term );
+
+				if ( is_string( $link ) ) {
+					$redirect_to = $link;
+					$requested_redirect_to = $link;
+					$redirect_type = self::REDIRECT_TYPE_TERM;
+				}
+			}
+		} elseif ( ! empty( $_GET['redirect_to_user'] ) ) {
+			// User
+			$user = get_userdata( absint( $_GET['redirect_to_user'] ) );
+
+			if ( $user instanceof WP_User ) {
+				$link = get_author_posts_url( $user->ID );
+
+				if ( is_string( $link ) ) {
+					$redirect_to = $link;
+					$requested_redirect_to = $link;
+					$redirect_type = self::REDIRECT_TYPE_USER;
+				}
+			}
+		} elseif ( ! empty( $_GET['redirect_to_comment'] ) ) {
+			// Comment
+			$comment = get_comment( absint( $_GET['redirect_to_comment'] ) );
+
+			if ( $comment instanceof WP_Comment ) {
+				// @todo check comment status and fall back to linking to its post
+				$link = get_comment_link( $comment );
+
+				if ( is_string( $link ) ) {
+					$redirect_to = $link;
+					$requested_redirect_to = $link;
+					$redirect_type = self::REDIRECT_TYPE_COMMENT;
+				}
+			}
 		}
 
 		if ( ! $new_user ) {
@@ -497,12 +560,12 @@ class user_switching {
 
 		if ( current_user_can( 'switch_off' ) ) {
 			$url = self::switch_off_url( wp_get_current_user() );
-			$redirect_to = is_admin() ? self::get_admin_redirect_to() : self::current_url();
+			$redirect_to = is_admin() ? self::get_admin_redirect_to() : array(
+				'redirect_to' => urlencode( self::current_url() ),
+			);
 
-			if ( is_string( $redirect_to ) ) {
-				$url = add_query_arg( array(
-					'redirect_to' => urlencode( $redirect_to ),
-				), $url );
+			if ( is_array( $redirect_to ) ) {
+				$url = add_query_arg( $redirect_to, $url );
 			}
 
 			$wp_admin_bar->add_node( array(
@@ -543,42 +606,33 @@ class user_switching {
 	}
 
 	/**
-	 * Returns a context-aware redirect URL for use when switching off in the admin area.
+	 * Returns a context-aware redirect parameter for use when switching off in the admin area.
 	 *
 	 * This is used to redirect the user to the URL of the item they're editing at the time.
 	 *
-	 * @return ?string
+	 * @return ?array<string, int>
 	 */
 	public static function get_admin_redirect_to() {
 		if ( ! empty( $_GET['post'] ) ) {
 			// Post
-			$post_id = intval( $_GET['post'] );
-
-			if ( function_exists( 'is_post_publicly_viewable' ) && is_post_publicly_viewable( $post_id ) ) {
-				$link = get_permalink( $post_id );
-
-				if ( is_string( $link ) ) {
-					return $link;
-				}
-			}
+			return array(
+				'redirect_to_post' => intval( $_GET['post'] ),
+			);
 		} elseif ( ! empty( $_GET['tag_ID'] ) ) {
 			// Term
-			$term_id = intval( $_GET['tag_ID'] );
-			$term = get_term( $term_id );
-
-			if ( ( $term instanceof WP_Term ) && function_exists( 'is_taxonomy_viewable' ) && is_taxonomy_viewable( $term->taxonomy ) ) {
-				$link = get_term_link( $term );
-
-				if ( is_string( $link ) ) {
-					return $link;
-				}
-			}
+			return array(
+				'redirect_to_term' => intval( $_GET['tag_ID'] ),
+			);
 		} elseif ( ! empty( $_GET['user_id'] ) ) {
 			// User
-			return get_author_posts_url( intval( $_GET['user_id'] ) );
+			return array(
+				'redirect_to_user' => intval( $_GET['user_id'] ),
+			);
 		} elseif ( ! empty( $_GET['c'] ) ) {
 			// Comment
-			return get_comment_link( intval( $_GET['c'] ) );
+			return array(
+				'redirect_to_comment' => intval( $_GET['c'] ),
+			);
 		}
 
 		return null;
