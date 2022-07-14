@@ -50,4 +50,17 @@ class SwitchOffCest extends Cest {
 		$I->amLoggedOut();
 		$I->seeCurrentUrlEquals( '/hello-world?switched_off=true' );
 	}
+
+	public function SwitchOffFromDraftPostEditingScreen( AcceptanceTester $I ) {
+		$I->loginAsAdmin();
+		$id = $I->havePostInDatabase( [
+			'post_type' => 'post',
+			'post_status' => 'draft',
+			'post_name' => 'hello-world',
+		] );
+		$I->amEditingPostWithId( $id );
+		$I->switchOff();
+		$I->amLoggedOut();
+		$I->seeCurrentUrlEquals( '?switched_off=true' );
+	}
 }
