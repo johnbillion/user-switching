@@ -41,7 +41,6 @@ class SwitchOffCest extends Cest {
 	public function SwitchOffFromPublishedPostEditingScreen( AcceptanceTester $I ) {
 		$I->loginAsAdmin();
 		$id = $I->havePostInDatabase( [
-			'post_type' => 'post',
 			'post_status' => 'publish',
 			'post_name' => 'hello-world',
 		] );
@@ -54,7 +53,6 @@ class SwitchOffCest extends Cest {
 	public function SwitchOffFromDraftPostEditingScreen( AcceptanceTester $I ) {
 		$I->loginAsAdmin();
 		$id = $I->havePostInDatabase( [
-			'post_type' => 'post',
 			'post_status' => 'draft',
 			'post_name' => 'hello-world',
 		] );
