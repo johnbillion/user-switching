@@ -46,7 +46,15 @@ class SwitchOffCest extends Cest {
 		] );
 		$I->amEditingPostWithId( $id );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '/hello-world?switched_off=true' );
+
+		try {
+			// WordPress >= 5.7:
+			$I->seeCurrentUrlEquals( '/hello-world?switched_off=true' );
+		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
+			// WordPress < 5.7:
+			$I->seeCurrentUrlEquals( '?switched_off=true' );
+		}
+
 		$I->amLoggedOut();
 	}
 
