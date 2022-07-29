@@ -67,7 +67,7 @@ class SwitchOffCest extends Cest {
 		$id = $I->haveUserInDatabase( 'example', 'editor' );
 		// https://github.com/lucatume/wp-browser/pull/586
 		// $I->amEditingUserWithId( $id );
-		$I->amOnAdminPage('/user-edit.php?user_id=' . $id);
+		$I->amOnAdminPage( '/user-edit.php?user_id=' . $id );
 		$I->switchOff();
 		$I->seeCurrentUrlEquals( '/author/example?switched_off=true' );
 		$I->amLoggedOut();
