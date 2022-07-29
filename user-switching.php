@@ -350,13 +350,22 @@ class user_switching {
 			$comment = get_comment( absint( $_GET['redirect_to_comment'] ) );
 
 			if ( $comment instanceof WP_Comment ) {
-				// @todo check comment status and fall back to linking to its post
-				$link = get_comment_link( $comment );
+				if ( 'approved' === wp_get_comment_status( $comment ) ) {
+					$link = get_comment_link( $comment );
 
-				if ( is_string( $link ) ) {
-					$redirect_to = $link;
-					$requested_redirect_to = $link;
-					$redirect_type = self::REDIRECT_TYPE_COMMENT;
+					if ( is_string( $link ) ) {
+						$redirect_to = $link;
+						$requested_redirect_to = $link;
+						$redirect_type = self::REDIRECT_TYPE_COMMENT;
+					}
+				} elseif ( function_exists( 'is_post_publicly_viewable' ) && is_post_publicly_viewable( (int) $comment->comment_post_ID ) ) {
+					$link = get_permalink( (int) $comment->comment_post_ID );
+
+					if ( is_string( $link ) ) {
+						$redirect_to = $link;
+						$requested_redirect_to = $link;
+						$redirect_type = self::REDIRECT_TYPE_POST;
+					}
 				}
 			}
 		}

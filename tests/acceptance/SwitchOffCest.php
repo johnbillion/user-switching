@@ -97,4 +97,42 @@ class SwitchOffCest extends Cest {
 		$I->seeCurrentUrlEquals( '/author/example?switched_off=true' );
 		$I->amLoggedOut();
 	}
+
+	public function SwitchOffFromApprovedCommentEditingScreen( AcceptanceTester $I ) {
+		$I->loginAsAdmin();
+		$postId = $I->havePostInDatabase( [
+			'post_status' => 'publish',
+			'post_name' => 'leave-a-comment',
+		] );
+		$commentId = $I->haveCommentInDatabase( $postId, [
+			'comment_approved' => '1',
+		] );
+		$I->amOnAdminPage( '/comment.php?action=editcomment&c=' . $commentId );
+		$I->switchOff();
+		$I->seeCurrentUrlEquals( '/leave-a-comment?switched_off=true#comment-' . $commentId );
+		$I->amLoggedOut();
+	}
+
+	public function SwitchOffFromUnapprovedCommentEditingScreen( AcceptanceTester $I ) {
+		$I->loginAsAdmin();
+		$postId = $I->havePostInDatabase( [
+			'post_status' => 'publish',
+			'post_name' => 'leave-a-comment',
+		] );
+		$commentId = $I->haveCommentInDatabase( $postId, [
+			'comment_approved' => '0',
+		] );
+		$I->amOnAdminPage( '/comment.php?action=editcomment&c=' . $commentId );
+		$I->switchOff();
+
+		try {
+			// WordPress >= 5.7:
+			$I->seeCurrentUrlEquals( '/leave-a-comment?switched_off=true' );
+		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
+			// WordPress < 5.7:
+			$I->seeCurrentUrlEquals( '?switched_off=true' );
+		}
+
+		$I->amLoggedOut();
+	}
 }
