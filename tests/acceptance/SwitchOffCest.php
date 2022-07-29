@@ -70,6 +70,23 @@ class SwitchOffCest extends Cest {
 		$I->amLoggedOut();
 	}
 
+	public function SwitchOffFromTermEditingScreen( AcceptanceTester $I ) {
+		$I->loginAsAdmin();
+		$term = $I->haveTermInDatabase( 'hello', 'category' );
+		$I->amOnAdminPage( '/term.php?taxonomy=category&tag_ID=' . $term[0] );
+		$I->switchOff();
+
+		try {
+			// WordPress >= 5.1:
+			$I->seeCurrentUrlEquals( '/category/hello?switched_off=true' );
+		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
+			// WordPress < 5.1:
+			$I->seeCurrentUrlEquals( '?switched_off=true' );
+		}
+
+		$I->amLoggedOut();
+	}
+
 	public function SwitchOffFromUserEditingScreen( AcceptanceTester $I ) {
 		$I->loginAsAdmin();
 		$id = $I->haveUserInDatabase( 'example', 'editor' );
