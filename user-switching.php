@@ -309,6 +309,7 @@ class user_switching {
 		} elseif ( ! empty( $_GET['redirect_to_post'] ) ) {
 			// Post
 			$post_id = absint( $_GET['redirect_to_post'] );
+			$redirect_type = self::REDIRECT_TYPE_POST;
 
 			if ( function_exists( 'is_post_publicly_viewable' ) && is_post_publicly_viewable( $post_id ) ) {
 				$link = get_permalink( $post_id );
@@ -316,12 +317,12 @@ class user_switching {
 				if ( is_string( $link ) ) {
 					$redirect_to = $link;
 					$requested_redirect_to = $link;
-					$redirect_type = self::REDIRECT_TYPE_POST;
 				}
 			}
 		} elseif ( ! empty( $_GET['redirect_to_term'] ) ) {
 			// Term
 			$term = get_term( absint( $_GET['redirect_to_term'] ) );
+			$redirect_type = self::REDIRECT_TYPE_TERM;
 
 			if ( ( $term instanceof WP_Term ) && function_exists( 'is_taxonomy_viewable' ) && is_taxonomy_viewable( $term->taxonomy ) ) {
 				$link = get_term_link( $term );
@@ -329,12 +330,12 @@ class user_switching {
 				if ( is_string( $link ) ) {
 					$redirect_to = $link;
 					$requested_redirect_to = $link;
-					$redirect_type = self::REDIRECT_TYPE_TERM;
 				}
 			}
 		} elseif ( ! empty( $_GET['redirect_to_user'] ) ) {
 			// User
 			$user = get_userdata( absint( $_GET['redirect_to_user'] ) );
+			$redirect_type = self::REDIRECT_TYPE_USER;
 
 			if ( $user instanceof WP_User ) {
 				$link = get_author_posts_url( $user->ID );
@@ -342,12 +343,12 @@ class user_switching {
 				if ( is_string( $link ) ) {
 					$redirect_to = $link;
 					$requested_redirect_to = $link;
-					$redirect_type = self::REDIRECT_TYPE_USER;
 				}
 			}
 		} elseif ( ! empty( $_GET['redirect_to_comment'] ) ) {
 			// Comment
 			$comment = get_comment( absint( $_GET['redirect_to_comment'] ) );
+			$redirect_type = self::REDIRECT_TYPE_COMMENT;
 
 			if ( $comment instanceof WP_Comment ) {
 				if ( 'approved' === wp_get_comment_status( $comment ) ) {
@@ -356,7 +357,6 @@ class user_switching {
 					if ( is_string( $link ) ) {
 						$redirect_to = $link;
 						$requested_redirect_to = $link;
-						$redirect_type = self::REDIRECT_TYPE_COMMENT;
 					}
 				} elseif ( function_exists( 'is_post_publicly_viewable' ) && is_post_publicly_viewable( (int) $comment->comment_post_ID ) ) {
 					$link = get_permalink( (int) $comment->comment_post_ID );
@@ -364,7 +364,6 @@ class user_switching {
 					if ( is_string( $link ) ) {
 						$redirect_to = $link;
 						$requested_redirect_to = $link;
-						$redirect_type = self::REDIRECT_TYPE_POST;
 					}
 				}
 			}
