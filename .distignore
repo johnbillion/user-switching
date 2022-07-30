@@ -8,6 +8,7 @@ tests
 vendor
 
 # Files
+.editorconfig
 .distignore
 .gitignore
 codeception.dist.yml
