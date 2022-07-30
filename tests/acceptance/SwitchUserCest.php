@@ -22,7 +22,7 @@ class SwitchUserCest extends Cest {
 		$I->amLoggedInAs( 'editor' );
 
 		$I->amOnPage( '/' );
-		$I->switchBack( 'admin' );
+		$I->switchBackTo( 'admin' );
 		$I->seeCurrentUrlEquals( '/?user_switched=true&switched_back=true' );
 		$I->amLoggedInAs( 'admin' );
 	}
@@ -37,7 +37,7 @@ class SwitchUserCest extends Cest {
 		$I->amLoggedInAs( 'editor' );
 
 		$I->amOnAdminPage( 'tools.php' );
-		$I->switchBack( 'admin' );
+		$I->switchBackTo( 'admin' );
 		$I->seeCurrentUrlEquals( '/wp-admin/tools.php?user_switched=true&switched_back=true' );
 		$I->seeAdminSuccessNotice( 'Switched back to admin' );
 		$I->amLoggedInAs( 'admin' );

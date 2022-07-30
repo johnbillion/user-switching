@@ -40,7 +40,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 *
 	 * @param string $user_login
 	 */
-	public function switchBack( $user_login ) {
+	public function switchBackTo( $user_login ) {
 		$display_name = $this->grabFromDatabase(
 			$this->grabUsersTableName(),
 			'display_name',

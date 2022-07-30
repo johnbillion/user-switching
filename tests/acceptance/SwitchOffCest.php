@@ -19,7 +19,7 @@ class SwitchOffCest extends Cest {
 		$I->seeCurrentUrlEquals( '?switched_off=true' );
 		$I->amLoggedOut();
 
-		$I->switchBack( 'admin' );
+		$I->switchBackTo( 'admin' );
 		$I->seeCurrentUrlEquals( '/?user_switched=true&switched_back=true' );
 		$I->amLoggedInAs( 'admin' );
 	}
@@ -32,7 +32,7 @@ class SwitchOffCest extends Cest {
 		$I->amLoggedOut();
 
 		$I->amOnPage( 'wp-login.php' );
-		$I->switchBack( 'admin' );
+		$I->switchBackTo( 'admin' );
 		$I->seeCurrentUrlEquals( '/wp-admin/users.php?user_switched=true&switched_back=true' );
 		$I->seeAdminSuccessNotice( 'Switched back to admin (admin)' );
 		$I->amLoggedInAs( 'admin' );

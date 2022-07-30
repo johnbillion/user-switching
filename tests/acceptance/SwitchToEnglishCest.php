@@ -34,7 +34,7 @@ class SwitchToEnglishCest extends Cest {
 		$I->canSeeTheElementInLanguage( '#user_switching p', 'it-IT' );
 
 		$I->amOnAdminPage( '/' );
-		$I->switchBack( 'admin_it' );
+		$I->switchBackTo( 'admin_it' );
 		$I->canSeeThePageInLanguage( 'it-IT' );
 		$I->seeAdminSuccessNotice( 'Tornato a Admin IT' );
 	}
