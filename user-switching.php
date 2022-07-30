@@ -261,7 +261,7 @@ class user_switching {
 				// Check authentication:
 				if ( ! $current_user || ! current_user_can( 'switch_off' ) ) {
 					/* Translators: "switch off" means to temporarily log out */
-					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ), 403 );
 				}
 
 				// Check intent:
@@ -282,7 +282,7 @@ class user_switching {
 					exit;
 				} else {
 					/* Translators: "switch off" means to temporarily log out */
-					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ) );
+					wp_die( esc_html__( 'Could not switch off.', 'user-switching' ), 403 );
 				}
 				break;
 
