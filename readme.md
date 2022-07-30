@@ -35,7 +35,8 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Uses the cookie authentication system in WordPress when remembering the account(s) you've switched from and when switching back.
  * Implements the nonce security system in WordPress, meaning only those who intend to switch users can switch.
  * Full support for user session validation where appropriate.
- * Full support for administration over SSL (if applicable).
+ * Full support for HTTPS.
+ * Approved for use on enterprise-grade WordPress platforms such as <a href="https://www.altis-dxp.com/">Altis</a> and <a href="https://wpvip.com/">WordPress.com VIP</a>.
 
 ### Usage
 
