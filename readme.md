@@ -82,7 +82,11 @@ Yes, it's actively tested and working up to PHP 8.1.
 
 Switching off logs you out of your account but retains your user ID in an authentication cookie so you can switch straight back without having to log in again manually. It's akin to switching to no user, and being able to switch back.
 
-The *Switch Off* link can be found in your profile menu in the WordPress toolbar. Once you've switched off you'll see a *Switch back* link on the Log In screen and in the footer of your site.
+The *Switch Off* link can be found in your profile menu in the WordPress toolbar. Once you've switched off you'll see a *Switch back* link in a few places:
+
+* In the footer of your site
+* On the Log In screen
+* In the "Meta" widget
 
 ### Does this plugin work with WordPress Multisite?
 
@@ -178,7 +182,7 @@ if ( method_exists( 'user_switching', 'get_old_user' ) ) {
 
 ### Can I determine whether the current user switched into their account?
 
-Yes. Use the `current_user_switched()` function for this.
+Yes. Use the `current_user_switched()` function for this. If the current user switched into their account from another then it returns a `WP_User` object for their originating user, otherwise it returns false.
 
 ~~~php
 if ( function_exists( 'current_user_switched' ) ) {
@@ -194,7 +198,7 @@ if ( function_exists( 'current_user_switched' ) ) {
 
 Potentially yes, but User Switching includes some safety protections for this and there are further precautions you can take as a site administrator:
 
-* User Switching stores the ID of the originating user in the new session for the user they switch to. Although this session does not persist by default when they subsequently switch back, there will be a record of this ID if your MySQL server has query logging enabled.
+* User Switching stores the ID of the originating user in the new WordPress user session for the user they switch to. Although this session does not persist by default when they subsequently switch back, there will be a record of this ID if your database server has query logging enabled.
 * User Switching stores the login name of the originating user in an authentication cookie (see the Privacy Statement for more information). If your server access logs store cookie data, there will be a record of this login name (along with the IP address) for each access request.
 * You can install an audit trail plugin such as Simple History, WP Activity Log, or Stream, all of which have built-in support for User Switching and all of which log an entry when a user switches into another account.
 * User Switching triggers an action when a user switches account, switches off, or switches back (see below). You can use these actions to perform additional logging for safety purposes depending on your requirements.
@@ -263,6 +267,22 @@ When a user switches off, the `switch_off_user` hook is called:
  * @param string $old_token   The token of the session of the user switching off.
  */
 do_action( 'switch_off_user', $old_user_id, $old_token );
+~~~
+
+When a user switches to another account, switches off, or switches back, the `user_switching_redirect_to` filter is applied to the location that they get redirected to:
+
+~~~php
+/**
+ * Filters the redirect location after a user switches to another account or switches off.
+ *
+ * @since 1.7.0
+ *
+ * @param string       $redirect_to   The target redirect location, or an empty string if none is specified.
+ * @param string|null  $redirect_type The redirect type, see the `user_switching::REDIRECT_*` constants.
+ * @param WP_User|null $new_user      The user being switched to, or null if there is none.
+ * @param WP_User|null $old_user      The user being switched from, or null if there is none.
+ */
+return apply_filters( 'user_switching_redirect_to', $redirect_to, $redirect_type, $new_user, $old_user );
 ~~~
 
 In addition, User Switching respects the following filters from WordPress core when appropriate:
