@@ -80,7 +80,7 @@ class user_switching {
 		add_action( 'admin_bar_menu', array( $this, 'action_admin_bar_menu' ), 11 );
 		add_action( 'bp_member_header_actions', array( $this, 'action_bp_button' ), 11 );
 		add_action( 'bp_directory_members_actions', array( $this, 'action_bp_button' ), 11 );
-		add_action( 'bbp_template_after_user_details', array( $this, 'action_bbpress_button' ) );
+		add_action( 'bbp_template_after_user_details_menu_items', array( $this, 'action_bbpress_button' ) );
 		add_action( 'woocommerce_login_form_start', array( $this, 'action_woocommerce_login_form_start' ), 10, 0 );
 		add_action( 'woocommerce_admin_order_data_after_order_details', array( $this, 'action_woocommerce_order_details' ), 1 );
 		add_filter( 'woocommerce_account_menu_items', array( $this, 'filter_woocommerce_account_menu_items' ), 999 );
