@@ -427,12 +427,7 @@ class user_switching {
 					$message = '';
 					$just_switched = isset( $_GET['user_switched'] );
 					if ( $just_switched ) {
-						$message = esc_html( sprintf(
-							/* Translators: 1: user display name; 2: username; */
-							__( 'Switched to %1$s (%2$s).', 'user-switching' ),
-							$user->display_name,
-							$user->user_login
-						) );
+						$message = esc_html( self::switched_to_message( $user ) );
 					}
 					$switch_back_url = add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
@@ -441,12 +436,7 @@ class user_switching {
 					$message .= sprintf(
 						' <a href="%s">%s</a>.',
 						esc_url( $switch_back_url ),
-						esc_html( sprintf(
-							/* Translators: 1: user display name; 2: username; */
-							__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
-							$old_user->display_name,
-							$old_user->user_login
-						) )
+						esc_html( self::switch_back_message( $old_user ) )
 					);
 
 					/**
@@ -480,19 +470,9 @@ class user_switching {
 				<p>
 				<?php
 					if ( isset( $_GET['switched_back'] ) ) {
-						echo esc_html( sprintf(
-							/* Translators: 1: user display name; 2: username; */
-							__( 'Switched back to %1$s (%2$s).', 'user-switching' ),
-							$user->display_name,
-							$user->user_login
-						) );
+						echo esc_html( self::switched_back_message( $user ) );
 					} else {
-						echo esc_html( sprintf(
-							/* Translators: 1: user display name; 2: username; */
-							__( 'Switched to %1$s (%2$s).', 'user-switching' ),
-							$user->display_name,
-							$user->user_login
-						) );
+						echo esc_html( self::switched_to_message( $user ) );
 					}
 				?>
 				</p>
@@ -565,12 +545,7 @@ class user_switching {
 			$wp_admin_bar->add_node( array(
 				'parent' => $parent,
 				'id' => 'switch-back',
-				'title' => esc_html( sprintf(
-					/* Translators: 1: user display name; 2: username; */
-					__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
-					$old_user->display_name,
-					$old_user->user_login
-				) ),
+				'title' => esc_html( self::switch_back_message( $old_user ) ),
 				'href' => add_query_arg( array(
 					'redirect_to' => urlencode( self::current_url() ),
 				), self::switch_back_url( $old_user ) ),
@@ -601,12 +576,7 @@ class user_switching {
 				$wp_admin_bar->add_node( array(
 					'parent' => 'edit',
 					'id' => 'author-switch-back',
-					'title' => esc_html( sprintf(
-						/* Translators: 1: user display name; 2: username; */
-						__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
-						$old_user->display_name,
-						$old_user->user_login
-					) ),
+					'title' => esc_html( self::switch_back_message( $old_user ) ),
 					'href' => add_query_arg( array(
 						'redirect_to' => urlencode( self::current_url() ),
 					), self::switch_back_url( $old_user ) ),
@@ -666,19 +636,13 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
-			$link = sprintf(
-				/* Translators: 1: user display name; 2: username; */
-				__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
-				$old_user->display_name,
-				$old_user->user_login
-			);
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
 			printf(
 				'<li id="user_switching_switch_on"><a href="%s">%s</a></li>',
 				esc_url( $url ),
-				esc_html( $link )
+				esc_html( self::switch_back_message( $old_user ) )
 			);
 		}
 	}
@@ -707,19 +671,13 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
-			$link = sprintf(
-				/* Translators: 1: user display name; 2: username; */
-				__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
-				$old_user->display_name,
-				$old_user->user_login
-			);
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
 			printf(
 				'<p id="user_switching_switch_on"><a href="%s">%s</a></p>',
 				esc_url( $url ),
-				esc_html( $link )
+				esc_html( self::switch_back_message( $old_user ) )
 			);
 		}
 	}
@@ -734,12 +692,6 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
-			$link = sprintf(
-				/* Translators: 1: user display name; 2: username; */
-				__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
-				$old_user->display_name,
-				$old_user->user_login
-			);
 			$url = self::switch_back_url( $old_user );
 
 			if ( ! empty( $_REQUEST['interim-login'] ) ) {
@@ -757,7 +709,7 @@ class user_switching {
 			$message .= sprintf(
 				'<a href="%1$s" onclick="window.location.href=\'%1$s\';return false;">%2$s</a>',
 				esc_url( $url ),
-				esc_html( $link )
+				esc_html( self::switch_back_message( $old_user ) )
 			);
 			$message .= '</p>';
 		}
@@ -954,6 +906,69 @@ class user_switching {
 	}
 
 	/**
+	 * Returns the message shown to the user when they've switched to a user.
+	 *
+	 * @param WP_User $user The concerned user.
+	 * @return string The message.
+	 */
+	public static function switched_to_message( WP_User $user ) {
+		$message = sprintf(
+			/* Translators: 1: user display name; 2: username; */
+			__( 'Switched to %1$s (%2$s).', 'user-switching' ),
+			$user->display_name,
+			$user->user_login
+		);
+
+		// Removes the user login from this message without invalidating existing translations
+		return str_replace( sprintf(
+			' (%s)',
+			$user->user_login
+		), '', $message );
+	}
+
+	/**
+	 * Returns the message shown to the user for the link to switch back to their original user.
+	 *
+	 * @param WP_User $user The concerned user.
+	 * @return string The message.
+	 */
+	public static function switch_back_message( WP_User $user ) {
+		$message = sprintf(
+			/* Translators: 1: user display name; 2: username; */
+			__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
+			$user->display_name,
+			$user->user_login
+		);
+
+		// Removes the user login from this message without invalidating existing translations
+		return str_replace( sprintf(
+			' (%s)',
+			$user->user_login
+		), '', $message );
+	}
+
+	/**
+	 * Returns the message shown to the user when they've switched back to their original user.
+	 *
+	 * @param WP_User $user The concerned user.
+	 * @return string The message.
+	 */
+	public static function switched_back_message( WP_User $user ) {
+		$message = sprintf(
+			/* Translators: 1: user display name; 2: username; */
+			__( 'Switched back to %1$s (%2$s).', 'user-switching' ),
+			$user->display_name,
+			$user->user_login
+		);
+
+		// Removes the user login from this message without invalidating existing translations
+		return str_replace( sprintf(
+			' (%s)',
+			$user->user_login
+		), '', $message );
+	}
+
+	/**
 	 * Returns the current URL.
 	 *
 	 * @return string The current URL.
@@ -1047,12 +1062,7 @@ class user_switching {
 			return $items;
 		}
 
-		$items['user-switching-switch-back'] = sprintf(
-			/* Translators: 1: user display name; 2: username; */
-			__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
-			$old_user->display_name,
-			$old_user->user_login
-		);
+		$items['user-switching-switch-back'] = self::switch_back_message( $old_user );
 
 		return $items;
 	}

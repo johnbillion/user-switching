@@ -30,12 +30,12 @@ class SwitchToEnglishCest extends Cest {
 		$I->loginAs( 'admin_it', 'admin_it' );
 		$I->switchToUser( 'author_en' );
 		$I->canSeeThePageInLanguage( 'en-US' );
-		$I->seeAdminSuccessNotice( 'Cambiato a Author EN' );
+		$I->seeAdminSuccessNotice( 'Cambiato a Author EN.' );
 		$I->canSeeTheElementInLanguage( '#user_switching p', 'it-IT' );
 
 		$I->amOnAdminPage( '/' );
 		$I->switchBackTo( 'admin_it' );
 		$I->canSeeThePageInLanguage( 'it-IT' );
-		$I->seeAdminSuccessNotice( 'Tornato a Admin IT' );
+		$I->seeAdminSuccessNotice( 'Tornato a Admin IT.' );
 	}
 }

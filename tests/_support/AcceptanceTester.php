@@ -50,9 +50,8 @@ class AcceptanceTester extends \Codeception\Actor {
 		);
 
 		$this->click( sprintf(
-			'Switch back to %1$s (%2$s)',
-			$display_name,
-			$user_login
+			'Switch back to %s',
+			$display_name
 		) );
 	}
 

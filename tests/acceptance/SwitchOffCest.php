@@ -34,7 +34,7 @@ class SwitchOffCest extends Cest {
 		$I->amOnPage( 'wp-login.php' );
 		$I->switchBackTo( 'admin' );
 		$I->seeCurrentUrlEquals( '/wp-admin/users.php?user_switched=true&switched_back=true' );
-		$I->seeAdminSuccessNotice( 'Switched back to admin (admin)' );
+		$I->seeAdminSuccessNotice( 'Switched back to admin.' );
 		$I->amLoggedInAs( 'admin' );
 	}
 
