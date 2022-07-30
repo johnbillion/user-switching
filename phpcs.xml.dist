@@ -23,9 +23,7 @@
 
 		<!-- Skip checks for naming and indentation because IDGAF: -->
 		<exclude name="WordPress.Files.FileName" />
-		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
 		<exclude name="PEAR.NamingConventions.ValidClassName" />
-		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
 		<exclude name="Generic.WhiteSpace.ScopeIndent" />
 		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma" />
@@ -36,6 +34,10 @@
 		<!-- These are all false positives: -->
 		<exclude name="WordPress.Security.NonceVerification.Recommended" />
 
+		<!-- Sanity: -->
+		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
+		<exclude name="WordPress.PHP.YodaConditions.NotYoda" />
 	</rule>
 
 	<rule ref="WordPress-Docs" />
