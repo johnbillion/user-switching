@@ -74,7 +74,7 @@ class user_switching {
 		add_filter( 'login_message', array( $this, 'filter_login_message' ), 1 );
 		add_filter( 'removable_query_args', array( $this, 'filter_removable_query_args' ) );
 		add_action( 'wp_meta', array( $this, 'action_wp_meta' ) );
-		add_filter( 'plugin_row_meta', array( $this, 'filter_plugin_row_meta' ), 10, 4 );
+		add_filter( 'plugin_row_meta', array( $this, 'filter_plugin_row_meta' ), 10, 2 );
 		add_action( 'wp_footer', array( $this, 'action_wp_footer' ) );
 		add_action( 'personal_options', array( $this, 'action_personal_options' ) );
 		add_action( 'admin_bar_menu', array( $this, 'action_admin_bar_menu' ), 11 );
