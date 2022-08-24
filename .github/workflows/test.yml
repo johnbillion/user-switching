@@ -63,6 +63,7 @@ jobs:
         php-version: ${{ matrix.php }}
         extensions: mysqli, xmlwriter
         coverage: none
+        ini-file: development
       env:
         fail-fast: true
 

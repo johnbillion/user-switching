@@ -64,6 +64,7 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         extensions: mysqli, xmlwriter, xdebug
+        ini-file: development
         ini-values: xdebug.mode="develop"
       env:
         fail-fast: true
