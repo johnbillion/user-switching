@@ -41,7 +41,7 @@ jobs:
             wp: '4.7'
       fail-fast: false
     name: "WP ${{ matrix.wp }} / PHP ${{ matrix.php }}"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
     - name: Checkout repository
