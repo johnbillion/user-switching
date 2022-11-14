@@ -545,7 +545,7 @@ class user_switching {
 			if ( function_exists( 'get_user_locale' ) ) {
 				$switched_locale = switch_to_locale( get_user_locale( $old_user ) );
 			}
-			$wp_admin_bar->add_menu( array(
+			$wp_admin_bar->add_node( array(
 				'parent' => $parent,
 				'id' => 'switch-back',
 				'title' => esc_html( self::switch_back_message( $old_user ) ),
@@ -568,7 +568,7 @@ class user_switching {
 				$url = add_query_arg( $redirect_to, $url );
 			}
 
-			$wp_admin_bar->add_menu( array(
+			$wp_admin_bar->add_node( array(
 				'parent' => $parent,
 				'id' => 'switch-off',
 				/* Translators: "switch off" means to temporarily log out */
@@ -583,7 +583,7 @@ class user_switching {
 				if ( function_exists( 'get_user_locale' ) ) {
 					$switched_locale = switch_to_locale( get_user_locale( $old_user ) );
 				}
-				$wp_admin_bar->add_menu( array(
+				$wp_admin_bar->add_node( array(
 					'parent' => 'edit',
 					'id' => 'author-switch-back',
 					'title' => esc_html( self::switch_back_message( $old_user ) ),
@@ -595,7 +595,7 @@ class user_switching {
 					restore_previous_locale();
 				}
 			} elseif ( current_user_can( 'switch_to_user', get_queried_object_id() ) ) {
-				$wp_admin_bar->add_menu( array(
+				$wp_admin_bar->add_node( array(
 					'parent' => 'edit',
 					'id' => 'author-switch-to',
 					'title' => esc_html__( 'Switch&nbsp;To', 'user-switching' ),
