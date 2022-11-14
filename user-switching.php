@@ -542,9 +542,6 @@ class user_switching {
 
 		if ( $old_user ) {
 			$switched_locale = false;
-			if ( function_exists( 'get_user_locale' ) ) {
-				$switched_locale = switch_to_locale( get_user_locale( $old_user ) );
-			}
 			$wp_admin_bar->add_node( array(
 				'parent' => $parent,
 				'id' => 'switch-back',
@@ -553,9 +550,6 @@ class user_switching {
 					'redirect_to' => urlencode( self::current_url() ),
 				), self::switch_back_url( $old_user ) ),
 			) );
-			if ( $switched_locale ) {
-				restore_previous_locale();
-			}
 		}
 
 		if ( current_user_can( 'switch_off' ) ) {
@@ -580,9 +574,6 @@ class user_switching {
 		if ( ! is_admin() && is_author() && ( get_queried_object() instanceof WP_User ) ) {
 			if ( $old_user ) {
 				$switched_locale = false;
-				if ( function_exists( 'get_user_locale' ) ) {
-					$switched_locale = switch_to_locale( get_user_locale( $old_user ) );
-				}
 				$wp_admin_bar->add_node( array(
 					'parent' => 'edit',
 					'id' => 'author-switch-back',
@@ -591,9 +582,6 @@ class user_switching {
 						'redirect_to' => urlencode( self::current_url() ),
 					), self::switch_back_url( $old_user ) ),
 				) );
-				if ( $switched_locale ) {
-					restore_previous_locale();
-				}
 			} elseif ( current_user_can( 'switch_to_user', get_queried_object_id() ) ) {
 				$wp_admin_bar->add_node( array(
 					'parent' => 'edit',
@@ -650,13 +638,6 @@ class user_switching {
 
 		if ( $old_user instanceof WP_User ) {
 			$switched_locale = false;
-			if ( function_exists( 'get_user_locale' ) ) {
-				$switched_locale = switch_to_locale( get_user_locale( $old_user ) );
-			}
-
-			if ( $switched_locale ) {
-				restore_previous_locale();
-			}
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
@@ -693,13 +674,6 @@ class user_switching {
 
 		if ( $old_user instanceof WP_User ) {
 			$switched_locale = false;
-			if ( function_exists( 'get_user_locale' ) ) {
-				$switched_locale = switch_to_locale( get_user_locale( $old_user ) );
-			}
-
-			if ( $switched_locale ) {
-				restore_previous_locale();
-			}
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
@@ -962,12 +936,22 @@ class user_switching {
 	 * @return string The message.
 	 */
 	public static function switch_back_message( WP_User $user ) {
+		$switched_locale = false;
+
+		if ( function_exists( 'get_user_locale' ) ) {
+			$switched_locale = switch_to_locale( get_user_locale( $user ) );
+		}
+
 		$message = sprintf(
 			/* Translators: 1: user display name; 2: username; */
 			__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
 			$user->display_name,
 			$user->user_login
 		);
+
+		if ( $switched_locale ) {
+			restore_previous_locale();
+		}
 
 		// Removes the user login from this message without invalidating existing translations
 		return str_replace( sprintf(
