@@ -541,7 +541,6 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user ) {
-			$switched_locale = false;
 			$wp_admin_bar->add_node( array(
 				'parent' => $parent,
 				'id' => 'switch-back',
@@ -573,7 +572,6 @@ class user_switching {
 
 		if ( ! is_admin() && is_author() && ( get_queried_object() instanceof WP_User ) ) {
 			if ( $old_user ) {
-				$switched_locale = false;
 				$wp_admin_bar->add_node( array(
 					'parent' => 'edit',
 					'id' => 'author-switch-back',
@@ -637,7 +635,6 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
-			$switched_locale = false;
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
@@ -673,7 +670,6 @@ class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
-			$switched_locale = false;
 			$url = add_query_arg( array(
 				'redirect_to' => urlencode( self::current_url() ),
 			), self::switch_back_url( $old_user ) );
