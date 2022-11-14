@@ -1,8 +1,17 @@
 <?php
 
-class TestAuthentication extends User_Switching_Test {
+declare(strict_types = 1);
 
-	function testValidCookiePassesAuthentication() {
+namespace UserSwitching\Tests;
+
+use user_switching;
+
+/**
+ * @covers \user_switching::authenticate_old_user
+ */
+class Authentication extends Test {
+
+	public function testValidCookiePassesAuthentication() {
 		$expiry = time() + 172800;
 
 		$auth_cookie = wp_generate_auth_cookie( self::$testers['editor']->ID, $expiry, 'auth' );

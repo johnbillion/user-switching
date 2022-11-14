@@ -1,0 +1,29 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using WPBrowser.
+
+actor: AcceptanceTester
+modules:
+  enabled:
+    - WPDb
+    - WPCLI
+    - WPBrowser
+  config:
+    WPDb:
+      dsn: 'mysql:host=%WP_TESTS_DB_HOST%;dbname=%WP_TESTS_DB_NAME%'
+      user: '%WP_TESTS_DB_USER%'
+      password: '%WP_TESTS_DB_PASS%'
+      url: '%TEST_SITE_WP_URL%'
+      tablePrefix: wp_
+      dump: false
+      populate: false
+      cleanup: false
+    WPCLI:
+      path: '%TEST_SITE_WP_DIR%'
+      url: '%TEST_SITE_WP_URL%'
+    WPBrowser:
+      url: '%TEST_SITE_WP_URL%'
+      adminUsername: 'admin'
+      adminPassword: 'admin'
+      adminPath: '/wp-admin'

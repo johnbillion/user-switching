@@ -1,37 +1,48 @@
 <?php
 
-class TestCapabilities extends User_Switching_Test {
+declare(strict_types = 1);
 
+namespace UserSwitching\Tests;
+
+/**
+ * @covers \user_switching::filter_user_has_cap
+ * @covers \user_switching::filter_map_meta_cap
+ */
+class Capabilities extends Test {
+
+	/**
+	 * @return array<string, array<int, string|bool>>
+	 */
 	public function data_roles() {
 		$roles = [
-			[
+			'admin' => [
 				'admin',
 				! is_multisite(),
 			],
-			[
+			'editor' => [
 				'editor',
 				false,
 			],
-			[
+			'author' => [
 				'author',
 				false,
 			],
-			[
+			'contributor' => [
 				'contributor',
 				false,
 			],
-			[
+			'subscriber' => [
 				'subscriber',
 				false,
 			],
-			[
+			'none' => [
 				'no_role',
 				false,
 			],
 		];
 
 		if ( is_multisite() ) {
-			$roles[] = [
+			$roles['super admin'] = [
 				'super',
 				true,
 			];
@@ -51,7 +62,7 @@ class TestCapabilities extends User_Switching_Test {
 	 * @dataProvider data_roles
 	 * @testdox User with role of $role can or cannot switch according to role
 	 */
-	public function testUserCanOrCannotSwitchAccordingToRole( string $role, bool $can_switch ) {
+	public function testUserCanOrCannotSwitchAccordingToRole( $role, $can_switch ) {
 		foreach ( self::$users as $user_role => $user ) {
 			if ( self::$testers[ $role ]->ID === $user->ID ) {
 				# No user can switch to themselves:
@@ -78,7 +89,7 @@ class TestCapabilities extends User_Switching_Test {
 
 		# Ensure the user can switch:
 		$can_switch_user = user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['admin']->ID );
-		$can_switch_off  = user_can( self::$testers['editor']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['editor']->ID, 'switch_off' );
 
 		# Revert the cap:
 		self::$testers['editor']->remove_cap( 'switch_users' );
@@ -93,15 +104,18 @@ class TestCapabilities extends User_Switching_Test {
 		# Editors cannot switch to other users:
 		$can_already_switch = user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['admin']->ID );
 
+		/** @var \WP_Role */
+		$role = get_role( 'editor' );
+
 		# Grant the ability for this role to switch users:
-		get_role( 'editor' )->add_cap( 'switch_users' );
+		$role->add_cap( 'switch_users' );
 
 		# Ensure the user can switch:
 		$can_switch_user = user_can( self::$testers['editor']->ID, 'switch_to_user', self::$users['admin']->ID );
-		$can_switch_off  = user_can( self::$testers['editor']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['editor']->ID, 'switch_off' );
 
 		# Revert the cap:
-		get_role( 'editor' )->remove_cap( 'switch_users' );
+		$role->remove_cap( 'switch_users' );
 
 		# Assert:
 		self::assertFalse( $can_already_switch );
@@ -121,7 +135,7 @@ class TestCapabilities extends User_Switching_Test {
 
 		# Ensure the user can no longer switch:
 		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
-		$can_switch_off  = user_can( self::$testers['admin']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['admin']->ID, 'switch_off' );
 
 		# Revert the cap:
 		self::$testers['admin']->remove_cap( 'switch_users' );
@@ -139,15 +153,18 @@ class TestCapabilities extends User_Switching_Test {
 		# Admins can switch to other users:
 		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
 
+		/** @var \WP_Role */
+		$role = get_role( 'administrator' );
+
 		# Revoke the ability for this role to switch users:
-		get_role( 'administrator' )->add_cap( 'switch_users', false );
+		$role->add_cap( 'switch_users', false );
 
 		# Ensure the user can no longer switch:
 		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
-		$can_switch_off  = user_can( self::$testers['admin']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['admin']->ID, 'switch_off' );
 
 		# Revert the cap:
-		get_role( 'administrator' )->remove_cap( 'switch_users' );
+		$role->remove_cap( 'switch_users' );
 
 		# Assert:
 		self::assertTrue( $can_already_switch );
@@ -163,15 +180,18 @@ class TestCapabilities extends User_Switching_Test {
 		# Admins on Multisite cannot switch to other users:
 		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
 
+		/** @var \WP_Role */
+		$role = get_role( 'administrator' );
+
 		# Grant the ability for this role to switch users:
-		get_role( 'administrator' )->add_cap( 'switch_users' );
+		$role->add_cap( 'switch_users' );
 
 		# Ensure the user can switch:
 		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
-		$can_switch_off  = user_can( self::$testers['admin']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['admin']->ID, 'switch_off' );
 
 		# Revert the cap:
-		get_role( 'administrator' )->remove_cap( 'switch_users' );
+		$role->remove_cap( 'switch_users' );
 
 		# Assert:
 		self::assertFalse( $can_already_switch );
@@ -192,7 +212,7 @@ class TestCapabilities extends User_Switching_Test {
 
 		# Ensure the user can switch:
 		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
-		$can_switch_off  = user_can( self::$testers['admin']->ID, 'switch_off' );
+		$can_switch_off = user_can( self::$testers['admin']->ID, 'switch_off' );
 
 		# Revert the cap:
 		self::$testers['admin']->remove_cap( 'switch_users' );
@@ -207,7 +227,7 @@ class TestCapabilities extends User_Switching_Test {
 	 * @dataProvider data_roles
 	 * @testdox User with role of $role cannot switch to no user
 	 */
-	public function testSwitchingToNoUserIsNotAllowed( string $role ) {
+	public function testSwitchingToNoUserIsNotAllowed( $role ) {
 		self::assertFalse( user_can( self::$testers[ $role ]->ID, 'switch_to_user', 0 ) );
 	}
 

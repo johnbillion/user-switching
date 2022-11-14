@@ -3,21 +3,20 @@
 .github
 .wordpress-org
 bin
-features
 node_modules
 tests
 vendor
 
 # Files
+.editorconfig
 .distignore
 .gitignore
-behat.yml
+codeception.dist.yml
 composer.json
 composer.lock
 CONTRIBUTING.md
-Gruntfile.js
 package-lock.json
 package.json
 phpcs.xml.dist
-phpunit.xml.dist
+phpstan.neon.dist
 SECURITY.md

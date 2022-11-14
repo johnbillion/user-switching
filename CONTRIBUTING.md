@@ -1,6 +1,6 @@
-[![Build Status](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=for-the-badge)](https://github.com/johnbillion/user-switching/actions)
-[![](https://img.shields.io/badge/contributor-code%20of%20conduct-5e0d73.svg?style=for-the-badge)](https://github.com/johnbillion/user-switching/blob/develop/CODE_OF_CONDUCT.md)
-[![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=for-the-badge)](#ethical-open-source)
+[![Build Status](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=flat-square)](https://github.com/johnbillion/user-switching/actions)
+[![](https://img.shields.io/badge/contributor-code%20of%20conduct-5e0d73.svg?style=flat-square)](https://github.com/johnbillion/user-switching/blob/develop/CODE_OF_CONDUCT.md)
+[![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=flat-square)](#ethical-open-source)
 
 # Contributing to User Switching
 
@@ -35,8 +35,7 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 ### Prerequisites
 
 * [Composer](https://getcomposer.org/)
-* [Node](https://nodejs.org/)
-* A local web server running WordPress
+* A local installation of MariaDB or MySQL
 
 ### Setup
 
@@ -44,31 +43,31 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 
        composer install
 
-2. Install the Node dependencies:
-
-       npm install
-
-3. Check the MySQL database credentials in the `tests/.env` file and amend them as necessary.
+2. Check the MySQL database credentials in the `tests/.env` file and amend them as necessary.
 
 **Important:** Ensure you use a separate test database (eg. `wordpress_test`) because, just like the WordPress test suite, the database will be wiped clean with every test run.
 
 ## Running the Tests
 
-To run the whole test suite which includes PHPUnit unit tests, PHPCS code sniffs, and WordHat functional tests:
+To run the whole test suite:
 
 	composer test
 
-To run just the unit tests:
+To run just the integration tests:
 
-	composer test:ut
+	composer test:integration
 
-To run just the code sniffs:
+To run just the coding standards checks:
 
-	composer test:cs
+	composer test:phpcs
 
-To run just the functional tests:
+To run just the static analysis:
 
-	composer test:ft
+	composer test:phpstan
+
+To run just the acceptance tests:
+
+	composer test:acceptance
 
 ## Releasing a New Version
 

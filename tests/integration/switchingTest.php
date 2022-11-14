@@ -1,20 +1,46 @@
 <?php
 
-class TestSwitching extends User_Switching_Test {
+declare(strict_types = 1);
 
-	function setUp() {
+namespace UserSwitching\Tests;
+
+use user_switching;
+
+class Switching extends Test {
+
+	/**
+	 * @var int|false
+	 */
+	public $test_switching_user_id;
+
+	/**
+	 * @var int|false
+	 */
+	public $test_switching_old_user_id;
+
+	/**
+	 * @var int
+	 */
+	public $test_switching_auth_cookie_user_id;
+
+	/**
+	 * @var bool
+	 */
+	public $test_switching_auth_cookie_remember;
+
+	public function _before() {
+		parent::_before();
 
 		add_action( 'switch_to_user',         array( $this, '_action_switch_user' ), 10, 2 );
 		add_action( 'switch_back_user',       array( $this, '_action_switch_user' ), 10, 2 );
 		add_action( 'switch_off_user',        array( $this, '_action_switch_off' ), 10 );
 		add_filter( 'auth_cookie_expiration', array( $this, '_filter_auth_cookie_expiration' ), 10, 3 );
-
-		parent::setUp();
-
 	}
 
-	function testSwitchUserAndBack() {
-
+	/**
+	 * @covers \switch_to_user
+	 */
+	public function testSwitchUserAndBack() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -113,11 +139,13 @@ class TestSwitching extends User_Switching_Test {
 		// Check the auth cookie behaviour
 		self::assertSame( $admin->ID, $this->test_switching_auth_cookie_user_id );
 		self::assertFalse( $this->test_switching_auth_cookie_remember );
-
 	}
 
-	function testSwitchOffAndBack() {
-
+	/**
+	 * @covers \switch_to_user
+	 * @covers \switch_off_user
+	 */
+	public function testSwitchOffAndBack() {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -167,32 +195,47 @@ class TestSwitching extends User_Switching_Test {
 		// Check the auth cookie behaviour
 		self::assertSame( $admin->ID, $this->test_switching_auth_cookie_user_id );
 		self::assertFalse( $this->test_switching_auth_cookie_remember );
+	}
 
+	/**
+	 * @covers \switch_to_user
+	 */
+	public function testSwitchToNonExistentUserFails() {
+		// Switch user
+		$user = switch_to_user( 0 );
+
+		self::assertFalse( $user );
 	}
 
 	/**
 	 * @testdox Current URL is detected correctly
+	 * @covers \user_switching::current_url
 	 */
-	function testCurrentUrl() {
-
+	public function testCurrentUrl() {
 		$url = add_query_arg( 'foo', 'bar', home_url( 'baz' ) );
 		$this->go_to( $url );
 		self::assertSame( user_switching::current_url(), $url );
-
 	}
 
-	function _action_switch_user( $user_id, $old_user_id ) {
-		$this->test_switching_user_id     = $user_id;
+	/**
+	 * @param int       $user_id
+	 * @param int|false $old_user_id
+	 */
+	public function _action_switch_user( $user_id, $old_user_id ) {
+		$this->test_switching_user_id = $user_id;
 		$this->test_switching_old_user_id = $old_user_id;
 	}
 
-	function _action_switch_off( $old_user_id ) {
-		$this->test_switching_user_id     = false;
+	public function _action_switch_off( $old_user_id ) {
+		$this->test_switching_user_id = false;
 		$this->test_switching_old_user_id = $old_user_id;
 	}
 
-	function _filter_auth_cookie_expiration( $length, $user_id, $remember ) {
-		$this->test_switching_auth_cookie_user_id  = $user_id;
+	/**
+	 * @return int
+	 */
+	public function _filter_auth_cookie_expiration( $length, $user_id, $remember ) {
+		$this->test_switching_auth_cookie_user_id = $user_id;
 		$this->test_switching_auth_cookie_remember = $remember;
 		return $length;
 	}

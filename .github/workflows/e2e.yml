@@ -1,39 +1,71 @@
-name: Functional Tests
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+
+name: Acceptance Tests
 on:
   push:
     branches:
       - 'develop'
       - 'trunk'
       - 'master'
+    paths:
+      - '.github/workflows/e2e.yml'
+      - 'codeception.dist.yml'
+      - 'bin/test.sh'
+      - 'composer.json'
+      - 'tests/**'
+      - 'user-switching.php'
   pull_request:
     branches:
       - '**'
+    paths:
+      - '.github/workflows/e2e.yml'
+      - 'codeception.dist.yml'
+      - 'bin/test.sh'
+      - 'composer.json'
+      - 'tests/**'
+      - 'user-switching.php'
+  # Once weekly on Wednesdays at 06:00 UTC.
+  schedule:
+    - cron: '0 6 * * 3'
+  workflow_dispatch:
 
 jobs:
   build:
     strategy:
       matrix:
-        php: ['7.3']
-        wp: ['*', 'dev-nightly']
+        php: ['8.1','8.0','7.4','5.6']
+        wp: ['latest', 'nightly']
+        include:
+          # Oldest version that supports user locales:
+          - php: '7.1'
+            wp: '4.7'
       fail-fast: false
-    name: WP ${{ matrix.wp }} / PHP ${{ matrix.php }}
-    runs-on: ubuntu-18.04
+    name: "WP ${{ matrix.wp }} / PHP ${{ matrix.php }}"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
+
+    - name: Get Composer cache directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
     - name: Composer cache
-      uses: actions/cache@v1
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-composer-dependencies
       with:
-        path: ~/.composer/cache
+        path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
     - name: Install PHP
-      uses: shivammathur/setup-php@2.7.0
+      uses: shivammathur/setup-php@2.16.0
       with:
         php-version: ${{ matrix.php }}
-        extensions: mysqli, xmlwriter
-        coverage: none
+        extensions: mysqli, xmlwriter, xdebug
+        ini-file: development
+        ini-values: xdebug.mode="develop"
       env:
         fail-fast: true
 
@@ -47,11 +79,20 @@ jobs:
     - name: Install dependencies
       run: |
         sudo systemctl start mysql.service
-        composer install --prefer-dist
-        composer require --dev --update-with-dependencies --prefer-dist roots/wordpress="${{ matrix.wp }} || *"
+        composer remove \
+          "phpstan/*" \
+          szepeviktor/phpstan-wordpress \
+          --dev
+        composer require --dev --update-with-dependencies --prefer-dist \
+          roots/wordpress-full="${{ matrix.wp == 'latest' && '*' || (matrix.wp == 'nightly' && 'dev-main' || format('~{0}.0', matrix.wp)) }}"
+        mysqladmin -uroot -proot create wordpress_test
 
     - name: Run the tests
-      run: composer test:ft
-      env:
-        MYSQL_DATABASE: wordpress
-        WP_TESTS_DB_PASS: root
+      run: composer test:acceptance
+
+    - name: Upload test artifacts
+      if: failure()
+      uses: actions/upload-artifact@v2
+      with:
+        name: "acceptance-wp-${{ matrix.wp }}-php-${{ matrix.php }}"
+        path: tests/_output

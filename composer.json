@@ -1,12 +1,12 @@
 {
-	"name"       : "johnbillion/user-switching",
+	"name": "johnbillion/user-switching",
 	"description": "Instant switching between user accounts in WordPress.",
-	"homepage"   : "https://github.com/johnbillion/user-switching",
-	"type"       : "wordpress-plugin",
-	"license"    : "GPL-2.0-or-later",
-	"authors"    : [
+	"homepage": "https://github.com/johnbillion/user-switching",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"authors": [
 		{
-			"name"    : "John Blackbourn",
+			"name": "John Blackbourn",
 			"homepage": "https://johnblackbourn.com/"
 		}
 	],
@@ -16,47 +16,73 @@
 		"source": "https://github.com/johnbillion/user-switching"
 	},
 	"config": {
-		"sort-packages": true
+		"sort-packages": true,
+		"allow-plugins": {
+			"composer/installers": true,
+			"composer/package-versions-deprecated": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"roots/wordpress-core-installer": true
+		}
 	},
 	"extra": {
 		"wordpress-install-dir": "tests/wordpress"
 	},
 	"require": {
-		"composer/installers": "^1"
+		"php": ">=5.3",
+		"composer/installers": "^1 || ^2"
 	},
-	"require-dev" : {
-		"behat/mink-goutte-driver": "^1.2",
-		"dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
-		"genesis/behat-fail-aid": "^2.0",
-		"johnbillion/php-docs-standards": "^1.2",
-		"paulgibbs/behat-wordpress-extension": "^3.3",
+	"require-dev": {
+		"codeception/module-cli": "^1.0",
+		"codeception/module-db": "^1.0",
+		"codeception/module-phpbrowser": "^1.0",
+		"dealerdirect/phpcodesniffer-composer-installer": "*",
+		"lucatume/wp-browser": "^3.0",
 		"phpcompatibility/php-compatibility": "^9",
-		"phpunit/phpunit": "^7",
-		"roots/wordpress": "*",
+		"phpstan/phpstan": "^1.0",
+		"phpstan/phpstan-deprecation-rules": "^1.0",
+		"phpstan/phpstan-phpunit": "^1.0",
+		"roots/wordpress-core-installer": "^1.0.0",
+		"roots/wordpress-full": "*",
+		"szepeviktor/phpstan-wordpress": "^1.0",
 		"vlucas/phpdotenv": "^3",
-		"wp-cli/wp-cli-bundle": "^2.1",
-		"wp-coding-standards/wpcs": "^2",
-		"wp-phpunit/wp-phpunit": "*"
+		"wp-cli/core-command": "^2",
+		"wp-cli/db-command": "^2",
+		"wp-cli/extension-command": "^2",
+		"wp-cli/language-command": "^2",
+		"wp-cli/rewrite-command": "^2",
+		"wp-coding-standards/wpcs": "^2"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"UserSwitching\\Tests\\": "tests/wpunit"
+		}
 	},
 	"scripts": {
 		"post-update-cmd": [
 			"@php -r \"! file_exists( 'tests/.env' ) && copy( 'tests/.env.dist', 'tests/.env' );\""
 		],
-		"test:cs": [
-			"phpcs -nps --colors --report-code --report-summary --report-width=80 ."
+		"test:phpcs": [
+			"phpcs -nps --colors --report-code --report-summary --report-width=80 --cache=tests/cache/phpcs.json ."
 		],
-		"test:ut": [
-			"wp db reset --yes --path=tests/wordpress #",
-			"export WP_MULTISITE=0 && phpunit --verbose --colors=always --exclude-group=ms-required",
-			"export WP_MULTISITE=1 && phpunit --verbose --colors=always --exclude-group=ms-excluded"
+		"test:phpstan": [
+			"phpstan analyze"
 		],
-		"test:ft": [
+		"test:integration": [
+			"codecept run integration --env singlesite --skip-group ms-required",
+			"codecept run integration --env multisite --skip-group ms-excluded"
+		],
+		"test:acceptance": [
 			"bin/test.sh"
 		],
+		"test:composer": [
+			"@composer validate --strict --no-check-lock"
+		],
 		"test": [
-			"@test:cs",
-			"@test:ut",
-			"@test:ft"
+			"@test:composer",
+			"@test:phpcs",
+			"@test:phpstan",
+			"@test:integration",
+			"@test:acceptance"
 		]
 	},
 	"funding": [
