@@ -83,7 +83,7 @@ jobs:
           --dev
         composer require --dev --update-with-dependencies --prefer-dist \
           roots/wordpress-full="${{ matrix.wp == 'latest' && '*' || (matrix.wp == 'nightly' && 'dev-main' || format('~{0}.0', matrix.wp)) }}"
-        mysqladmin -uroot -proot create wordpress_test
+        mysqladmin --default-auth=mysql_native_password -uroot -proot create wordpress_test
 
     - name: Run the tests
       run: composer test:integration
