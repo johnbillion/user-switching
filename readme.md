@@ -76,7 +76,7 @@ See also the FAQ for some questions relating to privacy and safety when switchin
 
 ### Does this plugin work with PHP 8?
 
-Yes, it's actively tested and working up to PHP 8.1.
+Yes, it's actively tested and working up to PHP 8.2.
 
 ### What does "Switch off" mean?
 
