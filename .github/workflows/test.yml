@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         php: ['8.2','7.4','5.6']
-        wp: ['latest', 'nightly']
+        wp: ['6.0', 'nightly']
         include:
           # Oldest version that passes the `$token` parameter to session actions:
           - php: '7.2'
