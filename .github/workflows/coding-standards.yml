@@ -30,7 +30,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Get Composer cache directory
       id: composer-cache
@@ -56,13 +56,14 @@ jobs:
         key: 8.0-phpcs-${{ hashFiles('user-switching.php') }}
 
     - name: Install PHP
-      uses: shivammathur/setup-php@2.16.0
+      uses: shivammathur/setup-php@v2
       with:
         php-version: '8.0'
         coverage: none
         ini-file: development
       env:
         fail-fast: true
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Debugging
       run: |
