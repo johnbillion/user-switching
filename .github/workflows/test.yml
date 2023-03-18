@@ -29,6 +29,15 @@ jobs:
     name: "WP ${{ matrix.wp }} / PHP ${{ matrix.php }}"
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    services:
+      mysql:
+        image: bitnami/mysql:8
+        ports:
+          - 3306/tcp
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: wordpress_test
+          MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -64,14 +73,12 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo systemctl start mysql.service
         composer remove \
           "phpstan/*" \
           szepeviktor/phpstan-wordpress \
           --dev
         composer require --dev --update-with-dependencies --prefer-dist \
           roots/wordpress-full="${{ matrix.wp == 'latest' && '*' || (matrix.wp == 'nightly' && 'dev-main' || format('~{0}.0', matrix.wp)) }}"
-        mysqladmin -uroot -proot create wordpress_test
 
     - name: Run the tests
       run: composer test:integration
