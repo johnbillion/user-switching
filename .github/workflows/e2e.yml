@@ -7,23 +7,9 @@ on:
       - 'develop'
       - 'trunk'
       - 'master'
-    paths:
-      - '.github/workflows/e2e.yml'
-      - 'codeception.dist.yml'
-      - 'bin/test.sh'
-      - 'composer.json'
-      - 'tests/**'
-      - 'user-switching.php'
   pull_request:
     branches:
       - '**'
-    paths:
-      - '.github/workflows/e2e.yml'
-      - 'codeception.dist.yml'
-      - 'bin/test.sh'
-      - 'composer.json'
-      - 'tests/**'
-      - 'user-switching.php'
   # Once weekly on Wednesdays at 06:00 UTC.
   schedule:
     - cron: '0 6 * * 3'

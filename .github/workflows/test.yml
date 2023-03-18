@@ -7,21 +7,9 @@ on:
       - 'develop'
       - 'trunk'
       - 'master'
-    paths:
-      - '.github/workflows/test.yml'
-      - 'composer.json'
-      - 'codeception.dist.yml'
-      - 'tests/**'
-      - 'user-switching.php'
   pull_request:
     branches:
       - '**'
-    paths:
-      - '.github/workflows/test.yml'
-      - 'composer.json'
-      - 'codeception.dist.yml'
-      - 'tests/**'
-      - 'user-switching.php'
   # Once weekly on Wednesdays at 05:00 UTC.
   schedule:
     - cron: '0 5 * * 3'
