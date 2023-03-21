@@ -1390,6 +1390,8 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 	 * @return false|WP_User WP_User object on success, false on failure.
 	 */
 	function switch_to_user( $user_id, $remember = false, $set_old_user = true ) {
+        global $wp_filter;
+
 		$user = get_userdata( $user_id );
 
 		if ( ! $user ) {
@@ -1427,9 +1429,48 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 
 		add_filter( 'attach_session_information', $session_filter, 99, 2 );
 
+        /**
+         * Compatibility with RegistrationMagic Plugin
+         * -------------------------------------------
+         * Remove the conflicting hook callback and reattach it after cookies have been cleared. 
+         *
+         * INSIGHT: The RegistrationMagic Plugin unconditionally performs a redirect when the
+         *          "clear_auth_cookie" hook is run, which occurs when the "wp_clear_auth_cookie()" function
+         *          is executed. This prevents cookie clearing from occurring and prevents the rest of this
+         *          plugin's code from being executed.
+         */
+        $removedActionMetadata = array();
+
+        foreach ($wp_filter['clear_auth_cookie']->callbacks as $priority => $priorityCallbacks) {
+            // Go deeper!
+            foreach ($priorityCallbacks as $actionMetaData) {
+                if (
+                    is_array($actionMetaData['function']) &&
+                    $actionMetaData['function'][0] instanceof Registration_Magic &&
+                    $actionMetaData['function'][1] == 'after_logout_redirect'
+                ) {
+                    // Save the action metadata so we can reattach it later
+                    $removedActionMetadata['callback'] = $actionMetaData['function'];
+                    $removedActionMetadatap['priority'] = $priority;
+
+                    // Remove the action
+                    remove_action(
+                        'clear_auth_cookie',
+                        $actionMetaData['function'],
+                        $priority
+                    );
+                }
+            }
+        }
+
 		wp_clear_auth_cookie();
 		wp_set_auth_cookie( $user_id, $remember, '', $new_token );
 		wp_set_current_user( $user_id );
+
+        // Reattach the previously cleared action
+        if (!empty($removedActionMetadata)) {
+            add_action('clear_auth_cookie', $removedActionMetadata['callback'], $removedActionMetadata['priority']);
+        }
 
 		remove_filter( 'attach_session_information', $session_filter, 99 );
 
