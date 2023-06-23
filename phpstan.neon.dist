@@ -1,12 +1,16 @@
 includes:
-	- vendor/phpstan/phpstan-deprecation-rules/rules.neon
 	- vendor/phpstan/phpstan-phpunit/extension.neon
 	- vendor/szepeviktor/phpstan-wordpress/extension.neon
+	- vendor/johnbillion/plugin-infrastructure/phpstan/extension.neon
 parameters:
 	level: 9
-	tmpDir: tests/cache
 	paths:
 		- user-switching.php
+	scanDirectories:
+		- tests/_support/
+	excludePaths:
+		analyse:
+			- tests/integration/Supports/
 	bootstrapFiles:
 		- tests/phpstan/stubs.php
 	ignoreErrors:

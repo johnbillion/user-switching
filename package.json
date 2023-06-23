@@ -5,15 +5,16 @@
 	"license": "GPL-2.0-or-later",
 	"author": "John Blackbourn",
 	"repository": "johnbillion/user-switching",
+	"engines": {
+		"node": ">=18"
+	},
 	"devDependencies": {
-		"@actions/github": "^2",
-		"replace-in-file": "^5",
-		"semver": "^7",
+		"plugin-infrastructure": "file:vendor/johnbillion/plugin-infrastructure",
 		"version-bump-prompt": "^6.1.0"
 	},
 	"scripts": {
-		"bump:patch": "bump patch --commit 'Version %s.' user-switching.php package.json readme.md",
-		"bump:minor": "bump minor --commit 'Version %s.' user-switching.php package.json readme.md",
-		"bump:major": "bump major --commit 'Version %s.' user-switching.php package.json readme.md"
+		"bump:patch": "bump patch --commit 'Version %s.' user-switching.php package.json package-lock.json readme.md",
+		"bump:minor": "bump minor --commit 'Version %s.' user-switching.php package.json package-lock.json readme.md",
+		"bump:major": "bump major --commit 'Version %s.' user-switching.php package.json package-lock.json readme.md"
 	}
 }
