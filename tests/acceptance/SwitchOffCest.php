@@ -3,10 +3,8 @@
  * Acceptance tests for switching off.
  */
 
-class SwitchOffCest extends Cest {
+class SwitchOffCest {
 	public function _before( AcceptanceTester $I ) {
-		parent::_before( $I );
-
 		$I->comment( 'As an administrator' );
 		$I->comment( 'I need to be able to switch off' );
 		$I->comment( 'In order to view the site without logging out completely' );
