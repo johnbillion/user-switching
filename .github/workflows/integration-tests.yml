@@ -33,3 +33,4 @@ jobs:
     with:
       wp: ${{ matrix.wp }}
       php: ${{ matrix.php }}
+      node: false
