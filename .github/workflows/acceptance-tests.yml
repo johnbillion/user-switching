@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 
-name: Coding Standards
+name: Acceptance Tests
 on:
   push:
     branches:
@@ -10,18 +10,25 @@ on:
   pull_request:
     branches:
       - '**'
+  # Once weekly on Thursdays at 08:00 UTC.
+  schedule:
+    - cron: '0 8 * * 4'
   workflow_dispatch:
 
 jobs:
   test:
-    name: PHP / PHP ${{ matrix.php }}
-    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-coding-standards.yml@trunk
+    name: WP ${{ matrix.wp }} / PHP ${{ matrix.php }}
     strategy:
       matrix:
+        wp:
+          - 'nightly'
+          - '6.2'
         php:
           - '8.2'
           - '7.4'
           - '5.6'
       fail-fast: false
+    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-acceptance-tests.yml@trunk
     with:
+      wp: ${{ matrix.wp }}
       php: ${{ matrix.php }}
