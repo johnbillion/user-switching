@@ -30,7 +30,7 @@ jobs:
     strategy:
       matrix:
         wp:
-          - 'dev-nightly'
+          - 'nightly'
           - '6.2'
         php:
           - '8.2'
@@ -39,8 +39,8 @@ jobs:
         dev:
           - ${{ github.ref_name == 'develop' }}
         exclude:
-          # Only run the dev-nightly tests on the develop branch.
-          - wp: 'dev-nightly'
+          # Only run the nightly tests on the develop branch.
+          - wp: 'nightly'
             dev: false
       fail-fast: false
     uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-acceptance-tests.yml@trunk
