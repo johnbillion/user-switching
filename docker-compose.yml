@@ -12,7 +12,7 @@ services:
       - php
     volumes:
       - ./vendor/johnbillion/plugin-infrastructure/tests/nginx.conf:/etc/nginx/templates/default.conf.template
-      - ./vendor/roots/wordpress:/var/www/html/:rw
+      - ./vendor/wordpress/wordpress:/var/www/html/:rw
       - ./vendor/johnbillion/plugin-infrastructure/tests/wp-config.php:/var/www/html/wp-config.php
       - ./:/var/www/html/wp-content/plugins/${COMPOSE_PROJECT_NAME}:rw
 
@@ -30,7 +30,7 @@ services:
       - database
     init: true
     volumes:
-      - ./vendor/roots/wordpress:/var/www/html/:rw
+      - ./vendor/wordpress/wordpress:/var/www/html/:rw
       - ./vendor/johnbillion/plugin-infrastructure/tests/wp-config.php:/var/www/html/wp-config.php
       - ./vendor/johnbillion/plugin-infrastructure/tests/php-config.ini:/usr/local/etc/php/conf.d/php-config.ini
       - ./:/var/www/html/wp-content/plugins/${COMPOSE_PROJECT_NAME}:rw
@@ -62,7 +62,7 @@ services:
       - php
     init: true
     volumes:
-      - ./vendor/roots/wordpress:/var/www/:rw
+      - ./vendor/wordpress/wordpress:/var/www/:rw
       - ./vendor/johnbillion/plugin-infrastructure/tests/wp-config.php:/var/www/wp-config.php
       - ./vendor/johnbillion/plugin-infrastructure/tests/php-config.ini:/usr/local/etc/php/conf.d/php-config.ini
       - ./:/var/www/wp-content/plugins/${COMPOSE_PROJECT_NAME}:rw
