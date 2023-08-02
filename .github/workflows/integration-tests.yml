@@ -10,6 +10,18 @@ on:
   pull_request:
     branches:
       - '**'
+  schedule:
+    # Once weekly on Mondays at 05:00 UTC.
+    #
+    #        ┌───────────── minute           (0 - 59)
+    #        │  ┌────────── hour             (0 - 23)
+    #        │  │  ┌─────── day of the month (1 - 31)
+    #        │  │  │  ┌──── month            (1 - 12 or JAN-DEC)
+    #        │  │  │  │  ┌─ day of the week  (0 - 6 or SUN-SAT)
+    #        │  │  │  │  │
+    #        │  │  │  │  │
+    #        │  │  │  │  │
+    - cron: '0  5  *  *  1'
   workflow_dispatch:
 
 jobs:
@@ -18,15 +30,16 @@ jobs:
     uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-integration-tests.yml@trunk
     strategy:
       matrix:
-        php:
-          - '8.2'
-          - '7.4'
         wp:
           - '*'
           - 'dev-nightly'
+        php:
+          - '8.2'
+          - '7.4'
         dev:
           - ${{ github.ref_name == 'develop' }}
         exclude:
+          # Only run the dev-nightly tests on the develop branch.
           - wp: 'dev-nightly'
             dev: false
       fail-fast: false
