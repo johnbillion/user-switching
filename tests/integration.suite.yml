@@ -16,6 +16,7 @@ modules:
       tablePrefix: wp_integration_
       plugins: ['%COMPOSE_PROJECT_NAME%/%COMPOSE_PROJECT_NAME%.php']
       activatePlugins: ['%COMPOSE_PROJECT_NAME%/%COMPOSE_PROJECT_NAME%.php']
+      skipPluggables: true
 env:
   singlesite:
     modules:
