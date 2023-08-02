@@ -75,7 +75,7 @@
 			"acceptance-tests"
 		],
 		"test:destroy": [
-			"COMPOSE_PROJECT_NAME=user-switching docker-compose down --volumes --remove-orphans"
+			"COMPOSE_PROJECT_NAME=user-switching docker compose down --volumes --remove-orphans"
 		],
 		"test:integration": [
 			"integration-tests"
@@ -88,10 +88,10 @@
 			"phpstan analyze --memory-limit=1024M"
 		],
 		"test:start": [
-			"COMPOSE_PROJECT_NAME=user-switching docker-compose up -d"
+			"COMPOSE_PROJECT_NAME=user-switching docker compose up -d"
 		],
 		"test:stop": [
-			"COMPOSE_PROJECT_NAME=user-switching docker-compose down"
+			"COMPOSE_PROJECT_NAME=user-switching docker compose down"
 		]
 	}
 }
