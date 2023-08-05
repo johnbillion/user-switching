@@ -9,10 +9,6 @@ class SwitchFromEnglishCest {
 		$I->comment( 'I need to be able to switch to user accounts that use a different language' );
 		$I->comment( 'And see the output of User Switching in my original language' );
 
-		# Install language files:
-		$I->cli( 'language core install it_IT' );
-		$I->cli( 'language plugin install user-switching it_IT' );
-
 		$I->haveUserInDatabase( 'autore', 'author', [
 			'display_name' => 'Autore',
 			'meta' => [

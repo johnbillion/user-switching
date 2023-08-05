@@ -73,7 +73,7 @@
 			"@test:acceptance"
 		],
 		"test:acceptance": [
-			"acceptance-tests"
+			"acceptance-tests --cli=\"language core install it_IT\" --cli=\"language plugin install user-switching it_IT\""
 		],
 		"test:destroy": [
 			"COMPOSE_PROJECT_NAME=user-switching docker compose down --volumes --remove-orphans"
