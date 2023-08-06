@@ -47,7 +47,7 @@ class SwitchOffCest {
 
 		try {
 			// WordPress >= 5.7:
-			$I->seeCurrentUrlEquals( '/hello-world?switched_off=true' );
+			$I->seeCurrentUrlEquals( '/hello-world/?switched_off=true' );
 		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
 			// WordPress < 5.7:
 			$I->seeCurrentUrlEquals( '?switched_off=true' );
@@ -76,7 +76,7 @@ class SwitchOffCest {
 
 		try {
 			// WordPress >= 5.1:
-			$I->seeCurrentUrlEquals( '/category/hello?switched_off=true' );
+			$I->seeCurrentUrlEquals( '/category/hello/?switched_off=true' );
 		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
 			// WordPress < 5.1:
 			$I->seeCurrentUrlEquals( '?switched_off=true' );
@@ -92,7 +92,7 @@ class SwitchOffCest {
 		// $I->amEditingUserWithId( $id );
 		$I->amOnAdminPage( '/user-edit.php?user_id=' . $id );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '/author/example?switched_off=true' );
+		$I->seeCurrentUrlEquals( '/author/example/?switched_off=true' );
 		$I->amLoggedOut();
 	}
 
@@ -107,7 +107,7 @@ class SwitchOffCest {
 		] );
 		$I->amOnAdminPage( '/comment.php?action=editcomment&c=' . $commentId );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '/leave-a-comment?switched_off=true#comment-' . $commentId );
+		$I->seeCurrentUrlEquals( '/leave-a-comment/?switched_off=true#comment-' . $commentId );
 		$I->amLoggedOut();
 	}
 
@@ -125,7 +125,7 @@ class SwitchOffCest {
 
 		try {
 			// WordPress >= 5.7:
-			$I->seeCurrentUrlEquals( '/leave-a-comment?switched_off=true' );
+			$I->seeCurrentUrlEquals( '/leave-a-comment/?switched_off=true' );
 		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
 			// WordPress < 5.7:
 			$I->seeCurrentUrlEquals( '?switched_off=true' );
