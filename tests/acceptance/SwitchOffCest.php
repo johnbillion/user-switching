@@ -31,7 +31,7 @@ class SwitchOffCest {
 
 		$I->amOnPage( 'wp-login.php' );
 		$I->switchBackTo( 'admin' );
-		$I->seeCurrentUrlEquals( '/wp-admin/users.php?user_switched=true&switched_back=true' );
+		$I->seeCurrentUrlEquals( '/wp-admin/users.php' );
 		$I->seeAdminSuccessNotice( 'Switched back to admin.' );
 		$I->amLoggedInAs( 'admin' );
 	}
@@ -58,7 +58,7 @@ class SwitchOffCest {
 		$I->amNotUsingTheEditorForTheFirstTime();
 		$I->amEditingPostWithId( $id );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '?switched_off=true' );
+		$I->seeCurrentUrlEquals( '/?switched_off=true' );
 		$I->amLoggedOut();
 	}
 
