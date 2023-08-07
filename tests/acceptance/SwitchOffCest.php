@@ -14,7 +14,7 @@ class SwitchOffCest {
 		$I->loginAsAdmin();
 		$I->amOnAdminPage( '/' );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '?switched_off=true' );
+		$I->seeCurrentUrlEquals( '/?switched_off=true' );
 		$I->amLoggedOut();
 
 		$I->switchBackTo( 'admin' );
@@ -26,7 +26,7 @@ class SwitchOffCest {
 		$I->loginAsAdmin();
 		$I->amOnAdminPage( '/' );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '?switched_off=true' );
+		$I->seeCurrentUrlEquals( '/?switched_off=true' );
 		$I->amLoggedOut();
 
 		$I->amOnPage( 'wp-login.php' );
