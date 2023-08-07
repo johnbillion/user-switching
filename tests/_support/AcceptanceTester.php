@@ -32,6 +32,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * Switch off
 	 */
 	public function switchOff() {
+		$this->moveMouseOver( '#wp-admin-bar-my-account' );
 		$this->click( 'Switch Off' );
 	}
 
@@ -48,6 +49,12 @@ class AcceptanceTester extends \Codeception\Actor {
 				'user_login' => $user_login,
 			]
 		);
+
+		try {
+			$this->moveMouseOver( '#wp-admin-bar-my-account' );
+		} catch ( \Codeception\Exception\ElementNotFound $e ) {
+			// Nothing.
+		}
 
 		$this->click( sprintf(
 			'Switch back to %s',
