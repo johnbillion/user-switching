@@ -17,6 +17,33 @@ class AcceptanceTester extends \Codeception\Actor {
 	use _generated\AcceptanceTesterActions;
 
 	/**
+	 * Put the block editor into a state where the items we need to interact with are
+	 * actually usable.
+	 *
+	 * @return void
+	 */
+	public function amNotUsingTheEditorForTheFirstTime() {
+		$key = sprintf(
+			'%spersisted_preferences',
+			$this->grabTablePrefix()
+		);
+		$value = [
+			'core/edit-post' => [
+				'fullscreenMode' => false,
+				'welcomeGuide' => false,
+			],
+		];
+
+		$this->haveUserMetaInDatabase(
+			1,
+			$key,
+			[
+				$value,
+			],
+		);
+	}
+
+	/**
 	 * Switch to the specified user
 	 *
 	 * @param string $user_login

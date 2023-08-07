@@ -42,6 +42,7 @@ class SwitchOffCest {
 			'post_status' => 'publish',
 			'post_name' => 'hello-world',
 		] );
+		$I->amNotUsingTheEditorForTheFirstTime();
 		$I->amEditingPostWithId( $id );
 		$I->switchOff();
 		$I->seeCurrentUrlEquals( '/hello-world/?switched_off=true' );
@@ -54,6 +55,7 @@ class SwitchOffCest {
 			'post_status' => 'draft',
 			'post_name' => 'hello-world',
 		] );
+		$I->amNotUsingTheEditorForTheFirstTime();
 		$I->amEditingPostWithId( $id );
 		$I->switchOff();
 		$I->seeCurrentUrlEquals( '?switched_off=true' );
