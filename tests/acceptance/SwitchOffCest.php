@@ -44,15 +44,7 @@ class SwitchOffCest {
 		] );
 		$I->amEditingPostWithId( $id );
 		$I->switchOff();
-
-		try {
-			// WordPress >= 5.7:
-			$I->seeCurrentUrlEquals( '/hello-world/?switched_off=true' );
-		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
-			// WordPress < 5.7:
-			$I->seeCurrentUrlEquals( '?switched_off=true' );
-		}
-
+		$I->seeCurrentUrlEquals( '/hello-world/?switched_off=true' );
 		$I->amLoggedOut();
 	}
 
@@ -122,15 +114,7 @@ class SwitchOffCest {
 		] );
 		$I->amOnAdminPage( '/comment.php?action=editcomment&c=' . $commentId );
 		$I->switchOff();
-
-		try {
-			// WordPress >= 5.7:
-			$I->seeCurrentUrlEquals( '/leave-a-comment/?switched_off=true' );
-		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
-			// WordPress < 5.7:
-			$I->seeCurrentUrlEquals( '?switched_off=true' );
-		}
-
+		$I->seeCurrentUrlEquals( '/leave-a-comment/?switched_off=true' );
 		$I->amLoggedOut();
 	}
 }
