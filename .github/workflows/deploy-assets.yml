@@ -14,6 +14,7 @@ jobs:
       plugin: user-switching
       readme: readme.md
       node: false
+      vendor: false
     secrets:
       WPORG_SVN_USERNAME: ${{ secrets.WPORG_SVN_USERNAME }}
       WPORG_SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}
