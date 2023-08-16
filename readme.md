@@ -2,7 +2,7 @@
 
 Stable tag: 1.7.0  
 Requires at least: 3.7  
-Tested up to: 6.0  
+Tested up to: 6.3  
 Requires PHP: 5.3  
 License: GPL v2 or later  
 Tags: users, user switching, fast user switching, multisite, woocommerce, buddypress, bbpress  
