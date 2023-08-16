@@ -31,11 +31,11 @@ jobs:
       matrix:
         wp:
           - 'nightly'
-          - '6.2'
+          - 'latest'
         php:
           - '8.2'
           - '7.4'
-          - '5.6'
+          - '7.0'
         dev:
           - ${{ github.ref_name == 'develop' }}
         exclude:
