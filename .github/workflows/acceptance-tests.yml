@@ -31,7 +31,9 @@ jobs:
       matrix:
         wp:
           - 'nightly'
-          - 'latest'
+          - '6.3'
+          - '6.2'
+          - '6.1'
         php:
           - '8.2'
           - '7.4'
