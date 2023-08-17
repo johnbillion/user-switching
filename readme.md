@@ -15,7 +15,7 @@ Instant switching between user accounts in WordPress.
 
 [![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=flat-square)](#ethical-open-source)
 [![](https://img.shields.io/wordpress/plugin/installs/user-switching?style=flat-square)](https://wordpress.org/plugins/user-switching/)
-[![](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=flat-square)](https://github.com/johnbillion/user-switching/actions)
+[![](https://img.shields.io/github/actions/workflow/status/johnbillion/user-switching/integration-tests.yml?branch=develop&style=flat-square)](https://github.com/johnbillion/user-switching/actions)
 
 ## Description
 
@@ -26,7 +26,9 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Switch user: Instantly switch to any user account from the *Users* screen.
  * Switch back: Instantly switch back to your originating account.
  * Switch off: Log out of your account but retain the ability to instantly switch back in again.
- * Compatible with Multisite, WooCommerce, BuddyPress, bbPress, and most two-factor authentication plugins.
+ * Compatible with Multisite, WooCommerce, BuddyPress, and bbPress.
+ * Compatible with most two-factor authentication solutions (see the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for more info).
+ * Approved for use on enterprise-grade WordPress platforms such as <a href="https://www.altis-dxp.com/">Altis</a> and <a href="https://wpvip.com/">WordPress VIP</a>.
 
 ### Security
 
@@ -36,7 +38,6 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Implements the nonce security system in WordPress, meaning only those who intend to switch users can switch.
  * Full support for user session validation where appropriate.
  * Full support for HTTPS.
- * Approved for use on enterprise-grade WordPress platforms such as <a href="https://www.altis-dxp.com/">Altis</a> and <a href="https://wpvip.com/">WordPress.com VIP</a>.
 
 ### Usage
 
