@@ -6,7 +6,7 @@ namespace UserSwitching\Tests;
 
 use user_switching;
 
-class Switching extends Test {
+class SwitchingTest extends Test {
 
 	/**
 	 * @var int|false

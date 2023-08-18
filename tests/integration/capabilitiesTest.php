@@ -8,7 +8,7 @@ namespace UserSwitching\Tests;
  * @covers \user_switching::filter_user_has_cap
  * @covers \user_switching::filter_map_meta_cap
  */
-class Capabilities extends Test {
+class CapabilitiesTest extends Test {
 
 	/**
 	 * @return array<string, array<int, string|bool>>

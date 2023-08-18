@@ -9,7 +9,7 @@ use user_switching;
 /**
  * @covers \user_switching::authenticate_old_user
  */
-class Authentication extends Test {
+class AuthenticationTest extends Test {
 
 	public function testValidCookiePassesAuthentication() {
 		$expiry = time() + 172800;
