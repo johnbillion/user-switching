@@ -50,10 +50,10 @@
 	},
 	"config": {
 		"allow-plugins": {
+			"composer/installers": true,
 			"dealerdirect/phpcodesniffer-composer-installer": true,
 			"ergebnis/composer-normalize": true,
-			"roots/wordpress-core-installer": true,
-			"composer/installers": true
+			"roots/wordpress-core-installer": true
 		},
 		"classmap-authoritative": true,
 		"preferred-install": "dist",
