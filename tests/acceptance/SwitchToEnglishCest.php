@@ -3,17 +3,11 @@
  * Acceptance tests for switching from a user who doesn't use English to a user who does
  */
 
-class SwitchToEnglishCest extends Cest {
+class SwitchToEnglishCest {
 	public function _before( AcceptanceTester $I ) {
-		parent::_before( $I );
-
 		$I->comment( 'As an administrator of a site which uses more than one language' );
 		$I->comment( 'I need to be able to switch between users' );
 		$I->comment( 'And see the output of User Switching in my original language' );
-
-		# Install language files:
-		$I->cli( 'language core install it_IT' );
-		$I->cli( 'language plugin install user-switching it_IT' );
 
 		$I->haveUserInDatabase( 'admin_it', 'administrator', [
 			'display_name' => 'Admin IT',

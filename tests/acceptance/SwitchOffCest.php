@@ -3,10 +3,8 @@
  * Acceptance tests for switching off.
  */
 
-class SwitchOffCest extends Cest {
+class SwitchOffCest {
 	public function _before( AcceptanceTester $I ) {
-		parent::_before( $I );
-
 		$I->comment( 'As an administrator' );
 		$I->comment( 'I need to be able to switch off' );
 		$I->comment( 'In order to view the site without logging out completely' );
@@ -16,7 +14,7 @@ class SwitchOffCest extends Cest {
 		$I->loginAsAdmin();
 		$I->amOnAdminPage( '/' );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '?switched_off=true' );
+		$I->seeCurrentUrlEquals( '/?switched_off=true' );
 		$I->amLoggedOut();
 
 		$I->switchBackTo( 'admin' );
@@ -28,12 +26,12 @@ class SwitchOffCest extends Cest {
 		$I->loginAsAdmin();
 		$I->amOnAdminPage( '/' );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '?switched_off=true' );
+		$I->seeCurrentUrlEquals( '/?switched_off=true' );
 		$I->amLoggedOut();
 
 		$I->amOnPage( 'wp-login.php' );
 		$I->switchBackTo( 'admin' );
-		$I->seeCurrentUrlEquals( '/wp-admin/users.php?user_switched=true&switched_back=true' );
+		$I->seeCurrentUrlEquals( '/wp-admin/users.php' );
 		$I->seeAdminSuccessNotice( 'Switched back to admin.' );
 		$I->amLoggedInAs( 'admin' );
 	}
@@ -44,17 +42,10 @@ class SwitchOffCest extends Cest {
 			'post_status' => 'publish',
 			'post_name' => 'hello-world',
 		] );
+		$I->amNotUsingTheEditorForTheFirstTime();
 		$I->amEditingPostWithId( $id );
 		$I->switchOff();
-
-		try {
-			// WordPress >= 5.7:
-			$I->seeCurrentUrlEquals( '/hello-world?switched_off=true' );
-		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
-			// WordPress < 5.7:
-			$I->seeCurrentUrlEquals( '?switched_off=true' );
-		}
-
+		$I->seeCurrentUrlEquals( '/hello-world/?switched_off=true' );
 		$I->amLoggedOut();
 	}
 
@@ -64,9 +55,10 @@ class SwitchOffCest extends Cest {
 			'post_status' => 'draft',
 			'post_name' => 'hello-world',
 		] );
+		$I->amNotUsingTheEditorForTheFirstTime();
 		$I->amEditingPostWithId( $id );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '?switched_off=true' );
+		$I->seeCurrentUrlEquals( '/?switched_off=true' );
 		$I->amLoggedOut();
 	}
 
@@ -78,7 +70,7 @@ class SwitchOffCest extends Cest {
 
 		try {
 			// WordPress >= 5.1:
-			$I->seeCurrentUrlEquals( '/category/hello?switched_off=true' );
+			$I->seeCurrentUrlEquals( '/category/hello/?switched_off=true' );
 		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
 			// WordPress < 5.1:
 			$I->seeCurrentUrlEquals( '?switched_off=true' );
@@ -94,7 +86,7 @@ class SwitchOffCest extends Cest {
 		// $I->amEditingUserWithId( $id );
 		$I->amOnAdminPage( '/user-edit.php?user_id=' . $id );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '/author/example?switched_off=true' );
+		$I->seeCurrentUrlEquals( '/author/example/?switched_off=true' );
 		$I->amLoggedOut();
 	}
 
@@ -109,7 +101,7 @@ class SwitchOffCest extends Cest {
 		] );
 		$I->amOnAdminPage( '/comment.php?action=editcomment&c=' . $commentId );
 		$I->switchOff();
-		$I->seeCurrentUrlEquals( '/leave-a-comment?switched_off=true#comment-' . $commentId );
+		$I->seeCurrentUrlEquals( '/leave-a-comment/?switched_off=true#comment-' . $commentId );
 		$I->amLoggedOut();
 	}
 
@@ -124,15 +116,7 @@ class SwitchOffCest extends Cest {
 		] );
 		$I->amOnAdminPage( '/comment.php?action=editcomment&c=' . $commentId );
 		$I->switchOff();
-
-		try {
-			// WordPress >= 5.7:
-			$I->seeCurrentUrlEquals( '/leave-a-comment?switched_off=true' );
-		} catch ( \PHPUnit\Framework\ExpectationFailedException $e ) {
-			// WordPress < 5.7:
-			$I->seeCurrentUrlEquals( '?switched_off=true' );
-		}
-
+		$I->seeCurrentUrlEquals( '/leave-a-comment/?switched_off=true' );
 		$I->amLoggedOut();
 	}
 }

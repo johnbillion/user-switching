@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow
 
-name: Coding Standards
+name: Integration Tests
 on:
   push:
     branches:
@@ -11,7 +11,7 @@ on:
     branches:
       - '**'
   schedule:
-    # Once weekly on Mondays at 03:00 UTC.
+    # Once weekly on Mondays at 05:00 UTC.
     #
     #        ┌───────────── minute           (0 - 59)
     #        │  ┌────────── hour             (0 - 23)
@@ -21,18 +21,31 @@ on:
     #        │  │  │  │  │
     #        │  │  │  │  │
     #        │  │  │  │  │
-    - cron: '0  3  *  *  1'
+    - cron: '0  5  *  *  1'
   workflow_dispatch:
 
 jobs:
   test:
-    name: PHP / PHP ${{ matrix.php }}
-    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-coding-standards.yml@trunk
+    name: WP ${{ matrix.wp }} / PHP ${{ matrix.php }}
+    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-integration-tests.yml@trunk
     strategy:
       matrix:
+        wp:
+          - 'nightly'
+          - '6.3'
+          - '6.2'
+          - '6.1'
         php:
           - '8.2'
           - '7.4'
+        dev:
+          - ${{ github.ref_name == 'develop' }}
+        exclude:
+          # Only run the nightly tests on the develop branch.
+          - wp: 'nightly'
+            dev: false
       fail-fast: false
     with:
+      wp: ${{ matrix.wp }}
       php: ${{ matrix.php }}
+      node: false

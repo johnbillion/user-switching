@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace UserSwitching\Tests;
 
-class Readme extends Test {
+class PluginTest extends Test {
 	/**
 	 * @var ?array<string, string>
 	 */

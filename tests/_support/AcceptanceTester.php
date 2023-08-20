@@ -17,6 +17,33 @@ class AcceptanceTester extends \Codeception\Actor {
 	use _generated\AcceptanceTesterActions;
 
 	/**
+	 * Put the block editor into a state where the items we need to interact with are
+	 * actually usable.
+	 *
+	 * @return void
+	 */
+	public function amNotUsingTheEditorForTheFirstTime() {
+		$key = sprintf(
+			'%spersisted_preferences',
+			$this->grabTablePrefix()
+		);
+		$value = [
+			'core/edit-post' => [
+				'fullscreenMode' => false,
+				'welcomeGuide' => false,
+			],
+		];
+
+		$this->haveUserMetaInDatabase(
+			1,
+			$key,
+			[
+				$value,
+			],
+		);
+	}
+
+	/**
 	 * Switch to the specified user
 	 *
 	 * @param string $user_login
@@ -32,6 +59,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * Switch off
 	 */
 	public function switchOff() {
+		$this->moveMouseOver( '#wp-admin-bar-my-account' );
 		$this->click( 'Switch Off' );
 	}
 
@@ -48,6 +76,12 @@ class AcceptanceTester extends \Codeception\Actor {
 				'user_login' => $user_login,
 			]
 		);
+
+		try {
+			$this->moveMouseOver( '#wp-admin-bar-my-account' );
+		} catch ( \Codeception\Exception\ElementNotFound $e ) {
+			// Nothing.
+		}
 
 		$this->click( sprintf(
 			'Switch back to %s',

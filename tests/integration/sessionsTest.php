@@ -7,7 +7,7 @@ namespace UserSwitching\Tests;
 use user_switching;
 use WP_Session_Tokens;
 
-class Sessions extends Test {
+class SessionsTest extends Test {
 
 	/**
 	 * @covers \switch_to_user

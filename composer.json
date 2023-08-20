@@ -1,94 +1,98 @@
 {
 	"name": "johnbillion/user-switching",
 	"description": "Instant switching between user accounts in WordPress.",
-	"homepage": "https://github.com/johnbillion/user-switching",
-	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
+	"type": "wordpress-plugin",
 	"authors": [
 		{
 			"name": "John Blackbourn",
 			"homepage": "https://johnblackbourn.com/"
 		}
 	],
+	"homepage": "https://github.com/johnbillion/user-switching/",
 	"support": {
 		"issues": "https://github.com/johnbillion/user-switching/issues",
 		"forum": "https://wordpress.org/support/plugin/user-switching",
 		"source": "https://github.com/johnbillion/user-switching"
-	},
-	"config": {
-		"sort-packages": true,
-		"allow-plugins": {
-			"composer/installers": true,
-			"composer/package-versions-deprecated": true,
-			"dealerdirect/phpcodesniffer-composer-installer": true,
-			"roots/wordpress-core-installer": true
-		}
-	},
-	"extra": {
-		"wordpress-install-dir": "tests/wordpress"
-	},
-	"require": {
-		"php": ">=5.3",
-		"composer/installers": "^1 || ^2"
-	},
-	"require-dev": {
-		"codeception/module-cli": "^1.0",
-		"codeception/module-db": "^1.0",
-		"codeception/module-phpbrowser": "^1.0",
-		"dealerdirect/phpcodesniffer-composer-installer": "*",
-		"lucatume/wp-browser": "^3.0",
-		"phpcompatibility/php-compatibility": "^9",
-		"phpstan/phpstan": "^1.0",
-		"phpstan/phpstan-deprecation-rules": "^1.0",
-		"phpstan/phpstan-phpunit": "^1.0",
-		"roots/wordpress-core-installer": "^1.0.0",
-		"roots/wordpress-full": "*",
-		"szepeviktor/phpstan-wordpress": "1.1.3",
-		"vlucas/phpdotenv": "^3",
-		"wp-cli/core-command": "^2",
-		"wp-cli/db-command": "^2",
-		"wp-cli/extension-command": "^2",
-		"wp-cli/language-command": "^2",
-		"wp-cli/rewrite-command": "^2",
-		"wp-coding-standards/wpcs": "^2"
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"UserSwitching\\Tests\\": "tests/wpunit"
-		}
-	},
-	"scripts": {
-		"post-update-cmd": [
-			"@php -r \"! file_exists( 'tests/.env' ) && copy( 'tests/.env.dist', 'tests/.env' );\""
-		],
-		"test:phpcs": [
-			"phpcs -nps --colors --report-code --report-summary --report-width=80 --cache=tests/cache/phpcs.json ."
-		],
-		"test:phpstan": [
-			"phpstan analyze --memory-limit=1024M"
-		],
-		"test:integration": [
-			"codecept run integration --env singlesite --skip-group ms-required",
-			"codecept run integration --env multisite --skip-group ms-excluded"
-		],
-		"test:acceptance": [
-			"bin/test.sh"
-		],
-		"test:composer": [
-			"@composer validate --strict --no-check-lock"
-		],
-		"test": [
-			"@test:composer",
-			"@test:phpcs",
-			"@test:phpstan",
-			"@test:integration",
-			"@test:acceptance"
-		]
 	},
 	"funding": [
 		{
 			"type": "github",
 			"url": "https://github.com/sponsors/johnbillion"
 		}
-	]
+	],
+	"require": {
+		"php": ">=7.2",
+		"composer/installers": "^1.0 || ^2.0"
+	},
+	"require-dev": {
+		"codeception/module-asserts": "^1.0",
+		"codeception/module-db": "^1.0",
+		"codeception/module-webdriver": "^1.0",
+		"codeception/util-universalframework": "^1.0",
+		"dealerdirect/phpcodesniffer-composer-installer": "0.7.2",
+		"ergebnis/composer-normalize": "^2",
+		"johnbillion/plugin-infrastructure": "dev-trunk",
+		"lucatume/wp-browser": "^3.0.21",
+		"phpcompatibility/phpcompatibility-wp": "2.1.4",
+		"phpstan/phpstan": "^1.0",
+		"phpstan/phpstan-phpunit": "^1.0",
+		"roots/wordpress-core-installer": "^1.0.0",
+		"roots/wordpress-full": "*",
+		"squizlabs/php_codesniffer": "3.7.1",
+		"szepeviktor/phpstan-wordpress": "1.3.0",
+		"wp-coding-standards/wpcs": "2.3.0"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"UserSwitching\\Tests\\": "tests/integration"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"ergebnis/composer-normalize": true,
+			"roots/wordpress-core-installer": true,
+			"composer/installers": true
+		},
+		"classmap-authoritative": true,
+		"preferred-install": "dist",
+		"prepend-autoloader": false,
+		"sort-packages": true
+	},
+	"extra": {
+		"wordpress-install-dir": "vendor/wordpress/wordpress"
+	},
+	"scripts": {
+		"test": [
+			"@composer validate --strict --no-check-lock",
+			"@composer normalize --dry-run",
+			"@test:phpstan",
+			"@test:phpcs",
+			"@test:integration",
+			"@test:acceptance"
+		],
+		"test:acceptance": [
+			"acceptance-tests --cli=\"language core install it_IT\" --cli=\"language plugin install user-switching it_IT\""
+		],
+		"test:destroy": [
+			"COMPOSE_PROJECT_NAME=user-switching docker compose down --volumes --remove-orphans"
+		],
+		"test:integration": [
+			"integration-tests"
+		],
+		"test:phpcs": [
+			"phpcs -nps --colors --report-code --report-summary --report-width=80 --cache=tests/cache/phpcs.json --basepath='./' ."
+		],
+		"test:phpstan": [
+			"codecept build",
+			"phpstan analyze --memory-limit=1024M"
+		],
+		"test:start": [
+			"COMPOSE_PROJECT_NAME=user-switching docker compose up -d"
+		],
+		"test:stop": [
+			"COMPOSE_PROJECT_NAME=user-switching docker compose down"
+		]
+	}
 }
