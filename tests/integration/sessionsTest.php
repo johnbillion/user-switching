@@ -7,12 +7,11 @@ namespace UserSwitching\Tests;
 use user_switching;
 use WP_Session_Tokens;
 
-class SessionsTest extends Test {
-
+final class SessionsTest extends Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testExtraSessionsAreNotCreatedForUsersWhenSwitching() {
+	public function testExtraSessionsAreNotCreatedForUsersWhenSwitching(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -49,7 +48,7 @@ class SessionsTest extends Test {
 	/**
 	 * @covers \switch_off_user
 	 */
-	public function testExtraSessionsAreNotCreatedForUserWhenSwitchingOff() {
+	public function testExtraSessionsAreNotCreatedForUserWhenSwitchingOff(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -79,7 +78,7 @@ class SessionsTest extends Test {
 	 * @covers \switch_to_user
 	 * @covers \switch_off_user
 	 */
-	public function testPreviousSessionForUserIsReusedWhenSwitchingBack() {
+	public function testPreviousSessionForUserIsReusedWhenSwitchingBack(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -132,7 +131,7 @@ class SessionsTest extends Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testExpiredSessionPreventsUserFromSwitchingBack() {
+	public function testExpiredSessionPreventsUserFromSwitchingBack(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -188,7 +187,7 @@ class SessionsTest extends Test {
 	 * @covers \switch_to_user
 	 * @covers \switch_off_user
 	 */
-	public function testSessionTokensAreCorrectlyReusedWhenSwitching() {
+	public function testSessionTokensAreCorrectlyReusedWhenSwitching(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -261,5 +260,4 @@ class SessionsTest extends Test {
 		self::assertCount( 1, $admin_manager->get_all() );
 		self::assertNotNull( $admin_manager->get( $admin_token ) );
 	}
-
 }

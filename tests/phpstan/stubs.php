@@ -41,7 +41,6 @@ function bp_get_button( array $args ) {}
 function buddypress() {}
 
 class BuddyPress {
-
 	/**
 	 * @var array<string, string>
 	 */
@@ -59,7 +58,6 @@ function bbp_get_user_id() {}
 function bbp_get_user_profile_url( int $user_id ) {}
 
 class WooCommerce {
-
 	/**
 	 * @var \WC_Session
 	 */

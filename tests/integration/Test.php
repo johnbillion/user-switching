@@ -5,21 +5,20 @@ declare(strict_types = 1);
 namespace UserSwitching\Tests;
 
 abstract class Test extends \Codeception\TestCase\WPTestCase {
+	/**
+	 * @var array<string, \WP_User>
+	 */
+	protected static $users = [];
 
 	/**
 	 * @var array<string, \WP_User>
 	 */
-	protected static $users = array();
-
-	/**
-	 * @var array<string, \WP_User>
-	 */
-	protected static $testers = array();
+	protected static $testers = [];
 
 	/**
 	 * @var array<int, string>
 	 */
-	protected $sessions = array();
+	protected $sessions = [];
 
 	/**
 	 * @return void
@@ -57,10 +56,7 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 		add_filter( 'user_switching_send_auth_cookies', '__return_false' );
 	}
 
-	/**
-	 * @return void
-	 */
-	public function _before() {
+	public function _before(): void {
 		add_action( 'set_auth_cookie',           array( $this, 'action_set_auth_cookie' ), 10, 6 );
 		add_action( 'set_logged_in_cookie',      array( $this, 'action_set_logged_in_cookie' ), 10, 6 );
 		add_action( 'clear_auth_cookie',         array( $this, 'action_clear_auth_cookie' ) );
@@ -70,35 +66,34 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 		add_action( 'clear_olduser_cookie',      array( $this, 'action_clear_olduser_cookie' ) );
 	}
 
-	public function action_set_auth_cookie( $cookie, $expire, $expiration, $user_id, $scheme, $token ) {
+	final public function action_set_auth_cookie( $cookie, $expire, $expiration, $user_id, $scheme, $token ): void {
 		$_COOKIE[ SECURE_AUTH_COOKIE ] = $cookie;
 		$_COOKIE[ AUTH_COOKIE ] = $cookie;
 		$this->sessions[ $user_id ] = $token;
 	}
 
-	public function action_set_logged_in_cookie( $cookie, $expire, $expiration, $user_id, $scheme, $token ) {
+	final public function action_set_logged_in_cookie( $cookie, $expire, $expiration, $user_id, $scheme, $token ): void {
 		$_COOKIE[ LOGGED_IN_COOKIE ] = $cookie;
 	}
 
-	public function action_clear_auth_cookie() {
+	final public function action_clear_auth_cookie(): void {
 		unset( $_COOKIE[ LOGGED_IN_COOKIE ] );
 		unset( $_COOKIE[ SECURE_AUTH_COOKIE ] );
 		unset( $_COOKIE[ AUTH_COOKIE ] );
 	}
 
-	public function action_set_user_switching_cookie( $cookie, $expiration, $user_id, $scheme, $token ) {
+	final public function action_set_user_switching_cookie( $cookie, $expiration, $user_id, $scheme, $token ): void {
 		$_COOKIE[ USER_SWITCHING_COOKIE ] = $cookie;
 		$_COOKIE[ USER_SWITCHING_SECURE_COOKIE ] = $cookie;
 	}
 
-	public function action_set_olduser_cookie( $cookie, $expiration, $user_id, $scheme, $token ) {
+	final public function action_set_olduser_cookie( $cookie, $expiration, $user_id, $scheme, $token ): void {
 		$_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] = $cookie;
 	}
 
-	public function action_clear_olduser_cookie() {
+	final public function action_clear_olduser_cookie(): void {
 		unset( $_COOKIE[ USER_SWITCHING_COOKIE ] );
 		unset( $_COOKIE[ USER_SWITCHING_SECURE_COOKIE ] );
 		unset( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] );
 	}
-
 }

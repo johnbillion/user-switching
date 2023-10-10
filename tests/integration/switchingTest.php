@@ -6,29 +6,28 @@ namespace UserSwitching\Tests;
 
 use user_switching;
 
-class SwitchingTest extends Test {
+final class SwitchingTest extends Test {
+	/**
+	 * @var int|false
+	 */
+	private $test_switching_user_id;
 
 	/**
 	 * @var int|false
 	 */
-	public $test_switching_user_id;
-
-	/**
-	 * @var int|false
-	 */
-	public $test_switching_old_user_id;
+	private $test_switching_old_user_id;
 
 	/**
 	 * @var int
 	 */
-	public $test_switching_auth_cookie_user_id;
+	private $test_switching_auth_cookie_user_id;
 
 	/**
 	 * @var bool
 	 */
-	public $test_switching_auth_cookie_remember;
+	private $test_switching_auth_cookie_remember;
 
-	public function _before() {
+	public function _before(): void {
 		parent::_before();
 
 		add_action( 'switch_to_user',         array( $this, '_action_switch_user' ), 10, 2 );
@@ -40,7 +39,7 @@ class SwitchingTest extends Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testSwitchUserAndBack() {
+	public function testSwitchUserAndBack(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -145,7 +144,7 @@ class SwitchingTest extends Test {
 	 * @covers \switch_to_user
 	 * @covers \switch_off_user
 	 */
-	public function testSwitchOffAndBack() {
+	public function testSwitchOffAndBack(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -200,7 +199,7 @@ class SwitchingTest extends Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testSwitchToNonExistentUserFails() {
+	public function testSwitchToNonExistentUserFails(): void {
 		// Switch user
 		$user = switch_to_user( 0 );
 
@@ -208,10 +207,9 @@ class SwitchingTest extends Test {
 	}
 
 	/**
-	 * @testdox Current URL is detected correctly
 	 * @covers \user_switching::current_url
 	 */
-	public function testCurrentUrl() {
+	public function testCurrentUrl(): void {
 		$url = add_query_arg( 'foo', 'bar', home_url( 'baz' ) );
 		$this->go_to( $url );
 		self::assertSame( user_switching::current_url(), $url );
@@ -221,23 +219,20 @@ class SwitchingTest extends Test {
 	 * @param int       $user_id
 	 * @param int|false $old_user_id
 	 */
-	public function _action_switch_user( $user_id, $old_user_id ) {
+	public function _action_switch_user( $user_id, $old_user_id ): void {
 		$this->test_switching_user_id = $user_id;
 		$this->test_switching_old_user_id = $old_user_id;
 	}
 
-	public function _action_switch_off( $old_user_id ) {
+	public function _action_switch_off( int $old_user_id ): void {
 		$this->test_switching_user_id = false;
 		$this->test_switching_old_user_id = $old_user_id;
 	}
 
-	/**
-	 * @return int
-	 */
-	public function _filter_auth_cookie_expiration( $length, $user_id, $remember ) {
+	public function _filter_auth_cookie_expiration( int $length, int $user_id, bool $remember ): int {
 		$this->test_switching_auth_cookie_user_id = $user_id;
 		$this->test_switching_auth_cookie_remember = $remember;
+
 		return $length;
 	}
-
 }
