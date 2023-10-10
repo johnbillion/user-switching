@@ -38,7 +38,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Main singleton class for the User Switching plugin.
  */
 class user_switching {
-
 	/**
 	 * The name used to identify the application during a WordPress redirect.
 	 *
@@ -1195,7 +1194,6 @@ class user_switching {
 	 * Private class constructor. Use `get_instance()` to get the instance.
 	 */
 	private function __construct() {}
-
 }
 
 if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
@@ -1404,16 +1402,15 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 		 * Attaches the original user ID and session token to the new session when a user switches to another user.
 		 *
 		 * @param array<string, mixed> $session Array of extra data.
-		 * @param int                  $user_id User ID.
 		 * @return array<string, mixed> Array of extra data.
 		 */
-		$session_filter = function( array $session, $user_id ) use ( $old_user_id, $old_token ) {
+		$session_filter = function ( array $session ) use ( $old_user_id, $old_token ) {
 			$session['switched_from_id'] = $old_user_id;
 			$session['switched_from_session'] = $old_token;
 			return $session;
 		};
 
-		add_filter( 'attach_session_information', $session_filter, 99, 2 );
+		add_filter( 'attach_session_information', $session_filter, 99 );
 
 		wp_clear_auth_cookie();
 		wp_set_auth_cookie( $user_id, $remember, '', $new_token );
