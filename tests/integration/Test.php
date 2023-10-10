@@ -70,7 +70,7 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 		int $expiration,
 		int $user_id,
 		string $scheme,
-		string $token,
+		string $token
 	): void {
 		$_COOKIE[ SECURE_AUTH_COOKIE ] = $cookie;
 		$_COOKIE[ AUTH_COOKIE ] = $cookie;
