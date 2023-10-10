@@ -6,8 +6,11 @@ parameters:
 	level: 9
 	paths:
 		- user-switching.php
+		- tests/acceptance
+		- tests/integration
 	scanDirectories:
 		- tests/_support/
+		- vendor/lucatume/wp-browser/src/includes/factory/
 	excludePaths:
 		analyse:
 			- tests/integration/Supports/
