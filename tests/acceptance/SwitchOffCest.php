@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Acceptance tests for switching off.
  */
 
-class SwitchOffCest {
-	public function _before( AcceptanceTester $I ) {
+final class SwitchOffCest {
+	public function _before( AcceptanceTester $I ): void {
 		$I->comment( 'As an administrator' );
 		$I->comment( 'I need to be able to switch off' );
 		$I->comment( 'In order to view the site without logging out completely' );
 	}
 
-	public function SwitchOffFromDashboardAndBackFromFrontEnd( AcceptanceTester $I ) {
+	public function SwitchOffFromDashboardAndBackFromFrontEnd( AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 		$I->amOnAdminPage( '/' );
 		$I->switchOff();
@@ -22,7 +22,7 @@ class SwitchOffCest {
 		$I->amLoggedInAs( 'admin' );
 	}
 
-	public function SwitchOffFromDashboardAndBackFromLoginScreen( AcceptanceTester $I ) {
+	public function SwitchOffFromDashboardAndBackFromLoginScreen( AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 		$I->amOnAdminPage( '/' );
 		$I->switchOff();
@@ -36,7 +36,7 @@ class SwitchOffCest {
 		$I->amLoggedInAs( 'admin' );
 	}
 
-	public function SwitchOffFromPublishedPostEditingScreen( AcceptanceTester $I ) {
+	public function SwitchOffFromPublishedPostEditingScreen( AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 		$id = $I->havePostInDatabase( [
 			'post_status' => 'publish',
@@ -49,7 +49,7 @@ class SwitchOffCest {
 		$I->amLoggedOut();
 	}
 
-	public function SwitchOffFromDraftPostEditingScreen( AcceptanceTester $I ) {
+	public function SwitchOffFromDraftPostEditingScreen( AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 		$id = $I->havePostInDatabase( [
 			'post_status' => 'draft',
@@ -62,7 +62,7 @@ class SwitchOffCest {
 		$I->amLoggedOut();
 	}
 
-	public function SwitchOffFromTermEditingScreen( AcceptanceTester $I ) {
+	public function SwitchOffFromTermEditingScreen( AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 		$term = $I->haveTermInDatabase( 'hello', 'category' );
 		$I->amOnAdminPage( '/term.php?taxonomy=category&tag_ID=' . $term[0] );
@@ -79,7 +79,7 @@ class SwitchOffCest {
 		$I->amLoggedOut();
 	}
 
-	public function SwitchOffFromUserEditingScreen( AcceptanceTester $I ) {
+	public function SwitchOffFromUserEditingScreen( AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 		$id = $I->haveUserInDatabase( 'example', 'editor' );
 		// https://github.com/lucatume/wp-browser/pull/586
@@ -90,7 +90,7 @@ class SwitchOffCest {
 		$I->amLoggedOut();
 	}
 
-	public function SwitchOffFromApprovedCommentEditingScreen( AcceptanceTester $I ) {
+	public function SwitchOffFromApprovedCommentEditingScreen( AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 		$postId = $I->havePostInDatabase( [
 			'post_status' => 'publish',
@@ -105,7 +105,7 @@ class SwitchOffCest {
 		$I->amLoggedOut();
 	}
 
-	public function SwitchOffFromUnapprovedCommentEditingScreen( AcceptanceTester $I ) {
+	public function SwitchOffFromUnapprovedCommentEditingScreen( AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 		$postId = $I->havePostInDatabase( [
 			'post_status' => 'publish',

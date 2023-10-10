@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 /**
  * Acceptance tests for switching from a user who doesn't use English to a user who does
  */
 
-class SwitchToEnglishCest {
-	public function _before( AcceptanceTester $I ) {
+final class SwitchToEnglishCest {
+	public function _before( AcceptanceTester $I ): void {
 		$I->comment( 'As an administrator of a site which uses more than one language' );
 		$I->comment( 'I need to be able to switch between users' );
 		$I->comment( 'And see the output of User Switching in my original language' );
@@ -20,7 +20,7 @@ class SwitchToEnglishCest {
 		] );
 	}
 
-	public function SwitchFromItalianAdminToEnglishAuthorAndBack( AcceptanceTester $I ) {
+	public function SwitchFromItalianAdminToEnglishAuthorAndBack( AcceptanceTester $I ): void {
 		$I->loginAs( 'admin_it', 'admin_it' );
 		$I->switchToUser( 'author_en' );
 		$I->canSeeThePageInLanguage( 'en-US' );
