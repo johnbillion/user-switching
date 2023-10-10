@@ -69,8 +69,10 @@
 			"@composer normalize --dry-run",
 			"@test:phpstan",
 			"@test:phpcs",
+			"@test:start",
 			"@test:integration",
-			"@test:acceptance"
+			"@test:acceptance",
+			"@test:stop"
 		],
 		"test:acceptance": [
 			"acceptance-tests --cli=\"language core install it_IT\" --cli=\"language plugin install user-switching it_IT\""
