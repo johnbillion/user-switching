@@ -1,18 +1,9 @@
-[![Build Status](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=for-the-badge)](https://github.com/johnbillion/user-switching/actions)
-[![](https://img.shields.io/badge/contributor-code%20of%20conduct-5e0d73.svg?style=for-the-badge)](https://github.com/johnbillion/user-switching/blob/develop/CODE_OF_CONDUCT.md)
-[![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=for-the-badge)](#ethical-open-source)
+[![](https://img.shields.io/badge/contributor-code%20of%20conduct-5e0d73.svg?style=flat-square)](https://github.com/johnbillion/user-switching/blob/develop/CODE_OF_CONDUCT.md)
+[![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=flat-square)](#ethical-open-source)
 
 # Contributing to User Switching
 
 Bug reports, code contributions, and general feedback are very welcome. These should be submitted through [the GitHub repository](https://github.com/johnbillion/user-switching). Development happens in the `develop` branch, and any pull requests should be made against that branch please.
-
-* [Reviews on WordPress.org](#reviews-on-wordpressorg)
-* [Reporting Security Issues](#reporting-security-issues)
-* [Inclusivity and Code of Conduct](#inclusivity-and-code-of-conduct)
-* [Setting up Locally](#setting-up-locally)
-* [Running the Tests](#running-the-tests)
-* [Releasing a New Version](#releasing-a-new-version)
-* [Ethical Open Source](#ethical-open-source)
 
 ## Reviews on WordPress.org
 
@@ -35,48 +26,74 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 ### Prerequisites
 
 * [Composer](https://getcomposer.org/)
-* [Node](https://nodejs.org/)
-* A local web server running WordPress
+* [Docker Desktop](https://www.docker.com/desktop) to run the tests
 
 ### Setup
 
-1. Install the PHP dependencies:
+Install the PHP dependencies:
 
-       composer install
-
-2. Install the Node dependencies:
-
-       npm install
-
-3. Check the MySQL database credentials in the `tests/.env` file and amend them as necessary.
-
-**Important:** Ensure you use a separate test database (eg. `wordpress_test`) because, just like the WordPress test suite, the database will be wiped clean with every test run.
+	composer install
 
 ## Running the Tests
 
-To run the whole test suite which includes PHPUnit unit tests, PHPCS code sniffs, PHPStan static analysis, and WordHat functional tests:
+The test suite includes integration and acceptance tests which run in a Docker container. Ensure Docker Desktop is running, then start the containers with:
+
+	composer test:start
+
+To run the whole test suite which includes integration tests, acceptance tests, linting, and static analysis:
 
 	composer test
 
-To run just the unit tests:
+To run tests individually, run one of:
 
-	composer test:ut
-
-To run just the code sniffs:
-
-	composer test:cs
-
-To run just the static analysis:
-
+	composer test:integration
+	composer test:acceptance
+	composer test:phpcs
 	composer test:phpstan
 
-To run just the functional tests:
+To stop the Docker containers:
 
-	composer test:ft
+	composer test:stop
 
 ## Releasing a New Version
 
-User Switching gets automatically deployed to the WordPress.org Plugin Directory whenever a new release is published on GitHub.
+These are the steps to take to release a new version of User Switching (for contributors who have push access to the GitHub repo).
+
+### Prior to Release
+
+1. Check [the milestone on GitHub](https://github.com/johnbillion/user-switching/milestones) for open issues or PRs. Fix or reassign as necessary.
+1. If this is a non-patch release, check issues and PRs assigned to the patch or minor milestones that will get skipped. Reassign as necessary.
+1. Ensure you're on the `develop` branch and all the changes for this release have been merged in.
+1. Ensure `readme.md` contains up to date descriptions, "Tested up to" versions, FAQs, screenshots, etc.
+1. Ensure `.gitattributes` is up to date with all files that shouldn't be part of the build.
+   - To do this, run `git archive --output=user-switching.zip HEAD` then check the contents for files that shouldn't be part of the package.
+1. Run `composer test` and ensure everything passes.
+1. Run `git push origin develop` (if necessary) and ensure CI is passing.
+1. Prepare a changelog for [the Releases page on GitHub](https://github.com/johnbillion/user-switching/releases).
+
+### For Release
+
+1. Bump the plugin version number:
+   - `npm run bump:patch` for a patch release (1.2.3 => 1.2.4)
+   - `npm run bump:minor` for a minor release (1.2.3 => 1.3.0)
+   - `npm run bump:major` for a major release (1.2.3 => 2.0.0)
+1. `git push origin develop`
+1. `git tag x.y.z`
+1. `git push origin --tags`
+1. Enter the changelog into [the release on GitHub](https://github.com/johnbillion/user-switching/releases) and publish it.
+
+### Post Release
+
+Publishing a release on GitHub triggers an action which deploys the release to the WordPress.org Plugin Directory. No need to touch Subversion.
+
+New milestones are automatically created for the next major, minor, and patch releases where appropriate.
+
+1. Close the milestone.
+1. If this is a non-patch release, manually delete any [unused patch and minor milestones on GitHub](https://github.com/johnbillion/user-switching/milestones).
+1. Check the new version has appeared [on the WordPress.org plugin page](https://wordpress.org/plugins/user-switching/) (it'll take a few minutes).
+1. Resolve relevant threads on [the plugin's support forums](https://wordpress.org/support/plugin/user-switching/).
+
+### Asset Updates
 
 Assets such as screenshots and banners are stored in the `.wordpress-org` directory. These get deployed as part of the automated release process too.
 

@@ -1,60 +1,58 @@
 <?xml version="1.0"?>
 <ruleset name="User Switching">
+	<arg name="cache" value="tests/cache/phpcs.json"/>
 
-	<config name="testVersion" value="5.3-"/>
+	<config name="minimum_wp_version" value="5.6"/>
+	<config name="testVersion" value="7.4-"/>
 
-	<exclude-pattern>*/.github/*</exclude-pattern>
-	<exclude-pattern>*/build/*</exclude-pattern>
-	<exclude-pattern>*/features/*</exclude-pattern>
-	<exclude-pattern>*/node_modules/*</exclude-pattern>
-	<exclude-pattern>*/tests/*</exclude-pattern>
-	<exclude-pattern>*/vendor/*</exclude-pattern>
-	<exclude-pattern>Gruntfile.js</exclude-pattern>
+	<exclude-pattern>/tests/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
 
 	<rule ref="PHPCompatibility"/>
 
 	<rule ref="WordPress-Extra">
-
-		<!-- User Switching supports WordPress versions older than 4.4: -->
-		<exclude name="WordPress.WP.AlternativeFunctions.parse_url_parse_url" />
-		<exclude name="WordPress.PHP.DiscouragedPHPFunctions.urlencode_urlencode" />
-
-		<!-- User Switching supports WordPress versions older than 4.1: -->
-		<exclude name="WordPress.WP.AlternativeFunctions.json_encode_json_encode" />
-
 		<!-- Skip checks for naming and indentation because IDGAF: -->
 		<exclude name="WordPress.Files.FileName" />
 		<exclude name="PEAR.NamingConventions.ValidClassName" />
-		<exclude name="Generic.WhiteSpace.ScopeIndent" />
 		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
 		<exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
+		<exclude name="Universal.Files.SeparateFunctionsFromOO.Mixed" />
 
 		<!-- These are all false positives: -->
 		<exclude name="WordPress.Security.NonceVerification.Recommended" />
 
+		<!-- Sanity: -->
+		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
 	</rule>
 
 	<rule ref="WordPress-Docs" />
 
 	<rule ref="WordPress.Security.EscapeOutput">
 		<properties>
-			<property type="array" name="customAutoEscapedFunctions" value="bp_get_button"/>
+			<property name="customAutoEscapedFunctions" type="array">
+				<element value="bp_get_button"/>
+			</property>
 		</properties>
 	</rule>
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="user-switching"/>
+			<property name="text_domain" type="array">
+				<element value="user-switching"/>
+			</property>
 		</properties>
 	</rule>
 
-	<rule ref="WordPress.WP.DeprecatedFunctions">
+	<rule ref="WordPress.WP.Capabilities">
 		<properties>
-			<property name="minimum_supported_version" value="3.7" />
+			<property name="custom_capabilities" type="array">
+				<element value="switch_to_user"/>
+				<element value="switch_off"/>
+			</property>
 		</properties>
 	</rule>
-
 </ruleset>

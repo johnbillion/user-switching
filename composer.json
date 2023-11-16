@@ -1,80 +1,95 @@
 {
-	"name"       : "johnbillion/user-switching",
+	"name": "johnbillion/user-switching",
 	"description": "Instant switching between user accounts in WordPress.",
-	"homepage"   : "https://github.com/johnbillion/user-switching",
-	"type"       : "wordpress-plugin",
-	"license"    : "GPL-2.0-or-later",
-	"authors"    : [
+	"license": "GPL-2.0-or-later",
+	"type": "wordpress-plugin",
+	"authors": [
 		{
-			"name"    : "John Blackbourn",
+			"name": "John Blackbourn",
 			"homepage": "https://johnblackbourn.com/"
 		}
 	],
+	"homepage": "https://github.com/johnbillion/user-switching/",
 	"support": {
 		"issues": "https://github.com/johnbillion/user-switching/issues",
 		"forum": "https://wordpress.org/support/plugin/user-switching",
 		"source": "https://github.com/johnbillion/user-switching"
-	},
-	"config": {
-		"sort-packages": true
-	},
-	"extra": {
-		"wordpress-install-dir": "tests/wordpress"
-	},
-	"require": {
-		"php": ">=5.3",
-		"composer/installers": "^1"
-	},
-	"require-dev" : {
-		"behat/mink-goutte-driver": "^1.2",
-		"dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
-		"genesis/behat-fail-aid": "^2.0",
-		"johnbillion/php-docs-standards": "^2",
-		"paulgibbs/behat-wordpress-extension": "^3.3",
-		"php-stubs/wordpress-stubs": "^5.7",
-		"phpcompatibility/php-compatibility": "^9",
-		"phpstan/phpstan": "0.12.87",
-		"phpstan/phpstan-deprecation-rules": "0.12.6",
-		"phpstan/phpstan-phpunit": "0.12.19",
-		"phpunit/phpunit": "^7",
-		"roots/wordpress": "*",
-		"szepeviktor/phpstan-wordpress": "^0.7.5",
-		"vlucas/phpdotenv": "^3",
-		"wp-cli/core-command": "^2",
-		"wp-cli/db-command": "^2",
-		"wp-cli/language-command": "^2",
-		"wp-coding-standards/wpcs": "^2",
-		"wp-phpunit/wp-phpunit": "*"
-	},
-	"scripts": {
-		"post-update-cmd": [
-			"@php -r \"! file_exists( 'tests/.env' ) && copy( 'tests/.env.dist', 'tests/.env' );\""
-		],
-		"test:cs": [
-			"phpcs -nps --colors --report-code --report-summary --report-width=80 ."
-		],
-		"test:phpstan": [
-			"phpstan analyze"
-		],
-		"test:ut": [
-			"wp db reset --yes --path=tests/wordpress #",
-			"export WP_MULTISITE=0 && phpunit --verbose --colors=always --exclude-group=ms-required",
-			"export WP_MULTISITE=1 && phpunit --verbose --colors=always --exclude-group=ms-excluded"
-		],
-		"test:ft": [
-			"bin/test.sh"
-		],
-		"test": [
-			"@test:cs",
-			"@test:phpstan",
-			"@test:ut",
-			"@test:ft"
-		]
 	},
 	"funding": [
 		{
 			"type": "github",
 			"url": "https://github.com/sponsors/johnbillion"
 		}
-	]
+	],
+	"require": {
+		"php": ">=7.4",
+		"composer/installers": "^1.0 || ^2.0"
+	},
+	"require-dev": {
+		"codeception/module-asserts": "^1.0",
+		"codeception/module-db": "^1.0",
+		"codeception/module-webdriver": "^1.0",
+		"codeception/util-universalframework": "^1.0",
+		"johnbillion/plugin-infrastructure": "dev-trunk",
+		"lucatume/wp-browser": "3.2.1",
+		"phpcompatibility/phpcompatibility-wp": "2.1.4",
+		"phpstan/phpstan": "1.10.41",
+		"phpstan/phpstan-phpunit": "1.3.15",
+		"roots/wordpress-core-installer": "^1.0.0",
+		"roots/wordpress-full": "*",
+		"szepeviktor/phpstan-wordpress": "1.3.2",
+		"wp-coding-standards/wpcs": "3.0.1"
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"UserSwitching\\Tests\\": "tests/integration"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true,
+			"roots/wordpress-core-installer": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"classmap-authoritative": true,
+		"preferred-install": "dist",
+		"prepend-autoloader": false,
+		"sort-packages": true
+	},
+	"extra": {
+		"wordpress-install-dir": "vendor/wordpress/wordpress"
+	},
+	"scripts": {
+		"test": [
+			"@composer validate --strict --no-check-lock",
+			"@test:phpstan",
+			"@test:phpcs",
+			"@test:start",
+			"@test:integration",
+			"@test:acceptance",
+			"@test:stop"
+		],
+		"test:acceptance": [
+			"acceptance-tests --cli=\"language core install it_IT\" --cli=\"language plugin install user-switching it_IT\""
+		],
+		"test:destroy": [
+			"tests-destroy"
+		],
+		"test:integration": [
+			"integration-tests"
+		],
+		"test:phpcs": [
+			"phpcs -ps --colors --report-code --report-summary --report-width=80 --basepath='./' ."
+		],
+		"test:phpstan": [
+			"codecept build",
+			"phpstan analyze --memory-limit=1024M"
+		],
+		"test:start": [
+			"tests-start"
+		],
+		"test:stop": [
+			"tests-stop"
+		]
+	}
 }

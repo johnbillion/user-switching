@@ -1,13 +1,15 @@
-<?php
+<?php declare(strict_types = 1);
 
-declare(strict_types = 1);
+namespace UserSwitching\Tests;
 
-class TestSessions extends User_Switching_Test {
+use user_switching;
+use WP_Session_Tokens;
 
+final class SessionsTest extends Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testExtraSessionsAreNotCreatedForUsersWhenSwitching() : void {
+	public function testExtraSessionsAreNotCreatedForUsersWhenSwitching(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -16,12 +18,12 @@ class TestSessions extends User_Switching_Test {
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
-		$admin_before  = $admin_manager->get_all();
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_before = $admin_manager->get_all();
 
 		// Set up the author session manager, but with no session
 		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
-		$author_before  = $author_manager->get_all();
+		$author_before = $author_manager->get_all();
 
 		// Set up the admin user state
 		wp_set_current_user( $admin->ID );
@@ -44,7 +46,7 @@ class TestSessions extends User_Switching_Test {
 	/**
 	 * @covers \switch_off_user
 	 */
-	public function testExtraSessionsAreNotCreatedForUserWhenSwitchingOff() : void {
+	public function testExtraSessionsAreNotCreatedForUserWhenSwitchingOff(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -53,8 +55,8 @@ class TestSessions extends User_Switching_Test {
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
-		$admin_before  = $admin_manager->get_all();
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_before = $admin_manager->get_all();
 
 		// Set up the admin user state
 		wp_set_current_user( $admin->ID );
@@ -74,7 +76,7 @@ class TestSessions extends User_Switching_Test {
 	 * @covers \switch_to_user
 	 * @covers \switch_off_user
 	 */
-	public function testPreviousSessionForUserIsReusedWhenSwitchingBack() : void {
+	public function testPreviousSessionForUserIsReusedWhenSwitchingBack(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -83,8 +85,8 @@ class TestSessions extends User_Switching_Test {
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
-		$admin_before  = $admin_manager->get_all();
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_before = $admin_manager->get_all();
 
 		// Set up the author session manager, but with no session
 		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
@@ -127,7 +129,7 @@ class TestSessions extends User_Switching_Test {
 	/**
 	 * @covers \switch_to_user
 	 */
-	public function testExpiredSessionPreventsUserFromSwitchingBack() : void {
+	public function testExpiredSessionPreventsUserFromSwitchingBack(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -136,12 +138,12 @@ class TestSessions extends User_Switching_Test {
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
-		$admin_before  = $admin_manager->get_all();
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_before = $admin_manager->get_all();
 
 		// Set up the author session manager, but with no session
 		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
-		$author_before  = $author_manager->get_all();
+		$author_before = $author_manager->get_all();
 
 		// Set up the admin user state
 		wp_set_current_user( $admin->ID );
@@ -183,7 +185,7 @@ class TestSessions extends User_Switching_Test {
 	 * @covers \switch_to_user
 	 * @covers \switch_off_user
 	 */
-	public function testSessionTokensAreCorrectlyReusedWhenSwitching() : void {
+	public function testSessionTokensAreCorrectlyReusedWhenSwitching(): void {
 		if ( is_multisite() ) {
 			$admin = self::$testers['super'];
 		} else {
@@ -192,7 +194,7 @@ class TestSessions extends User_Switching_Test {
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token   = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
 
 		// Set up the author session manager, but with no session
 		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
@@ -202,10 +204,10 @@ class TestSessions extends User_Switching_Test {
 		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
 
 		// Switch user
-		$user         = switch_to_user( self::$users['author']->ID );
+		$user = switch_to_user( self::$users['author']->ID );
 		$author_token = wp_get_session_token();
-		$cookies      = user_switching_get_auth_cookie();
-		$cookie       = end( $cookies );
+		$cookies = user_switching_get_auth_cookie();
+		$cookie = end( $cookies );
 
 		self::assertIsString( $cookie );
 
@@ -236,9 +238,9 @@ class TestSessions extends User_Switching_Test {
 		self::assertNull( $author_manager->get( $author_token ) );
 
 		// Switch off
-		$off     = switch_off_user();
+		$off = switch_off_user();
 		$cookies = user_switching_get_auth_cookie();
-		$cookie  = end( $cookies );
+		$cookie = end( $cookies );
 
 		self::assertIsString( $cookie );
 
@@ -256,5 +258,4 @@ class TestSessions extends User_Switching_Test {
 		self::assertCount( 1, $admin_manager->get_all() );
 		self::assertNotNull( $admin_manager->get( $admin_token ) );
 	}
-
 }

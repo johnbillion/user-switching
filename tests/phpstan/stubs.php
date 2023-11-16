@@ -1,14 +1,5 @@
 <?php
 
-// WP core constants:
-define( 'AUTH_COOKIE', '' );
-define( 'COOKIE_DOMAIN', '' );
-define( 'COOKIEHASH', '' );
-define( 'COOKIEPATH', '' );
-define( 'LOGGED_IN_COOKIE', '' );
-define( 'SECURE_AUTH_COOKIE', '' );
-define( 'SITECOOKIEPATH', '' );
-
 // User Switching constants:
 define( 'USER_SWITCHING_COOKIE', '' );
 define( 'USER_SWITCHING_OLDUSER_COOKIE', '' );
@@ -50,7 +41,6 @@ function bp_get_button( array $args ) {}
 function buddypress() {}
 
 class BuddyPress {
-
 	/**
 	 * @var array<string, string>
 	 */
@@ -68,7 +58,6 @@ function bbp_get_user_id() {}
 function bbp_get_user_profile_url( int $user_id ) {}
 
 class WooCommerce {
-
 	/**
 	 * @var \WC_Session
 	 */
@@ -82,9 +71,19 @@ class WC_Session {
 	public function forget_session() {}
 }
 
+class WC_Order {
+	/**
+	 * @return \WP_User|false
+	 */
+	public function get_user() {}
+
+	/**
+	 * @return string
+	 */
+	public function get_view_order_url() {}
+}
+
 /**
  * @return \WooCommerce
  */
 function WC() {}
-
-class PHPUnit_Framework_TestCase {}
