@@ -10,7 +10,7 @@
  *
  * Plugin Name:       User Switching
  * Description:       Instant switching between user accounts in WordPress
- * Version:           1.7.0
+ * Version:           1.7.1
  * Plugin URI:        https://wordpress.org/plugins/user-switching/
  * Author:            John Blackbourn & contributors
  * Author URI:        https://github.com/johnbillion/user-switching/graphs/contributors
@@ -377,7 +377,7 @@ class user_switching {
 		/**
 		 * Filters the redirect location after a user switches to another account or switches off.
 		 *
-		 * @since 1.7.0
+		 * @since 1.7.1
 		 *
 		 * @param string       $redirect_to   The target redirect location, or an empty string if none is specified.
 		 * @param string|null  $redirect_type The redirect type, see the `user_switching::REDIRECT_*` constants.
