@@ -282,7 +282,7 @@ When a user switches to another account, switches off, or switches back, the `us
 /**
  * Filters the redirect location after a user switches to another account or switches off.
  *
- * @since 1.7.1
+ * @since 1.7.0
  *
  * @param string       $redirect_to   The target redirect location, or an empty string if none is specified.
  * @param string|null  $redirect_type The redirect type, see the `user_switching::REDIRECT_*` constants.
