@@ -1,9 +1,7 @@
 # User Switching
 
 Stable tag: 1.7.0  
-Requires at least: 5.1  
 Tested up to: 6.3  
-Requires PHP: 7.2  
 License: GPL v2 or later  
 Tags: users, user switching, fast user switching, multisite, woocommerce, buddypress, bbpress  
 Contributors: johnbillion  
@@ -29,6 +27,8 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Compatible with Multisite, WooCommerce, BuddyPress, and bbPress.
  * Compatible with most two-factor authentication solutions (see the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for more info).
  * Approved for use on enterprise-grade WordPress platforms such as <a href="https://www.altis-dxp.com/">Altis</a> and <a href="https://wpvip.com/">WordPress VIP</a>.
+
+Note: User Switching supports versions of WordPress up to three years old, and PHP version 7.4 or higher.
 
 ### Security
 
