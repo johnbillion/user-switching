@@ -1,6 +1,6 @@
 # User Switching
 
-Stable tag: 1.7.1  
+Stable tag: 1.7.2  
 Tested up to: 6.4  
 License: GPL v2 or later  
 Tags: users, user switching, fast user switching, multisite, woocommerce, buddypress, bbpress  
