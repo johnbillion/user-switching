@@ -30,7 +30,6 @@
 		"codeception/module-db": "^1.0",
 		"codeception/module-webdriver": "^1.0",
 		"codeception/util-universalframework": "^1.0",
-		"ergebnis/composer-normalize": "^2",
 		"johnbillion/plugin-infrastructure": "dev-trunk",
 		"lucatume/wp-browser": "^3.0.21",
 		"phpcompatibility/phpcompatibility-wp": "2.1.4",
@@ -49,7 +48,6 @@
 	"config": {
 		"allow-plugins": {
 			"composer/installers": true,
-			"ergebnis/composer-normalize": true,
 			"roots/wordpress-core-installer": true,
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		},
@@ -64,7 +62,6 @@
 	"scripts": {
 		"test": [
 			"@composer validate --strict --no-check-lock",
-			"@composer normalize --dry-run",
 			"@test:phpstan",
 			"@test:phpcs",
 			"@test:start",
