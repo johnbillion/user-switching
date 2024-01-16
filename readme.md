@@ -17,7 +17,7 @@ Instant switching between user accounts in WordPress.
 
 ## Description
 
-This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for testing environments, for helping customers on WooCommerce sites, or for any site where administrators need to switch between multiple accounts.
+This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for for helping customers on WooCommerce sites, membership sites, testing environments, or for any site where administrators need to switch between multiple accounts.
 
 ### Features
 
@@ -25,8 +25,9 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Switch back: Instantly switch back to your originating account.
  * Switch off: Log out of your account but retain the ability to instantly switch back in again.
  * Compatible with Multisite, WooCommerce, BuddyPress, and bbPress.
+ * Compatible with most membership and user management plugins.
  * Compatible with most two-factor authentication solutions (see the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for more info).
- * Approved for use on enterprise-grade WordPress platforms such as <a href="https://www.altis-dxp.com/">Altis</a> and <a href="https://wpvip.com/">WordPress VIP</a>.
+ * Approved for use on enterprise-grade WordPress platforms such as [Altis](https://www.altis-dxp.com/) and [WordPress VIP](https://wpvip.com/).
 
 Note: User Switching supports versions of WordPress up to three years old, and PHP version 7.4 or higher.
 
