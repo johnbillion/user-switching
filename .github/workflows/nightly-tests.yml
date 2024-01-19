@@ -18,7 +18,7 @@ on:
     branches:
       - 'develop'
     paths:
-      - '.github/nightly-tests.yml'
+      - '.github/workflows/nightly-tests.yml'
   workflow_dispatch:
 
 jobs:
