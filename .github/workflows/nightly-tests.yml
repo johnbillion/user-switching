@@ -14,6 +14,11 @@ on:
     #        │  │  │  │  │
     #        │  │  │  │  │
     - cron: '0  4  *  *  1'
+  push:
+    branches:
+      - 'develop'
+    paths:
+      - '.github/nightly-tests.yml'
   workflow_dispatch:
 
 jobs:
