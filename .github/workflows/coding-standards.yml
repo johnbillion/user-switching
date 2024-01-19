@@ -7,7 +7,7 @@ on:
       - 'develop'
       - 'trunk'
     paths:
-      - '.github/**'
+      - '.github/coding-standards.yml'
       - '**.php'
       - 'composer.json'
       - 'package.json'
@@ -17,7 +17,7 @@ on:
     branches:
       - '**'
     paths:
-      - '.github/**'
+      - '.github/coding-standards.yml'
       - '**.php'
       - 'composer.json'
       - 'package.json'
