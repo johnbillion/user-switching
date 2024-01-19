@@ -18,7 +18,7 @@ on:
 
 jobs:
   acceptance:
-    name: Acceptance with PHP ${{ matrix.php }}
+    name: Nightly acceptance
     strategy:
       matrix:
         php:
@@ -31,7 +31,7 @@ jobs:
       php: ${{ matrix.php }}
       node: false
   integration:
-    name: Integration with PHP ${{ matrix.php }}
+    name: Nightly integration
     uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-integration-tests.yml@trunk
     strategy:
       matrix:
