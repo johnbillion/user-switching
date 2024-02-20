@@ -757,8 +757,16 @@ class user_switching {
 			return;
 		}
 
+		if ( function_exists( 'bp_members_get_user_url' ) ) {
+			$redirect_to = bp_members_get_user_url( $user->ID );
+		} elseif ( function_exists( 'bp_core_get_user_domain' ) ) {
+			$redirect_to = bp_core_get_user_domain( $user->ID );
+		} else {
+			$redirect_to = home_url();
+		}
+
 		$link = add_query_arg( array(
-			'redirect_to' => rawurlencode( bp_core_get_user_domain( $user->ID ) ),
+			'redirect_to' => rawurlencode( $redirect_to ),
 		), $link );
 
 		$components = array_keys( buddypress()->active_components );

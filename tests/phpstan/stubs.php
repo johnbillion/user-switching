@@ -33,6 +33,11 @@ function bp_core_get_user_domain( int $user_id ) {}
 /**
  * @return string
  */
+function bp_members_get_user_url( int $user_id ) {}
+
+/**
+ * @return string
+ */
 function bp_get_button( array $args ) {}
 
 /**
