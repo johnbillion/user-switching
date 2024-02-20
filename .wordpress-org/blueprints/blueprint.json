@@ -14,7 +14,7 @@
 			"path": "/wordpress/wp-content/mu-plugins/user-switching-helper.php",
 			"data":{
 				"resource":"url",
-				"url":"https://raw.githubusercontent.com/johnbillion/user-switching/playground-blueprint/.wordpress-org/blueprints/user-switching-helper.php"
+				"url":"https://raw.githubusercontent.com/johnbillion/user-switching/trunk/.wordpress-org/blueprints/user-switching-helper.php"
 			}
 		},
 		{
