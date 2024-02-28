@@ -11,7 +11,9 @@ If you enjoy using User Switching I would greatly appreciate it <a href="https:/
 
 ## Reporting Security Issues
 
-If you discover a security issue in User Switching, please report it to [the security program on HackerOne](https://hackerone.com/johnblackbourn). Do not report security issues on GitHub or the WordPress.org support forums. Thank you.
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team helps validate, triage, and handle any security vulnerabilities. [Report a security vulnerability here](https://patchstack.com/database/vdp/user-switching).
+
+Do not report security issues on GitHub or the WordPress.org support forums. Thank you.
 
 ## Inclusivity and Code of Conduct
 
