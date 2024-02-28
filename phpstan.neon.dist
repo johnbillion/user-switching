@@ -6,18 +6,17 @@ parameters:
 	level: 9
 	paths:
 		- user-switching.php
+		- tests/acceptance
+		- tests/integration
 	scanDirectories:
 		- tests/_support/
+		- vendor/lucatume/wp-browser/src/includes/factory/
 	excludePaths:
 		analyse:
 			- tests/integration/Supports/
 	bootstrapFiles:
 		- tests/phpstan/stubs.php
 	ignoreErrors:
-		# Uses func_get_args()
-		- '#^Function apply_filters invoked with [34567] parameters, 2 required\.$#'
-		# The 'token' element was added in WordPress 4.0
-		- '#Offset ''token'' on array{username: string, expiration: string, token: string, hmac: string, scheme: string} in isset\(\) always exists and is not nullable\.#'
 		# Covers the breaks after exits in user_switching::action_init()
 		-
 			message: '#^Unreachable statement#'

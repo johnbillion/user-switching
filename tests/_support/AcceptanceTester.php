@@ -39,7 +39,7 @@ class AcceptanceTester extends \Codeception\Actor {
 			$key,
 			[
 				$value,
-			],
+			]
 		);
 	}
 

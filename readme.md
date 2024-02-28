@@ -1,9 +1,7 @@
 # User Switching
 
-Stable tag: 1.7.0  
-Requires at least: 5.1  
-Tested up to: 6.3  
-Requires PHP: 7.2  
+Stable tag: 1.7.3  
+Tested up to: 6.4  
 License: GPL v2 or later  
 Tags: users, user switching, fast user switching, multisite, woocommerce, buddypress, bbpress  
 Contributors: johnbillion  
@@ -19,7 +17,7 @@ Instant switching between user accounts in WordPress.
 
 ## Description
 
-This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for testing environments, for helping customers on WooCommerce sites, or for any site where administrators need to switch between multiple accounts.
+This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for for helping customers on WooCommerce sites, membership sites, testing environments, or for any site where administrators need to switch between multiple accounts.
 
 ### Features
 
@@ -27,8 +25,11 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  * Switch back: Instantly switch back to your originating account.
  * Switch off: Log out of your account but retain the ability to instantly switch back in again.
  * Compatible with Multisite, WooCommerce, BuddyPress, and bbPress.
+ * Compatible with most membership and user management plugins.
  * Compatible with most two-factor authentication solutions (see the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for more info).
- * Approved for use on enterprise-grade WordPress platforms such as <a href="https://www.altis-dxp.com/">Altis</a> and <a href="https://wpvip.com/">WordPress VIP</a>.
+ * Approved for use on enterprise-grade WordPress platforms such as [Altis](https://www.altis-dxp.com/) and [WordPress VIP](https://wpvip.com/).
+
+Note: User Switching supports versions of WordPress up to three years old, and PHP version 7.4 or higher.
 
 ### Security
 
@@ -83,7 +84,7 @@ User Switching should adhere to Web Content Accessibility Guidelines (WCAG) 2.0 
 
 ### Does this plugin work with PHP 8?
 
-Yes, it's actively tested and working up to PHP 8.2.
+Yes, it's actively tested and working up to PHP 8.3.
 
 ### What does "Switch off" mean?
 
@@ -120,6 +121,12 @@ One exception I'm aware of is [Duo Security](https://wordpress.org/plugins/duo-w
 ### What capability does a user need in order to switch accounts?
 
 A user needs the `edit_users` capability in order to switch user accounts. By default only Administrators have this capability, and with Multisite enabled only Super Admins have this capability.
+
+Specifically, a user needs the ability to edit the target user in order to switch to them. This means if you have custom user capability mapping in place which uses the `edit_users` or `edit_user` capabilities to affect ability of users to edit others, then User Switching should respect that.
+
+### Can regular admins on Multisite installations switch accounts?
+
+No. This can be enabled though by installing the [User Switching for Regular Admins](https://github.com/johnbillion/user-switching-for-regular-admins) plugin.
 
 ### Can the ability to switch accounts be granted to other users or roles?
 
@@ -201,22 +208,22 @@ if ( function_exists( 'current_user_switched' ) ) {
 }
 ~~~
 
+### Can I log each time a user switches to another account?
+
+You can install an audit trail plugin such as [Simple History](https://wordpress.org/plugins/simple-history/), [WP Activity Log](https://wordpress.org/plugins/wp-security-audit-log/), or [Stream](https://wordpress.org/plugins/stream/), all of which have built-in support for User Switching and all of which log an entry when a user switches into another account.
+
 ### Does this plugin allow a user to frame another user for an action?
 
 Potentially yes, but User Switching includes some safety protections for this and there are further precautions you can take as a site administrator:
 
 * User Switching stores the ID of the originating user in the new WordPress user session for the user they switch to. Although this session does not persist by default when they subsequently switch back, there will be a record of this ID if your database server has query logging enabled.
 * User Switching stores the login name of the originating user in an authentication cookie (see the Privacy Statement for more information). If your server access logs store cookie data, there will be a record of this login name (along with the IP address) for each access request.
-* You can install an audit trail plugin such as Simple History, WP Activity Log, or Stream, all of which have built-in support for User Switching and all of which log an entry when a user switches into another account.
+* You can install an audit trail plugin such as [Simple History](https://wordpress.org/plugins/simple-history/), [WP Activity Log](https://wordpress.org/plugins/wp-security-audit-log/), or [Stream](https://wordpress.org/plugins/stream/), all of which have built-in support for User Switching and all of which log an entry when a user switches into another account.
 * User Switching triggers an action when a user switches account, switches off, or switches back (see below). You can use these actions to perform additional logging for safety purposes depending on your requirements.
 
 One or more of the above should allow you to correlate an action with the originating user when a user switches account, should you need to.
 
 Bear in mind that even without the User Switching plugin in use, any user who has the ability to edit another user can still frame another user for an action by, for example, changing their password and manually logging into that account. If you are concerned about users abusing others, you should take great care when granting users administrative rights.
-
-### Can regular admins on Multisite installations switch accounts?
-
-No. This can be enabled though by installing the [User Switching for Regular Admins](https://github.com/johnbillion/user-switching-for-regular-admins) plugin.
 
 ### Can I switch users directly from the admin toolbar?
 

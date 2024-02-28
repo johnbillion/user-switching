@@ -6,22 +6,23 @@ on:
     branches:
       - 'develop'
       - 'trunk'
-      - 'master'
+    paths:
+      - '.github/workflows/coding-standards.yml'
+      - '**.php'
+      - 'composer.json'
+      - 'package.json'
+      - 'phpcs.xml.dist'
+      - 'phpstan.neon.dist'
   pull_request:
     branches:
       - '**'
-  schedule:
-    # Once weekly on Mondays at 03:00 UTC.
-    #
-    #        ┌───────────── minute           (0 - 59)
-    #        │  ┌────────── hour             (0 - 23)
-    #        │  │  ┌─────── day of the month (1 - 31)
-    #        │  │  │  ┌──── month            (1 - 12 or JAN-DEC)
-    #        │  │  │  │  ┌─ day of the week  (0 - 6 or SUN-SAT)
-    #        │  │  │  │  │
-    #        │  │  │  │  │
-    #        │  │  │  │  │
-    - cron: '0  3  *  *  1'
+    paths:
+      - '.github/workflows/coding-standards.yml'
+      - '**.php'
+      - 'composer.json'
+      - 'package.json'
+      - 'phpcs.xml.dist'
+      - 'phpstan.neon.dist'
   workflow_dispatch:
 
 jobs:

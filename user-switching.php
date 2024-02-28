@@ -4,20 +4,22 @@
  *
  * @package   user-switching
  * @link      https://github.com/johnbillion/user-switching
- * @author    John Blackbourn <john@johnblackbourn.com>
- * @copyright 2009-2023 John Blackbourn
+ * @author    John Blackbourn
+ * @copyright 2009-2024 John Blackbourn
  * @license   GPL v2 or later
  *
- * Plugin Name:  User Switching
- * Description:  Instant switching between user accounts in WordPress
- * Version:      1.7.0
- * Plugin URI:   https://wordpress.org/plugins/user-switching/
- * Author:       John Blackbourn & contributors
- * Author URI:   https://github.com/johnbillion/user-switching/graphs/contributors
- * Text Domain:  user-switching
- * Domain Path:  /languages/
- * Network:      true
- * Requires PHP: 7.2
+ * Plugin Name:       User Switching
+ * Description:       Instant switching between user accounts in WordPress
+ * Version:           1.7.3
+ * Plugin URI:        https://wordpress.org/plugins/user-switching/
+ * Author:            John Blackbourn & contributors
+ * Author URI:        https://github.com/johnbillion/user-switching/graphs/contributors
+ * Text Domain:       user-switching
+ * Domain Path:       /languages/
+ * Network:           true
+ * Requires at least: 5.6
+ * Requires PHP:      7.4
+ * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +40,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Main singleton class for the User Switching plugin.
  */
 class user_switching {
-
 	/**
 	 * The name used to identify the application during a WordPress redirect.
 	 *
@@ -756,8 +757,16 @@ class user_switching {
 			return;
 		}
 
+		if ( function_exists( 'bp_members_get_user_url' ) ) {
+			$redirect_to = bp_members_get_user_url( $user->ID );
+		} elseif ( function_exists( 'bp_core_get_user_domain' ) ) {
+			$redirect_to = bp_core_get_user_domain( $user->ID );
+		} else {
+			$redirect_to = home_url();
+		}
+
 		$link = add_query_arg( array(
-			'redirect_to' => rawurlencode( bp_core_get_user_domain( $user->ID ) ),
+			'redirect_to' => rawurlencode( $redirect_to ),
 		), $link );
 
 		$components = array_keys( buddypress()->active_components );
@@ -1205,7 +1214,6 @@ class user_switching {
 	 * Private class constructor. Use `get_instance()` to get the instance.
 	 */
 	private function __construct() {}
-
 }
 
 if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
@@ -1414,16 +1422,15 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 		 * Attaches the original user ID and session token to the new session when a user switches to another user.
 		 *
 		 * @param array<string, mixed> $session Array of extra data.
-		 * @param int                  $user_id User ID.
 		 * @return array<string, mixed> Array of extra data.
 		 */
-		$session_filter = function( array $session, $user_id ) use ( $old_user_id, $old_token ) {
+		$session_filter = function ( array $session ) use ( $old_user_id, $old_token ) {
 			$session['switched_from_id'] = $old_user_id;
 			$session['switched_from_session'] = $old_token;
 			return $session;
 		};
 
-		add_filter( 'attach_session_information', $session_filter, 99, 2 );
+		add_filter( 'attach_session_information', $session_filter, 99 );
 
 		wp_clear_auth_cookie();
 		wp_set_auth_cookie( $user_id, $remember, '', $new_token );

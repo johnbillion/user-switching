@@ -23,5 +23,4 @@
 /package.json export-ignore
 /phpcs.xml.dist export-ignore
 /phpstan.neon.dist export-ignore
-/readme.md export-ignore
 /SECURITY.md export-ignore

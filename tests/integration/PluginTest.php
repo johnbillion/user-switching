@@ -1,16 +1,14 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace UserSwitching\Tests;
 
-class PluginTest extends Test {
+final class PluginTest extends Test {
 	/**
 	 * @var ?array<string, string>
 	 */
 	private $readme_data;
 
-	public function testStableTagMatchesVersion() {
+	public function testStableTagMatchesVersion(): void {
 		$readme_data = $this->get_readme();
 		if ( null === $readme_data ) {
 			self::fail( 'There is no readme file' );
@@ -24,7 +22,7 @@ class PluginTest extends Test {
 	/**
 	 * @return ?array<string, string>
 	 */
-	private function get_readme() {
+	private function get_readme(): ?array {
 		if ( ! isset( $this->readme_data ) ) {
 			$file = dirname( dirname( __DIR__ ) ) . '/readme.md';
 
@@ -49,5 +47,4 @@ class PluginTest extends Test {
 
 		return $this->readme_data;
 	}
-
 }

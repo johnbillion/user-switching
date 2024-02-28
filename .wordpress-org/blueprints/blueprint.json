@@ -1,0 +1,42 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/wp-admin/users.php",
+	"steps": [
+		{
+			"step": "installPlugin",
+			"pluginZipFile": {
+				"resource": "wordpress.org/plugins",
+				"slug": "user-switching"
+			}
+		},
+		{
+			"step": "writeFile",
+			"path": "/wordpress/wp-content/mu-plugins/user-switching-helper.php",
+			"data":{
+				"resource":"url",
+				"url":"https://raw.githubusercontent.com/johnbillion/user-switching/trunk/.wordpress-org/blueprints/user-switching-helper.php"
+			}
+		},
+		{
+			"step": "login",
+			"username": "admin",
+			"password": "password"
+		},
+		{
+			"step": "wp-cli",
+			"command": "wp user create editor editor@example.com --role=editor"
+		},
+		{
+			"step": "wp-cli",
+			"command": "wp user create author author@example.com --role=author"
+		},
+		{
+			"step": "wp-cli",
+			"command": "wp user create contributor contributor@example.com --role=contributor"
+		},
+		{
+			"step": "wp-cli",
+			"command": "wp user create subscriber subscriber@example.com --role=subscriber"
+		}
+	]
+}

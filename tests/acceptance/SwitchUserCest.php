@@ -1,16 +1,18 @@
-<?php
+<?php declare(strict_types = 1);
+
+namespace UserSwitching\Tests;
+
 /**
  * Acceptance tests for switching users.
  */
-
-class SwitchUserCest {
-	public function _before( AcceptanceTester $I ) {
+final class SwitchUserCest {
+	public function _before( \AcceptanceTester $I ): void {
 		$I->comment( 'As an administrator' );
 		$I->comment( 'I need to be able to switch between users' );
 		$I->comment( 'In order to access different user accounts' );
 	}
 
-	public function SwitchToEditorThenBackFromFrontEnd( AcceptanceTester $I ) {
+	public function SwitchToEditorThenBackFromFrontEnd( \AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 		$I->haveUserInDatabase( 'editor', 'editor' );
 
@@ -25,7 +27,7 @@ class SwitchUserCest {
 		$I->amLoggedInAs( 'admin' );
 	}
 
-	public function SwitchToEditorThenBackFromAdminArea( AcceptanceTester $I ) {
+	public function SwitchToEditorThenBackFromAdminArea( \AcceptanceTester $I ): void {
 		$I->loginAsAdmin();
 		$I->haveUserInDatabase( 'editor', 'editor' );
 

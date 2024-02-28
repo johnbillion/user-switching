@@ -1,4 +1,3 @@
-[![Build Status](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=flat-square)](https://github.com/johnbillion/user-switching/actions)
 [![](https://img.shields.io/badge/contributor-code%20of%20conduct-5e0d73.svg?style=flat-square)](https://github.com/johnbillion/user-switching/blob/develop/CODE_OF_CONDUCT.md)
 [![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=flat-square)](#ethical-open-source)
 
@@ -37,7 +36,7 @@ Install the PHP dependencies:
 
 ## Running the Tests
 
-The test suite includes acceptance tests which run in a Docker container. Ensure Docker Desktop is running, then start the containers with:
+The test suite includes integration and acceptance tests which run in a Docker container. Ensure Docker Desktop is running, then start the containers with:
 
 	composer test:start
 
