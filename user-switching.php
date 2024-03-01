@@ -934,12 +934,22 @@ class user_switching {
 	 * @return string The message.
 	 */
 	public static function switch_back_message( WP_User $user ) {
+		$switched_locale = false;
+
+		if ( function_exists( 'get_user_locale' ) ) {
+			$switched_locale = switch_to_locale( get_user_locale( $user ) );
+		}
+
 		$message = sprintf(
 			/* Translators: 1: user display name; 2: username; */
 			__( 'Switch back to %1$s (%2$s)', 'user-switching' ),
 			$user->display_name,
 			$user->user_login
 		);
+
+		if ( $switched_locale ) {
+			restore_previous_locale();
+		}
 
 		// Removes the user login from this message without invalidating existing translations
 		return str_replace( sprintf(
