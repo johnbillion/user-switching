@@ -54,8 +54,10 @@ jobs:
           - wp: '5.8'
             php: '7.4'
       fail-fast: false
-    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-acceptance-tests.yml@trunk
+    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-acceptance-tests.yml@cfe4821395eefd4b639ea0d923ffa0e1a333e574
     with:
       wp: ${{ matrix.wp }}
       php: ${{ matrix.php }}
       node: false
+    secrets:
+      BUILDEVENT_APIKEY: ${{ secrets.BUILDEVENT_APIKEY }}
