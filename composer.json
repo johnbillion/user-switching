@@ -31,7 +31,7 @@
 		"codeception/module-db": "^1.0",
 		"codeception/module-webdriver": "^1.0",
 		"codeception/util-universalframework": "^1.0",
-		"johnbillion/plugin-infrastructure": "dev-trunk",
+		"johnbillion/plugin-infrastructure": "dev-plugin-list",
 		"johnbillion/wp-compat": "0.3.0",
 		"lucatume/wp-browser": "3.2.3",
 		"phpcompatibility/phpcompatibility-wp": "2.1.5",
