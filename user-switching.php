@@ -1448,10 +1448,10 @@ if ( ! function_exists( 'user_switching_get_olduser_cookie' ) ) {
 	 */
 	function user_switching_get_olduser_cookie() {
 		if ( isset( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] ) ) {
-			return wp_unslash( $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] );
-		} else {
-			return false;
+			return wp_unslash( (string) $_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] );
 		}
+
+		return false;
 	}
 }
 
@@ -1459,7 +1459,7 @@ if ( ! function_exists( 'user_switching_get_auth_cookie' ) ) {
 	/**
 	 * Gets the value of the auth cookie containing the list of originating users.
 	 *
-	 * @return array<int,string> Array of originating user authentication cookie values. Empty array if there are none.
+	 * @return list<string> Array of originating user authentication cookie values. Empty array if there are none.
 	 */
 	function user_switching_get_auth_cookie(): array {
 		if ( user_switching::secure_auth_cookie() ) {
@@ -1474,7 +1474,8 @@ if ( ! function_exists( 'user_switching_get_auth_cookie' ) ) {
 		if ( ! isset( $cookie ) || ! is_array( $cookie ) ) {
 			$cookie = [];
 		}
-		return $cookie;
+
+		return array_values( array_filter( $cookie, 'is_string' ) );
 	}
 }
 
