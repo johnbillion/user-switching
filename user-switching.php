@@ -1039,11 +1039,7 @@ final class user_switching {
 	 * @return string The message.
 	 */
 	public static function switch_back_message( WP_User $user ): string {
-		$switched_locale = false;
-
-		if ( function_exists( 'get_user_locale' ) ) {
-			$switched_locale = switch_to_locale( get_user_locale( $user ) );
-		}
+		$switched_locale = switch_to_locale( get_user_locale( $user ) );
 
 		$message = sprintf(
 			/* Translators: 1: user display name; 2: username; */
