@@ -39,3 +39,6 @@ parameters:
 			message: '#^Unreachable statement#'
 			path: user-switching.php
 			count: 3
+		# Covers the WooCommerce compatibility checks
+		- '#^Call to function property_exists\(\) with WooCommerce and ''session'' will always evaluate to true\.$#'
+		- '#^Call to function method_exists\(\) with WC_Session and ''forget_session'' will always evaluate to true\.$#'
