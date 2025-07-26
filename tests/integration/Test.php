@@ -6,17 +6,12 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @var array<string, \WP_User>
 	 */
-	protected static $users = [];
+	protected static array $users = [];
 
 	/**
 	 * @var array<string, \WP_User>
 	 */
-	protected static $testers = [];
-
-	/**
-	 * @var array<int, string>
-	 */
-	protected $sessions = [];
+	protected static array $testers = [];
 
 	/**
 	 * @return void
@@ -42,10 +37,10 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 
 		if ( is_multisite() ) {
 			self::$users['super'] = $factory->user->create_and_get( array(
-				'role' => 'administrator'
+				'role' => 'administrator',
 			) );
 			self::$testers['super'] = $factory->user->create_and_get( array(
-				'role' => 'administrator'
+				'role' => 'administrator',
 			) );
 			grant_super_admin( self::$users['super']->ID );
 			grant_super_admin( self::$testers['super']->ID );
@@ -62,6 +57,8 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 		add_action( 'set_user_switching_cookie', array( $this, 'action_set_user_switching_cookie' ), 10 );
 		add_action( 'set_olduser_cookie',        array( $this, 'action_set_olduser_cookie' ), 10 );
 		add_action( 'clear_olduser_cookie',      array( $this, 'action_clear_olduser_cookie' ) );
+
+		$_COOKIE = [];
 	}
 
 	final public function action_set_auth_cookie(
@@ -74,7 +71,6 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 	): void {
 		$_COOKIE[ SECURE_AUTH_COOKIE ] = $cookie;
 		$_COOKIE[ AUTH_COOKIE ] = $cookie;
-		$this->sessions[ $user_id ] = $token;
 	}
 
 	final public function action_set_logged_in_cookie( string $cookie ): void {

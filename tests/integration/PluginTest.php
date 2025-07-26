@@ -24,7 +24,7 @@ final class PluginTest extends Test {
 	 */
 	private function get_readme(): ?array {
 		if ( ! isset( $this->readme_data ) ) {
-			$file = dirname( dirname( __DIR__ ) ) . '/readme.md';
+			$file = dirname( dirname( __DIR__ ) ) . '/readme.txt';
 
 			if ( ! is_file( $file ) ) {
 				return null;
@@ -38,7 +38,9 @@ final class PluginTest extends Test {
 
 			$file_contents = implode( '', $file_array );
 
-			preg_match( '|Stable tag:(.*)|i', $file_contents, $_stable_tag );
+			if ( preg_match( '|Stable tag:(.*)|i', $file_contents, $_stable_tag ) !== 1 ) {
+				return null;
+			}
 
 			$this->readme_data = array(
 				'stable_tag' => trim( trim( $_stable_tag[1], '*' ) )

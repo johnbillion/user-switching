@@ -2,6 +2,8 @@ includes:
 	- vendor/phpstan/phpstan-phpunit/extension.neon
 	- vendor/szepeviktor/phpstan-wordpress/extension.neon
 	- vendor/johnbillion/plugin-infrastructure/phpstan/extension.neon
+	- vendor/johnbillion/wp-compat/extension.neon
+	- vendor/swissspidy/phpstan-no-private/rules.neon
 parameters:
 	level: 9
 	paths:
@@ -11,14 +13,36 @@ parameters:
 	scanDirectories:
 		- tests/_support/
 		- vendor/lucatume/wp-browser/src/includes/factory/
-	excludePaths:
-		analyse:
-			- tests/integration/Supports/
 	bootstrapFiles:
 		- tests/phpstan/stubs.php
+	dynamicConstantNames:
+		- DB_HOST
+		- DB_NAME
+		- DB_PASSWORD
+		- DB_USER
+		- SAVEQUERIES
+		- WP_MEMORY_LIMIT
+		- WPINC
+		- AUTH_COOKIE
+		- COOKIE_DOMAIN
+		- COOKIEHASH
+		- COOKIEPATH
+		- LOGGED_IN_COOKIE
+		- SECURE_AUTH_COOKIE
+		- SITECOOKIEPATH
+		- USER_SWITCHING_COOKIE
+		- USER_SWITCHING_SECURE_COOKIE
+		- USER_SWITCHING_OLDUSER_COOKIE
 	ignoreErrors:
 		# Covers the breaks after exits in user_switching::action_init()
 		-
 			message: '#^Unreachable statement#'
 			path: user-switching.php
 			count: 3
+		# Covers the WooCommerce compatibility checks
+		- '#^Call to function property_exists\(\) with WooCommerce and ''session'' will always evaluate to true\.$#'
+		- '#^Call to function method_exists\(\) with WC_Session and ''forget_session'' will always evaluate to true\.$#'
+		# Casting mixed to int or string isn't that big of a problem
+		- '#^Parameter \#1 \$maybeint of function absint expects array\|bool\|float\|int\|resource\|string\|null, mixed given\.$#'
+		- '#^Cannot cast mixed to string\.$#'
+		- '#\(mixed\) of encapsed string cannot be cast to string\.$#'

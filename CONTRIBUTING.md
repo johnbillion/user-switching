@@ -11,13 +11,15 @@ If you enjoy using User Switching I would greatly appreciate it <a href="https:/
 
 ## Reporting Security Issues
 
-If you discover a security issue in User Switching, please report it to [the security program on HackerOne](https://hackerone.com/johnblackbourn). Do not report security issues on GitHub or the WordPress.org support forums. Thank you.
+[You can report security bugs through the official User Switching Vulnerability Disclosure Program on Patchstack](https://patchstack.com/database/vdp/user-switching). The Patchstack team helps validate, triage, and handle any security vulnerabilities.
+
+Do not report security issues on GitHub or the WordPress.org support forums. Thank you.
 
 ## Inclusivity and Code of Conduct
 
 Contributions to User Switching are welcome from anyone. Whether you are new to Open Source or a seasoned veteran, all constructive contribution is welcome and I'll endeavour to support you when I can.
 
-This project is released with <a href="https://github.com/johnbillion/user-switching/blob/develop/CODE_OF_CONDUCT.md">a contributor code of conduct</a> and by participating in this project you agree to abide by its terms. The code of conduct is nothing to worry about, if you are a respectful human being then all will be good.
+This project is released with <a href="CODE_OF_CONDUCT.md">a contributor code of conduct</a> and by participating in this project you agree to abide by its terms. The code of conduct is nothing to worry about, if you are a respectful human being then all will be good.
 
 ## Setting up Locally
 
@@ -64,7 +66,7 @@ These are the steps to take to release a new version of User Switching (for cont
 1. Check [the milestone on GitHub](https://github.com/johnbillion/user-switching/milestones) for open issues or PRs. Fix or reassign as necessary.
 1. If this is a non-patch release, check issues and PRs assigned to the patch or minor milestones that will get skipped. Reassign as necessary.
 1. Ensure you're on the `develop` branch and all the changes for this release have been merged in.
-1. Ensure `readme.md` contains up to date descriptions, "Tested up to" versions, FAQs, screenshots, etc.
+1. Ensure `readme.md` and `readme.txt` contain up to date "Tested up to" versions, descriptions, FAQs, screenshots, etc.
 1. Ensure `.gitattributes` is up to date with all files that shouldn't be part of the build.
    - To do this, run `git archive --output=user-switching.zip HEAD` then check the contents for files that shouldn't be part of the package.
 1. Run `composer test` and ensure everything passes.
@@ -78,9 +80,9 @@ These are the steps to take to release a new version of User Switching (for cont
    - `npm run bump:minor` for a minor release (1.2.3 => 1.3.0)
    - `npm run bump:major` for a major release (1.2.3 => 2.0.0)
 1. `git push origin develop`
-1. `git tag x.y.z`
 1. `git push origin --tags`
 1. Enter the changelog into [the release on GitHub](https://github.com/johnbillion/user-switching/releases) and publish it.
+1. Approve the release on [the WordPress.org release management dashboard](https://wordpress.org/plugins/developers/releases/).
 
 ### Post Release
 
@@ -90,14 +92,14 @@ New milestones are automatically created for the next major, minor, and patch re
 
 1. Close the milestone.
 1. If this is a non-patch release, manually delete any [unused patch and minor milestones on GitHub](https://github.com/johnbillion/user-switching/milestones).
-1. Check the new version has appeared [on the WordPress.org plugin page](https://wordpress.org/plugins/user-switching/) (it'll take a few minutes).
+1. Check the new version has appeared [on the WordPress.org plugin page](https://wordpress.org/plugins/user-switching/).
 1. Resolve relevant threads on [the plugin's support forums](https://wordpress.org/support/plugin/user-switching/).
 
 ### Asset Updates
 
 Assets such as screenshots and banners are stored in the `.wordpress-org` directory. These get deployed as part of the automated release process too.
 
-In order to deploy only changes to assets, push the change to the `deploy` branch and they will be deployed if they're the only changes in the branch since the last release. This allows for the "Tested up to" value to be bumped as well as assets to be updated in between releases.
+In order to deploy only changes to assets and the readme file, push the change to the `deploy` branch. This allows for the "Tested up to" value to be bumped as well as assets to be updated in between releases. Changes to files other than assets and the readme file will be ignored.
 
 ## Ethical Open Source
 

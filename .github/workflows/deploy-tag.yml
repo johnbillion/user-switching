@@ -4,16 +4,31 @@ name: Deploy Tag
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        type: string
+        description: The version number of the release
 
 concurrency: WordPress.org
 
+permissions: {}
+
 jobs:
-  test:
+  deploy:
     name: Deploy Tag
     uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-deploy-tag.yml@trunk
+    permissions:
+      contents: read
+      issues: write
+      attestations: write
+      id-token: write
     with:
+      deploy: ${{ github.event_name != 'workflow_dispatch' }}
       plugin: user-switching
-      readme: readme.md
+      readme: readme.txt
+      version: ${{ github.event_name != 'workflow_dispatch' && github.event.release.tag_name || github.event.inputs.version }}
+      username: johnbillion
     secrets:
-      WPORG_SVN_USERNAME: ${{ secrets.WPORG_SVN_USERNAME }}
       WPORG_SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}

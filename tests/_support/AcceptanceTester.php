@@ -23,6 +23,7 @@ class AcceptanceTester extends \Codeception\Actor {
 	 * @return void
 	 */
 	public function amNotUsingTheEditorForTheFirstTime() {
+		$user_id = 1;
 		$key = sprintf(
 			'%spersisted_preferences',
 			$this->grabTablePrefix()
@@ -35,11 +36,31 @@ class AcceptanceTester extends \Codeception\Actor {
 		];
 
 		$this->haveUserMetaInDatabase(
-			1,
+			$user_id,
 			$key,
 			[
 				$value,
 			]
+		);
+
+		// Pre-6.1 support for when the editor welcome screen state was only stored in local storage.
+		$value = [
+			'core/edit-post' => [
+				'preferences' => [
+					'features' => [
+						'fullscreenMode' => false,
+						'welcomeGuide' => false,
+					],
+				],
+			],
+		];
+
+		$this->executeJS(
+			sprintf(
+				"localStorage.setItem( 'WP_DATA_USER_%d', '%s' );",
+				$user_id,
+				json_encode( $value )
+			)
 		);
 	}
 

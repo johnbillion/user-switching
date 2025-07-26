@@ -1,26 +1,21 @@
 {
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
 	"landingPage": "/wp-admin/users.php",
-	"steps": [
+	"plugins": [
 		{
-			"step": "installPlugin",
-			"pluginZipFile": {
-				"resource": "wordpress.org/plugins",
-				"slug": "user-switching"
-			}
-		},
+			"resource": "wordpress.org/plugins",
+			"slug": "user-switching"
+		}
+	],
+	"login": true,
+	"steps": [
 		{
 			"step": "writeFile",
 			"path": "/wordpress/wp-content/mu-plugins/user-switching-helper.php",
-			"data":{
-				"resource":"url",
-				"url":"https://raw.githubusercontent.com/johnbillion/user-switching/trunk/.wordpress-org/blueprints/user-switching-helper.php"
+			"data": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/johnbillion/user-switching/trunk/.wordpress-org/blueprints/user-switching-helper.php"
 			}
-		},
-		{
-			"step": "login",
-			"username": "admin",
-			"password": "password"
 		},
 		{
 			"step": "wp-cli",

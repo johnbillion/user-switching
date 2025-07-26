@@ -10,11 +10,7 @@ final class SessionsTest extends Test {
 	 * @covers \switch_to_user
 	 */
 	public function testExtraSessionsAreNotCreatedForUsersWhenSwitching(): void {
-		if ( is_multisite() ) {
-			$admin = self::$testers['super'];
-		} else {
-			$admin = self::$testers['admin'];
-		}
+		$admin = self::$testers['admin'];
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
@@ -47,11 +43,7 @@ final class SessionsTest extends Test {
 	 * @covers \switch_off_user
 	 */
 	public function testExtraSessionsAreNotCreatedForUserWhenSwitchingOff(): void {
-		if ( is_multisite() ) {
-			$admin = self::$testers['super'];
-		} else {
-			$admin = self::$testers['admin'];
-		}
+		$admin = self::$testers['admin'];
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
@@ -77,11 +69,7 @@ final class SessionsTest extends Test {
 	 * @covers \switch_off_user
 	 */
 	public function testPreviousSessionForUserIsReusedWhenSwitchingBack(): void {
-		if ( is_multisite() ) {
-			$admin = self::$testers['super'];
-		} else {
-			$admin = self::$testers['admin'];
-		}
+		$admin = self::$testers['admin'];
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
@@ -130,11 +118,7 @@ final class SessionsTest extends Test {
 	 * @covers \switch_to_user
 	 */
 	public function testExpiredSessionPreventsUserFromSwitchingBack(): void {
-		if ( is_multisite() ) {
-			$admin = self::$testers['super'];
-		} else {
-			$admin = self::$testers['admin'];
-		}
+		$admin = self::$testers['admin'];
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
@@ -186,11 +170,7 @@ final class SessionsTest extends Test {
 	 * @covers \switch_off_user
 	 */
 	public function testSessionTokensAreCorrectlyReusedWhenSwitching(): void {
-		if ( is_multisite() ) {
-			$admin = self::$testers['super'];
-		} else {
-			$admin = self::$testers['admin'];
-		}
+		$admin = self::$testers['admin'];
 
 		// Set up the admin session manager with a session
 		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );

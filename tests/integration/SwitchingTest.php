@@ -15,15 +15,9 @@ final class SwitchingTest extends Test {
 	 */
 	private $test_switching_old_user_id;
 
-	/**
-	 * @var int
-	 */
-	private $test_switching_auth_cookie_user_id;
+	private int $test_switching_auth_cookie_user_id;
 
-	/**
-	 * @var bool
-	 */
-	private $test_switching_auth_cookie_remember;
+	private bool $test_switching_auth_cookie_remember;
 
 	public function _before(): void {
 		parent::_before();
@@ -38,11 +32,7 @@ final class SwitchingTest extends Test {
 	 * @covers \switch_to_user
 	 */
 	public function testSwitchUserAndBack(): void {
-		if ( is_multisite() ) {
-			$admin = self::$testers['super'];
-		} else {
-			$admin = self::$testers['admin'];
-		}
+		$admin = self::$testers['admin'];
 
 		wp_set_current_user( $admin->ID );
 
@@ -143,11 +133,7 @@ final class SwitchingTest extends Test {
 	 * @covers \switch_off_user
 	 */
 	public function testSwitchOffAndBack(): void {
-		if ( is_multisite() ) {
-			$admin = self::$testers['super'];
-		} else {
-			$admin = self::$testers['admin'];
-		}
+		$admin = self::$testers['admin'];
 
 		wp_set_current_user( $admin->ID );
 
@@ -205,6 +191,86 @@ final class SwitchingTest extends Test {
 	}
 
 	/**
+	 * @covers \user_switching_clear_olduser_cookie
+	 */
+	public function testOldUserIsClearedWhenLoggingOut(): void {
+		$admin = self::$testers['admin'];
+
+		wp_set_current_user( $admin->ID );
+
+		// Switch user
+		switch_to_user( self::$users['author']->ID, true );
+
+		// Check that we are considered switched
+		$switched = current_user_switched();
+		self::assertInstanceOf( 'WP_User', $switched );
+		self::assertSame( $admin->ID, $switched->ID );
+
+		// Log out
+		wp_logout();
+
+		// Check that we are no longer considered switched
+		$switched = current_user_switched();
+		self::assertFalse( $switched );
+	}
+
+	/**
+	 * @covers \user_switching_clear_olduser_cookie
+	 */
+	public function testOldUserIsClearedWhenLoggingIn(): void {
+		$admin = self::$testers['admin'];
+
+		wp_set_current_user( $admin->ID );
+
+		// Switch user
+		switch_to_user( self::$users['author']->ID, true );
+
+		// Check that we are considered switched
+		$switched = current_user_switched();
+		self::assertInstanceOf( 'WP_User', $switched );
+		self::assertSame( $admin->ID, $switched->ID );
+
+		// Clear the current user
+		wp_set_current_user( 0 );
+
+		// Log in
+		$signed_on = wp_signon( array(
+			'user_login' => self::$users['author']->user_login,
+			'user_password' => 'password',
+		) );
+		self::assertNotWPError( $signed_on );
+
+		// Check that we are no longer considered switched
+		$switched = current_user_switched();
+		self::assertFalse( $switched );
+	}
+
+	/**
+	 * @covers \user_switching_clear_olduser_cookie
+	 * @see https://github.com/johnbillion/user-switching/issues/142
+	 */
+	public function testBrokenWPLoginActionValueIsIgnored(): void {
+		$admin = self::$testers['admin'];
+
+		wp_set_current_user( $admin->ID );
+
+		// Switch user
+		switch_to_user( self::$users['author']->ID, true );
+
+		// Check that we are considered switched
+		$switched = current_user_switched();
+		self::assertInstanceOf( 'WP_User', $switched );
+		self::assertSame( $admin->ID, $switched->ID );
+
+		// ...
+		do_action( 'wp_login', null );
+
+		// Check that we are no longer considered switched
+		$switched = current_user_switched();
+		self::assertFalse( $switched );
+	}
+
+	/**
 	 * @covers \user_switching::current_url
 	 */
 	public function testCurrentUrl(): void {
@@ -214,10 +280,9 @@ final class SwitchingTest extends Test {
 	}
 
 	/**
-	 * @param int       $user_id
 	 * @param int|false $old_user_id
 	 */
-	public function _action_switch_user( $user_id, $old_user_id ): void {
+	public function _action_switch_user( int $user_id, $old_user_id ): void {
 		$this->test_switching_user_id = $user_id;
 		$this->test_switching_old_user_id = $old_user_id;
 	}
