@@ -392,7 +392,7 @@ final class user_switching {
 
 		if ( ! empty( $_REQUEST['redirect_to'] ) ) {
 			// URL
-			$redirect_to = self::remove_query_args( wp_unslash( $_REQUEST['redirect_to'] ) );
+			$redirect_to = self::remove_query_args( wp_unslash( (string) $_REQUEST['redirect_to'] ) );
 			$requested_redirect_to = wp_unslash( $_REQUEST['redirect_to'] );
 			$redirect_type = self::REDIRECT_TYPE_URL;
 		} elseif ( ! empty( $_GET['redirect_to_post'] ) ) {
@@ -472,8 +472,6 @@ final class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user ) {
-			$switched_locale = false;
-			$lang_attr = '';
 			$locale = get_user_locale( $old_user );
 			$switched_locale = switch_to_locale( $locale );
 			$lang_attr = str_replace( '_', '-', $locale );
@@ -805,7 +803,7 @@ final class user_switching {
 				], $url );
 			} elseif ( ! empty( $_REQUEST['redirect_to'] ) ) {
 				$url = add_query_arg( [
-					'redirect_to' => rawurlencode( wp_unslash( $_REQUEST['redirect_to'] ) ),
+					'redirect_to' => rawurlencode( wp_unslash( (string) $_REQUEST['redirect_to'] ) ),
 				], $url );
 			}
 
@@ -942,8 +940,6 @@ final class user_switching {
 
 	/**
 	 * Filters the list of query arguments which get removed from admin area URLs in WordPress.
-	 *
-	 * @link https://core.trac.wordpress.org/ticket/23367
 	 *
 	 * @param array<int,string> $args Array of removable query arguments.
 	 * @return array<int,string> Updated array of removable query arguments.
@@ -1084,7 +1080,8 @@ final class user_switching {
 	 * @return string The current URL.
 	 */
 	public static function current_url(): string {
-		return ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$scheme = is_ssl() ? 'https' : 'http';
+		return "{$scheme}{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 	}
 
 	/**
@@ -1101,8 +1098,6 @@ final class user_switching {
 	 * Returns whether User Switching's equivalent of the 'logged_in' cookie should be secure.
 	 *
 	 * This is used to set the 'secure' flag on the old user cookie, for enhanced security.
-	 *
-	 * @link https://core.trac.wordpress.org/ticket/15330
 	 *
 	 * @return bool Should the old user cookie be secure?
 	 */

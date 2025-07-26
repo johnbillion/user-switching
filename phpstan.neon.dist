@@ -45,3 +45,4 @@ parameters:
 		# Casting mixed to int or string isn't that big of a problem
 		- '#^Parameter \#1 \$maybeint of function absint expects array\|bool\|float\|int\|resource\|string\|null, mixed given\.$#'
 		- '#^Cannot cast mixed to string\.$#'
+		- '#\(mixed\) of encapsed string cannot be cast to string\.$#'
