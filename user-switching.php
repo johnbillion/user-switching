@@ -712,22 +712,22 @@ final class user_switching {
 		if ( ! empty( $_GET['post'] ) ) {
 			// Post
 			return [
-				'redirect_to_post' => intval( $_GET['post'] ),
+				'redirect_to_post' => absint( $_GET['post'] ),
 			];
 		} elseif ( ! empty( $_GET['tag_ID'] ) ) {
 			// Term
 			return [
-				'redirect_to_term' => intval( $_GET['tag_ID'] ),
+				'redirect_to_term' => absint( $_GET['tag_ID'] ),
 			];
 		} elseif ( ! empty( $_GET['user_id'] ) ) {
 			// User
 			return [
-				'redirect_to_user' => intval( $_GET['user_id'] ),
+				'redirect_to_user' => absint( $_GET['user_id'] ),
 			];
 		} elseif ( ! empty( $_GET['c'] ) ) {
 			// Comment
 			return [
-				'redirect_to_comment' => intval( $_GET['c'] ),
+				'redirect_to_comment' => absint( $_GET['c'] ),
 			];
 		}
 
