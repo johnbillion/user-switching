@@ -402,11 +402,8 @@ final class user_switching {
 
 			if ( is_post_publicly_viewable( $post_id ) ) {
 				$link = get_permalink( $post_id );
-
-				if ( is_string( $link ) ) {
-					$redirect_to = $link;
-					$requested_redirect_to = $link;
-				}
+				$redirect_to = $link;
+				$requested_redirect_to = $link;
 			}
 		} elseif ( ! empty( $_GET['redirect_to_term'] ) ) {
 			// Term
@@ -415,11 +412,8 @@ final class user_switching {
 
 			if ( ( $term instanceof WP_Term ) && is_taxonomy_viewable( $term->taxonomy ) ) {
 				$link = get_term_link( $term );
-
-				if ( is_string( $link ) ) {
-					$redirect_to = $link;
-					$requested_redirect_to = $link;
-				}
+				$redirect_to = $link;
+				$requested_redirect_to = $link;
 			}
 		} elseif ( ! empty( $_GET['redirect_to_user'] ) ) {
 			// User
@@ -428,11 +422,8 @@ final class user_switching {
 
 			if ( $user instanceof WP_User ) {
 				$link = get_author_posts_url( $user->ID );
-
-				if ( is_string( $link ) ) {
-					$redirect_to = $link;
-					$requested_redirect_to = $link;
-				}
+				$redirect_to = $link;
+				$requested_redirect_to = $link;
 			}
 		} elseif ( ! empty( $_GET['redirect_to_comment'] ) ) {
 			// Comment
@@ -442,18 +433,12 @@ final class user_switching {
 			if ( $comment instanceof WP_Comment ) {
 				if ( 'approved' === wp_get_comment_status( $comment ) ) {
 					$link = get_comment_link( $comment );
-
-					if ( is_string( $link ) ) {
-						$redirect_to = $link;
-						$requested_redirect_to = $link;
-					}
+					$redirect_to = $link;
+					$requested_redirect_to = $link;
 				} elseif ( is_post_publicly_viewable( (int) $comment->comment_post_ID ) ) {
 					$link = get_permalink( (int) $comment->comment_post_ID );
-
-					if ( is_string( $link ) ) {
-						$redirect_to = $link;
-						$requested_redirect_to = $link;
-					}
+					$redirect_to = $link;
+					$requested_redirect_to = $link;
 				}
 			}
 		}
