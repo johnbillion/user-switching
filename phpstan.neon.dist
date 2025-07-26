@@ -15,6 +15,24 @@ parameters:
 		- vendor/lucatume/wp-browser/src/includes/factory/
 	bootstrapFiles:
 		- tests/phpstan/stubs.php
+	dynamicConstantNames:
+		- DB_HOST
+		- DB_NAME
+		- DB_PASSWORD
+		- DB_USER
+		- SAVEQUERIES
+		- WP_MEMORY_LIMIT
+		- WPINC
+		- AUTH_COOKIE
+		- COOKIE_DOMAIN
+		- COOKIEHASH
+		- COOKIEPATH
+		- LOGGED_IN_COOKIE
+		- SECURE_AUTH_COOKIE
+		- SITECOOKIEPATH
+		- USER_SWITCHING_COOKIE
+		- USER_SWITCHING_SECURE_COOKIE
+		- USER_SWITCHING_OLDUSER_COOKIE
 	ignoreErrors:
 		# Covers the breaks after exits in user_switching::action_init()
 		-
