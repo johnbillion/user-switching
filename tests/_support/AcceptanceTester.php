@@ -86,10 +86,8 @@ class AcceptanceTester extends \Codeception\Actor {
 
 	/**
 	 * Switch back to the original user
-	 *
-	 * @param string $user_login
 	 */
-	public function switchBackTo( $user_login ) {
+	public function switchBackTo( string $user_login, string $lang = 'en-US' ) {
 		$display_name = $this->grabFromDatabase(
 			$this->grabUsersTableName(),
 			'display_name',
@@ -104,8 +102,18 @@ class AcceptanceTester extends \Codeception\Actor {
 			// Nothing.
 		}
 
+		switch ( $lang ) {
+			case 'it-IT':
+				$text = 'Torna a %s';
+				break;
+			case 'en-US':
+			default:
+				$text = 'Switch back to %s';
+				break;
+		}
+
 		$this->click( sprintf(
-			'Switch back to %s',
+			$text,
 			$display_name
 		) );
 	}

@@ -30,7 +30,7 @@ final class SwitchToEnglishCest {
 		$I->canSeeTheElementInLanguage( '#user_switching p', 'it-IT' );
 
 		$I->amOnAdminPage( '/' );
-		$I->switchBackTo( 'admin_it' );
+		$I->switchBackTo( 'admin_it', 'it-IT' );
 		$I->canSeeThePageInLanguage( 'it-IT' );
 		$I->seeAdminSuccessNotice( 'Tornato a Admin IT.' );
 	}
