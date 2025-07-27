@@ -25,7 +25,7 @@ final class SwitchToEnglishCest {
 	}
 
 	public function SwitchFromItalianAdminToEnglishAuthorAndBack( \AcceptanceTester $I, Scenario $scenario ): void {
-		require_once dirname( __DIR__, 2 ) . '/vendor/wordpress/wordpress/wp-includes/version.php';
+		require dirname( __DIR__, 2 ) . '/vendor/wordpress/wordpress/wp-includes/version.php';
 
 		/** @var string $wp_version */
 

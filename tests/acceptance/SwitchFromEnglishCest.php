@@ -2,6 +2,8 @@
 
 namespace UserSwitching\Tests;
 
+use Codeception\Scenario;
+
 /**
  * Acceptance tests for switching from a user who uses English to a user who doesn't
  */
@@ -19,7 +21,17 @@ final class SwitchFromEnglishCest {
 		] );
 	}
 
-	public function SwitchFromEnglishAdminToItalianAuthorAndBack( \AcceptanceTester $I ): void {
+	public function SwitchFromEnglishAdminToItalianAuthorAndBack( \AcceptanceTester $I, Scenario $scenario ): void {
+		require dirname( __DIR__, 2 ) . '/vendor/wordpress/wordpress/wp-includes/version.php';
+
+		/** @var string $wp_version */
+
+		$I->comment( sprintf( 'Running test on WordPress version %s', $wp_version ) );
+
+		if ( version_compare( $wp_version, '6.2', '<' ) ) {
+			$scenario->skip( 'This test requires WordPress 6.2 or later.' );
+		}
+
 		$I->loginAsAdmin();
 		$I->switchToUser( 'autore' );
 		$I->canSeeThePageInLanguage( 'it-IT' );
