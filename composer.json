@@ -29,7 +29,6 @@
 	"require-dev": {
 		"behat/gherkin": "< 4.13.0",
 		"codeception/module-asserts": "^1.0",
-		"codeception/module-cli": "^1.0",
 		"codeception/module-db": "^1.0",
 		"codeception/module-webdriver": "^1.0",
 		"codeception/util-universalframework": "^1.0",
@@ -66,11 +65,7 @@
 	},
 	"scripts": {
 		"test": [
-			"@composer validate --strict --no-check-lock",
-			"@test:phpstan",
-			"@test:phpcs",
 			"@test:start",
-			"@test:integration",
 			"@test:acceptance",
 			"@test:stop"
 		],

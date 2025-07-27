@@ -25,9 +25,13 @@ final class SwitchToEnglishCest {
 	}
 
 	public function SwitchFromItalianAdminToEnglishAuthorAndBack( \AcceptanceTester $I, Scenario $scenario ): void {
-		$version = (string) $I->cli( ['core', 'version'] );
+		require_once dirname( __DIR__, 2 ) . '/vendor/wordpress/wordpress/wp-includes/version.php';
 
-		if ( version_compare( $version, '6.2', '<' ) ) {
+		/** @var string $wp_version */
+
+		$I->comment( sprintf( 'Running test on WordPress version %s', $wp_version ) );
+
+		if ( version_compare( $wp_version, '6.2', '<' ) ) {
 			$scenario->skip( 'This test requires WordPress 6.2 or later.' );
 		}
 
