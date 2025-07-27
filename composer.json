@@ -65,7 +65,11 @@
 	},
 	"scripts": {
 		"test": [
+			"@composer validate --strict --no-check-lock",
+			"@test:phpstan",
+			"@test:phpcs",
 			"@test:start",
+			"@test:integration",
 			"@test:acceptance",
 			"@test:stop"
 		],
