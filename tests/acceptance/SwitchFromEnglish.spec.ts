@@ -28,8 +28,7 @@ test.describe( 'Switch From English', () => {
 
 			// Switch to Italian author
 			await userSwitching.switchToUser( 'autore' );
-			// TODO: Fix language switching - requires Italian language pack installation
-			// await userSwitching.canSeeThePageInLanguage( 'it-IT' );
+			await userSwitching.canSeeThePageInLanguage( 'it-IT' );
 			await userSwitching.seeAdminSuccessNotice( 'Switched to Autore.' );
 
 			// The user switching element should be in English
@@ -41,8 +40,7 @@ test.describe( 'Switch From English', () => {
 
 			// Switch back to English admin
 			await userSwitching.switchBackTo( 'admin' );
-			// TODO: Fix language switching - requires Italian language pack installation
-			// await userSwitching.canSeeThePageInLanguage( 'en-US' );
+			await userSwitching.canSeeThePageInLanguage( 'en-US' );
 			await userSwitching.seeAdminSuccessNotice( 'Switched back to admin.' );
 		} );
 	} );

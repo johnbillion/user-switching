@@ -26,6 +26,10 @@ export class GlobalUtils {
 		// Set a predictable permalink structure:
 		GlobalUtils.runWPCLICommand( 'rewrite structure "/%postname%/"' );
 
+		// Install language packs for testing:
+		GlobalUtils.runWPCLICommand( 'language core install it_IT' );
+		GlobalUtils.runWPCLICommand( 'language plugin install user-switching it_IT' );
+
 		// Activate the plugin under test:
 		GlobalUtils.runWPCLICommand( 'plugin activate user-switching' );
 	}
