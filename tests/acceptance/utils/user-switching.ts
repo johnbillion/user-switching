@@ -1,26 +1,72 @@
 import { Page, expect } from '@playwright/test';
-import { Admin, RequestUtils } from '@wordpress/e2e-test-utils-playwright';
-import type { WP_REST_API_User } from 'wp-types';
+import { Admin } from '@wordpress/e2e-test-utils-playwright';
+import { GlobalUtils } from './global-utils';
 
 export class UserSwitchingUtils {
 	private page: Page;
 	private admin: Admin;
-	private requestUtils: RequestUtils;
 
-	constructor( page: Page, admin: Admin, requestUtils: RequestUtils ) {
+	constructor( page: Page, admin: Admin ) {
 		this.page = page;
 		this.admin = admin;
-		this.requestUtils = requestUtils;
+	}
+
+	/**
+	 * Put the block editor into a state where the items we need to interact with are
+	 * actually usable.
+	 */
+	async prepareBlockEditor() {
+		const userId = 1;
+
+		// Set user meta for WordPress 6.1+ persisted preferences
+		const modernPreferences = {
+			'core/edit-post': {
+				fullscreenMode: false,
+				welcomeGuide: false,
+			},
+		};
+
+		GlobalUtils.runWPCLICommand( `user meta add ${userId} wp_persisted_preferences '${JSON.stringify( modernPreferences )}' --format=json` );
+
+		// Set localStorage for pre-6.1 compatibility
+		await this.page.evaluate( ( userId ) => {
+			const legacyPreferences = {
+				'core/edit-post': {
+					preferences: {
+						features: {
+							fullscreenMode: false,
+							welcomeGuide: false,
+						},
+					},
+				},
+			};
+
+			localStorage.setItem(
+				`WP_DATA_USER_${userId}`,
+				JSON.stringify( legacyPreferences )
+			);
+		}, userId );
+	}
+
+	/**
+	 * Login via the wp-login.php page
+	 */
+	async loginViaPage( username: string, password: string ) {
+		await this.page.goto( '/wp-login.php' );
+		await this.page.fill( 'input[name="log"]', username );
+		await this.page.fill( 'input[name="pwd"]', password );
+		await this.page.locator( '#wp-submit' ).click();
+
+		// @todo verify we're logged in (can't use HTTP status code as WP returns 200 even on failed login)
 	}
 
 	/**
 	 * Switch to the specified user
 	 */
 	async switchToUser( username: string ) {
-		const userId = await this.getUserIdByUsername( username );
+		const userId = this.getUserIdByUsername( username );
 		await this.admin.visitAdminPage( 'user-edit.php', `user_id=${userId}` );
-		await this.page.click( '#user_switching_switcher' );
-		await this.page.waitForURL( '**/wp-admin/**' );
+		await this.page.locator( '#user_switching_switcher' ).click();
 	}
 
 	/**
@@ -28,40 +74,37 @@ export class UserSwitchingUtils {
 	 */
 	async switchOff() {
 		await this.page.hover( '#wp-admin-bar-my-account' );
-		await this.page.click( 'text=Switch Off' );
+		await this.page.locator( 'text=Switch Off' ).click();
 	}
 
 	/**
 	 * Switch back to the original user
 	 */
-	async switchBackTo( displayName: string, lang: string = 'en-US' ) {
-		try {
-			await this.page.hover( '#wp-admin-bar-my-account' );
-		} catch ( error ) {
-			// Element might not be visible, continue
-		}
+	async switchBackTo( userLogin: string, lang: string = 'en-US' ) {
+		const displayName = this.getUserDisplayName( userLogin );
 
-		let text: string;
+		// Get the expected text format - just "Switch back to DisplayName"
+		let expectedText: string;
 		switch ( lang ) {
 			case 'it-IT':
-				text = `Torna a ${displayName}`;
+				expectedText = `Torna a ${displayName}`;
 				break;
 			case 'en-US':
 			default:
-				text = `Switch back to ${displayName}`;
+				expectedText = `Switch back to ${displayName}`;
 				break;
 		}
 
-		// Click on the switch back link (exact text match)
-		await this.page.click( `text=${text}` );
+		// Use Playwright's getByText which is more reliable than text= selector
+		await this.page.getByText( expectedText ).click();
 	}
 
 	/**
 	 * Verify that the user is logged in as the specified user
 	 */
 	async verifyLoggedInAs( username: string ) {
-		const displayName = await this.getUserDisplayName( username );
-		await expect( this.page.locator( '#wpadminbar .display-name' ) ).toContainText( displayName );
+		const displayName = this.getUserDisplayName( username );
+		await expect( this.page.locator( '#wpadminbar .display-name' ).first() ).toContainText( displayName );
 	}
 
 	/**
@@ -69,6 +112,20 @@ export class UserSwitchingUtils {
 	 */
 	async verifyLoggedOut() {
 		await expect( this.page.locator( '#wpadminbar .display-name' ) ).not.toBeVisible();
+	}
+
+	/**
+	 * Verify the page language
+	 */
+	async canSeeThePageInLanguage( lang: string ) {
+		await this.canSeeTheElementInLanguage( 'html', lang );
+	}
+
+	/**
+	 * Verify the language of an element
+	 */
+	async canSeeTheElementInLanguage( selector: string, lang: string ) {
+		await expect( this.page.locator( selector ) ).toHaveAttribute( 'lang', lang );
 	}
 
 	/**
@@ -100,123 +157,27 @@ export class UserSwitchingUtils {
 	}
 
 	/**
-	 * Verify the page language
-	 */
-	async canSeePageInLanguage( lang: string ) {
-		await expect( this.page.locator( 'html' ) ).toHaveAttribute( 'lang', lang );
-	}
-
-	/**
 	 * Create a user with the specified username, role, and optional custom data
-	 * If user already exists, return the existing user
 	 */
-	async createUser( username: string, role: string, customData: Partial<WP_REST_API_User> = {} ): Promise<WP_REST_API_User> {
-		// First check if user already exists
-		try {
-			const existingUserId = await this.getUserIdByUsername( username );
-			return await this.requestUtils.rest<WP_REST_API_User>( {
-				path: `/wp/v2/users/${existingUserId}`,
-			} );
-		} catch ( error ) {
-			// User doesn't exist, continue to create
-		}
+	createUser( username: string, role: string, customData: { email?: string; first_name?: string; last_name?: string; name?: string } = {} ) {
+		const email = customData.email || `${username}@example.com`;
+		const displayName = customData.name || `${customData.first_name || ''} ${customData.last_name || ''}`.trim() || username;
 
-		const defaultData = {
-			username,
-			email: `${username}@example.com`,
-			first_name: username,
-			last_name: 'User',
-			roles: [ role ],
-			password: username,
-		};
-
-		const userData = { ...defaultData, ...customData };
-
-		return await this.requestUtils.rest<WP_REST_API_User>( {
-			path: '/wp/v2/users',
-			method: 'POST',
-			data: userData,
-		} );
+		GlobalUtils.runWPCLICommand( `user create ${username} ${email} --role=${role} --display_name="${displayName}" --user_pass=password` );
 	}
 
 	/**
-	 * Put the block editor into a state where items are usable
+	 * Get user ID by username
 	 */
-	async prepareBlockEditor() {
-		const userId = 1;
-
-		// Save user meta to database via REST API (WordPress 6.2+)
-		const preferences = {
-			'core/edit-post': {
-				fullscreenMode: false,
-				welcomeGuide: false,
-			},
-		};
-
-		// Update user meta via REST API
-		await this.requestUtils.rest( {
-			path: `/wp/v2/users/${userId}`,
-			method: 'POST',
-			data: {
-				meta: {
-					wp_acceptance_persisted_preferences: preferences,
-				},
-			},
-		} );
-
-		// Also set localStorage for pre-6.1 compatibility
-		await this.page.evaluate( () => {
-			const legacyPreferences = {
-				'core/edit-post': {
-					preferences: {
-						features: {
-							fullscreenMode: false,
-							welcomeGuide: false,
-						},
-					},
-				},
-			};
-
-			localStorage.setItem(
-				`WP_DATA_USER_${userId}`,
-				JSON.stringify( legacyPreferences )
-			);
-		} );
+	private getUserIdByUsername( username: string ): number {
+		return parseInt( GlobalUtils.runWPCLICommand( `user get ${username} --field=ID` ), 10 );
 	}
 
 	/**
-	 * Get user ID by username using WordPress REST API
+	 * Get user display name by username
 	 */
-	private async getUserIdByUsername( username: string ): Promise<number> {
-		// Get all users and find the one with matching username
-		const users = await this.requestUtils.rest<WP_REST_API_User[]>( {
-			path: '/wp/v2/users',
-			params: { search: username, per_page: 100 },
-		} );
-
-		const user = users.find( ( u ) => u.username === username );
-		if ( user ) {
-			return user.id;
-		}
-
-		throw new Error( `User with username "${username}" not found` );
+	private getUserDisplayName( username: string ): string {
+		return GlobalUtils.runWPCLICommand( `user get ${username} --field=display_name` );
 	}
 
-	/**
-	 * Get user display name by username using WordPress REST API
-	 */
-	private async getUserDisplayName( username: string ): Promise<string> {
-		// Get all users and find the one with matching username
-		const users = await this.requestUtils.rest<WP_REST_API_User[]>( {
-			path: '/wp/v2/users',
-			params: { search: username, per_page: 100 },
-		} );
-
-		const user = users.find( ( u ) => u.username === username );
-		if ( user ) {
-			return user.name;
-		}
-
-		throw new Error( `User with username "${username}" not found` );
-	}
 }

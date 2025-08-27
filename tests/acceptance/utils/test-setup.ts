@@ -1,14 +1,14 @@
 import { test as base, expect } from '@playwright/test';
-import { Admin, Editor, RequestUtils, PageUtils } from '@wordpress/e2e-test-utils-playwright';
+import { Admin, Editor, PageUtils } from '@wordpress/e2e-test-utils-playwright';
 import { UserSwitchingUtils } from './user-switching';
-import * as path from 'path';
+import { GlobalUtils } from './global-utils';
 
 type UserSwitchingFixtures = {
 	admin: Admin;
 	editor: Editor;
 	pageUtils: PageUtils;
-	requestUtils: RequestUtils;
 	userSwitching: UserSwitchingUtils;
+	globalUtils: GlobalUtils;
 };
 
 export const test = base.extend<UserSwitchingFixtures>( {
@@ -20,21 +20,17 @@ export const test = base.extend<UserSwitchingFixtures>( {
 		const editor = new Editor( { page } );
 		await use( editor );
 	},
-	requestUtils: async ( { baseURL }, use ) => {
-		const storageStatePath = path.join( process.cwd(), 'tests/acceptance/storage/admin-storage-state.json' );
-		const requestUtils = await RequestUtils.setup( {
-			baseURL,
-			storageStatePath,
-		} );
-		await use( requestUtils );
-	},
 	admin: async ( { page, pageUtils, editor }, use ) => {
 		const admin = new Admin( { page, pageUtils, editor } );
 		await use( admin );
 	},
-	userSwitching: async ( { page, admin, requestUtils }, use ) => {
-		const userSwitching = new UserSwitchingUtils( page, admin, requestUtils );
+	userSwitching: async ( { page, admin }, use ) => {
+		const userSwitching = new UserSwitchingUtils( page, admin );
 		await use( userSwitching );
+	},
+	globalUtils: async ( {}, use ) => {
+		const globalUtils = new GlobalUtils();
+		await use( globalUtils );
 	},
 } );
 

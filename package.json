@@ -16,8 +16,7 @@
 		"@types/node": "^24.3.0",
 		"@wordpress/e2e-test-utils-playwright": "^1.29.0",
 		"sharp-cli": "^4.0.0",
-		"typescript": "^5.9.2",
-		"wp-types": "^4.68.1"
+		"typescript": "^5.9.2"
 	},
 	"scripts": {
 		"icons": "sharp -i .wordpress-org/icon.svg -o .wordpress-org/icon-128x128.png -f png --palette resize 128 128 && sharp -i .wordpress-org/icon.svg -o .wordpress-org/icon-256x256.png -f png --palette resize 256 256",

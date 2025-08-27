@@ -9,7 +9,6 @@ if ( ! baseURL ) {
 export default defineConfig({
 	testDir: '../',
 	outputDir: '../../_output',
-	globalSetup: './global-setup.ts',
 	fullyParallel: false,
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 2 : 0,

@@ -1,12 +1,9 @@
+import { GlobalUtils } from './utils/global-utils';
 import { test, expect } from './utils/test-setup';
 
 test.describe( 'Access Denied', () => {
-	test.beforeEach( async ( { userSwitching } ) => {
-		// Create an editor user if not exists
-		await userSwitching.createUser( 'editor', 'editor', {
-			first_name: 'Test',
-			last_name: 'Editor',
-		} );
+	test.beforeAll( async ( { globalUtils } ) => {
+		await globalUtils.installWordPress();
 	} );
 
 	test( 'Switch back from page access denied', {
@@ -19,8 +16,11 @@ test.describe( 'Access Denied', () => {
 		admin,
 		userSwitching,
 	} ) => {
-		// Login as admin
-		await admin.visitAdminPage( '/' );
+		// Create editor user for testing
+		GlobalUtils.runWPCLICommand( 'user create editor editor@example.com --role=editor --user_pass=password' );
+
+		// Login through the page's browser context
+		await userSwitching.loginViaPage( 'admin', 'password' );
 
 		// Switch to editor
 		await userSwitching.switchToUser( 'editor' );
@@ -32,7 +32,7 @@ test.describe( 'Access Denied', () => {
 		await expect( page ).toHaveTitle( /Error/ );
 
 		// Switch back to admin
-		await userSwitching.switchBackTo( 'admin User' );
+		await userSwitching.switchBackTo( 'admin' );
 
 		// Should be on the same page but with switched parameters
 		const expectedPath = '/wp-admin/tools.php?page=foo&user_switched=true&switched_back=true';

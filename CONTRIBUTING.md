@@ -58,6 +58,10 @@ To run tests individually, run one of:
 	composer test:phpcs
 	composer test:phpstan
 
+To run a single test:
+
+	composer test:acceptance -- tests/acceptance/AccessDenied.spec.ts
+
 To stop the Docker containers:
 
 	composer test:stop

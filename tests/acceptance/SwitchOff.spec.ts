@@ -1,7 +1,10 @@
 import { test, expect } from './utils/test-setup';
-import type { WP_REST_API_Post, WP_REST_API_Comment, WP_REST_API_Category } from 'wp-types';
+import { GlobalUtils } from './utils/global-utils';
 
 test.describe( 'Switch Off', () => {
+	test.beforeAll( async ( { globalUtils } ) => {
+		await globalUtils.installWordPress();
+	} );
 	test( 'Switch off from dashboard and back from front end', {
 		annotation: {
 			type: 'user-story',
@@ -13,6 +16,7 @@ test.describe( 'Switch Off', () => {
 		userSwitching,
 	} ) => {
 		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Switch off
@@ -21,7 +25,7 @@ test.describe( 'Switch Off', () => {
 		await userSwitching.verifyLoggedOut();
 
 		// Switch back to admin
-		await userSwitching.switchBackTo( 'admin User' );
+		await userSwitching.switchBackTo( 'admin' );
 		expect( page.url() ).toContain( '/?user_switched=true&switched_back=true' );
 		await userSwitching.verifyLoggedInAs( 'admin' );
 	} );
@@ -37,6 +41,7 @@ test.describe( 'Switch Off', () => {
 		userSwitching,
 	} ) => {
 		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Switch off
@@ -48,7 +53,7 @@ test.describe( 'Switch Off', () => {
 		await page.goto( '/wp-login.php' );
 
 		// Switch back to admin
-		await userSwitching.switchBackTo( 'admin User' );
+		await userSwitching.switchBackTo( 'admin' );
 		expect( page.url() ).toContain( '/wp-admin/users.php' );
 		await userSwitching.seeAdminSuccessNotice( 'Switched back to admin.' );
 		await userSwitching.verifyLoggedInAs( 'admin' );
@@ -63,29 +68,20 @@ test.describe( 'Switch Off', () => {
 		page,
 		admin,
 		editor,
-		requestUtils,
 		userSwitching,
 	} ) => {
 		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Create a published post
-		const post = await requestUtils.rest<WP_REST_API_Post>( {
-			path: '/wp/v2/posts',
-			method: 'POST',
-			data: {
-				title: 'Test Post',
-				content: 'Test content',
-				status: 'publish',
-				slug: 'hello-world',
-			},
-		} );
+		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Hello World" --post_status=publish --porcelain' );
 
 		// Prepare block editor
 		await userSwitching.prepareBlockEditor();
 
 		// Edit the post
-		await admin.visitAdminPage( 'post.php', `post=${post.id}&action=edit` );
+		await admin.visitAdminPage( 'post.php', `post=${postId}&action=edit` );
 
 		// Switch off
 		await userSwitching.switchOff();
@@ -102,29 +98,20 @@ test.describe( 'Switch Off', () => {
 		page,
 		admin,
 		editor,
-		requestUtils,
 		userSwitching,
 	} ) => {
 		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Create a draft post
-		const post = await requestUtils.rest<WP_REST_API_Post>( {
-			path: '/wp/v2/posts',
-			method: 'POST',
-			data: {
-				title: 'Draft Post',
-				content: 'Draft content',
-				status: 'draft',
-				slug: 'hello-world',
-			},
-		} );
+		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Draft Post" --post_status=draft --porcelain' );
 
 		// Prepare block editor
 		await userSwitching.prepareBlockEditor();
 
 		// Edit the post
-		await admin.visitAdminPage( 'post.php', `post=${post.id}&action=edit` );
+		await admin.visitAdminPage( 'post.php', `post=${postId}&action=edit` );
 
 		// Switch off
 		await userSwitching.switchOff();
@@ -140,24 +127,17 @@ test.describe( 'Switch Off', () => {
 	}, async ( {
 		page,
 		admin,
-		requestUtils,
 		userSwitching,
 	} ) => {
 		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
-		// Create a category using REST API
-		const term = await requestUtils.rest<WP_REST_API_Category>( {
-			path: '/wp/v2/categories',
-			method: 'POST',
-			data: {
-				name: 'Test Category',
-				slug: 'hello',
-			},
-		} );
+		// Create a category
+		const termId = GlobalUtils.runWPCLICommand( 'term create category "Hello Category" --slug=hello --porcelain' );
 
 		// Edit the term
-		await admin.visitAdminPage( 'term.php', `taxonomy=category&tag_ID=${term.id}` );
+		await admin.visitAdminPage( 'term.php', `taxonomy=category&tag_ID=${termId}` );
 
 		// Switch off
 		await userSwitching.switchOff();
@@ -173,20 +153,21 @@ test.describe( 'Switch Off', () => {
 	}, async ( {
 		page,
 		admin,
-		requestUtils,
 		userSwitching,
 	} ) => {
 		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Create a user
-		const user = await userSwitching.createUser( 'example', 'editor', {
+		userSwitching.createUser( 'example', 'editor', {
 			first_name: 'Example',
 			last_name: 'User',
 		} );
+		const userId = GlobalUtils.runWPCLICommand( 'user get example --field=ID' );
 
 		// Edit the user
-		await admin.visitAdminPage( 'user-edit.php', `user_id=${user.id}` );
+		await admin.visitAdminPage( 'user-edit.php', `user_id=${userId}` );
 
 		// Switch off
 		await userSwitching.switchOff();
@@ -202,41 +183,24 @@ test.describe( 'Switch Off', () => {
 	}, async ( {
 		page,
 		admin,
-		requestUtils,
 		userSwitching,
 	} ) => {
 		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Create a post
-		const post = await requestUtils.rest<WP_REST_API_Post>( {
-			path: '/wp/v2/posts',
-			method: 'POST',
-			data: {
-				title: 'Comment Test',
-				content: 'Leave a comment',
-				status: 'publish',
-				slug: 'leave-a-comment',
-			},
-		} );
+		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_status=publish --porcelain' );
 
 		// Create an approved comment
-		const comment = await requestUtils.rest<WP_REST_API_Comment>( {
-			path: '/wp/v2/comments',
-			method: 'POST',
-			data: {
-				post: post.id,
-				content: 'Test comment',
-				status: 'approved',
-			},
-		} );
+		const commentId = GlobalUtils.runWPCLICommand( `comment create --comment_post_ID=${postId} --comment_content="Great post!" --comment_approved=1 --porcelain` );
 
 		// Edit the comment
-		await admin.visitAdminPage( 'comment.php', `action=editcomment&c=${comment.id}` );
+		await admin.visitAdminPage( 'comment.php', `action=editcomment&c=${commentId}` );
 
 		// Switch off
 		await userSwitching.switchOff();
-		expect( page.url() ).toContain( `/leave-a-comment/?switched_off=true#comment-${comment.id}` );
+		expect( page.url() ).toContain( `/leave-a-comment/?switched_off=true#comment-${commentId}` );
 		await userSwitching.verifyLoggedOut();
 	} );
 
@@ -248,37 +212,20 @@ test.describe( 'Switch Off', () => {
 	}, async ( {
 		page,
 		admin,
-		requestUtils,
 		userSwitching,
 	} ) => {
 		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Create a post
-		const post = await requestUtils.rest<WP_REST_API_Post>( {
-			path: '/wp/v2/posts',
-			method: 'POST',
-			data: {
-				title: 'Comment Test',
-				content: 'Leave a comment',
-				status: 'publish',
-				slug: 'leave-a-comment',
-			},
-		} );
+		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_status=publish --porcelain' );
 
 		// Create an unapproved comment
-		const comment = await requestUtils.rest<WP_REST_API_Comment>( {
-			path: '/wp/v2/comments',
-			method: 'POST',
-			data: {
-				post: post.id,
-				content: 'Test comment',
-				status: 'hold',
-			},
-		} );
+		const commentId = GlobalUtils.runWPCLICommand( `comment create --comment_post_ID=${postId} --comment_content="Pending comment" --comment_approved=0 --porcelain` );
 
 		// Edit the comment
-		await admin.visitAdminPage( 'comment.php', `action=editcomment&c=${comment.id}` );
+		await admin.visitAdminPage( 'comment.php', `action=editcomment&c=${commentId}` );
 
 		// Switch off
 		await userSwitching.switchOff();

@@ -72,7 +72,7 @@
 			"@test:stop"
 		],
 		"test:acceptance": [
-			"acceptance-tests --cli=\"language core install it_IT\" --cli=\"language plugin install user-switching it_IT\""
+			"acceptance-tests"
 		],
 		"test:destroy": [
 			"tests-destroy"

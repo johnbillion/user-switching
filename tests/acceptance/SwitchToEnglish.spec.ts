@@ -15,7 +15,6 @@ test.describe( 'Switch To English', () => {
 		}, async ( {
 			page,
 			admin,
-			requestUtils,
 			userSwitching,
 		} ) => {
 			// Create Italian admin user
@@ -34,12 +33,11 @@ test.describe( 'Switch To English', () => {
 			await page.goto( '/wp-login.php' );
 			await page.fill( '#user_login', 'admin_it' );
 			await page.fill( '#user_pass', 'admin_it' );
-			await page.click( '#wp-submit' );
-			await page.waitForURL( '**/wp-admin/**' );
+			await page.locator( '#wp-submit' ).click();
 
 			// Switch to English author
 			await userSwitching.switchToUser( 'author_en' );
-			await userSwitching.canSeePageInLanguage( 'en-US' );
+			await userSwitching.canSeeThePageInLanguage( 'en-US' );
 			await userSwitching.seeAdminSuccessNotice( 'Cambiato a Author EN.' );
 
 			// The user switching element should be in Italian
@@ -50,8 +48,8 @@ test.describe( 'Switch To English', () => {
 			await admin.visitAdminPage( '/' );
 
 			// Switch back to Italian admin
-			await userSwitching.switchBackTo( 'Admin IT', 'it-IT' );
-			await userSwitching.canSeePageInLanguage( 'it-IT' );
+			await userSwitching.switchBackTo( 'admin_it', 'it-IT' );
+			await userSwitching.canSeeThePageInLanguage( 'it-IT' );
 			await userSwitching.seeAdminSuccessNotice( 'Tornato a Admin IT.' );
 		} );
 	} );

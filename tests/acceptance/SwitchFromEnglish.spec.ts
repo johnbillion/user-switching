@@ -15,7 +15,6 @@ test.describe( 'Switch From English', () => {
 		}, async ( {
 			page,
 			admin,
-			requestUtils,
 			userSwitching,
 		} ) => {
 			// Create Italian author user
@@ -29,7 +28,7 @@ test.describe( 'Switch From English', () => {
 
 			// Switch to Italian author
 			await userSwitching.switchToUser( 'autore' );
-			await userSwitching.canSeePageInLanguage( 'it-IT' );
+			await userSwitching.canSeeThePageInLanguage( 'it-IT' );
 			await userSwitching.seeAdminSuccessNotice( 'Switched to Autore.' );
 
 			// The user switching element should be in English
@@ -41,7 +40,7 @@ test.describe( 'Switch From English', () => {
 
 			// Switch back to English admin
 			await userSwitching.switchBackTo( 'admin User' );
-			await userSwitching.canSeePageInLanguage( 'en-US' );
+			await userSwitching.canSeeThePageInLanguage( 'en-US' );
 			await userSwitching.seeAdminSuccessNotice( 'Switched back to admin.' );
 		} );
 	} );
