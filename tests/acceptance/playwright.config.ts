@@ -1,0 +1,37 @@
+import { defineConfig, devices } from '@playwright/test';
+import * as path from 'path';
+
+const baseURL = process.env.WP_BASE_URL;
+if ( ! baseURL ) {
+	throw new Error( 'WP_BASE_URL environment variable is required. Run tests via "composer test:acceptance".' );
+}
+
+export default defineConfig({
+	testDir: '.',
+	outputDir: '../_output',
+	globalSetup: './utils/global-setup.ts',
+	fullyParallel: false,
+	forbidOnly: !!process.env.CI,
+	retries: process.env.CI ? 2 : 0,
+	workers: 1,
+	reporter: process.env.CI ? 'github' : 'list',
+	use: {
+		baseURL,
+		storageState: path.join( process.cwd(), 'tests/acceptance/admin-storage-state.json' ),
+		trace: 'on-first-retry',
+		screenshot: 'only-on-failure',
+		video: 'retain-on-failure',
+	},
+
+	projects: [
+		{
+			name: 'chromium',
+			use: {
+				...devices['Desktop Chrome'],
+				viewport: { width: 1440, height: 900 },
+			},
+		},
+	],
+
+	webServer: undefined,
+});
