@@ -161,7 +161,15 @@ export class UserSwitchingUtils {
 	 */
 	createUser( username: string, role: string, customData: { email?: string; first_name?: string; last_name?: string; name?: string } = {} ) {
 		const email = customData.email || `${username}@example.com`;
-		const displayName = customData.name || `${customData.first_name || ''} ${customData.last_name || ''}`.trim() || username;
+		let displayName: string;
+		
+		if ( customData.name ) {
+			displayName = customData.name;
+		} else if ( customData.first_name || customData.last_name ) {
+			displayName = `${customData.first_name || ''} ${customData.last_name || ''}`.trim();
+		} else {
+			displayName = username;
+		}
 
 		GlobalUtils.runWPCLICommand( `user create ${username} ${email} --role=${role} --display_name="${displayName}" --user_pass=password` );
 	}

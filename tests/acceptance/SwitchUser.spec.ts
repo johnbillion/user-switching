@@ -1,12 +1,14 @@
 import { test, expect } from './utils/test-setup';
 
 test.describe( 'User Switching', () => {
+	test.beforeAll( async ( { globalUtils } ) => {
+		// Install WordPress fresh for this test suite
+		globalUtils.installWordPress();
+	} );
+
 	test.beforeEach( async ( { userSwitching } ) => {
 		// Create an editor user if not exists
-		await userSwitching.createUser( 'editor', 'editor', {
-			first_name: 'Test',
-			last_name: 'Editor',
-		} );
+		await userSwitching.createUser( 'editor', 'editor' );
 	} );
 
 	test( 'Switch to editor then back from front end', {
@@ -20,6 +22,7 @@ test.describe( 'User Switching', () => {
 		userSwitching,
 	} ) => {
 		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Switch to editor
@@ -32,7 +35,7 @@ test.describe( 'User Switching', () => {
 		await page.goto( '/' );
 
 		// Switch back to admin
-		await userSwitching.switchBackTo( 'admin User' );
+		await userSwitching.switchBackTo( 'admin' );
 		expect( page.url() ).toContain( '/?user_switched=true&switched_back=true' );
 		await userSwitching.verifyLoggedInAs( 'admin' );
 	} );
@@ -48,6 +51,7 @@ test.describe( 'User Switching', () => {
 		userSwitching,
 	} ) => {
 		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Switch to editor
@@ -60,7 +64,7 @@ test.describe( 'User Switching', () => {
 		await admin.visitAdminPage( 'tools.php' );
 
 		// Switch back to admin
-		await userSwitching.switchBackTo( 'admin User' );
+		await userSwitching.switchBackTo( 'admin' );
 		expect( page.url() ).toContain( '/wp-admin/tools.php' );
 		await userSwitching.seeAdminSuccessNotice( 'Switched back to admin.' );
 		await userSwitching.verifyLoggedInAs( 'admin' );

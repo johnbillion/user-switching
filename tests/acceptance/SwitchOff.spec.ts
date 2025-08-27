@@ -75,7 +75,7 @@ test.describe( 'Switch Off', () => {
 		await admin.visitAdminPage( '/' );
 
 		// Create a published post
-		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Hello World" --post_status=publish --porcelain' );
+		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Hello World" --post_name="hello-world" --post_status=publish --porcelain' );
 
 		// Prepare block editor
 		await userSwitching.prepareBlockEditor();
@@ -190,7 +190,7 @@ test.describe( 'Switch Off', () => {
 		await admin.visitAdminPage( '/' );
 
 		// Create a post
-		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_status=publish --porcelain' );
+		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_name="leave-a-comment" --post_status=publish --porcelain' );
 
 		// Create an approved comment
 		const commentId = GlobalUtils.runWPCLICommand( `comment create --comment_post_ID=${postId} --comment_content="Great post!" --comment_approved=1 --porcelain` );
@@ -219,7 +219,7 @@ test.describe( 'Switch Off', () => {
 		await admin.visitAdminPage( '/' );
 
 		// Create a post
-		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_status=publish --porcelain' );
+		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_name="leave-a-comment" --post_status=publish --porcelain' );
 
 		// Create an unapproved comment
 		const commentId = GlobalUtils.runWPCLICommand( `comment create --comment_post_ID=${postId} --comment_content="Pending comment" --comment_approved=0 --porcelain` );

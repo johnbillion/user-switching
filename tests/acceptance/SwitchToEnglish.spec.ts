@@ -2,9 +2,9 @@ import { test, expect } from './utils/test-setup';
 
 test.describe( 'Switch To English', () => {
 	test.describe( 'WordPress 6.2+', () => {
-		test.beforeAll( async () => {
-			// Check WordPress version - these tests require 6.2+
-			// This would need to be implemented based on actual WP version check
+		test.beforeAll( async ( { globalUtils } ) => {
+			// Install WordPress fresh for this test suite
+			globalUtils.installWordPress();
 		} );
 
 		test( 'Switch from Italian admin to English author and back', {
@@ -30,10 +30,7 @@ test.describe( 'Switch To English', () => {
 			} );
 
 			// Login as Italian admin
-			await page.goto( '/wp-login.php' );
-			await page.fill( '#user_login', 'admin_it' );
-			await page.fill( '#user_pass', 'admin_it' );
-			await page.locator( '#wp-submit' ).click();
+			await userSwitching.loginViaPage( 'admin_it', 'password' );
 
 			// Switch to English author
 			await userSwitching.switchToUser( 'author_en' );

@@ -1,5 +1,4 @@
 import { defineConfig, devices } from '@playwright/test';
-import * as path from 'path';
 
 const baseURL = process.env.WP_BASE_URL;
 if ( ! baseURL ) {
@@ -16,7 +15,6 @@ export default defineConfig({
 	reporter: process.env.CI ? 'github' : 'list',
 	use: {
 		baseURL,
-		storageState: path.join( process.cwd(), 'tests/acceptance/storage/admin-storage-state.json' ),
 		trace: 'on-first-retry',
 		screenshot: 'only-on-failure',
 		video: 'retain-on-failure',
