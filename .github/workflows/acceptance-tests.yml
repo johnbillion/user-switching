@@ -14,6 +14,7 @@ on:
       - 'composer.json'
       - 'docker-compose.yml'
       - 'package.json'
+      - 'tsconfig.json'
   pull_request:
     branches:
       - '**'
@@ -25,6 +26,7 @@ on:
       - 'composer.json'
       - 'docker-compose.yml'
       - 'package.json'
+      - 'tsconfig.json'
   workflow_dispatch:
 
 permissions: {}
