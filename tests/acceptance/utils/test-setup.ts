@@ -28,8 +28,8 @@ export const test = base.extend<UserSwitchingFixtures>( {
 		} );
 		await use( requestUtils );
 	},
-	admin: async ( { page, pageUtils, editor, requestUtils }, use ) => {
-		const admin = new Admin( { page, pageUtils, editor, requestUtils } );
+	admin: async ( { page, pageUtils, editor }, use ) => {
+		const admin = new Admin( { page, pageUtils, editor } );
 		await use( admin );
 	},
 	userSwitching: async ( { page, admin, requestUtils }, use ) => {

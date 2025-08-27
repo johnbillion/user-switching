@@ -1,5 +1,4 @@
 import { test, expect } from './utils/test-setup';
-import type { WP_REST_API_User } from 'wp-types';
 
 test.describe( 'Access Denied', () => {
 	test.beforeEach( async ( { userSwitching } ) => {

@@ -1,5 +1,4 @@
 import { test, expect } from './utils/test-setup';
-import type { WP_REST_API_User } from 'wp-types';
 
 test.describe( 'User Switching', () => {
 	test.beforeEach( async ( { userSwitching } ) => {
@@ -31,7 +30,7 @@ test.describe( 'User Switching', () => {
 
 		// Go to front end
 		await page.goto( '/' );
-		
+
 		// Switch back to admin
 		await userSwitching.switchBackTo( 'admin User' );
 		expect( page.url() ).toContain( '/?user_switched=true&switched_back=true' );
@@ -59,7 +58,7 @@ test.describe( 'User Switching', () => {
 
 		// Navigate to tools page
 		await admin.visitAdminPage( 'tools.php' );
-		
+
 		// Switch back to admin
 		await userSwitching.switchBackTo( 'admin User' );
 		expect( page.url() ).toContain( '/wp-admin/tools.php' );

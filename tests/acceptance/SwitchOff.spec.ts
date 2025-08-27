@@ -1,5 +1,5 @@
 import { test, expect } from './utils/test-setup';
-import type { WP_REST_API_Post, WP_REST_API_User, WP_REST_API_Comment, WP_REST_API_Category } from 'wp-types';
+import type { WP_REST_API_Post, WP_REST_API_Comment, WP_REST_API_Category } from 'wp-types';
 
 test.describe( 'Switch Off', () => {
 	test( 'Switch off from dashboard and back from front end', {
@@ -46,7 +46,7 @@ test.describe( 'Switch Off', () => {
 
 		// Go to login page
 		await page.goto( '/wp-login.php' );
-		
+
 		// Switch back to admin
 		await userSwitching.switchBackTo( 'admin User' );
 		expect( page.url() ).toContain( '/wp-admin/users.php' );

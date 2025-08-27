@@ -1,5 +1,4 @@
 import { test, expect } from './utils/test-setup';
-import type { WP_REST_API_User } from 'wp-types';
 
 test.describe( 'Switch To English', () => {
 	test.describe( 'WordPress 6.2+', () => {
@@ -42,14 +41,14 @@ test.describe( 'Switch To English', () => {
 			await userSwitching.switchToUser( 'author_en' );
 			await userSwitching.canSeePageInLanguage( 'en-US' );
 			await userSwitching.seeAdminSuccessNotice( 'Cambiato a Author EN.' );
-			
+
 			// The user switching element should be in Italian
 			const switchingElement = page.locator( '#user_switching p' );
 			await expect( switchingElement ).toHaveAttribute( 'lang', 'it-IT' );
 
 			// Go to dashboard
 			await admin.visitAdminPage( '/' );
-			
+
 			// Switch back to Italian admin
 			await userSwitching.switchBackTo( 'Admin IT', 'it-IT' );
 			await userSwitching.canSeePageInLanguage( 'it-IT' );
