@@ -7,9 +7,9 @@ if ( ! baseURL ) {
 }
 
 export default defineConfig({
-	testDir: '.',
-	outputDir: '../_output',
-	globalSetup: './utils/global-setup.ts',
+	testDir: '../',
+	outputDir: '../../_output',
+	globalSetup: './global-setup.ts',
 	fullyParallel: false,
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 2 : 0,
@@ -17,7 +17,7 @@ export default defineConfig({
 	reporter: process.env.CI ? 'github' : 'list',
 	use: {
 		baseURL,
-		storageState: path.join( process.cwd(), 'tests/acceptance/admin-storage-state.json' ),
+		storageState: path.join( process.cwd(), 'tests/acceptance/storage/admin-storage-state.json' ),
 		trace: 'on-first-retry',
 		screenshot: 'only-on-failure',
 		video: 'retain-on-failure',

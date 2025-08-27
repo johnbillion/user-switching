@@ -4,4 +4,4 @@
 /tests/_output/
 /tests/_support/_generated
 /tests/cache
-/tests/acceptance/admin-storage-state.json
+/tests/acceptance/storage/admin-storage-state.json

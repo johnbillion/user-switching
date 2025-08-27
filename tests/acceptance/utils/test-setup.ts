@@ -21,7 +21,7 @@ export const test = base.extend<UserSwitchingFixtures>( {
 		await use( editor );
 	},
 	requestUtils: async ( { baseURL }, use ) => {
-		const storageStatePath = path.join( process.cwd(), 'tests/acceptance/admin-storage-state.json' );
+		const storageStatePath = path.join( process.cwd(), 'tests/acceptance/storage/admin-storage-state.json' );
 		const requestUtils = await RequestUtils.setup( {
 			baseURL,
 			storageStatePath,

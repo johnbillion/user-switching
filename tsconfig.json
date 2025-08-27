@@ -11,7 +11,6 @@
 		"types": ["node"]
 	},
 	"include": [
-		"tests/acceptance/**/*.ts",
-		"playwright.config.ts"
+		"tests/acceptance/**/*.ts"
 	]
 }

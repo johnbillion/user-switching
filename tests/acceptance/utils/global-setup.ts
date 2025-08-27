@@ -8,7 +8,7 @@ async function globalSetup() {
 		throw new Error( 'WP_BASE_URL environment variable is required' );
 	}
 
-	const storageStatePath = path.join( process.cwd(), 'tests/acceptance/admin-storage-state.json' );
+	const storageStatePath = path.join( process.cwd(), 'tests/acceptance/storage/admin-storage-state.json' );
 
 	// Create request context
 	const requestContext = await request.newContext( { baseURL } );
