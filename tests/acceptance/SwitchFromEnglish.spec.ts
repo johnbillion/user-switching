@@ -20,7 +20,6 @@ test.describe( 'Switch From English', () => {
 	}, testInfo ) => {
 		// Check WordPress version - this test requires 6.2+
 		const wpVersion = GlobalUtils.runWPCLICommand( 'core version' );
-		console.log( `Running test on WordPress version ${wpVersion}` );
 
 		testInfo.skip( semver.lt( wpVersion, '6.2.0' ), 'This test requires WordPress 6.2 or later' );
 
