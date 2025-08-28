@@ -10,7 +10,7 @@ on:
       - '.github/workflows/integration-tests.yml'
       - 'tests/**'
       - '**.php'
-      - 'codeception.dist.yml'
+      - 'phpunit.xml.dist'
       - 'composer.json'
       - 'docker-compose.yml'
       - 'package.json'
@@ -21,7 +21,7 @@ on:
       - '.github/workflows/integration-tests.yml'
       - 'tests/**'
       - '**.php'
-      - 'codeception.dist.yml'
+      - 'phpunit.xml.dist'
       - 'composer.json'
       - 'docker-compose.yml'
       - 'package.json'
@@ -34,7 +34,7 @@ jobs:
     name: WP ${{ matrix.wp }}
     permissions:
       contents: read
-    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-integration-tests.yml@playwright
+    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-integration-tests.yml@integration-framework
     strategy:
       # See the following for PHP compatibility of WordPress versions:
       # https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/

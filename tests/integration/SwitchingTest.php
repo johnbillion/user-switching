@@ -19,8 +19,8 @@ final class SwitchingTest extends Test {
 
 	private bool $test_switching_auth_cookie_remember;
 
-	public function _before(): void {
-		parent::_before();
+	public function set_up(): void {
+		parent::set_up();
 
 		add_action( 'switch_to_user',         array( $this, '_action_switch_user' ), 10, 2 );
 		add_action( 'switch_back_user',       array( $this, '_action_switch_user' ), 10, 2 );

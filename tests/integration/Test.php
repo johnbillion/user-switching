@@ -2,7 +2,7 @@
 
 namespace UserSwitching\Tests;
 
-abstract class Test extends \Codeception\TestCase\WPTestCase {
+abstract class Test extends \WP_UnitTestCase {
 	/**
 	 * @var array<string, \WP_User>
 	 */
@@ -49,7 +49,9 @@ abstract class Test extends \Codeception\TestCase\WPTestCase {
 		add_filter( 'user_switching_send_auth_cookies', '__return_false' );
 	}
 
-	public function _before(): void {
+	public function set_up(): void {
+		parent::set_up();
+
 		add_action( 'set_auth_cookie',           array( $this, 'action_set_auth_cookie' ), 10, 6 );
 		add_action( 'set_logged_in_cookie',      array( $this, 'action_set_logged_in_cookie' ), 10 );
 		add_action( 'clear_auth_cookie',         array( $this, 'action_clear_auth_cookie' ) );
