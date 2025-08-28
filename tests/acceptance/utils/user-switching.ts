@@ -184,7 +184,7 @@ export class UserSwitchingUtils {
 		
 		// Set user locale if provided
 		if ( customData.locale ) {
-			GlobalUtils.runWPCLICommand( `user meta add ${username} locale ${customData.locale}` );
+			GlobalUtils.runWPCLICommand( `user meta update ${username} locale ${customData.locale}` );
 		}
 	}
 
