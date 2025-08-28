@@ -11,7 +11,7 @@ export default defineConfig({
 	fullyParallel: false,
 	forbidOnly: !!process.env.CI,
 	workers: 1,
-	reporter: process.env.CI ? 'github' : 'list',
+	reporter: 'list',
 	use: {
 		baseURL,
 		...devices['Desktop Chrome'],
