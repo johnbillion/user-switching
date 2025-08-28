@@ -168,7 +168,7 @@ export class UserSwitchingUtils {
 	/**
 	 * Create a user with the specified username, role, and optional custom data
 	 */
-	createUser( username: string, role: string, customData: { email?: string; first_name?: string; last_name?: string; name?: string } = {} ) {
+	createUser( username: string, role: string, customData: { email?: string; first_name?: string; last_name?: string; name?: string; locale?: string } = {} ) {
 		const email = customData.email || `${username}@example.com`;
 		let displayName: string;
 
@@ -181,6 +181,11 @@ export class UserSwitchingUtils {
 		}
 
 		GlobalUtils.runWPCLICommand( `user create ${username} ${email} --role=${role} --display_name="${displayName}" --user_pass=password` );
+		
+		// Set user locale if provided
+		if ( customData.locale ) {
+			GlobalUtils.runWPCLICommand( `user meta add ${username} locale ${customData.locale}` );
+		}
 	}
 
 	/**

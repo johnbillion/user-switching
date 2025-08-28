@@ -20,6 +20,7 @@ test.describe( 'Switch From English', () => {
 			// Create Italian author user
 			await userSwitching.createUser( 'autore', 'author', {
 				name: 'Autore',
+				locale: 'it_IT',
 			} );
 
 			// Login as admin (English)

@@ -1,12 +1,13 @@
 import { test, expect } from './utils/test-setup';
+import { GlobalUtils } from './utils/global-utils';
 
 test.describe( 'User Switching', () => {
-	test.beforeAll( async ( { globalUtils, userSwitching } ) => {
+	test.beforeAll( async ( { globalUtils } ) => {
 		// Install WordPress fresh for this test suite
 		globalUtils.installWordPress();
-
-		// Create an editor user
-		await userSwitching.createUser( 'editor', 'editor' );
+		
+		// Create an editor user once for all tests
+		GlobalUtils.runWPCLICommand( 'user create editor editor@example.com --role=editor --display_name="editor" --user_pass=password' );
 	} );
 
 	test( 'Switch to editor then back from front end', {

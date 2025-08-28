@@ -19,14 +19,13 @@ test.describe( 'Switch To English', () => {
 		} ) => {
 			// Create Italian admin user
 			await userSwitching.createUser( 'admin_it', 'administrator', {
-				first_name: 'Admin',
-				last_name: 'IT',
+				name: 'Admin IT',
+				locale: 'it_IT',
 			} );
 
 			// Create English author user
 			await userSwitching.createUser( 'author_en', 'author', {
-				first_name: 'Author',
-				last_name: 'EN',
+				name: 'Author EN',
 			} );
 
 			// Login as Italian admin
