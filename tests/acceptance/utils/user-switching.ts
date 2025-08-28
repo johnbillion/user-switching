@@ -83,6 +83,14 @@ export class UserSwitchingUtils {
 	async switchBackTo( userLogin: string, lang: string = 'en-US' ) {
 		const displayName = this.getUserDisplayName( userLogin );
 
+		// Try to hover over the admin bar account area to open the dropdown if it exists
+		// This is optional as the admin bar may not be present on all pages
+		try {
+			await this.page.hover( '#wp-admin-bar-my-account', { timeout: 2000 } );
+		} catch ( error ) {
+			// Admin bar not found or not needed, continue without hover
+		}
+
 		// Get the expected text format - just "Switch back to DisplayName"
 		let expectedText: string;
 		switch ( lang ) {
@@ -96,7 +104,8 @@ export class UserSwitchingUtils {
 		}
 
 		// Use Playwright's getByText which is more reliable than text= selector
-		await this.page.getByText( expectedText ).click();
+		// Get the first visible link with the expected text
+		await this.page.getByText( expectedText ).first().click();
 	}
 
 	/**
@@ -162,7 +171,7 @@ export class UserSwitchingUtils {
 	createUser( username: string, role: string, customData: { email?: string; first_name?: string; last_name?: string; name?: string } = {} ) {
 		const email = customData.email || `${username}@example.com`;
 		let displayName: string;
-		
+
 		if ( customData.name ) {
 			displayName = customData.name;
 		} else if ( customData.first_name || customData.last_name ) {
