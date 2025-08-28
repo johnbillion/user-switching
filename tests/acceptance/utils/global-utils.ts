@@ -46,7 +46,7 @@ export class GlobalUtils {
 			throw new Error( `Unable to parse WordPress version: ${wpVersion}` );
 		}
 		const currentVersion = parseFloat( versionMatch[1] );
-		console.log( `Running test on WordPress version ${wpVersion} (using ${currentVersion} for comparison)` );
+
 		return currentVersion >= minVersion;
 	}
 }
