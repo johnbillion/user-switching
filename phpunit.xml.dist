@@ -18,7 +18,7 @@
 		</testsuite>
 	</testsuites>
 	<php>
-		<env name="WP_PHPUNIT__TESTS_CONFIG" value="tests/wp-tests-config.php" />
+		<env name="WP_PHPUNIT__TESTS_CONFIG" value="vendor/johnbillion/plugin-infrastructure/config/wp-tests-config.php" />
 		<env name="WP_TESTS_DIR" value="vendor/wp-phpunit/wp-phpunit" />
 	</php>
 	<coverage>
