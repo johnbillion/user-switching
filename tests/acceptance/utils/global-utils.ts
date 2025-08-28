@@ -39,18 +39,14 @@ export class GlobalUtils {
 	 */
 	static isWordPressVersionAtLeast( minVersion: number ): boolean {
 		const wpVersion = GlobalUtils.runWPCLICommand( 'core version' );
-		
 		// Extract major.minor version from WordPress version string
 		// Examples: "6.2.1" -> "6.2", "6.9-alpha-60684" -> "6.9"
 		const versionMatch = wpVersion.match( /^(\d+\.\d+)/ );
 		if ( ! versionMatch ) {
 			throw new Error( `Unable to parse WordPress version: ${wpVersion}` );
 		}
-		
 		const currentVersion = parseFloat( versionMatch[1] );
-		
 		console.log( `Running test on WordPress version ${wpVersion} (using ${currentVersion} for comparison)` );
-		
 		return currentVersion >= minVersion;
 	}
 }

@@ -5,7 +5,6 @@ test.describe( 'User Switching', () => {
 	test.beforeAll( async ( { globalUtils } ) => {
 		// Install WordPress fresh for this test suite
 		globalUtils.installWordPress();
-		
 		// Create an editor user once for all tests
 		GlobalUtils.runWPCLICommand( 'user create editor editor@example.com --role=editor --display_name="editor" --user_pass=password' );
 	} );

@@ -181,7 +181,6 @@ export class UserSwitchingUtils {
 		}
 
 		GlobalUtils.runWPCLICommand( `user create ${username} ${email} --role=${role} --display_name="${displayName}" --user_pass=password` );
-		
 		// Set user locale if provided
 		if ( customData.locale ) {
 			GlobalUtils.runWPCLICommand( `user meta update ${username} locale ${customData.locale}` );
