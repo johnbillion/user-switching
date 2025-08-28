@@ -75,7 +75,6 @@ test.describe( 'Switch Off', () => {
 	}, async ( {
 		page,
 		admin,
-		editor,
 		userSwitching,
 	} ) => {
 		// Login as admin
@@ -102,7 +101,6 @@ test.describe( 'Switch Off', () => {
 	}, async ( {
 		page,
 		admin,
-		editor,
 		userSwitching,
 	} ) => {
 		// Login as admin

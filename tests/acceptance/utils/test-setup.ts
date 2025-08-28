@@ -1,27 +1,29 @@
-import { test as base, expect } from '@playwright/test';
-import { Admin, Editor, PageUtils } from '@wordpress/e2e-test-utils-playwright';
+import { test as base, expect, Page } from '@playwright/test';
 import { UserSwitchingUtils } from './user-switching';
 import { GlobalUtils } from './global-utils';
 
+class Admin {
+	private page: Page;
+
+	constructor( page: Page ) {
+		this.page = page;
+	}
+
+	async visitAdminPage( path: string = '', queryString: string = '' ) {
+		const url = `/wp-admin/${path}${queryString ? '?' + queryString : ''}`;
+		await this.page.goto( url );
+	}
+}
+
 type UserSwitchingFixtures = {
 	admin: Admin;
-	editor: Editor;
-	pageUtils: PageUtils;
 	userSwitching: UserSwitchingUtils;
 	globalUtils: GlobalUtils;
 };
 
 export const test = base.extend<UserSwitchingFixtures>( {
-	pageUtils: async ( { page, browserName }, use ) => {
-		const pageUtils = new PageUtils( { page, browserName } );
-		await use( pageUtils );
-	},
-	editor: async ( { page }, use ) => {
-		const editor = new Editor( { page } );
-		await use( editor );
-	},
-	admin: async ( { page, pageUtils, editor }, use ) => {
-		const admin = new Admin( { page, pageUtils, editor } );
+	admin: async ( { page }, use ) => {
+		const admin = new Admin( page );
 		await use( admin );
 	},
 	userSwitching: async ( { page, admin }, use ) => {

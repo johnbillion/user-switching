@@ -1,6 +1,10 @@
 import { Page, expect } from '@playwright/test';
-import { Admin } from '@wordpress/e2e-test-utils-playwright';
 import { GlobalUtils } from './global-utils';
+
+// Simple admin utility interface to match what we need
+interface Admin {
+	visitAdminPage( path?: string, queryString?: string ): Promise<void>;
+}
 
 export class UserSwitchingUtils {
 	private page: Page;
