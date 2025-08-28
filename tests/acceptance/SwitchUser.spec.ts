@@ -1,13 +1,11 @@
 import { test, expect } from './utils/test-setup';
 
 test.describe( 'User Switching', () => {
-	test.beforeAll( async ( { globalUtils } ) => {
+	test.beforeAll( async ( { globalUtils, userSwitching } ) => {
 		// Install WordPress fresh for this test suite
 		globalUtils.installWordPress();
-	} );
 
-	test.beforeEach( async ( { userSwitching } ) => {
-		// Create an editor user if not exists
+		// Create an editor user
 		await userSwitching.createUser( 'editor', 'editor' );
 	} );
 

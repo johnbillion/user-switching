@@ -2,9 +2,19 @@ import { test, expect } from './utils/test-setup';
 import { GlobalUtils } from './utils/global-utils';
 
 test.describe( 'Switch Off', () => {
+	let sharedPostId: string;
+	let commentPostId: string;
+
 	test.beforeAll( async ( { globalUtils } ) => {
 		await globalUtils.installWordPress();
+		
+		// Create a shared post for tests that need it
+		sharedPostId = GlobalUtils.runWPCLICommand( 'post create --post_title="Test Post" --post_name="test-post" --post_status=publish --porcelain' );
+		
+		// Create a shared post for comment tests
+		commentPostId = GlobalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_name="leave-a-comment" --post_status=publish --porcelain' );
 	} );
+
 	test( 'Switch off from dashboard and back from front end', {
 		annotation: {
 			type: 'user-story',
@@ -74,18 +84,15 @@ test.describe( 'Switch Off', () => {
 		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
-		// Create a published post
-		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Hello World" --post_name="hello-world" --post_status=publish --porcelain' );
-
 		// Prepare block editor
 		await userSwitching.prepareBlockEditor();
 
-		// Edit the post
-		await admin.visitAdminPage( 'post.php', `post=${postId}&action=edit` );
+		// Edit the shared post
+		await admin.visitAdminPage( 'post.php', `post=${sharedPostId}&action=edit` );
 
 		// Switch off
 		await userSwitching.switchOff();
-		expect( page.url() ).toContain( '/hello-world/?switched_off=true' );
+		expect( page.url() ).toContain( '/test-post/?switched_off=true' );
 		await userSwitching.verifyLoggedOut();
 	} );
 
@@ -189,11 +196,8 @@ test.describe( 'Switch Off', () => {
 		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
-		// Create a post
-		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_name="leave-a-comment" --post_status=publish --porcelain' );
-
-		// Create an approved comment
-		const commentId = GlobalUtils.runWPCLICommand( `comment create --comment_post_ID=${postId} --comment_content="Great post!" --comment_approved=1 --porcelain` );
+		// Create an approved comment on the shared post
+		const commentId = GlobalUtils.runWPCLICommand( `comment create --comment_post_ID=${commentPostId} --comment_content="Great post!" --comment_approved=1 --porcelain` );
 
 		// Edit the comment
 		await admin.visitAdminPage( 'comment.php', `action=editcomment&c=${commentId}` );
@@ -218,11 +222,8 @@ test.describe( 'Switch Off', () => {
 		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
-		// Create a post
-		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_name="leave-a-comment" --post_status=publish --porcelain' );
-
-		// Create an unapproved comment
-		const commentId = GlobalUtils.runWPCLICommand( `comment create --comment_post_ID=${postId} --comment_content="Pending comment" --comment_approved=0 --porcelain` );
+		// Create an unapproved comment on the shared post
+		const commentId = GlobalUtils.runWPCLICommand( `comment create --comment_post_ID=${commentPostId} --comment_content="Pending comment" --comment_approved=0 --porcelain` );
 
 		// Edit the comment
 		await admin.visitAdminPage( 'comment.php', `action=editcomment&c=${commentId}` );
