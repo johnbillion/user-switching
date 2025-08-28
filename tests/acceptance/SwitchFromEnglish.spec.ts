@@ -1,6 +1,5 @@
 import { test, expect } from './utils/test-setup';
 import { GlobalUtils } from './utils/global-utils';
-import * as semver from 'semver';
 
 test.describe( 'Switch From English', () => {
 	test.beforeAll( async ( { globalUtils } ) => {
@@ -19,9 +18,7 @@ test.describe( 'Switch From English', () => {
 		userSwitching,
 	}, testInfo ) => {
 		// Check WordPress version - this test requires 6.2+
-		const wpVersion = GlobalUtils.runWPCLICommand( 'core version' );
-
-		testInfo.skip( semver.lt( wpVersion, '6.2.0' ), 'This test requires WordPress 6.2 or later' );
+		testInfo.skip( ! GlobalUtils.isWordPressVersionAtLeast( 6.2 ), 'This test requires WordPress 6.2 or later' );
 
 		// Create Italian author user
 		userSwitching.createUser( 'autore', 'author', {
