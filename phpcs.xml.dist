@@ -29,6 +29,9 @@
 		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
 		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
 		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
+
+		<!-- Deprecated sniff: -->
+		<exclude name="Generic.Functions.CallTimePassByReference" />
 	</rule>
 
 	<rule ref="WordPress-Docs" />
