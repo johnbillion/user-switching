@@ -1,5 +1,4 @@
 import { test, expect } from './utils/test-setup';
-import { GlobalUtils } from './utils/global-utils';
 
 test.describe( 'Switch From English', () => {
 	test.beforeAll( async ( { globalUtils } ) => {
@@ -16,9 +15,10 @@ test.describe( 'Switch From English', () => {
 		page,
 		admin,
 		userSwitching,
+		globalUtils,
 	}, testInfo ) => {
 		// Check WordPress version - this test requires 6.2+
-		testInfo.skip( ! GlobalUtils.isWordPressVersionAtLeast( 6.2 ), 'This test requires WordPress 6.2 or later' );
+		testInfo.skip( ! globalUtils.isWordPressVersionAtLeast( 6.2 ), 'This test requires WordPress 6.2 or later' );
 
 		// Create Italian author user
 		userSwitching.createUser( 'autore', 'author', {

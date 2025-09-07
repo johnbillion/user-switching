@@ -1,6 +1,6 @@
 import { test as base, expect, Page } from '@playwright/test';
 import { UserSwitchingUtils } from './user-switching';
-import { GlobalUtils } from './global-utils';
+import { UserSwitchingGlobalUtils } from './user-switching-global-utils';
 
 class Admin {
 	private page: Page;
@@ -18,7 +18,7 @@ class Admin {
 type UserSwitchingFixtures = {
 	admin: Admin;
 	userSwitching: UserSwitchingUtils;
-	globalUtils: GlobalUtils;
+	globalUtils: UserSwitchingGlobalUtils;
 };
 
 export const test = base.extend<UserSwitchingFixtures>( {
@@ -26,12 +26,13 @@ export const test = base.extend<UserSwitchingFixtures>( {
 		const admin = new Admin( page );
 		await use( admin );
 	},
-	userSwitching: async ( { page, admin }, use ) => {
-		const userSwitching = new UserSwitchingUtils( page, admin );
+	userSwitching: async ( { page, admin, globalUtils }, use ) => {
+		const userSwitching = new UserSwitchingUtils( page, admin, globalUtils );
 		await use( userSwitching );
 	},
-	globalUtils: async ( {}, use ) => {
-		const globalUtils = new GlobalUtils();
+	globalUtils: async ( {}, use, testInfo ) => {
+		const baseURL = testInfo.project.use.baseURL!;
+		const globalUtils = new UserSwitchingGlobalUtils( { baseURL, pluginSlug: 'user-switching' } );
 		await use( globalUtils );
 	},
 } );

@@ -1,4 +1,3 @@
-import { GlobalUtils } from './utils/global-utils';
 import { test, expect } from './utils/test-setup';
 
 test.describe( 'Access Denied', () => {
@@ -15,9 +14,10 @@ test.describe( 'Access Denied', () => {
 		page,
 		admin,
 		userSwitching,
+		globalUtils,
 	} ) => {
 		// Create editor user for testing
-		GlobalUtils.runWPCLICommand( 'user create editor editor@example.com --role=editor --user_pass=password' );
+		globalUtils.runWPCLICommand( 'user create editor editor@example.com --role=editor --user_pass=password' );
 
 		// Login through the page's browser context
 		await userSwitching.loginViaPage( 'admin', 'password' );

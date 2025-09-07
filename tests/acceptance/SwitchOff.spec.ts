@@ -1,5 +1,4 @@
 import { test, expect } from './utils/test-setup';
-import { GlobalUtils } from './utils/global-utils';
 
 test.describe( 'Switch Off', () => {
 	let sharedPostId: string;
@@ -8,9 +7,9 @@ test.describe( 'Switch Off', () => {
 	test.beforeAll( async ( { globalUtils } ) => {
 		await globalUtils.installWordPress();
 		// Create a shared post for tests that need it
-		sharedPostId = GlobalUtils.runWPCLICommand( 'post create --post_title="Test Post" --post_name="test-post" --post_status=publish --porcelain' );
+		sharedPostId = globalUtils.runWPCLICommand( 'post create --post_title="Test Post" --post_name="test-post" --post_status=publish --porcelain' );
 		// Create a shared post for comment tests
-		commentPostId = GlobalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_name="leave-a-comment" --post_status=publish --porcelain' );
+		commentPostId = globalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_name="leave-a-comment" --post_status=publish --porcelain' );
 	} );
 
 	test( 'Switch off from dashboard and back from front end', {
@@ -102,13 +101,14 @@ test.describe( 'Switch Off', () => {
 		page,
 		admin,
 		userSwitching,
+		globalUtils,
 	} ) => {
 		// Login as admin
 		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Create a draft post
-		const postId = GlobalUtils.runWPCLICommand( 'post create --post_title="Draft Post" --post_status=draft --porcelain' );
+		const postId = globalUtils.runWPCLICommand( 'post create --post_title="Draft Post" --post_status=draft --porcelain' );
 
 		// Prepare block editor
 		await userSwitching.prepareBlockEditor();
@@ -131,13 +131,14 @@ test.describe( 'Switch Off', () => {
 		page,
 		admin,
 		userSwitching,
+		globalUtils,
 	} ) => {
 		// Login as admin
 		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Create a category
-		const termId = GlobalUtils.runWPCLICommand( 'term create category "Hello Category" --slug=hello --porcelain' );
+		const termId = globalUtils.runWPCLICommand( 'term create category "Hello Category" --slug=hello --porcelain' );
 
 		// Edit the term
 		await admin.visitAdminPage( 'term.php', `taxonomy=category&tag_ID=${termId}` );
@@ -157,6 +158,7 @@ test.describe( 'Switch Off', () => {
 		page,
 		admin,
 		userSwitching,
+		globalUtils,
 	} ) => {
 		// Login as admin
 		await userSwitching.loginViaPage( 'admin', 'password' );
@@ -167,7 +169,7 @@ test.describe( 'Switch Off', () => {
 			first_name: 'Example',
 			last_name: 'User',
 		} );
-		const userId = GlobalUtils.runWPCLICommand( 'user get example --field=ID' );
+		const userId = globalUtils.runWPCLICommand( 'user get example --field=ID' );
 
 		// Edit the user
 		await admin.visitAdminPage( 'user-edit.php', `user_id=${userId}` );
@@ -187,13 +189,14 @@ test.describe( 'Switch Off', () => {
 		page,
 		admin,
 		userSwitching,
+		globalUtils,
 	} ) => {
 		// Login as admin
 		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Create an approved comment on the shared post
-		const commentId = GlobalUtils.runWPCLICommand( `comment create --comment_post_ID=${commentPostId} --comment_content="Great post!" --comment_approved=1 --porcelain` );
+		const commentId = globalUtils.runWPCLICommand( `comment create --comment_post_ID=${commentPostId} --comment_content="Great post!" --comment_approved=1 --porcelain` );
 
 		// Edit the comment
 		await admin.visitAdminPage( 'comment.php', `action=editcomment&c=${commentId}` );
@@ -213,13 +216,14 @@ test.describe( 'Switch Off', () => {
 		page,
 		admin,
 		userSwitching,
+		globalUtils,
 	} ) => {
 		// Login as admin
 		await userSwitching.loginViaPage( 'admin', 'password' );
 		await admin.visitAdminPage( '/' );
 
 		// Create an unapproved comment on the shared post
-		const commentId = GlobalUtils.runWPCLICommand( `comment create --comment_post_ID=${commentPostId} --comment_content="Pending comment" --comment_approved=0 --porcelain` );
+		const commentId = globalUtils.runWPCLICommand( `comment create --comment_post_ID=${commentPostId} --comment_content="Pending comment" --comment_approved=0 --porcelain` );
 
 		// Edit the comment
 		await admin.visitAdminPage( 'comment.php', `action=editcomment&c=${commentId}` );

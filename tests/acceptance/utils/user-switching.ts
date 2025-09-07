@@ -1,5 +1,5 @@
 import { Page, expect } from '@playwright/test';
-import { GlobalUtils } from './global-utils';
+import { GlobalUtils } from '@johnbillion/plugin-infrastructure/acceptance';
 
 // Simple admin utility interface to match what we need
 interface Admin {
@@ -9,10 +9,12 @@ interface Admin {
 export class UserSwitchingUtils {
 	private page: Page;
 	private admin: Admin;
+	private globalUtils: GlobalUtils;
 
-	constructor( page: Page, admin: Admin ) {
+	constructor( page: Page, admin: Admin, globalUtils: GlobalUtils ) {
 		this.page = page;
 		this.admin = admin;
+		this.globalUtils = globalUtils;
 	}
 
 	/**
@@ -30,7 +32,7 @@ export class UserSwitchingUtils {
 			},
 		};
 
-		GlobalUtils.runWPCLICommand( `user meta add ${userId} wp_persisted_preferences '${JSON.stringify( modernPreferences )}' --format=json` );
+		this.globalUtils.runWPCLICommand( `user meta add ${userId} wp_persisted_preferences '${JSON.stringify( modernPreferences )}' --format=json` );
 
 		// Set localStorage for pre-6.1 compatibility
 		await this.page.evaluate( ( userId ) => {
@@ -184,10 +186,10 @@ export class UserSwitchingUtils {
 			displayName = username;
 		}
 
-		GlobalUtils.runWPCLICommand( `user create ${username} ${email} --role=${role} --display_name="${displayName}" --user_pass=password` );
+		this.globalUtils.runWPCLICommand( `user create ${username} ${email} --role=${role} --display_name="${displayName}" --user_pass=password` );
 		// Set user locale if provided
 		if ( customData.locale ) {
-			GlobalUtils.runWPCLICommand( `user meta update ${username} locale ${customData.locale}` );
+			this.globalUtils.runWPCLICommand( `user meta update ${username} locale ${customData.locale}` );
 		}
 	}
 
@@ -195,14 +197,14 @@ export class UserSwitchingUtils {
 	 * Get user ID by username
 	 */
 	private getUserIdByUsername( username: string ): number {
-		return parseInt( GlobalUtils.runWPCLICommand( `user get ${username} --field=ID` ), 10 );
+		return parseInt( this.globalUtils.runWPCLICommand( `user get ${username} --field=ID` ), 10 );
 	}
 
 	/**
 	 * Get user display name by username
 	 */
 	private getUserDisplayName( username: string ): string {
-		return GlobalUtils.runWPCLICommand( `user get ${username} --field=display_name` );
+		return this.globalUtils.runWPCLICommand( `user get ${username} --field=display_name` );
 	}
 
 }
