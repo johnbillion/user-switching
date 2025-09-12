@@ -8,8 +8,8 @@ on:
       - 'trunk'
     paths:
       - '.github/workflows/acceptance-tests.yml'
-      - 'tests/**'
-      - '**.php'
+      - 'tests/acceptance/**'
+      - 'user-switching.php'
       - 'composer.json'
       - 'docker-compose.yml'
       - 'package.json'
@@ -19,8 +19,8 @@ on:
       - '**'
     paths:
       - '.github/workflows/acceptance-tests.yml'
-      - 'tests/**'
-      - '**.php'
+      - 'tests/acceptance/**'
+      - 'user-switching.php'
       - 'composer.json'
       - 'docker-compose.yml'
       - 'package.json'
