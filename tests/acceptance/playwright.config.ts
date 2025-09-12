@@ -6,8 +6,8 @@ if ( ! baseURL ) {
 }
 
 export default defineConfig({
-	testDir: '../',
-	outputDir: '../../_output',
+	testDir: '.',
+	outputDir: '../_output',
 	fullyParallel: false,
 	forbidOnly: !!process.env.CI,
 	workers: 1,
