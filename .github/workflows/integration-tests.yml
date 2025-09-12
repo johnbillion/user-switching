@@ -8,9 +8,9 @@ on:
       - 'trunk'
     paths:
       - '.github/workflows/integration-tests.yml'
-      - 'tests/**'
-      - '**.php'
-      - 'codeception.dist.yml'
+      - 'tests/integration/**'
+      - 'user-switching.php'
+      - 'phpunit.xml.dist'
       - 'composer.json'
       - 'docker-compose.yml'
       - 'package.json'
@@ -19,9 +19,9 @@ on:
       - '**'
     paths:
       - '.github/workflows/integration-tests.yml'
-      - 'tests/**'
-      - '**.php'
-      - 'codeception.dist.yml'
+      - 'tests/integration/**'
+      - 'user-switching.php'
+      - 'phpunit.xml.dist'
       - 'composer.json'
       - 'docker-compose.yml'
       - 'package.json'
@@ -34,7 +34,7 @@ jobs:
     name: WP ${{ matrix.wp }}
     permissions:
       contents: read
-    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-integration-tests.yml@33705f771525b0d691ee821c90e0c10b18e02871 # 1.2.1
+    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-integration-tests.yml@1603731e84de084b9cc0a6d65b4dfb04ce3a96a1 # 2.0.0
     strategy:
       # See the following for PHP compatibility of WordPress versions:
       # https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/
@@ -57,6 +57,5 @@ jobs:
             php: '7.4'
       fail-fast: false
     with:
-      node: false
       php: ${{ matrix.php }}
       wp: ${{ matrix.wp }}

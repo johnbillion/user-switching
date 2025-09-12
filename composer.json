@@ -27,19 +27,11 @@
 		"composer/installers": "^1.0 || ^2.0"
 	},
 	"require-dev": {
-		"behat/gherkin": "< 4.13.0",
-		"codeception/module-asserts": "^1.0",
-		"codeception/module-db": "^1.0",
-		"codeception/module-webdriver": "^1.0",
-		"codeception/util-universalframework": "^1.0",
-		"johnbillion/plugin-infrastructure": "1.2.1",
+		"johnbillion/plugin-infrastructure": "2.0.0",
 		"johnbillion/wp-compat": "1.3.0",
-		"lucatume/wp-browser": "3.2.3",
 		"phpcompatibility/phpcompatibility-wp": "2.1.5",
 		"phpstan/phpstan": "2.1.19",
 		"phpstan/phpstan-phpunit": "2.0.7",
-		"roots/wordpress-core-installer": "1.100.0",
-		"roots/wordpress-full": "*",
 		"swissspidy/phpstan-no-private": "1.0.0",
 		"szepeviktor/phpstan-wordpress": "2.0.2",
 		"wp-coding-standards/wpcs": "3.1.0"
@@ -74,7 +66,7 @@
 			"@test:stop"
 		],
 		"test:acceptance": [
-			"acceptance-tests --cli=\"language core install it_IT\" --cli=\"language plugin install user-switching it_IT\""
+			"acceptance-tests"
 		],
 		"test:destroy": [
 			"tests-destroy"
@@ -86,7 +78,6 @@
 			"phpcs -ps --colors --report-code --report-summary --report-width=80 --basepath='./' ."
 		],
 		"test:phpstan": [
-			"codecept build",
 			"phpstan analyze -v --memory-limit=1024M"
 		],
 		"test:start": [

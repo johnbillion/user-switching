@@ -11,8 +11,7 @@ parameters:
 		- tests/acceptance
 		- tests/integration
 	scanDirectories:
-		- tests/_support/
-		- vendor/lucatume/wp-browser/src/includes/factory/
+		- vendor/wp-phpunit/wp-phpunit/includes/
 	bootstrapFiles:
 		- tests/phpstan/stubs.php
 	dynamicConstantNames:

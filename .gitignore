@@ -1,7 +1,6 @@
 /composer.lock
-/package-lock.json
 /vendor
 /node_modules
-/tests/_output/
-/tests/_support/_generated
 /tests/cache
+/tests/acceptance/storage/admin-storage-state.json
+/phpunit.xml

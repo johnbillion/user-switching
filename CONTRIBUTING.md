@@ -28,6 +28,7 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 ### Prerequisites
 
 * [Composer](https://getcomposer.org/)
+* [Node.js](https://nodejs.org/) (version 18 or later)
 * [Docker Desktop](https://www.docker.com/desktop) to run the tests
 
 ### Setup
@@ -35,6 +36,10 @@ You can clone this repo and activate it like a normal WordPress plugin. If you w
 Install the PHP dependencies:
 
 	composer install
+
+Install the Node.js dependencies:
+
+	npm install
 
 ## Running the Tests
 
@@ -52,6 +57,10 @@ To run tests individually, run one of:
 	composer test:acceptance
 	composer test:phpcs
 	composer test:phpstan
+
+To run a single test:
+
+	composer test:acceptance -- tests/acceptance/AccessDenied.spec.ts
 
 To stop the Docker containers:
 
