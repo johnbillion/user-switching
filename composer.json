@@ -29,12 +29,12 @@
 	"require-dev": {
 		"johnbillion/plugin-infrastructure": "2.0.0",
 		"johnbillion/wp-compat": "1.3.0",
-		"phpcompatibility/phpcompatibility-wp": "2.1.5",
-		"phpstan/phpstan": "2.1.19",
+		"phpcompatibility/phpcompatibility-wp": "2.1.7",
+		"phpstan/phpstan": "2.1.31",
 		"phpstan/phpstan-phpunit": "2.0.7",
 		"swissspidy/phpstan-no-private": "1.0.0",
 		"szepeviktor/phpstan-wordpress": "2.0.2",
-		"wp-coding-standards/wpcs": "3.1.0"
+		"wp-coding-standards/wpcs": "3.2.0"
 	},
 	"autoload-dev": {
 		"psr-4": {
