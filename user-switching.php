@@ -661,12 +661,9 @@ final class user_switching {
 
 	/**
 	 * Adds a 'Switch back to {user}' link to access denied messages within the admin area.
-	 *
-	 * Note that this doesn't appear for the "You need a higher level of permission" errors
-	 * because they use a standard `wp_die()` call rather than `admin_page_access_denied`.
 	 */
 	public function action_shutdown_for_wp_die(): void {
-		if ( ! did_action( 'admin_page_access_denied' ) ) {
+		if ( ! did_action( 'admin_page_access_denied' ) && ! ( function_exists( 'did_filter' ) && did_filter( 'wp_die_handler' ) ) ) {
 			return;
 		}
 
