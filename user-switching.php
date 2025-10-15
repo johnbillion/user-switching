@@ -738,16 +738,18 @@ final class user_switching {
 	public function action_wp_meta(): void {
 		$old_user = self::get_old_user();
 
-		if ( $old_user instanceof WP_User ) {
-			$url = add_query_arg( [
-				'redirect_to' => rawurlencode( self::current_url() ),
-			], self::switch_back_url( $old_user ) );
-			printf(
-				'<li id="user_switching_switch_on"><a href="%s">%s</a></li>',
-				esc_url( $url ),
-				esc_html( self::switch_back_message( $old_user ) )
-			);
+		if ( ! ( $old_user instanceof WP_User ) ) {
+			return;
 		}
+
+		$url = add_query_arg( [
+			'redirect_to' => rawurlencode( self::current_url() ),
+		], self::switch_back_url( $old_user ) );
+		printf(
+			'<li id="user_switching_switch_on"><a href="%s">%s</a></li>',
+			esc_url( $url ),
+			esc_html( self::switch_back_message( $old_user ) )
+		);
 	}
 
 	/**
@@ -771,18 +773,21 @@ final class user_switching {
 
 		$old_user = self::get_old_user();
 
-		if ( $old_user instanceof WP_User ) {
-			$url = add_query_arg( [
-				'redirect_to' => rawurlencode( self::current_url() ),
-			], self::switch_back_url( $old_user ) );
-			printf(
-				'<p id="user_switching_switch_on" style="%s"><a href="%s" style="%s">%s</a></p>',
-				'position: fixed; bottom: 40px; padding: 0; margin: 0; left: 10px; font-size: 13px; z-index:99999;',
-				esc_url( $url ),
-				'padding: 8px 10px; background: #fff; color: #3858e9;',
-				esc_html( self::switch_back_message( $old_user ) )
-			);
+		if ( ! ( $old_user instanceof WP_User ) ) {
+			return;
 		}
+
+		$url = add_query_arg( [
+			'redirect_to' => rawurlencode( self::current_url() ),
+		], self::switch_back_url( $old_user ) );
+
+		printf(
+			'<p id="user_switching_switch_on" style="%s"><a href="%s" style="%s">%s</a></p>',
+			'position: fixed; bottom: 40px; padding: 0; margin: 0; left: 10px; font-size: 13px; z-index:99999;',
+			esc_url( $url ),
+			'padding: 8px 10px; background: #fff; color: #3858e9;',
+			esc_html( self::switch_back_message( $old_user ) )
+		);
 	}
 
 	/**
@@ -794,28 +799,30 @@ final class user_switching {
 	public function filter_login_message( string $message ): string {
 		$old_user = self::get_old_user();
 
-		if ( $old_user instanceof WP_User ) {
-			$url = self::switch_back_url( $old_user );
-
-			if ( ! empty( $_REQUEST['interim-login'] ) ) {
-				$url = add_query_arg( [
-					'interim-login' => '1',
-				], $url );
-			} elseif ( ! empty( $_REQUEST['redirect_to'] ) ) {
-				$url = add_query_arg( [
-					'redirect_to' => rawurlencode( wp_unslash( (string) $_REQUEST['redirect_to'] ) ),
-				], $url );
-			}
-
-			$message .= '<p class="message" id="user_switching_switch_on">';
-			$message .= '<span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span> ';
-			$message .= sprintf(
-				'<a href="%1$s" onclick="window.location.href=\'%1$s\';return false;">%2$s</a>',
-				esc_url( $url ),
-				esc_html( self::switch_back_message( $old_user ) )
-			);
-			$message .= '</p>';
+		if ( ! ( $old_user instanceof WP_User ) ) {
+			return $message;
 		}
+
+		$url = self::switch_back_url( $old_user );
+
+		if ( ! empty( $_REQUEST['interim-login'] ) ) {
+			$url = add_query_arg( [
+				'interim-login' => '1',
+			], $url );
+		} elseif ( ! empty( $_REQUEST['redirect_to'] ) ) {
+			$url = add_query_arg( [
+				'redirect_to' => rawurlencode( wp_unslash( (string) $_REQUEST['redirect_to'] ) ),
+			], $url );
+		}
+
+		$message .= '<p class="message" id="user_switching_switch_on">';
+		$message .= '<span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span> ';
+		$message .= sprintf(
+			'<a href="%1$s" onclick="window.location.href=\'%1$s\';return false;">%2$s</a>',
+			esc_url( $url ),
+			esc_html( self::switch_back_message( $old_user ) )
+		);
+		$message .= '</p>';
 
 		return $message;
 	}
