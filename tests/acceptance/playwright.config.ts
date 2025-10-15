@@ -15,10 +15,11 @@ export default defineConfig({
 	use: {
 		baseURL,
 		...devices['Desktop Chrome'],
+		channel: process.env.CI ? 'chrome' : undefined,
 		viewport: { width: 1440, height: 900 },
 		trace: 'on-first-retry',
 		screenshot: 'only-on-failure',
-		video: 'retain-on-failure',
+		video: process.env.CI ? 'off' : 'retain-on-failure',
 	},
 
 	webServer: undefined,

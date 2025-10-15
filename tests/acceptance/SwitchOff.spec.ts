@@ -166,8 +166,7 @@ test.describe( 'Switch Off', () => {
 
 		// Create a user
 		userSwitching.createUser( 'example', 'editor', {
-			first_name: 'Example',
-			last_name: 'User',
+			name: 'Example User',
 		} );
 		const userId = globalUtils.runWPCLICommand( 'user get example --field=ID' );
 
