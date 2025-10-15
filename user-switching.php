@@ -256,7 +256,7 @@ final class user_switching {
 			case 'switch_to_olduser':
 				// Fetch the originating user data:
 				$old_user = self::get_old_user();
-				if ( ! $old_user ) {
+				if ( ! ( $old_user instanceof WP_User ) ) {
 					wp_die( esc_html__( 'Could not switch users.', 'user-switching' ), 400 );
 				}
 
@@ -471,7 +471,7 @@ final class user_switching {
 		$user = wp_get_current_user();
 		$old_user = self::get_old_user();
 
-		if ( $old_user ) {
+		if ( $old_user instanceof WP_User ) {
 			$locale = get_user_locale( $old_user );
 			$switched_locale = switch_to_locale( $locale );
 			$lang_attr = str_replace( '_', '-', $locale );
@@ -606,7 +606,7 @@ final class user_switching {
 
 		$old_user = self::get_old_user();
 
-		if ( $old_user ) {
+		if ( $old_user instanceof WP_User ) {
 			$wp_admin_bar->add_node( [
 				'parent' => $parent,
 				'id' => 'switch-back',
@@ -961,7 +961,7 @@ final class user_switching {
 	public static function maybe_switch_url( WP_User $user ) {
 		$old_user = self::get_old_user();
 
-		if ( $old_user && ( $old_user->ID === $user->ID ) ) {
+		if ( ( $old_user instanceof WP_User ) && ( $old_user->ID === $user->ID ) ) {
 			return self::switch_back_url( $old_user );
 		} elseif ( current_user_can( 'switch_to_user', $user->ID ) ) {
 			return self::switch_to_url( $user );
@@ -1162,7 +1162,7 @@ final class user_switching {
 	public function filter_woocommerce_account_menu_items( array $items ): array {
 		$old_user = self::get_old_user();
 
-		if ( ! $old_user ) {
+		if ( ! ( $old_user instanceof WP_User ) ) {
 			return $items;
 		}
 
@@ -1185,7 +1185,7 @@ final class user_switching {
 
 		$old_user = self::get_old_user();
 
-		if ( ! $old_user ) {
+		if ( ! ( $old_user instanceof WP_User ) ) {
 			return $url;
 		}
 
