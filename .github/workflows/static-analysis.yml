@@ -28,7 +28,7 @@ jobs:
     name: ${{ matrix.label }}
     permissions:
       contents: read
-    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-static-analysis.yml@e8152871b7dbdd1becfc93c65ce0e9cb83d82e3a # 2.1.0
+    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-static-analysis.yml@9dfddded4ca1d463ab735b8abff4fc9a991c886a
     strategy:
       matrix:
         label:
