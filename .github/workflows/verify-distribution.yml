@@ -31,7 +31,8 @@ permissions: {}
 jobs:
   verify:
     name: Verify Plugin Distribution
-    permissions: {}
+    permissions:
+      contents: read
     uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-verify-distribution.yml@e8152871b7dbdd1becfc93c65ce0e9cb83d82e3a # 2.1.0
     with:
       plugin: user-switching
