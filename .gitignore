@@ -3,3 +3,4 @@
 /node_modules
 /tests/cache
 /phpunit.xml
+/tests/_output
