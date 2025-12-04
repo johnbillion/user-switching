@@ -1,4 +1,4 @@
-# Security Policy
+# User Switching Security Policy
 
 ## How can I report a security bug?
 

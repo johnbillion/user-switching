@@ -10,7 +10,11 @@
       "url": "https://johnblackbourn.com"
     }
   ],
-  "security": [],
+  "security": [
+    {
+      "url": "https://github.com/johnbillion/user-switching/security/policy"
+    }
+  ],
   "releases": [
     {
       "version": "1.11.1",
