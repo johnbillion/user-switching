@@ -92,6 +92,7 @@ These are the steps to take to release a new version of User Switching (for cont
 1. `git push origin --tags`
 1. Enter the changelog into [the release on GitHub](https://github.com/johnbillion/user-switching/releases) and publish it.
 1. Approve the release on [the WordPress.org release management dashboard](https://wordpress.org/plugins/developers/releases/).
+1. `git push origin develop:trunk`
 
 ### Post Release
 
