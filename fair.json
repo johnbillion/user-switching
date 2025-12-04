@@ -1,0 +1,25 @@
+{
+  "@context": "https://fair.pm/ns/metadata/v1",
+  "id": "did:plc:ap4bi3w5w42oy7hfom57tehj",
+  "type": "wp-plugin",
+  "name": "User Switching",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "John Blackbourn",
+      "url": "https://johnblackbourn.com"
+    }
+  ],
+  "security": [],
+  "releases": [
+  ],
+  "slug": "user-switching",
+  "description": "Instant switching between user accounts in WordPress",
+  "keywords": [
+    "users",
+    "user switching",
+    "fast user switching",
+    "multisite",
+    "woocommerce"
+  ]
+}
