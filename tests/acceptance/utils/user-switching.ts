@@ -24,7 +24,7 @@ export class UserSwitchingUtils {
 	async prepareBlockEditor() {
 		const userId = 1;
 
-		// Set user meta for WordPress 6.1+ persisted preferences
+		// Set user meta for persisted preferences
 		const modernPreferences = {
 			'core/edit-post': {
 				fullscreenMode: false,
@@ -33,25 +33,6 @@ export class UserSwitchingUtils {
 		};
 
 		this.globalUtils.runWPCLICommand( `user meta add ${userId} wp_persisted_preferences '${JSON.stringify( modernPreferences )}' --format=json` );
-
-		// Set localStorage for pre-6.1 compatibility
-		await this.page.evaluate( ( userId ) => {
-			const legacyPreferences = {
-				'core/edit-post': {
-					preferences: {
-						features: {
-							fullscreenMode: false,
-							welcomeGuide: false,
-						},
-					},
-				},
-			};
-
-			localStorage.setItem(
-				`WP_DATA_USER_${userId}`,
-				JSON.stringify( legacyPreferences )
-			);
-		}, userId );
 	}
 
 	/**

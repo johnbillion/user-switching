@@ -50,9 +50,6 @@ test.describe( 'Access Denied', () => {
 		userSwitching,
 		globalUtils,
 	}, testInfo ) => {
-		// Check WordPress version - this test requires 6.1+
-		testInfo.skip( ! globalUtils.isWordPressVersionAtLeast( 6.1 ), 'This test requires WordPress 6.1 or later' );
-
 		// Create editor user for testing
 		globalUtils.runWPCLICommand( 'user create editor editor@example.com --role=editor --user_pass=password' );
 
