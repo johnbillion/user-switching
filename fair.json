@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/fairpm/fair-protocol/refs/heads/main/schemas/metadata.schema.json",
   "@context": "https://fair.pm/ns/metadata/v1",
   "id": "did:plc:ap4bi3w5w42oy7hfom57tehj",
   "type": "wp-plugin",
@@ -34,6 +35,7 @@
     }
   ],
   "slug": "user-switching",
+  "filename": "user-switching/user-switching.php",
   "description": "Instant switching between user accounts in WordPress",
   "keywords": [
     "users",
