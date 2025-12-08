@@ -20,10 +20,10 @@ jobs:
     name: Deploy Tag
     uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-deploy-tag.yml@2d12bdc0117c39e81f596e33861cb13c9561002f # 2.1.5
     permissions:
-      contents: read
-      issues: write
-      attestations: write
-      id-token: write
+      contents: read      # Required to clone the repo.
+      issues: write       # Required for write access to milestones.
+      attestations: write # Required to store the build provenance attestation.
+      id-token: write     # Required for creating an OIDC token for build provenance attestation.
     with:
       deploy: ${{ github.event_name != 'workflow_dispatch' }}
       plugin: user-switching

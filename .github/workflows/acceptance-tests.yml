@@ -33,7 +33,7 @@ jobs:
   test:
     name: WP ${{ matrix.wp }}
     permissions:
-      contents: read
+      contents: read # Needed to clone the repo.
     strategy:
       # See the following for PHP compatibility of WordPress versions:
       # https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/
