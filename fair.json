@@ -24,6 +24,7 @@
           {
             "url": "https://downloads.wordpress.org/plugin/user-switching.1.11.1.zip",
             "checksum": "sha256:6f26c67a39db317af60b829fd279735e89ee37b6eba500783077f47aba0c6283",
+            "content-type": "application/zip",
             "signature": "KBIOH-FgbVpJhiIlFwXa0OzhC7K3dRCdmo-c2CU1hG1lB2cBNrrbcEjdcW-E7q_twkcmi004Xx2eYSIt4-XWDQ"
           }
         ]
