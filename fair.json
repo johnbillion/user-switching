@@ -4,18 +4,29 @@
   "id": "did:plc:ap4bi3w5w42oy7hfom57tehj",
   "type": "wp-plugin",
   "name": "User Switching",
-  "license": "GPL-2.0-or-later",
+  "slug": "user-switching",
+  "filename": "user-switching/user-switching.php",
+  "description": "Instant switching between user accounts in WordPress",
   "authors": [
     {
       "name": "John Blackbourn",
       "url": "https://johnblackbourn.com"
     }
   ],
+  "license": "GPL-2.0-or-later",
   "security": [
     {
       "url": "https://github.com/johnbillion/user-switching/security/policy"
     }
   ],
+  "keywords": [
+    "users",
+    "user switching",
+    "fast user switching",
+    "multisite",
+    "woocommerce"
+  ],
+  "sections": {},
   "releases": [
     {
       "version": "1.11.1",
@@ -32,17 +43,8 @@
       "requires": {
         "env:wp": ">=6.1",
         "env:php": ">=7.4"
-      }
+      },
+      "suggests": {}
     }
-  ],
-  "slug": "user-switching",
-  "filename": "user-switching/user-switching.php",
-  "description": "Instant switching between user accounts in WordPress",
-  "keywords": [
-    "users",
-    "user switching",
-    "fast user switching",
-    "multisite",
-    "woocommerce"
   ]
 }
