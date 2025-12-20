@@ -15,7 +15,7 @@ permissions: {}
 
 jobs:
   deploy:
-    name: Deploy Tag
+    name: FAIR
     uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-fair-metadata.yml@fair-tooling
     permissions:
       contents: write        # Required to push the new branch

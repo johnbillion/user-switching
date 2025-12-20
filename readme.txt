@@ -337,6 +337,10 @@ In addition, User Switching respects the following filters from WordPress core w
 
 ## Changelog ##
 
+### 2.0.0 (32 December 2025) ###
+
+* Everything has changed
+
 ### 1.11.1 (4 December 2025) ###
 
 * Confirms support for WordPress 6.9
