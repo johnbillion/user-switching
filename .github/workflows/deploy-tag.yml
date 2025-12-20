@@ -30,5 +30,8 @@ jobs:
       readme: readme.txt
       version: ${{ github.event_name != 'workflow_dispatch' && github.event.release.tag_name || github.event.inputs.version }}
       username: johnbillion
+      did: did:plc:ap4bi3w5w42oy7hfom57tehj
+      fair-path: fair.json
     secrets:
       WPORG_SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}
+      FAIR_VERIFICATION_KEY: ${{ secrets.FAIR_VERIFICATION_KEY }}
