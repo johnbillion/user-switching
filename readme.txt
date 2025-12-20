@@ -334,3 +334,60 @@ In addition, User Switching respects the following filters from WordPress core w
 ### Do you accept donations?
 
 [I am accepting sponsorships via the GitHub Sponsors program](https://github.com/sponsors/johnbillion) and any support you can give will help me maintain this plugin and keep it free for everyone.
+
+## Changelog ##
+
+### 1.11.1 (4 December 2025) ###
+
+* Confirms support for WordPress 6.9
+
+### 1.11.0 (15 October 2025) ###
+
+- Adds a Switch Back link to all `wp_die()` screens when you're switched into another account.
+
+### 1.10.0 (27 July 2025) ###
+
+* When the user is switched, display all of User Switching's messages in the language of the original user
+
+
+### 1.9.2 (16 April 2025) ###
+
+* Confirms support for WordPress 6.8
+* Minor code quality improvements
+
+### 1.9.1 (5 December 2024) ###
+
+* Fixes the `wp_login` and `wp_logout` parameter usage which could cause a fatal error when passed an unexpected value.
+
+### 1.9.0 (21 November 2024) ###
+
+* Introduces a confirmation message when a user attempts to switch into an account which somebody else is already switched into. Helpful for teams of support engineers who switch into customer accounts.
+* Confirms support for WordPress 6.7.
+* Confirms support for PHP 8.4.
+* Various code quality improvements.
+
+### 1.8.0 (22 July 2024) ###
+
+* Adds a 'Switch back' link to some access denied messages within the admin area.
+* Confirms support for WordPress 6.6.
+
+### 1.7.3 (21 February 2024) ###
+
+* Confirms support for PHP 8.3
+* Fixes compatibility with BuddyPress version 12
+* Adds configuration for the Live Preview feature on wordpress.org
+
+
+### 1.7.2 (16 November 2023) ###
+
+* Confirm support for WordPress 6.4
+* Reinstate the missing plugin readme file
+
+### 1.7.1 (16 November 2023) ###
+
+* Fix the redirect type parameter passed to the `user_switching_redirect_to` filter
+* Increase the minimum supported version of PHP to 7.4
+
+### Earlier versions ###
+
+For the changelog of earlier versions, <a href="https://github.com/johnbillion/user-switching/releases">refer to the releases page on GitHub</a>.
