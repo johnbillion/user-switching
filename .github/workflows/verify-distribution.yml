@@ -33,7 +33,9 @@ jobs:
     name: Verify Plugin Distribution
     permissions:
       contents: read # Needed to clone the repo.
-    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-verify-distribution.yml@58c88f6aa243ca37eecf820ef1a2dd1399abb485 # 2.4.0
+    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-verify-distribution.yml@9203bb0c5423a9a4b395ff5ffd093ba3714d723f # 2.5.1
     with:
       plugin: user-switching
       owner: johnbillion
+      did: did:plc:ap4bi3w5w42oy7hfom57tehj
+      did-log-path: .did/log.json
