@@ -90,5 +90,25 @@
 		"verificationMethods": {
 			"fair": "did:key:z6MktTiKa9nhab5urFgeRU8qh2P2yZrQCLmtLnUhVmdKGkLW"
 		}
+	},
+	{
+		"sig": "szjP9ysVkyd_ypHUvXITd7oSwBMlsHzoBJq22NREYs585bxHj9mRbUiURw6PKdsku1r_EWa4fSLhPEf_QbK1SQ",
+		"prev": "bafyreigcrrwvgdrxick5tcqadary57x53uy6nlxkzny4tnkbhjrobyme4u",
+		"type": "plc_operation",
+		"services": {
+			"fairpm_repo": {
+				"type": "FairPackageManagementRepo",
+				"endpoint": "https://raw.githubusercontent.com/johnbillion/user-switching/refs/heads/develop/.did/fair.json"
+			}
+		},
+		"alsoKnownAs": [
+			"fair://user-switching.com"
+		],
+		"rotationKeys": [
+			"did:key:zQ3shtV7vojmUyFLF8Gqnkp9z7qHqgJvLHhz1VtkaabHKTA1L"
+		],
+		"verificationMethods": {
+			"fair": "did:key:z6MktTiKa9nhab5urFgeRU8qh2P2yZrQCLmtLnUhVmdKGkLW"
+		}
 	}
 ]
