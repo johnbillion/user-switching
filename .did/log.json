@@ -1,0 +1,94 @@
+[
+	{
+		"sig": "hNCfikJ0PyupWRqhyCwUIrcHcWmAUeYMbRLpwwcFYSFpj9OIrlYD2SG1m2sRbgZty6ZHxjcdP96jG5o7-p-djQ",
+		"prev": null,
+		"type": "plc_operation",
+		"services": {},
+		"alsoKnownAs": [],
+		"rotationKeys": [
+			"did:key:zQ3shtV7vojmUyFLF8Gqnkp9z7qHqgJvLHhz1VtkaabHKTA1L"
+		],
+		"verificationMethods": {
+			"fair": "did:key:z6MktTiKa9nhab5urFgeRU8qh2P2yZrQCLmtLnUhVmdKGkLW"
+		}
+	},
+	{
+		"sig": "TnM_7ADcevDkOzuI4ZXy2N-PuZoRTFtQyX3SMS4bPFYFCWFlZvC1M-Wcr2vpK9DArTpy06YOp_8b-Uf7AJpVwg",
+		"prev": "bafyreiad7akg5xnxgtwhzzlthp4zb2mbw6yoilytngyv4omqwubs2z6zla",
+		"type": "plc_operation",
+		"services": {
+			"fairpm_repo": {
+				"type": "FairPackageManagementRepo",
+				"endpoint": "https://raw.githubusercontent.com/johnbillion/user-switching/refs/heads/develop/fair.json"
+			}
+		},
+		"alsoKnownAs": [],
+		"rotationKeys": [
+			"did:key:zQ3shtV7vojmUyFLF8Gqnkp9z7qHqgJvLHhz1VtkaabHKTA1L"
+		],
+		"verificationMethods": {
+			"fair": "did:key:z6MktTiKa9nhab5urFgeRU8qh2P2yZrQCLmtLnUhVmdKGkLW"
+		}
+	},
+	{
+		"sig": "i9I4VBkTnYLj1UPluluLvCIBkym7qh16vbEFRlcGOH4DbLSkQPz3Y28z8lsY3F2p7bRkYbA5_8OLmJGK8k2TFg",
+		"prev": "bafyreihucxwcjmdnhjiu6oi7araqzdlu6am735ezcsd7istfumjb275ndq",
+		"type": "plc_operation",
+		"services": {
+			"fairpm_repo": {
+				"type": "FairPackageManagementRepo",
+				"endpoint": "https://raw.githubusercontent.com/johnbillion/user-switching/refs/heads/develop/fair.json"
+			}
+		},
+		"alsoKnownAs": [
+			"https://wordpress.org/plugins/user-switching/"
+		],
+		"rotationKeys": [
+			"did:key:zQ3shtV7vojmUyFLF8Gqnkp9z7qHqgJvLHhz1VtkaabHKTA1L"
+		],
+		"verificationMethods": {
+			"fair": "did:key:z6MktTiKa9nhab5urFgeRU8qh2P2yZrQCLmtLnUhVmdKGkLW"
+		}
+	},
+	{
+		"sig": "_N59aiFMGVJhwjxPXFmAxP_4iMrnxqkqV6RwBhUkVtQEZriPaXUbhjuId5EPX3z9v0NNTYhmT_a6YbR-DMH5RQ",
+		"prev": "bafyreies3ijku5xguzev34voyd6fnzvxhbn7nln5wth46xvc5iryu76u7q",
+		"type": "plc_operation",
+		"services": {
+			"fairpm_repo": {
+				"type": "FairPackageManagementRepo",
+				"endpoint": "https://raw.githubusercontent.com/johnbillion/user-switching/refs/heads/develop/fair.json"
+			}
+		},
+		"alsoKnownAs": [
+			"https://wordpress.org/plugins/user-switching/",
+			"fair://user-switching.com"
+		],
+		"rotationKeys": [
+			"did:key:zQ3shtV7vojmUyFLF8Gqnkp9z7qHqgJvLHhz1VtkaabHKTA1L"
+		],
+		"verificationMethods": {
+			"fair": "did:key:z6MktTiKa9nhab5urFgeRU8qh2P2yZrQCLmtLnUhVmdKGkLW"
+		}
+	},
+	{
+		"sig": "YKBkLz8SQ4gvDHNFprxAmRIZb5MIgYJUxxspba_aWPQ3Al6tKuvYSwTzhZiw3yH-jVFdcW4JKqb0arKq0IKiVg",
+		"prev": "bafyreifsrqqwonlakdt56t5tuazakewh65mwlsjbpnddwfcvybtcucdow4",
+		"type": "plc_operation",
+		"services": {
+			"fairpm_repo": {
+				"type": "FairPackageManagementRepo",
+				"endpoint": "https://raw.githubusercontent.com/johnbillion/user-switching/refs/heads/develop/fair.json"
+			}
+		},
+		"alsoKnownAs": [
+			"fair://user-switching.com"
+		],
+		"rotationKeys": [
+			"did:key:zQ3shtV7vojmUyFLF8Gqnkp9z7qHqgJvLHhz1VtkaabHKTA1L"
+		],
+		"verificationMethods": {
+			"fair": "did:key:z6MktTiKa9nhab5urFgeRU8qh2P2yZrQCLmtLnUhVmdKGkLW"
+		}
+	}
+]
