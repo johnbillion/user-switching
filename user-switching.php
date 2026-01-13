@@ -1092,7 +1092,25 @@ final class user_switching {
 	 */
 	public static function current_url(): string {
 		$scheme = is_ssl() ? 'https' : 'http';
-		return "{$scheme}://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+	
+		$home_host = wp_parse_url( home_url( '/' ), PHP_URL_HOST );
+		if ( empty( $home_host ) ) {
+			return home_url( '/' );
+		}
+	
+		$request_uri = '/';
+		if ( isset( $_SERVER['REQUEST_URI'] ) && is_string( $_SERVER['REQUEST_URI'] ) ) {
+			// REQUEST_URI can be slashed by PHP in some environments.
+			$request_uri = wp_unslash( $_SERVER['REQUEST_URI'] );
+		}
+	
+		// Build a same-host URL to avoid host header injection issues.
+		$url = $scheme . '://' . $home_host . $request_uri;
+	
+		// esc_url_raw is the common WP-safe sanitizer for URLs stored/processed internally.
+		$url = esc_url_raw( $url, [ 'http', 'https' ] );
+	
+		return $url ?: home_url( '/' );
 	}
 
 	/**
