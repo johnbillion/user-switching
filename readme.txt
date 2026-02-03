@@ -109,7 +109,7 @@ Yes, and you'll also be able to switch users from member profile screens.
 
 Yes, mostly.
 
-One exception I'm aware of is [Duo Security](https://wordpress.org/plugins/duo-wordpress/). If you're using this plugin, you should install the [User Switching for Duo Security](https://github.com/johnbillion/user-switching-duo-security) add-on plugin which will prevent the two-factor authentication prompt from appearing when you switch between users.
+One exception I'm aware of is Duo. If you're using [Duo Universal](https://wordpress.org/plugins/duo-universal/) or [Duo Security](https://wordpress.org/plugins/duo-wordpress/) then you should install the [User Switching for Duo](https://github.com/johnbillion/user-switching-duo-security) add-on plugin which will prevent the two-factor authentication prompt from appearing when you switch between users.
 
 ### What capability does a user need in order to switch accounts?
 
