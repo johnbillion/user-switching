@@ -34,7 +34,7 @@ jobs:
     permissions:
       contents: write      # Needed to push commits
       pull-requests: write # Needed to create a PR
-    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-verify-distribution.yml@294edc068c173342bc8c581e7a9f04ae4c63b91b # 2.6.0
+    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-verify-distribution.yml@881b0b0f6572f7eeeb743592421c8b587f5a5558
     with:
       plugin: user-switching
       owner: johnbillion
