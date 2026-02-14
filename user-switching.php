@@ -68,6 +68,7 @@ final class user_switching {
 		add_action( 'all_admin_notices', [ $this, 'action_admin_notices' ], 1 );
 		add_action( 'wp_logout', 'user_switching_clear_olduser_cookie', 10, 0 );
 		add_action( 'wp_login', 'user_switching_clear_olduser_cookie', 10, 0 );
+		add_action( 'clear_auth_cookie', [ $this, 'action_clear_auth_cookie' ] );
 
 		// Nice-to-haves:
 		add_filter( 'ms_user_row_actions', [ $this, 'filter_user_row_actions' ], 10, 2 );
@@ -114,6 +115,20 @@ final class user_switching {
 		if ( ! defined( 'USER_SWITCHING_OLDUSER_COOKIE' ) ) {
 			define( 'USER_SWITCHING_OLDUSER_COOKIE', 'wordpress_user_sw_olduser_' . COOKIEHASH );
 		}
+	}
+
+	/**
+	 * Clears the stale logged-in cookie from the superglobal when auth cookies are being cleared.
+	 *
+	 * WordPress's `wp_clear_auth_cookie()` sends `Set-Cookie` headers to clear the browser cookies
+	 * but does not update `$_COOKIE`, so code running later in the same request still sees the stale
+	 * value. This causes `wp_get_session_token()` to return a dead session token, which in turn
+	 * causes `wp_create_nonce()` to generate a nonce that will fail verification on the next request.
+	 *
+	 * @link https://github.com/johnbillion/user-switching/issues/144
+	 */
+	public function action_clear_auth_cookie(): void {
+		unset( $_COOKIE[ LOGGED_IN_COOKIE ] );
 	}
 
 	/**
