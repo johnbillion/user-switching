@@ -7,7 +7,7 @@ use user_switching;
 final class ShutdownHandlerTest extends Test {
 	/**
 	 * Test that action_shutdown_for_wp_die() doesn't emit warnings during early boot.
-	 * 
+	 *
 	 * This is a regression test for an edge case where wp_die() occurs during early boot
 	 * before the cookie constants are defined (i.e., before plugins_loaded fires).
 	 * The guard condition checking did_action('plugins_loaded') ensures the method returns
@@ -17,7 +17,7 @@ final class ShutdownHandlerTest extends Test {
 	 */
 	public function testShutdownHandlerReturnsEarlyBeforePluginsLoaded(): void {
 		global $wp_actions;
-		
+
 		// Get the plugin instance
 		$plugin = user_switching();
 
@@ -28,42 +28,46 @@ final class ShutdownHandlerTest extends Test {
 		$original_count = $wp_actions['plugins_loaded'] ?? 0;
 		$wp_actions['plugins_loaded'] = 0;
 
-		// Set up error handler to catch any warnings about undefined constants
-		$warning_caught = false;
-		$warning_message = '';
-		set_error_handler(
-			function( $errno, $errstr ) use ( &$warning_caught, &$warning_message ) {
-				// Check specifically for undefined constant warnings
-				if ( ( $errno === E_WARNING || $errno === E_NOTICE ) && 
-				     strpos( $errstr, 'USER_SWITCHING' ) !== false ) {
-					$warning_caught = true;
-					$warning_message = $errstr;
-				}
-				return true; // Suppress the warning from being displayed
-			},
-			E_ALL
-		);
+		try {
+			// Set up error handler to catch any warnings about undefined constants
+			$warning_caught = false;
+			$warning_message = '';
+			set_error_handler(
+				function( $errno, $errstr ) use ( &$warning_caught, &$warning_message ) {
+					// Check specifically for undefined constant warnings
+					if ( ( $errno === E_WARNING || $errno === E_NOTICE ) &&
+					     strpos( $errstr, 'USER_SWITCHING' ) !== false ) {
+						$warning_caught = true;
+						$warning_message = $errstr;
+					}
+					return true; // Suppress the warning from being displayed
+				},
+				E_ALL
+			);
 
-		// Call the shutdown handler - should return early without accessing constants
-		ob_start();
-		$plugin->action_shutdown_for_wp_die();
-		$output = ob_get_clean();
-		
-		// Restore error handler and action count
-		restore_error_handler();
-		$wp_actions['plugins_loaded'] = $original_count;
+			// Call the shutdown handler - should return early without accessing constants
+			ob_start();
+			$plugin->action_shutdown_for_wp_die();
+			$output = ob_get_clean();
 
-		// Assert no warnings about USER_SWITCHING constants were emitted
-		self::assertFalse( 
-			$warning_caught, 
-			'No warnings about USER_SWITCHING constants should be emitted when plugins_loaded has not fired. Got: ' . $warning_message 
-		);
-		
-		// Assert no output was produced (method returned early)
-		self::assertEmpty( 
-			$output,
-			'No output should be produced when plugins_loaded has not fired'
-		);
+			// Restore error handler
+			restore_error_handler();
+
+			// Assert no warnings about USER_SWITCHING constants were emitted
+			self::assertFalse(
+				$warning_caught,
+				'No warnings about USER_SWITCHING constants should be emitted when plugins_loaded has not fired. Got: ' . $warning_message
+			);
+
+			// Assert no output was produced (method returned early)
+			self::assertEmpty(
+				$output,
+				'No output should be produced when plugins_loaded has not fired'
+			);
+		} finally {
+			// Ensure action count is restored even if test fails
+			$wp_actions['plugins_loaded'] = $original_count;
+		}
 	}
 
 	/**
