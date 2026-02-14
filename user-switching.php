@@ -683,6 +683,10 @@ final class user_switching {
 			return;
 		}
 
+		if ( ! defined( 'USER_SWITCHING_OLDUSER_COOKIE' ) ) {
+			return;
+		}
+
 		$old_user = self::get_old_user();
 
 		if ( ! ( $old_user instanceof WP_User ) ) {
