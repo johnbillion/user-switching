@@ -683,7 +683,7 @@ final class user_switching {
 			return;
 		}
 
-		if ( ! did_action( 'plugins_loaded' ) ) {
+		if ( ! defined( 'USER_SWITCHING_OLDUSER_COOKIE' ) ) {
 			return;
 		}
 
