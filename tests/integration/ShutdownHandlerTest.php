@@ -3,7 +3,6 @@
 namespace UserSwitching\Tests;
 
 use user_switching;
-use ReflectionClass;
 
 final class ShutdownHandlerTest extends Test {
 	/**
