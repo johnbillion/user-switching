@@ -7,7 +7,7 @@ Tags: users, user switching, fast user switching, multisite, woocommerce
 Contributors: johnbillion
 Donate link: https://github.com/sponsors/johnbillion
 
-Instant switching between user accounts in WordPress.
+Instant switching between user accounts in WordPress and WooCommerce.
 
 ## Description
 

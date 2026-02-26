@@ -9,7 +9,7 @@
  * @license   GPL v2 or later
  *
  * Plugin Name:       User Switching
- * Description:       Instant switching between user accounts in WordPress
+ * Description:       Instant switching between user accounts in WordPress and WooCommerce.
  * Version:           1.11.1
  * Plugin URI:        https://wordpress.org/plugins/user-switching/
  * Author:            John Blackbourn

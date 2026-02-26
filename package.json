@@ -1,7 +1,7 @@
 {
 	"name": "user-switching",
 	"version": "1.11.1",
-	"description": "Instant switching between user accounts in WordPress.",
+	"description": "Instant switching between user accounts in WordPress and WooCommerce.",
 	"license": "GPL-2.0-or-later",
 	"private": true,
 	"author": "John Blackbourn",
