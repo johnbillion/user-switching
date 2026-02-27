@@ -15,6 +15,8 @@
 /.gitignore export-ignore
 /.npmrc export-ignore
 /.nvmrc export-ignore
+/AGENTS.md export-ignore
+/CLAUDE.md export-ignore
 /CODE_OF_CONDUCT.md export-ignore
 /phpunit.xml.dist export-ignore
 /composer.lock export-ignore
@@ -25,4 +27,6 @@
 /phpcs.xml.dist export-ignore
 /phpstan.neon.dist export-ignore
 /readme.md export-ignore
+/RELEASING.md export-ignore
+/SECURITY.md export-ignore
 /tsconfig.json export-ignore
