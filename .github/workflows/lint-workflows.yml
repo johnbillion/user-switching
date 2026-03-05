@@ -27,4 +27,4 @@ jobs:
       security-events: write # Required for upload-sarif to upload SARIF files.
       contents: read         # Needed to clone the repo.
       actions: read          # Needed for upload-sarif to read workflow run info.
-    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-workflow-lint.yml@bb606d520dfe6131697c80bfe0f4eabc7b8a46a6 # 2.8.0
+    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-workflow-lint.yml@70fc3aa653ff2199080449781e70d26e80a4fff8

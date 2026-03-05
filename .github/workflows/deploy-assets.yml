@@ -13,7 +13,7 @@ jobs:
     name: WordPress.org
     permissions:
       contents: read # Needed to clone the repo.
-    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-deploy-assets.yml@bb606d520dfe6131697c80bfe0f4eabc7b8a46a6 # 2.8.0
+    uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-deploy-assets.yml@70fc3aa653ff2199080449781e70d26e80a4fff8
     with:
       plugin: user-switching
       readme: readme.txt
