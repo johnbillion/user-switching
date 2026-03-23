@@ -26,7 +26,6 @@ Note: User Switching supports versions of WordPress up to three years old, and P
  * Implements the nonce security system in WordPress, meaning only those who intend to switch users can switch.
  * Full support for user session validation where appropriate.
  * Full support for HTTPS.
- * Backed by [the Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/user-switching)
 
 ## Usage
 

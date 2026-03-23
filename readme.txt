@@ -33,7 +33,6 @@ Note: User Switching supports versions of WordPress up to three years old, and P
  * Implements the nonce security system in WordPress, meaning only those who intend to switch users can switch.
  * Full support for user session validation where appropriate.
  * Full support for HTTPS.
- * Backed by [the Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/user-switching)
 
 ### Usage
 
@@ -329,7 +328,9 @@ In addition, User Switching respects the following filters from WordPress core w
 
 ### How can I report a security bug?
 
-[You can report security bugs through the official User Switching Vulnerability Disclosure Program on Patchstack](https://patchstack.com/database/vdp/user-switching). The Patchstack team helps validate, triage, and handle any security vulnerabilities.
+You can submit a private security vulnerability report to User Switching via [the Security tab on the GitHub repo](https://github.com/johnbillion/user-switching/security). The GitHub Security Advisory process facilitates private collaboration on security issues. You'll receive credit for a valid report and a CVE if necessary.
+
+Do not report security issues on the WordPress.org support forums or via email. Thank you.
 
 ### Do you accept donations?
 
