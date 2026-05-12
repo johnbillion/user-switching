@@ -73,6 +73,7 @@ final class user_switching {
 		add_filter( 'ms_user_row_actions', [ $this, 'filter_user_row_actions' ], 10, 2 );
 		add_filter( 'login_message', [ $this, 'filter_login_message' ], 1 );
 		add_filter( 'removable_query_args', [ $this, 'filter_removable_query_args' ] );
+		add_filter( 'wp_check_post_lock_window', [ $this, 'filter_post_lock_window_after_switch' ] );
 		add_action( 'wp_meta', [ $this, 'action_wp_meta' ] );
 		add_filter( 'plugin_row_meta', [ $this, 'filter_plugin_row_meta' ], 10, 2 );
 		add_action( 'wp_footer', [ $this, 'action_wp_footer' ] );
@@ -973,6 +974,24 @@ final class user_switching {
 			'switched_off',
 			'switched_back',
 		] );
+	}
+
+	/**
+	 * Treats the post lock as expired on the post-edit screen immediately after a user switch.
+	 *
+	 * @param  int $window The post lock window duration in seconds.
+	 * @return int The filtered post lock window duration in seconds.
+	 */
+	public function filter_post_lock_window_after_switch( int $window ): int {
+		if ( empty( $_GET['user_switched'] ) ) {
+			return $window;
+		}
+
+		if ( ( $_GET['action'] ?? '' ) !== 'edit' ) {
+			return $window;
+		}
+
+		return 0;
 	}
 
 	/**
