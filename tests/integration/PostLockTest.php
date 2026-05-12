@@ -3,19 +3,19 @@
 namespace UserSwitching\Tests;
 
 /**
- * @covers \user_switching::filter_post_lock_window_after_switch
+ * @covers \user_switching::filter_post_lock_window_after_switch_back
  */
 final class PostLockTest extends Test {
-	public function testPostLockWindowIsZeroedOnPostEditScreenAfterSwitch(): void {
+	public function testPostLockWindowIsZeroedOnPostEditScreenAfterSwitchBack(): void {
 		$_GET = [
-			'user_switched' => 'true',
+			'switched_back' => 'true',
 			'action' => 'edit',
 		];
 
 		self::assertSame( 0, apply_filters( 'wp_check_post_lock_window', 150 ) );
 	}
 
-	public function testPostLockWindowIsUnchangedWithoutUserSwitched(): void {
+	public function testPostLockWindowIsUnchangedWithoutSwitchedBack(): void {
 		$_GET = [
 			'action' => 'edit',
 		];
@@ -25,13 +25,13 @@ final class PostLockTest extends Test {
 
 	public function testPostLockWindowIsUnchangedWhenActionIsNotEdit(): void {
 		$_GET = [
-			'user_switched' => 'true',
+			'switched_back' => 'true',
 		];
 
 		self::assertSame( 150, apply_filters( 'wp_check_post_lock_window', 150 ) );
 	}
 
-	public function testStalePostLockIsTreatedAsExpiredAfterSwitch(): void {
+	public function testStalePostLockIsTreatedAsExpiredAfterSwitchBack(): void {
 		$current = self::$testers['admin'];
 		$previous = self::$users['editor'];
 
@@ -43,13 +43,13 @@ final class PostLockTest extends Test {
 		// Simulate a fresh lock left behind by the user being switched away from.
 		update_post_meta( $post->ID, '_edit_lock', time() . ':' . $previous->ID );
 
-		// Without the after-switch query args, the lock is considered active.
+		// Without the after-switch-back query args, the lock is considered active.
 		$_GET = [];
 		self::assertSame( $previous->ID, wp_check_post_lock( $post->ID ) );
 
-		// With the after-switch query args, the lock is treated as expired.
+		// With the after-switch-back query args, the lock is treated as expired.
 		$_GET = [
-			'user_switched' => 'true',
+			'switched_back' => 'true',
 			'action' => 'edit',
 		];
 		self::assertFalse( wp_check_post_lock( $post->ID ) );
