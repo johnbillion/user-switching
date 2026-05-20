@@ -17,7 +17,7 @@
  * Text Domain:       user-switching
  * Domain Path:       /languages/
  * Network:           true
- * Requires at least: 6.1
+ * Requires at least: 6.2
  * Requires PHP:      7.4
  * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
@@ -487,9 +487,8 @@ final class user_switching {
 		$old_user = self::get_old_user();
 
 		if ( $old_user instanceof WP_User ) {
-			$locale = get_user_locale( $old_user );
-			$switched_locale = switch_to_locale( $locale );
-			$lang_attr = str_replace( '_', '-', $locale );
+			$switched_locale = switch_to_user_locale( $old_user->ID );
+			$lang_attr = str_replace( '_', '-', get_user_locale( $old_user ) );
 
 			?>
 			<div id="user_switching" class="updated notice notice-success is-dismissible">
@@ -678,7 +677,7 @@ final class user_switching {
 	 * Adds a 'Switch back to {user}' link to access denied messages within the admin area.
 	 */
 	public function action_shutdown_for_wp_die(): void {
-		if ( ! did_action( 'admin_page_access_denied' ) && ! ( function_exists( 'did_filter' ) && did_filter( 'wp_die_handler' ) ) ) {
+		if ( ! did_action( 'admin_page_access_denied' ) && ! did_filter( 'wp_die_handler' ) ) {
 			return;
 		}
 
@@ -1062,7 +1061,7 @@ final class user_switching {
 	 * @return string The message.
 	 */
 	public static function switch_back_message( WP_User $user ): string {
-		$switched_locale = switch_to_locale( get_user_locale( $user ) );
+		$switched_locale = switch_to_user_locale( $user->ID );
 
 		$message = sprintf(
 			/* Translators: 1: user display name; 2: username; */
