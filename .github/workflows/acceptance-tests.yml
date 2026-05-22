@@ -38,24 +38,25 @@ jobs:
       # See the following for PHP compatibility of WordPress versions:
       # https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/
       matrix:
-        wp:
-          # Three most recent versions of WordPress:
-          - '7.0'
-          - '6.9'
-          - '6.8'
-        php:
-          # Most recent version of PHP supported by all of the above:
-          - '8.4'
-          # Oldest support PHP:
-          - '7.4'
         include:
-          # Latest WordPress on latest PHP:
+          # Latest:
           - wp: '7.0'
             php: '8.5'
-          # Oldest supported WordPress on its newest supported PHP:
+          - wp: '7.0'
+            php: '7.4'
+          # Latest -1:
+          - wp: '6.9'
+            php: '8.5'
+          - wp: '6.9'
+            php: '7.4'
+          # Latest -2:
+          - wp: '6.8'
+            php: '8.4'
+          - wp: '6.8'
+            php: '7.4'
+          # Oldest supported:
           - wp: '6.2'
             php: '8.2'
-          # Oldest supported WordPress on oldest support PHP:
           - wp: '6.2'
             php: '7.4'
       fail-fast: false
