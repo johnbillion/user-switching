@@ -10,6 +10,7 @@
 	"engines": {
 		"node": ">=24"
 	},
+	"type": "module",
 	"devDependencies": {
 		"@johnbillion/plugin-infrastructure": "2.9.1",
 		"@jsdevtools/version-bump-prompt": "^6.1.0",
