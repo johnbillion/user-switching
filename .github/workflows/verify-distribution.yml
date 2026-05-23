@@ -32,8 +32,7 @@ jobs:
   verify:
     name: Verify Plugin Distribution
     permissions:
-      contents: write      # Needed to push commits
-      pull-requests: write # Needed to create a PR
+      contents: read # Needed to fetch the latest release via the GitHub API.
     uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-verify-distribution.yml@667f50aeb549afa5a5cf0137a21a08de1bc983f5 # 2.9.3
     with:
       plugin: user-switching
