@@ -5,7 +5,7 @@ test.describe( 'Switch Off', () => {
 	let commentPostId: string;
 
 	test.beforeAll( async ( { globalUtils } ) => {
-		await globalUtils.installWordPress();
+		globalUtils.installWordPress();
 		// Create a shared post for tests that need it
 		sharedPostId = globalUtils.runWPCLICommand( 'post create --post_title="Test Post" --post_name="test-post" --post_status=publish --porcelain' );
 		// Create a shared post for comment tests

@@ -2,7 +2,7 @@ import { test, expect } from './utils/test-setup';
 
 test.describe( 'Access Denied', () => {
 	test.beforeEach( async ( { globalUtils } ) => {
-		await globalUtils.installWordPress();
+		globalUtils.installWordPress();
 	} );
 
 	test( 'Switch back from admin screen access denied', {
