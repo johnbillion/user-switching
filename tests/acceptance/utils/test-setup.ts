@@ -1,7 +1,7 @@
 import { test as base, expect, Page } from '@playwright/test';
-import { UserSwitchingUtils } from './user-switching';
-import { UserSwitchingGlobalUtils } from './user-switching-global-utils';
 import { captureHtmlOnFailure } from '@johnbillion/plugin-infrastructure/acceptance';
+import { UserSwitchingUtils } from './user-switching.js';
+import { UserSwitchingGlobalUtils } from './user-switching-global-utils.js';
 
 class Admin {
 	private page: Page;

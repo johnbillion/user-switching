@@ -1,4 +1,4 @@
-import { test, expect } from './utils/test-setup';
+import { test, expect } from './utils/test-setup.js';
 
 test.describe( 'Switch From English', () => {
 	test.beforeAll( async ( { globalUtils } ) => {
