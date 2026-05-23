@@ -1,8 +1,7 @@
 import { test as base, expect, Page } from '@playwright/test';
 import { UserSwitchingUtils } from './user-switching';
 import { UserSwitchingGlobalUtils } from './user-switching-global-utils';
-import * as fs from 'fs';
-import * as path from 'path';
+import { captureHtmlOnFailure } from '@johnbillion/plugin-infrastructure/acceptance';
 
 class Admin {
 	private page: Page;
@@ -38,5 +37,7 @@ export const test = base.extend<UserSwitchingFixtures>( {
 		await use( globalUtils );
 	},
 } );
+
+captureHtmlOnFailure( test );
 
 export { expect };
