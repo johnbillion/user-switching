@@ -1224,17 +1224,17 @@ final class user_switching {
 		}
 
 		wp_enqueue_script(
-			'user-switching-commands',
+			'user-switching',
 			plugins_url( 'js/command-palette.js', __FILE__ ),
 			[ 'wp-commands', 'wp-components', 'wp-compose', 'wp-core-data', 'wp-data', 'wp-element', 'wp-i18n' ],
 			USER_SWITCHING_VERSION,
 			true
 		);
 
-		wp_set_script_translations( 'user-switching-commands', 'user-switching' );
+		wp_set_script_translations( 'user-switching', 'user-switching' );
 
 		wp_localize_script(
-			'user-switching-commands',
+			'user-switching',
 			'userSwitchingCommands',
 			$settings
 		);
