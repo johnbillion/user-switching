@@ -51,6 +51,7 @@
 		dispatch( commandsStore ).registerCommand( {
 			name: 'user-switching/switch-back',
 			label: settings.switchBackLabel,
+			searchLabel: `Switch back ${ settings.switchBackLabel }`,
 			icon: settings.switchBackAvatar ? el( 'img', {
 				src: settings.switchBackAvatar,
 				alt: '',
@@ -67,6 +68,7 @@
 		dispatch( commandsStore ).registerCommand( {
 			name: 'user-switching/switch-off',
 			label: settings.switchOffLabel,
+			searchLabel: `Switch off ${ settings.switchOffLabel }`,
 			icon: switchIcon,
 			callback: function ( args ) {
 				document.location.href = settings.switchOffUrl;
@@ -80,7 +82,11 @@
 		dispatch( commandsStore ).registerCommandLoader( {
 			name: 'user-switching/switch-to-user',
 			hook: function useSwitchToUserLoader( options ) {
-				const search = useDebouncedValue( options.search );
+				const trimmedSearch = options.search
+					.replace( new RegExp( settings.switchToLabel, 'i' ), '' )
+					.replace( /Switch To/i, '' )
+					.trim();
+				const search = useDebouncedValue( trimmedSearch );
 
 				const { users, isLoading } = useSelect( function ( select ) {
 					if ( ! search ) {
@@ -110,9 +116,16 @@
 
 							return {
 								name: `user-switching/switch-to-${ user.id }`,
-								/* translators: %s: User's display name. */
-								label: sprintf( __( 'Switch to %s', 'user-switching' ), user.name ),
-								searchLabel: `Switch to ${ user.name } ${ user.slug }`,
+								label: sprintf(
+									/* translators: %s: User's display name. */
+									__( 'Switch to %s', 'user-switching' ),
+									user.name,
+								),
+								searchLabel: sprintf(
+									/* translators: %s: User's display name. */
+									__( 'Switch to %s', 'user-switching' ),
+									`${ user.name } ${ user.slug }`,
+								),
 								icon: avatarUrl ? el( 'img', {
 									src: avatarUrl,
 									alt: '',

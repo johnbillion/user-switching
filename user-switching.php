@@ -1194,6 +1194,7 @@ final class user_switching {
 
 		$settings = [
 			'canSwitchUsers' => $can_switch_off,
+			'switchToLabel' => str_replace( '&nbsp;', ' ', __( 'Switch&nbsp;To', 'user-switching' ) ),
 		];
 
 		if ( $old_user instanceof WP_User ) {
