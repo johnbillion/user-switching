@@ -33,6 +33,8 @@ Note: User Switching supports versions of WordPress up to three years old, and P
  2. Click this and you will immediately switch into that user account.
  3. You can switch back to your originating account via the *Switch back* link on each dashboard screen or in your profile menu in the WordPress toolbar.
 
+Alternatively, in the [WordPress Command Palette](https://wordpress.org/documentation/article/site-editor-command-palette/) you can search for a user and immediately switch into their account. You can switch off and switch back from there too.
+
 ## Frequently Asked Questions
 
 [See the FAQ on the WordPress.org plugin page for User Switching](https://wordpress.org/plugins/user-switching/#faq).
