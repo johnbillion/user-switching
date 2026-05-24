@@ -36,6 +36,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'USER_SWITCHING_VERSION', '1.11.2' );
+
 /**
  * Main singleton class for the User Switching plugin.
  */
@@ -1225,7 +1227,7 @@ final class user_switching {
 			'user-switching-commands',
 			plugins_url( 'js/command-palette.js', __FILE__ ),
 			[ 'wp-commands', 'wp-components', 'wp-compose', 'wp-core-data', 'wp-data', 'wp-element', 'wp-i18n' ],
-			(string) filemtime( __DIR__ . '/js/command-palette.js' ),
+			USER_SWITCHING_VERSION,
 			true
 		);
 
