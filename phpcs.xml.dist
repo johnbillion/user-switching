@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="User Switching">
 	<arg name="cache" value="tests/cache/phpcs.json"/>
+	<arg name="extensions" value="php"/>
 
 	<config name="minimum_wp_version" value="6.2"/>
 	<config name="testVersion" value="7.4-"/>
