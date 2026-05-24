@@ -58,6 +58,7 @@
 		dispatch( commandsStore ).registerCommand( {
 			name: 'user-switching/switch-off',
 			label: settings.switchOffLabel,
+			// This facilitates searching either in English or the localized language
 			searchLabel: `Switch off ${ settings.switchOffLabel }`,
 			icon: switchIcon,
 			callback: function ( args ) {
@@ -72,9 +73,11 @@
 		dispatch( commandsStore ).registerCommandLoader( {
 			name: 'user-switching/switch-to-user',
 			hook: function useSwitchToUserLoader( options ) {
+				// This facilitates searching either in English or the localized language
+				// and trims the search query to just the name.
 				const trimmedSearch = options.search
 					.replace( new RegExp( settings.switchToLabel, 'i' ), '' )
-					.replace( /Switch To/i, '' )
+					.replace( /Switch to/i, '' )
 					.trim();
 				const search = useDebouncedValue( trimmedSearch );
 
@@ -111,10 +114,11 @@
 									__( 'Switch to %s', 'user-switching' ),
 									user.name,
 								),
+								// This facilitates searching either in English or the localized language
 								searchLabel: sprintf(
 									/* translators: %s: User's display name. */
 									__( 'Switch to %s', 'user-switching' ),
-									`${ user.name } ${ user.slug }`,
+									`${ user.name } ${ user.slug } Switch to ${ user.name } ${ user.slug }`,
 								),
 								icon: avatarUrl ? el( 'img', {
 									src: avatarUrl,
