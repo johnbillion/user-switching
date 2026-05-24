@@ -1,6 +1,6 @@
 {
 	"name": "user-switching",
-	"version": "1.11.2",
+	"version": "1.12.0",
 	"description": "Instant switching between user accounts in WordPress and WooCommerce.",
 	"license": "GPL-2.0-or-later",
 	"private": true,

@@ -10,7 +10,7 @@
  *
  * Plugin Name:       User Switching
  * Description:       Instant switching between user accounts in WordPress and WooCommerce.
- * Version:           1.11.2
+ * Version:           1.12.0
  * Plugin URI:        https://wordpress.org/plugins/user-switching/
  * Author:            John Blackbourn
  * Author URI:        https://johnblackbourn.com
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'USER_SWITCHING_VERSION', '1.11.2' );
+define( 'USER_SWITCHING_VERSION', '1.12.0' );
 
 /**
  * Main singleton class for the User Switching plugin.
