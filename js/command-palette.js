@@ -51,7 +51,10 @@
 		dispatch( commandsStore ).registerCommand( {
 			name: 'user-switching/switch-back',
 			label: settings.switchBackLabel,
-			icon: switchIcon,
+			icon: settings.switchBackAvatar ? el( 'img', {
+				src: settings.switchBackAvatar,
+				alt: '',
+			} ) : switchIcon,
 			callback: function ( args ) {
 				document.location.href = settings.switchBackUrl;
 				args.close();

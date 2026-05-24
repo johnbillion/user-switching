@@ -1203,6 +1203,7 @@ final class user_switching {
 
 			$settings['switchBackUrl'] = wp_specialchars_decode( $switch_back_url );
 			$settings['switchBackLabel'] = self::switch_back_message( $old_user );
+			$settings['switchBackAvatar'] = get_avatar_url( $old_user->ID, [ 'size' => 48 ] );
 		}
 
 		if ( $can_switch_off ) {
