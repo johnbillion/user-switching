@@ -1224,7 +1224,7 @@ final class user_switching {
 		wp_enqueue_script(
 			'user-switching-commands',
 			plugins_url( 'js/command-palette.js', __FILE__ ),
-			[ 'wp-commands', 'wp-compose', 'wp-core-data', 'wp-data', 'wp-element', 'wp-i18n', 'wp-primitives' ],
+			[ 'wp-commands', 'wp-components', 'wp-compose', 'wp-core-data', 'wp-data', 'wp-element', 'wp-i18n' ],
 			(string) filemtime( __DIR__ . '/js/command-palette.js' ),
 			true
 		);
