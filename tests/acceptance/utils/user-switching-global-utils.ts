@@ -11,8 +11,5 @@ export class UserSwitchingGlobalUtils extends GlobalUtils {
 		// Install language packs for user-switching testing:
 		this.runWPCLICommand( 'language core install it_IT' );
 		this.runWPCLICommand( 'language plugin install user-switching it_IT' );
-
-		// Maximise the calm:
-		this.runWPCLICommand( 'plugin install airplane-mode --activate' );
 	}
 }
