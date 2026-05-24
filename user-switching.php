@@ -80,6 +80,10 @@ final class user_switching {
 		add_action( 'admin_bar_menu', [ $this, 'action_admin_bar_menu' ], 11 );
 		add_action( 'shutdown', [ $this, 'action_shutdown_for_wp_die' ], 1, 0 );
 
+		// Command Palette integration:
+		add_action( 'rest_api_init', [ $this, 'action_rest_api_init' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'action_enqueue_command_palette_script' ] );
+
 		// BuddyPress integration:
 		add_action( 'bp_member_header_actions', [ $this, 'action_bp_button' ], 11 );
 		add_action( 'bp_directory_members_actions', [ $this, 'action_bp_button' ], 11 );
@@ -1142,6 +1146,94 @@ final class user_switching {
 	 */
 	public static function secure_auth_cookie(): bool {
 		return ( is_ssl() && ( 'https' === wp_parse_url( wp_login_url(), PHP_URL_SCHEME ) ) );
+	}
+
+	/**
+	 * Registers a REST API field on the users endpoint containing the "Switch to" URL.
+	 */
+	public function action_rest_api_init(): void {
+		register_rest_field( 'user', 'user_switching_url', [
+			'get_callback' => function ( array $user ): ?string {
+				if ( ! current_user_can( 'switch_to_user', $user['id'] ) ) {
+					return null;
+				}
+
+				$target = get_userdata( $user['id'] );
+
+				if ( ! $target ) {
+					return null;
+				}
+
+				return wp_specialchars_decode( self::switch_to_url( $target ) );
+			},
+			'schema' => [
+				'type' => [
+					'string',
+					'null',
+				],
+				'description' => __( 'The URL to switch to this user.', 'user-switching' ),
+				'readonly' => true,
+			],
+		] );
+	}
+
+	/**
+	 * Enqueues the command palette integration script.
+	 */
+	public function action_enqueue_command_palette_script(): void {
+		if ( ! wp_script_is( 'wp-commands', 'enqueued' ) ) {
+			return;
+		}
+
+		$old_user = self::get_old_user();
+		$can_switch_off = current_user_can( 'switch_off' );
+
+		if ( ! $can_switch_off && ! $old_user ) {
+			return;
+		}
+
+		$settings = [
+			'canSwitchUsers' => $can_switch_off,
+		];
+
+		if ( $old_user instanceof WP_User ) {
+			$switch_back_url = add_query_arg( [
+				'redirect_to' => rawurlencode( self::current_url() ),
+			], self::switch_back_url( $old_user ) );
+
+			$settings['switchBackUrl'] = wp_specialchars_decode( $switch_back_url );
+			$settings['switchBackLabel'] = self::switch_back_message( $old_user );
+		}
+
+		if ( $can_switch_off ) {
+			$switch_off_url = self::switch_off_url();
+			$redirect_to = is_admin() ? self::get_admin_redirect_to() : [
+				'redirect_to' => rawurlencode( self::current_url() ),
+			];
+
+			if ( is_array( $redirect_to ) ) {
+				$switch_off_url = add_query_arg( $redirect_to, $switch_off_url );
+			}
+
+			$settings['switchOffUrl'] = wp_specialchars_decode( $switch_off_url );
+			$settings['switchOffLabel'] = __( 'Switch Off', 'user-switching' );
+		}
+
+		wp_enqueue_script(
+			'user-switching-commands',
+			plugins_url( 'js/command-palette.js', __FILE__ ),
+			[ 'wp-commands', 'wp-compose', 'wp-core-data', 'wp-data', 'wp-element', 'wp-i18n', 'wp-primitives' ],
+			(string) filemtime( __DIR__ . '/js/command-palette.js' ),
+			true
+		);
+
+		wp_set_script_translations( 'user-switching-commands', 'user-switching' );
+
+		wp_localize_script(
+			'user-switching-commands',
+			'userSwitchingCommands',
+			$settings
+		);
 	}
 
 	/**

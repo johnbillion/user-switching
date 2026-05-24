@@ -258,7 +258,7 @@ This feature is useful if you have multiple users on your site who may be switch
 
 ### Can I switch users directly from the admin toolbar?
 
-Yes, there's a third party add-on plugin for this: [Admin Bar User Switching](https://wordpress.org/plugins/admin-bar-user-switching/).
+Yes, in the WordPress Command Palette (WordPress 6.9+) you can search for a user and immediately switch into their account. You can switch off and switch back from the Command Palette too.
 
 ### Are any plugin actions called when a user switches account?
 
