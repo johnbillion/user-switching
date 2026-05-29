@@ -94,6 +94,7 @@ final class user_switching {
 		add_action( 'bbp_template_after_user_details_menu_items', [ $this, 'action_bbpress_button' ] );
 
 		// WooCommerce integration:
+		add_action( 'before_woocommerce_init', [ $this, 'action_before_woocommerce_init' ] );
 		add_action( 'woocommerce_login_form_start', [ $this, 'action_woocommerce_login_form_start' ], 10, 0 );
 		add_action( 'woocommerce_admin_order_data_after_order_details', [ $this, 'action_woocommerce_order_details' ], 1 );
 		add_filter( 'woocommerce_account_menu_items', [ $this, 'filter_woocommerce_account_menu_items' ], 999 );
@@ -1238,6 +1239,16 @@ final class user_switching {
 			'userSwitchingCommands',
 			$settings
 		);
+	}
+
+	/**
+	 * Declares compatibility with WooCommerce HPOS and cart/checkout blocks features.
+	 */
+	public function action_before_woocommerce_init(): void {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+		}
 	}
 
 	/**
