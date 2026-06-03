@@ -1523,7 +1523,7 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 		}
 		if ( $clear_all || empty( $auth_cookie ) ) {
 			/**
-			 * Fires just before the user switching cookies are cleared.
+			 * Fires just before the User Switching cookies are cleared.
 			 *
 			 * @since 1.4.0
 			 */
