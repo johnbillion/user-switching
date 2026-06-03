@@ -43,7 +43,12 @@ final class SwitchingTest extends Test {
 		// Check that we've switched
 		self::assertInstanceOf( 'WP_User', $user );
 		self::assertSame( self::$users['author']->ID, $user->ID );
-		self::assertSame( self::$users['author']->ID, get_current_user_id() );
+
+		// Check the new user data
+		$new_user_id = get_current_user_id();
+		$new_user = wp_get_current_user();
+		self::assertSame( self::$users['author']->ID, $new_user_id );
+		self::assertSame( array( 'author' ), $new_user->roles );
 
 		// Check the `switch_*` actions were fired
 		self::assertSame( 1, did_action( 'switch_to_user' ) );
@@ -66,7 +71,12 @@ final class SwitchingTest extends Test {
 		// Check that we've switched
 		self::assertInstanceOf( 'WP_User', $user );
 		self::assertSame( self::$users['editor']->ID, $user->ID );
-		self::assertSame( self::$users['editor']->ID, get_current_user_id() );
+
+		// Check the new user data
+		$new_user_id = get_current_user_id();
+		$new_user = wp_get_current_user();
+		self::assertSame( self::$users['editor']->ID, $new_user_id );
+		self::assertSame( array( 'editor' ), $new_user->roles );
 
 		// Check the `switch_*` actions were fired
 		self::assertSame( 2, did_action( 'switch_to_user' ) );
@@ -89,7 +99,12 @@ final class SwitchingTest extends Test {
 		// Check that we've switched
 		self::assertInstanceOf( 'WP_User', $user );
 		self::assertSame( self::$users['author']->ID, $user->ID );
-		self::assertSame( self::$users['author']->ID, get_current_user_id() );
+
+		// Check the new user data
+		$new_user_id = get_current_user_id();
+		$new_user = wp_get_current_user();
+		self::assertSame( self::$users['author']->ID, $new_user_id );
+		self::assertSame( array( 'author' ), $new_user->roles );
 
 		// Check the `switch_*` actions were fired
 		self::assertSame( 2, did_action( 'switch_to_user' ) );
@@ -112,7 +127,12 @@ final class SwitchingTest extends Test {
 		// Check that we've switched
 		self::assertInstanceOf( 'WP_User', $user );
 		self::assertSame( $admin->ID, $user->ID );
-		self::assertSame( $admin->ID, get_current_user_id() );
+
+		// Check the new user data
+		$new_user_id = get_current_user_id();
+		$new_user = wp_get_current_user();
+		self::assertSame( $admin->ID, $new_user_id );
+		self::assertSame( array( 'administrator' ), $new_user->roles );
 
 		// Check the `switch_*` actions were fired
 		self::assertSame( 2, did_action( 'switch_to_user' ) );
