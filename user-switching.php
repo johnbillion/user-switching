@@ -520,7 +520,7 @@ final class user_switching {
 				], self::switch_back_url( $old_user ) );
 
 				$message .= sprintf(
-					' <a href="%s">%s</a>.',
+					' <a href="%s">%s</a>',
 					esc_url( $switch_back_url ),
 					esc_html( self::switch_back_message( $old_user ) )
 				);
