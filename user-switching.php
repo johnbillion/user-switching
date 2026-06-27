@@ -806,7 +806,7 @@ final class user_switching {
 			'<p id="user_switching_switch_on" style="%s"><a href="%s" style="%s">%s</a></p>',
 			'position: fixed; bottom: 40px; padding: 0; margin: 0; left: 10px; font-size: 13px; z-index:99999;',
 			esc_url( $url ),
-			'padding: 8px 10px; background: #fff; color: #3858e9;',
+			'padding: 9px 12px; background: #3858e9; color: #fff; text-decoration: none; border-radius: 2px;',
 			esc_html( self::switch_back_message( $old_user ) )
 		);
 	}
