@@ -169,6 +169,35 @@ final class CapabilitiesTest extends Test {
 	}
 
 	/**
+	 * Covers the dynamic denial approach documented in the readme, whereby a `user_has_cap` filter
+	 * running before User Switching's own filter sets `switch_users` to false at runtime.
+	 *
+	 * @group ms-excluded
+	 */
+	public function testAbilityToSwitchUsersCanBeDeniedViaUserHasCapFilter(): void {
+		# Admins can switch to other users:
+		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
+
+		$denied_user_id = self::$testers['admin']->ID;
+		$callback = static function ( array $allcaps, array $caps, array $args, \WP_User $user ) use ( $denied_user_id ): array {
+			if ( 'switch_to_user' === $args[0] && $user->ID === $denied_user_id ) {
+				$allcaps['switch_users'] = false;
+			}
+			return $allcaps;
+		};
+
+		# Deny the ability to switch users via the filter:
+		add_filter( 'user_has_cap', $callback, 9, 4 );
+
+		# Ensure the user can no longer switch:
+		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
+
+		# Assert:
+		self::assertTrue( $can_already_switch );
+		self::assertFalse( $can_switch_user );
+	}
+
+	/**
 	 * @group multisite
 	 * @group ms-required
 	 */
