@@ -35,7 +35,7 @@ jobs:
           - 'PHP'
         php:
           # Newest and oldest supported versions of PHP
-          - '8.4'
+          - '8.5'
           - '7.4'
       fail-fast: false
     with:

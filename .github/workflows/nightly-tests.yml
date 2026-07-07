@@ -38,7 +38,7 @@ jobs:
         label:
           - 'acceptance'
         php:
-          - '8.3'
+          - '8.5'
           - '7.4'
       fail-fast: false
     uses: johnbillion/plugin-infrastructure/.github/workflows/reusable-acceptance-tests.yml@99fbf371962704dbaef452ebe7ea188d5cfb8069 # 2.9.4
@@ -58,7 +58,7 @@ jobs:
         label:
           - 'integration'
         php:
-          - '8.3'
+          - '8.5'
           - '7.4'
       fail-fast: false
     with:
