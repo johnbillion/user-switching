@@ -146,7 +146,11 @@ add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
 }, 9, 4 );
 ~~~
 
-Note that this needs to happen before User Switching's own capability filtering, hence the priority of `9`.
+Notes:
+
+* This needs to happen before User Switching's own capability filtering, hence the priority of `9`.
+* The `$user` parameter is the currently logged in user.
+* The ID of the target user can be found in `$args[2]`.
 
 ### Can the ability to switch accounts be denied from users?
 
@@ -166,6 +170,7 @@ add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
 Notes:
 
 * This needs to happen before User Switching's own capability filtering, hence the priority of `9`.
+* The `$user` parameter is the currently logged in user.
 * The ID of the target user can be found in `$args[2]`.
 
 ### Can I add a custom "Switch To" link to my own plugin or theme?
