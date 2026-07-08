@@ -708,16 +708,16 @@ final class user_switching {
 			esc_html( self::switch_back_message( $old_user ) )
 		);
 
-		?>
-		<script>
 		// Move the switch back link so it's within the wp_die message container.
-		document.addEventListener( 'DOMContentLoaded', function() {
-			document.querySelector( '.wp-die-message' ).appendChild(
-				document.getElementById( 'user_switching_wp_die' )
-			);
-		} );
-		</script>
-		<?php
+		function_exists( 'wp_print_inline_script_tag' ) && wp_print_inline_script_tag(
+			<<<'JS'
+			document.addEventListener( 'DOMContentLoaded', function() {
+				document.querySelector( '.wp-die-message' ).appendChild(
+					document.getElementById( 'user_switching_wp_die' )
+				);
+			} );
+			JS
+		);
 	}
 
 	/**
