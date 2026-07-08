@@ -1,10 +1,9 @@
 # User Switching
 
-[![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=flat-square)](#ethical-open-source)
 [![](https://img.shields.io/wordpress/plugin/installs/user-switching?style=flat-square)](https://wordpress.org/plugins/user-switching/)
 [![](https://img.shields.io/github/actions/workflow/status/johnbillion/user-switching/integration-tests.yml?branch=develop&style=flat-square)](https://github.com/johnbillion/user-switching/actions)
 
-This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for helping customers on WooCommerce sites, membership sites, testing environments, or for any site where administrators need to switch between multiple accounts.
+This plugin allows you to quickly switch between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for helping customers on WooCommerce sites, membership sites, testing environments, or for any site where administrators need to switch between multiple accounts.
 
 ## Features
 

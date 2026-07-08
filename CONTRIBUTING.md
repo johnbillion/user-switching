@@ -65,15 +65,3 @@ To stop the Docker containers:
 ## Releasing a New Version
 
 See [RELEASING.md](RELEASING.md).
-
-## Ethical Open Source
-
-User Switching is considered **Ethical Open Source** because it meets all of the criteria of [The Ethical Source Definition (ESD)](https://ethicalsource.dev/definition/):
-
-1. It benefits the commons.
-2. It is created in the open.
-3. Its community is welcoming and just.
-4. It puts accessibility first.
-5. It prioritizes user safety.
-6. It protects user privacy.
-7. It encourages fair compensation.

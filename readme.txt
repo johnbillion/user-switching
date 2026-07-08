@@ -11,7 +11,7 @@ Instant switching between user accounts in WordPress and WooCommerce.
 
 ## Description
 
-This plugin allows you to quickly swap between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for helping customers on WooCommerce sites, membership sites, testing environments, or for any site where administrators need to switch between multiple accounts.
+This plugin allows you to quickly switch between user accounts in WordPress at the click of a button. You'll be instantly logged out and logged in as your desired user. This is handy for helping customers on WooCommerce sites, membership sites, testing environments, or for any site where administrators need to switch between multiple accounts.
 
 ### Features
 
