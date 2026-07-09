@@ -1,6 +1,6 @@
 # User Switching
 
-Stable tag: 1.12.0
+Stable tag: 1.12.1
 Tested up to: 7.0
 License: GPL v2 or later
 Tags: users, user switching, fast user switching, multisite, woocommerce
