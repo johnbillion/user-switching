@@ -41,6 +41,7 @@
 		dispatch( commandsStore ).registerCommand( {
 			name: 'user-switching/switch-back',
 			label: settings.switchBackLabel,
+			// This facilitates searching either in English or the localized language
 			searchLabel: `Switch back ${ settings.switchBackLabel }`,
 			icon: settings.switchBackAvatar ? el( 'img', {
 				src: settings.switchBackAvatar,
