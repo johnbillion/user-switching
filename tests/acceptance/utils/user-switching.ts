@@ -21,9 +21,7 @@ export class UserSwitchingUtils {
 	 * Put the block editor into a state where the items we need to interact with are
 	 * actually usable.
 	 */
-	async prepareBlockEditor() {
-		const userId = 1;
-
+	async prepareBlockEditor( userId: number = 1 ) {
 		// Set user meta for persisted preferences
 		const modernPreferences = {
 			'core/edit-post': {
@@ -74,6 +72,38 @@ export class UserSwitchingUtils {
 		const userId = this.getUserIdByUsername( username );
 		await this.admin.visitAdminPage( 'user-edit.php', `user_id=${userId}` );
 		await this.page.locator( '#user_switching_switcher' ).click();
+	}
+
+	/**
+	 * Open the command palette from the block editor (WP 6.3+).
+	 */
+	async openCommandPaletteFromEditor() {
+		await this.page.locator( '.editor-document-bar__command' ).click();
+		await expect( this.page.locator( '[cmdk-input]' ) ).toBeVisible();
+	}
+
+	/**
+	 * Open the command palette from the admin bar (WP 6.9+).
+	 */
+	async openCommandPaletteFromAdminBar() {
+		await this.page.locator( '#wp-admin-bar-command-palette a' ).click();
+		await expect( this.page.locator( '[cmdk-input]' ) ).toBeVisible();
+	}
+
+	/**
+	 * Type a query into the open command palette.
+	 */
+	async searchCommandPalette( query: string ) {
+		await this.page.locator( '[cmdk-input]' ).fill( query );
+	}
+
+	/**
+	 * Wait for a command with the given label to appear in the palette, then click it.
+	 */
+	async runCommand( label: string ) {
+		const command = this.page.locator( '[cmdk-item]', { hasText: label } );
+		await expect( command.first() ).toBeVisible();
+		await command.first().click();
 	}
 
 	/**
@@ -190,7 +220,7 @@ export class UserSwitchingUtils {
 	/**
 	 * Get user ID by username
 	 */
-	private getUserIdByUsername( username: string ): number {
+	getUserIdByUsername( username: string ): number {
 		return parseInt( this.globalUtils.runWPCLICommand( `user get ${username} --field=ID` ), 10 );
 	}
 
