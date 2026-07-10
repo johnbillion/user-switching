@@ -81,9 +81,9 @@
 					.trim();
 				const search = useDebouncedValue( trimmedSearch );
 
-				const { users, isLoading } = useSelect( function ( select ) {
+				const { users = [], isLoading } = useSelect( function ( select ) {
 					if ( ! search ) {
-						return { users: [], isLoading: false };
+						return { users: undefined, isLoading: false };
 					}
 
 					const query = {
@@ -94,7 +94,7 @@
 					const core = select( coreStore );
 
 					return {
-						users: core.getEntityRecords( 'root', 'user', query ) || [],
+						users: core.getEntityRecords( 'root', 'user', query ) || undefined,
 						isLoading: ! core.hasFinishedResolution( 'getEntityRecords', [ 'root', 'user', query ] ),
 					};
 				}, [ search ] );
