@@ -21,11 +21,11 @@ const screens = [
 		},
 	},
 	{
-		name: 'from the admin bar',
+		name: 'admin-wide via keyboard shortcut',
 		minVersion: 6.9,
 		async gotoAndOpen( userSwitching: UserSwitchingUtils, admin: Admin ) {
 			await admin.visitAdminPage( '/' );
-			await userSwitching.openCommandPaletteFromAdminBar();
+			await userSwitching.openCommandPaletteWithKeyboard();
 		},
 	},
 ];

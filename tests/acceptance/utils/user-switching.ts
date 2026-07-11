@@ -83,10 +83,10 @@ export class UserSwitchingUtils {
 	}
 
 	/**
-	 * Open the command palette from the admin bar (WP 6.9+).
+	 * Open the command palette via its keyboard shortcut.
 	 */
-	async openCommandPaletteFromAdminBar() {
-		await this.page.locator( '#wp-admin-bar-command-palette a' ).click();
+	async openCommandPaletteWithKeyboard() {
+		await this.page.keyboard.press( 'ControlOrMeta+k' );
 		await expect( this.page.locator( '[cmdk-input]' ) ).toBeVisible();
 	}
 
