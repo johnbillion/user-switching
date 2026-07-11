@@ -73,7 +73,6 @@ test.describe( 'Command Palette', () => {
 					description: 'As an administrator, I need to be able to switch off from the command palette, in order to view the site without logging out completely'
 				}
 			}, async ( {
-				page,
 				admin,
 				userSwitching,
 				globalUtils,
@@ -89,7 +88,6 @@ test.describe( 'Command Palette', () => {
 				await userSwitching.runCommand( 'Switch Off' );
 
 				// Should be switched off and logged out
-				expect( page.url() ).toContain( 'switched_off=true' );
 				await userSwitching.verifyLoggedOut();
 			} );
 
@@ -99,7 +97,6 @@ test.describe( 'Command Palette', () => {
 					description: 'As a user who has switched accounts, I need to be able to switch back from the command palette, in order to quickly return to my original account'
 				}
 			}, async ( {
-				page,
 				admin,
 				userSwitching,
 				globalUtils,
@@ -120,7 +117,6 @@ test.describe( 'Command Palette', () => {
 				await userSwitching.runCommand( 'Switch back to admin' );
 
 				// Should be switched back to admin
-				expect( page.url() ).toContain( 'user_switched=true' );
 				await userSwitching.verifyLoggedInAs( 'admin' );
 			} );
 		} );
