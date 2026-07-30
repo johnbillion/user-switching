@@ -35,7 +35,7 @@
 		"phpstan/phpstan-phpunit": "2.0.11",
 		"swissspidy/phpstan-no-private": "1.0.0",
 		"szepeviktor/phpstan-wordpress": "2.0.3",
-		"wp-coding-standards/wpcs": "3.3.0"
+		"wp-coding-standards/wpcs": "3.4.1"
 	},
 	"autoload-dev": {
 		"psr-4": {
