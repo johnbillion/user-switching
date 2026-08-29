@@ -3,7 +3,7 @@
 	<arg name="cache" value="tests/cache/phpcs.json"/>
 	<arg name="extensions" value="php"/>
 
-	<config name="minimum_wp_version" value="6.2"/>
+	<config name="minimum_wp_version" value="6.3"/>
 	<config name="testVersion" value="7.4-"/>
 
 	<exclude-pattern>/.wordpress-org/*</exclude-pattern>

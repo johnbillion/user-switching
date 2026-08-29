@@ -15,11 +15,7 @@ test.describe( 'Switch To English', () => {
 		page,
 		admin,
 		userSwitching,
-		globalUtils,
-	}, testInfo ) => {
-		// Check WordPress version - this test requires 6.2+
-		testInfo.skip( ! globalUtils.isWordPressVersionAtLeast( 6.2 ), 'This test requires WordPress 6.2 or later' );
-
+	} ) => {
 		// Create Italian admin user
 		await userSwitching.createUser( 'admin_it', 'administrator', {
 			name: 'Admin IT',

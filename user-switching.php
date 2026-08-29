@@ -17,7 +17,7 @@
  * Text Domain:       user-switching
  * Domain Path:       /languages/
  * Network:           true
- * Requires at least: 6.2
+ * Requires at least: 6.3
  * Requires PHP:      7.4
  * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *

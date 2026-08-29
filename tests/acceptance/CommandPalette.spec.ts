@@ -5,15 +5,18 @@ interface Admin {
 	visitAdminPage( path?: string, queryString?: string ): Promise<void>;
 }
 
+interface Screen {
+	name: string;
+	minVersion?: number;
+	gotoAndOpen( userSwitching: UserSwitchingUtils, admin: Admin, currentUser: string ): Promise<void>;
+}
+
 /**
- * The command palette was introduced in the block editor in WordPress 6.3 and
- * made available admin-wide (via the admin bar) in WordPress 6.9. Each screen
- * runs the same set of command palette tests, guarded by its minimum version.
+ * The command palette was made available admin-wide (via the admin bar) in WordPress 6.9.
  */
-const screens = [
+const screens: Screen[] = [
 	{
 		name: 'in the block editor',
-		minVersion: 6.3,
 		async gotoAndOpen( userSwitching: UserSwitchingUtils, admin: Admin, currentUser: string ) {
 			await userSwitching.prepareBlockEditor( userSwitching.getUserIdByUsername( currentUser ) );
 			await admin.visitAdminPage( 'post-new.php' );
@@ -50,7 +53,7 @@ test.describe( 'Command Palette', () => {
 				userSwitching,
 				globalUtils,
 			}, testInfo ) => {
-				testInfo.skip( ! globalUtils.isWordPressVersionAtLeast( screen.minVersion ), `This test requires WordPress ${screen.minVersion} or later` );
+				testInfo.skip( screen.minVersion !== undefined && ! globalUtils.isWordPressVersionAtLeast( screen.minVersion ), `This test requires WordPress ${screen.minVersion} or later` );
 
 				// Login as admin
 				await userSwitching.loginViaPage( 'admin', 'password' );
@@ -77,7 +80,7 @@ test.describe( 'Command Palette', () => {
 				userSwitching,
 				globalUtils,
 			}, testInfo ) => {
-				testInfo.skip( ! globalUtils.isWordPressVersionAtLeast( screen.minVersion ), `This test requires WordPress ${screen.minVersion} or later` );
+				testInfo.skip( screen.minVersion !== undefined && ! globalUtils.isWordPressVersionAtLeast( screen.minVersion ), `This test requires WordPress ${screen.minVersion} or later` );
 
 				// Login as admin
 				await userSwitching.loginViaPage( 'admin', 'password' );
@@ -101,7 +104,7 @@ test.describe( 'Command Palette', () => {
 				userSwitching,
 				globalUtils,
 			}, testInfo ) => {
-				testInfo.skip( ! globalUtils.isWordPressVersionAtLeast( screen.minVersion ), `This test requires WordPress ${screen.minVersion} or later` );
+				testInfo.skip( screen.minVersion !== undefined && ! globalUtils.isWordPressVersionAtLeast( screen.minVersion ), `This test requires WordPress ${screen.minVersion} or later` );
 
 				// Login as admin
 				await userSwitching.loginViaPage( 'admin', 'password' );
