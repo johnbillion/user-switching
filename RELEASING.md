@@ -31,6 +31,3 @@ These are the steps to take to release a new version of User Switching (for cont
 Publishing a release on GitHub triggers an action which deploys the release to the WordPress.org Plugin Directory. No need to touch Subversion.
 
 New milestones are automatically created for the next major, minor, and patch releases where appropriate.
-
-1. If this is a non-patch release, manually delete any [unused patch and minor milestones on GitHub](https://github.com/johnbillion/user-switching/milestones).
-1. Resolve relevant threads on [the plugin's support forums](https://wordpress.org/support/plugin/user-switching/).
