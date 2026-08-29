@@ -28,7 +28,7 @@
 	},
 	"require-dev": {
 		"johnbillion/plugin-infrastructure": "2.9.6",
-		"johnbillion/wp-compat": "1.5.0",
+		"johnbillion/wp-compat": "2.0.1",
 		"php-stubs/wordpress-stubs": "7.1.0",
 		"phpcompatibility/phpcompatibility-wp": "2.1.8",
 		"phpstan/phpstan": "2.1.33",
