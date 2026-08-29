@@ -148,13 +148,19 @@ final class user_switching {
 			return;
 		}
 
+		$aria_label = sprintf(
+			/* translators: %s: The display name of the user to switch to */
+			__( 'Switch to %s', 'user-switching' ),
+			$user->display_name,
+		);
+
 		?>
 		<tr class="user-switching-wrap">
 			<th scope="row">
 				<?php echo esc_html_x( 'User Switching', 'User Switching title on user profile screen', 'user-switching' ); ?>
 			</th>
 			<td>
-				<a id="user_switching_switcher" class="button" href="<?php echo esc_url( $link ); ?>">
+				<a id="user_switching_switcher" class="button" href="<?php echo esc_url( $link ); ?>" aria-label="<?php echo esc_attr( $aria_label ); ?>">
 					<?php esc_html_e( 'Switch&nbsp;To', 'user-switching' ); ?>
 				</a>
 			</td>
@@ -863,8 +869,10 @@ final class user_switching {
 		}
 
 		$actions['switch_to_user'] = sprintf(
-			'<a href="%s">%s</a>',
+			'<a href="%s" aria-label="%s">%s</a>',
 			esc_url( $link ),
+			/* translators: %s: The display name of the user to switch to */
+			esc_attr( sprintf( __( 'Switch to %s', 'user-switching' ), $user->display_name ) ),
 			esc_html__( 'Switch&nbsp;To', 'user-switching' )
 		);
 
