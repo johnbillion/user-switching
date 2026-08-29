@@ -78,6 +78,13 @@ export class UserSwitchingUtils {
 	 * Open the command palette from the block editor (WP 6.3+).
 	 */
 	async openCommandPaletteFromEditor() {
+		// The document bar in the editor header was introduced in WordPress 6.4. Before
+		// that the palette can only be opened with the keyboard shortcut.
+		if ( ! this.globalUtils.isWordPressVersionAtLeast( 6.4 ) ) {
+			await this.openCommandPaletteWithKeyboard();
+			return;
+		}
+
 		await this.page.locator( '.editor-document-bar__command' ).click();
 		await expect( this.page.locator( '[cmdk-input]' ) ).toBeVisible();
 	}
@@ -86,8 +93,12 @@ export class UserSwitchingUtils {
 	 * Open the command palette via its keyboard shortcut.
 	 */
 	async openCommandPaletteWithKeyboard() {
-		await this.page.keyboard.press( 'ControlOrMeta+k' );
-		await expect( this.page.locator( '[cmdk-input]' ) ).toBeVisible();
+		// The shortcut is registered by a script which loads asynchronously, so pressing
+		// it too early does nothing. Keep pressing until the palette appears.
+		await expect( async () => {
+			await this.page.keyboard.press( 'ControlOrMeta+k' );
+			await expect( this.page.locator( '[cmdk-input]' ) ).toBeVisible( { timeout: 2000 } );
+		} ).toPass();
 	}
 
 	/**

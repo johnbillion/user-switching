@@ -35,9 +35,8 @@ test.describe( 'Expired Nonce', () => {
 		// Click the switch back link - before the fix this showed "The link you followed has expired"
 		await switchBackLink.click();
 
-		// Verify successfully switched back to admin
-		expect( page.url() ).toContain( 'user_switched=true' );
-		expect( page.url() ).toContain( 'switched_back=true' );
+		// Verify successfully switched back to admin.
+		await userSwitching.seeAdminSuccessNotice( 'Switched back to admin.' );
 		await expect( page.locator( '#wpadminbar .display-name' ).first() ).toContainText( 'admin' );
 	} );
 } );
