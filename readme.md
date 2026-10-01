@@ -61,7 +61,7 @@ See also the FAQ for some questions relating to privacy and safety when switchin
 
 User Switching aims to be fully accessible to all of its users. It implements best practices for web accessibility, outputs semantic and structured markup, adheres to the default styles and accessibility guidelines of WordPress, uses the accessibility APIs provided by WordPress and web browsers where appropriate, and is fully accessible via keyboard.
 
-User Switching should adhere to Web Content Accessibility Guidelines (WCAG) 2.0 at level AA when used with a recent version of WordPress where its admin area itself adheres to these guidelines. If you've experienced or identified an accessibility issue in User Switching, please open a thread in [the User Switching plugin support forum](https://wordpress.org/support/plugin/user-switching/) and I'll address it swiftly.
+User Switching should adhere to Web Content Accessibility Guidelines (WCAG) 2.0 at level AA when used with a recent version of WordPress where the admin area itself adheres to these guidelines. If you've experienced or identified an accessibility issue in User Switching, please open a thread in [the User Switching plugin support forum](https://wordpress.org/support/plugin/user-switching/) and I'll address it swiftly.
 
 ## Sponsors
 
