@@ -148,7 +148,7 @@ export class UserSwitchingUtils {
 		let expectedText: string;
 		switch ( lang ) {
 			case 'it-IT':
-				expectedText = `Torna a ${displayName}`;
+				expectedText = `Passa di nuovo a ${displayName}`;
 				break;
 			case 'en-US':
 			default:

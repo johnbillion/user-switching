@@ -33,7 +33,7 @@ test.describe( 'Switch To English', () => {
 		// Switch to English author
 		await userSwitching.switchToUser( 'author_en' );
 		await userSwitching.canSeeThePageInLanguage( 'en-US' );
-		await userSwitching.seeAdminSuccessNotice( 'Cambiato a Author EN.' );
+		await userSwitching.seeAdminSuccessNotice( 'Passato a Author EN.' );
 
 		// The user switching element should be in Italian
 		const switchingElement = page.locator( '#user_switching p' );
@@ -45,6 +45,6 @@ test.describe( 'Switch To English', () => {
 		// Switch back to Italian admin
 		await userSwitching.switchBackTo( 'admin_it', 'it-IT' );
 		await userSwitching.canSeeThePageInLanguage( 'it-IT' );
-		await userSwitching.seeAdminSuccessNotice( 'Tornato a Admin IT.' );
+		await userSwitching.seeAdminSuccessNotice( 'Passato di nuovo a Admin IT.' );
 	} );
 } );
