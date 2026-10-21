@@ -26,6 +26,8 @@ Note: User Switching supports versions of WordPress up to three years old, and P
  * Full support for user session validation where appropriate.
  * Full support for HTTPS.
 
+User Switching does not facilitate privilege escalation. A user can only switch into an account which they already have the ability to edit. See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for more details about security and safety.
+
 ## Usage
 
  1. Visit the *Users* menu in WordPress and you'll see a *Switch To* link in the list of action links for each user.
