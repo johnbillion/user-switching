@@ -27,7 +27,7 @@
 		"composer/installers": "^1.0 || ^2.0"
 	},
 	"require-dev": {
-		"johnbillion/plugin-infrastructure": "2.9.6",
+		"johnbillion/plugin-infrastructure": "dev-docker-only-dev-built",
 		"johnbillion/wp-compat": "2.0.1",
 		"php-stubs/wordpress-stubs": "7.1.0",
 		"phpcompatibility/phpcompatibility-wp": "2.1.8",
