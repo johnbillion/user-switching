@@ -34,7 +34,9 @@
 		return;
 	}
 
-	const switchIcon = el( Dashicon, { icon: 'admin-users' } );
+	const switchIcon = settings.switchIcon ? el( wp.element.RawHTML, {
+		style: { display: 'flex' },
+	}, settings.switchIcon ) : el( Dashicon, { icon: 'admin-users' } );
 
 	// Static command: Switch Back.
 	if ( settings.switchBackUrl ) {
