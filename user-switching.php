@@ -513,9 +513,10 @@ final class user_switching {
 				} else {
 					echo '<p>';
 				}
-				?>
-				<span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span>
-				<?php
+
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo self::get_users_icon() . ' ';
+
 				$message = '';
 				$just_switched = isset( $_GET['user_switched'] );
 				if ( $just_switched ) {
@@ -843,7 +844,7 @@ final class user_switching {
 		}
 
 		$message .= '<p class="message" id="user_switching_switch_on">';
-		$message .= '<span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span> ';
+		$message .= self::get_users_icon() . ' ';
 		$message .= sprintf(
 			'<a href="%1$s" onclick="window.location.href=\'%1$s\';return false;">%2$s</a>',
 			esc_url( $url ),
@@ -1159,6 +1160,37 @@ final class user_switching {
 	}
 
 	/**
+	 * Returns the SVG markup for the users icon from the WordPress icon library, if available.
+	 *
+	 * @param int $size Width and height of the icon in pixels.
+	 * @return string SVG markup, or an empty string on versions of WordPress prior to 7.2.
+	 */
+	public static function get_users_svg_icon( int $size ): string {
+		if ( ! function_exists( 'wp_get_icon' ) ) {
+			return '';
+		}
+
+		return wp_get_icon( 'core-admin/people', [
+			'size' => $size,
+		] );
+	}
+
+	/**
+	 * Returns the markup for the users icon shown in notices, falling back to the Dashicon.
+	 *
+	 * @return string Icon markup.
+	 */
+	public static function get_users_icon(): string {
+		$svg = self::get_users_svg_icon( 20 );
+
+		if ( '' === $svg ) {
+			return '<span class="dashicons dashicons-admin-users" style="color:#56c234" aria-hidden="true"></span>';
+		}
+
+		return '<span style="display:inline-flex;vertical-align:top;color:#56c234" aria-hidden="true">' . $svg . '</span>';
+	}
+
+	/**
 	 * Registers a REST API field on the users endpoint containing the "Switch to" URL.
 	 */
 	public function action_rest_api_init(): void {
@@ -1205,6 +1237,7 @@ final class user_switching {
 		$settings = [
 			'canSwitchUsers' => $can_switch_off,
 			'switchToLabel' => str_replace( '&nbsp;', ' ', __( 'Switch&nbsp;To', 'user-switching' ) ),
+			'switchIcon' => self::get_users_svg_icon( 24 ),
 		];
 
 		if ( $old_user instanceof WP_User ) {
