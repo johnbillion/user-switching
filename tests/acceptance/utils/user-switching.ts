@@ -80,12 +80,12 @@ export class UserSwitchingUtils {
 	}
 
 	/**
-	 * Open the command palette from the block editor (WP 6.3+).
+	 * Open the command palette from the block editor.
 	 */
 	async openCommandPaletteFromEditor() {
-		// The document bar in the editor header was introduced in WordPress 6.4. Before
+		// The document bar in the post editor header was introduced in WordPress 6.5. Before
 		// that the palette can only be opened with the keyboard shortcut.
-		if ( ! this.globalUtils.isWordPressVersionAtLeast( 6.4 ) ) {
+		if ( ! this.globalUtils.isWordPressVersionAtLeast( 6.5 ) ) {
 			await this.openCommandPaletteWithKeyboard();
 			return;
 		}

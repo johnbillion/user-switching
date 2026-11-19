@@ -17,7 +17,7 @@
  * Text Domain:       user-switching
  * Domain Path:       /languages/
  * Network:           true
- * Requires at least: 6.3
+ * Requires at least: 6.4
  * Requires PHP:      7.4
  * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  *
@@ -716,7 +716,7 @@ final class user_switching {
 		);
 
 		// Move the switch back link so it's within the wp_die message container.
-		function_exists( 'wp_print_inline_script_tag' ) && wp_print_inline_script_tag(
+		wp_print_inline_script_tag(
 			<<<'JS'
 			document.addEventListener( 'DOMContentLoaded', function() {
 				document.querySelector( '.wp-die-message' ).appendChild(

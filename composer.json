@@ -33,6 +33,7 @@
 		"phpcompatibility/phpcompatibility-wp": "2.1.8",
 		"phpstan/phpstan": "2.1.33",
 		"phpstan/phpstan-phpunit": "2.0.11",
+		"roots/wordpress-full": "7.2-RC2",
 		"swissspidy/phpstan-no-private": "1.0.0",
 		"szepeviktor/phpstan-wordpress": "2.0.4",
 		"wp-coding-standards/wpcs": "3.4.1"
