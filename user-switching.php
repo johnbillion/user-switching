@@ -78,6 +78,7 @@ final class user_switching {
 		add_action( 'wp_meta', [ $this, 'action_wp_meta' ] );
 		add_filter( 'plugin_row_meta', [ $this, 'filter_plugin_row_meta' ], 10, 2 );
 		add_action( 'wp_footer', [ $this, 'action_wp_footer' ] );
+		add_action( 'send_headers', [ $this, 'action_send_headers' ] );
 		add_action( 'personal_options', [ $this, 'action_personal_options' ] );
 		add_action( 'admin_bar_menu', [ $this, 'action_admin_bar_menu' ], 11 );
 		add_action( 'shutdown', [ $this, 'action_shutdown_for_wp_die' ], 1, 0 );
@@ -778,6 +779,28 @@ final class user_switching {
 			esc_url( $url ),
 			esc_html( self::switch_back_message( $old_user ) )
 		);
+	}
+
+	/**
+	 * Prevents caching of front-end pages for a user who has switched off.
+	 *
+	 * These pages contain the 'Switch back to {user}' link but the visitor has no logged-in cookie,
+	 * so a page cache would otherwise treat them as an anonymous request.
+	 */
+	public function action_send_headers(): void {
+		if ( is_user_logged_in() ) {
+			return;
+		}
+
+		if ( ! ( self::get_old_user() instanceof WP_User ) ) {
+			return;
+		}
+
+		nocache_headers();
+
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
 	}
 
 	/**
