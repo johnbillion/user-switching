@@ -166,6 +166,51 @@ final class SessionsTest extends Test {
 	}
 
 	/**
+	 * @covers \user_switching::remember
+	 * @covers \switch_to_user
+	 */
+	public function testSwitchedSessionRemainsValidWhenOriginatingSessionExpires(): void {
+		$operator = self::$testers[ is_multisite() ? 'super' : 'admin' ];
+		$author = self::$users['author'];
+		$operator_sessions = WP_Session_Tokens::get_instance( $operator->ID );
+		$author_sessions = WP_Session_Tokens::get_instance( $author->ID );
+		$browser_expiries = [];
+		add_action( 'set_logged_in_cookie', static function ( string $cookie, int $expire ) use ( &$browser_expiries ): void {
+			$browser_expiries[] = $expire;
+		}, 10, 2 );
+
+		// Issue a remembered login with only a minute left on its cookie and server session.
+		wp_set_current_user( $operator->ID );
+		$one_minute = static fn (): int => MINUTE_IN_SECONDS;
+		add_filter( 'auth_cookie_expiration', $one_minute );
+		wp_set_auth_cookie( $operator->ID, true );
+		remove_filter( 'auth_cookie_expiration', $one_minute );
+		$operator_token = wp_get_session_token();
+		self::assertGreaterThan( time(), $browser_expiries[0] );
+
+		$switched_at = time();
+		switch_to_user( $author->ID, user_switching::remember() );
+		$switched_token = wp_get_session_token();
+		self::assertSame( 0, $browser_expiries[1], 'A nearly expired remembered login should switch to a browser-session cookie.' );
+
+		$operator_session = $operator_sessions->get( $operator_token );
+		$switched_session = $author_sessions->get( $switched_token );
+		self::assertIsArray( $operator_session );
+		self::assertIsArray( $switched_session );
+		self::assertGreaterThanOrEqual( $switched_at + 2 * DAY_IN_SECONDS, $switched_session['expiration'] );
+		self::assertTrue( user_switching::authenticate_old_user( $operator ) );
+
+		// Backdate the original session so WordPress expires it on its next read.
+		$operator_session['expiration'] = time() - 1;
+		$operator_sessions->update( $operator_token, $operator_session );
+
+		self::assertFalse( $operator_sessions->verify( $operator_token ) );
+		self::assertFalse( user_switching::authenticate_old_user( $operator ) );
+		self::assertTrue( $author_sessions->verify( $switched_token ), 'The switched session should remain valid after its originating session expires.' );
+		self::assertSame( $author->ID, wp_validate_auth_cookie( '', 'logged_in' ) );
+	}
+
+	/**
 	 * @covers \switch_to_user
 	 * @covers \switch_off_user
 	 */
