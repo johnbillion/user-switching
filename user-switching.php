@@ -38,6 +38,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'USER_SWITCHING_VERSION', '1.12.2' );
 
+require_once __DIR__ . '/class-user-switching-session-tokens.php';
+
 /**
  * Main singleton class for the User Switching plugin.
  */
@@ -61,6 +63,7 @@ final class user_switching {
 	 */
 	public function init_hooks(): void {
 		// Required functionality:
+		add_filter( 'session_token_manager', [ $this, 'filter_session_token_manager' ] );
 		add_filter( 'user_has_cap', [ $this, 'filter_user_has_cap' ], 10, 4 );
 		add_filter( 'map_meta_cap', [ $this, 'filter_map_meta_cap' ], 10, 4 );
 		add_filter( 'user_row_actions', [ $this, 'filter_user_row_actions' ], 10, 2 );
@@ -1370,6 +1373,22 @@ final class user_switching {
 		}
 
 		$wc->session->forget_session();
+	}
+
+	/**
+	 * Replaces the core session manager with one that also revokes sessions switched into from a revoked session.
+	 *
+	 * Custom session managers are left alone.
+	 *
+	 * @param mixed $manager Name of the session token manager class.
+	 * @return mixed Name of the session token manager class.
+	 */
+	public function filter_session_token_manager( $manager ) {
+		if ( WP_User_Meta_Session_Tokens::class === $manager ) {
+			return User_Switching_Session_Tokens::class;
+		}
+
+		return $manager;
 	}
 
 	/**

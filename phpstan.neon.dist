@@ -8,6 +8,7 @@ parameters:
 	level: 9
 	paths:
 		- user-switching.php
+		- class-user-switching-session-tokens.php
 		- tests/acceptance
 		- tests/integration
 	scanDirectories:
