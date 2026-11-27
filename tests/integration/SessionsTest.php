@@ -167,6 +167,80 @@ final class SessionsTest extends Test {
 
 	/**
 	 * @covers \switch_to_user
+	 * @covers \switch_off_user
+	 */
+	public function testSessionTokensAreCorrectlyReusedWhenSwitching(): void {
+		$admin = self::$testers['admin'];
+
+		// Set up the admin session manager with a session
+		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+
+		// Set up the author session manager, but with no session
+		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
+
+		// Set up the admin user state
+		wp_set_current_user( $admin->ID );
+		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
+
+		// Switch user
+		$user = switch_to_user( self::$users['author']->ID );
+		$author_token = wp_get_session_token();
+		$cookies = user_switching_get_auth_cookie();
+		$cookie = end( $cookies );
+
+		self::assertIsString( $cookie );
+
+		$parts = wp_parse_auth_cookie( $cookie );
+
+		self::assertIsArray( $parts );
+
+		// Verify the original user session information is stored in the switch stack and against the new user session
+		$author_session = $author_manager->get( $author_token );
+
+		self::assertIsArray( $author_session );
+
+		self::assertArrayHasKey( 'switched_from_id', $author_session );
+		self::assertArrayHasKey( 'switched_from_session', $author_session );
+		self::assertSame( $admin->ID, $author_session['switched_from_id'] );
+		self::assertSame( $admin_token, $author_session['switched_from_session'] );
+		self::assertSame( $admin_token, $parts['token'] );
+
+		// Switch back
+		$user = switch_to_user( $admin->ID, false, false );
+
+		// Verify the original session token was reused
+		self::assertCount( 1, $admin_manager->get_all() );
+		self::assertNotNull( $admin_manager->get( $admin_token ) );
+
+		// Verify the session for the switched to user was destroyed
+		self::assertCount( 0, $author_manager->get_all() );
+		self::assertNull( $author_manager->get( $author_token ) );
+
+		// Switch off
+		$off = switch_off_user();
+		$cookies = user_switching_get_auth_cookie();
+		$cookie = end( $cookies );
+
+		self::assertIsString( $cookie );
+
+		$parts = wp_parse_auth_cookie( $cookie );
+
+		self::assertIsArray( $parts );
+
+		// Verify the original user session information is stored in the switch stack
+		self::assertSame( $admin_token, $parts['token'] );
+
+		// Switch back on again
+		$user = switch_to_user( $admin->ID, false, false );
+
+		// Verify the original session token was reused
+		self::assertCount( 1, $admin_manager->get_all() );
+		self::assertNotNull( $admin_manager->get( $admin_token ) );
+	}
+
+	/**
+	 * @covers \switch_to_user
 	 */
 	public function testRevokingOriginatingSessionInvalidatesSwitchedSession(): void {
 		$operator = self::$testers[ is_multisite() ? 'super' : 'admin' ];
@@ -243,75 +317,30 @@ final class SessionsTest extends Test {
 
 	/**
 	 * @covers \switch_to_user
-	 * @covers \switch_off_user
 	 */
-	public function testSessionTokensAreCorrectlyReusedWhenSwitching(): void {
-		$admin = self::$testers['admin'];
+	public function testNaturalExpiryOfOriginatingSessionDoesNotDestroySwitchedSession(): void {
+		$operator = self::$testers[ is_multisite() ? 'super' : 'admin' ];
+		$author = self::$users['author'];
+		$operator_sessions = WP_Session_Tokens::get_instance( $operator->ID );
+		$author_sessions = WP_Session_Tokens::get_instance( $author->ID );
+		$operator_token = $operator_sessions->create( time() + HOUR_IN_SECONDS );
 
-		// Set up the admin session manager with a session
-		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
-		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		wp_set_current_user( $operator->ID );
+		wp_set_auth_cookie( $operator->ID, false, '', $operator_token );
+		switch_to_user( $author->ID );
+		$switched_token = wp_get_session_token();
 
-		// Set up the author session manager, but with no session
-		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
+		$operator_session = $operator_sessions->get( $operator_token );
+		self::assertIsArray( $operator_session );
 
-		// Set up the admin user state
-		wp_set_current_user( $admin->ID );
-		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
+		// Backdate the original session so WordPress expires it on its next read.
+		$operator_session['expiration'] = time() - 1;
+		$operator_sessions->update( $operator_token, $operator_session );
 
-		// Switch user
-		$user = switch_to_user( self::$users['author']->ID );
-		$author_token = wp_get_session_token();
-		$cookies = user_switching_get_auth_cookie();
-		$cookie = end( $cookies );
+		// Writing the operator's sessions again prunes the expired one without explicitly destroying it.
+		$operator_sessions->create( time() + HOUR_IN_SECONDS );
 
-		self::assertIsString( $cookie );
-
-		$parts = wp_parse_auth_cookie( $cookie );
-
-		self::assertIsArray( $parts );
-
-		// Verify the original user session information is stored in the switch stack and against the new user session
-		$author_session = $author_manager->get( $author_token );
-
-		self::assertIsArray( $author_session );
-
-		self::assertArrayHasKey( 'switched_from_id', $author_session );
-		self::assertArrayHasKey( 'switched_from_session', $author_session );
-		self::assertSame( $admin->ID, $author_session['switched_from_id'] );
-		self::assertSame( $admin_token, $author_session['switched_from_session'] );
-		self::assertSame( $admin_token, $parts['token'] );
-
-		// Switch back
-		$user = switch_to_user( $admin->ID, false, false );
-
-		// Verify the original session token was reused
-		self::assertCount( 1, $admin_manager->get_all() );
-		self::assertNotNull( $admin_manager->get( $admin_token ) );
-
-		// Verify the session for the switched to user was destroyed
-		self::assertCount( 0, $author_manager->get_all() );
-		self::assertNull( $author_manager->get( $author_token ) );
-
-		// Switch off
-		$off = switch_off_user();
-		$cookies = user_switching_get_auth_cookie();
-		$cookie = end( $cookies );
-
-		self::assertIsString( $cookie );
-
-		$parts = wp_parse_auth_cookie( $cookie );
-
-		self::assertIsArray( $parts );
-
-		// Verify the original user session information is stored in the switch stack
-		self::assertSame( $admin_token, $parts['token'] );
-
-		// Switch back on again
-		$user = switch_to_user( $admin->ID, false, false );
-
-		// Verify the original session token was reused
-		self::assertCount( 1, $admin_manager->get_all() );
-		self::assertNotNull( $admin_manager->get( $admin_token ) );
+		self::assertFalse( $operator_sessions->verify( $operator_token ) );
+		self::assertTrue( $author_sessions->verify( $switched_token ), 'The switched session should remain valid after its originating session expires.' );
 	}
 }
