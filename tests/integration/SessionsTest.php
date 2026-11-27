@@ -238,4 +238,109 @@ final class SessionsTest extends Test {
 		self::assertCount( 1, $admin_manager->get_all() );
 		self::assertNotNull( $admin_manager->get( $admin_token ) );
 	}
+
+	/**
+	 * @covers \switch_to_user
+	 */
+	public function testRevokingOriginatingSessionInvalidatesSwitchedSession(): void {
+		$operator = self::$testers[ is_multisite() ? 'super' : 'admin' ];
+		$author = self::$users['author'];
+		$operator_sessions = WP_Session_Tokens::get_instance( $operator->ID );
+		$author_sessions = WP_Session_Tokens::get_instance( $author->ID );
+		$author_login_token = $author_sessions->create( time() + DAY_IN_SECONDS );
+
+		wp_set_current_user( $operator->ID );
+		wp_set_auth_cookie( $operator->ID );
+		$operator_token = wp_get_session_token();
+
+		switch_to_user( $author->ID );
+		$switched_token = wp_get_session_token();
+		self::assertTrue( $operator_sessions->verify( $operator_token ) );
+		self::assertTrue( $author_sessions->verify( $switched_token ) );
+
+		$operator_sessions->destroy( $operator_token );
+
+		self::assertFalse( $operator_sessions->verify( $operator_token ) );
+		self::assertTrue( $author_sessions->verify( $author_login_token ), "The author's own session should remain valid." );
+		self::assertFalse( $author_sessions->verify( $switched_token ), 'The switched session should be invalid after its originating session is revoked.' );
+	}
+
+	/**
+	 * @covers \switch_to_user
+	 */
+	public function testDestroyingAllOriginatingSessionsInvalidatesSwitchedSession(): void {
+		$operator = self::$testers[ is_multisite() ? 'super' : 'admin' ];
+		$author = self::$users['author'];
+		$operator_sessions = WP_Session_Tokens::get_instance( $operator->ID );
+		$author_sessions = WP_Session_Tokens::get_instance( $author->ID );
+		$author_login_token = $author_sessions->create( time() + DAY_IN_SECONDS );
+
+		wp_set_current_user( $operator->ID );
+		wp_set_auth_cookie( $operator->ID );
+
+		switch_to_user( $author->ID );
+		$switched_token = wp_get_session_token();
+		self::assertTrue( $author_sessions->verify( $switched_token ) );
+
+		$operator_sessions->destroy_all();
+
+		self::assertTrue( $author_sessions->verify( $author_login_token ), "The author's own session should remain valid." );
+		self::assertFalse( $author_sessions->verify( $switched_token ), 'The switched session should be invalid after all originating sessions are revoked.' );
+	}
+
+	/**
+	 * @covers \switch_to_user
+	 */
+	public function testDestroyingOtherOriginatingSessionsOnlyInvalidatesTheirSwitchedSessions(): void {
+		$operator = self::$testers[ is_multisite() ? 'super' : 'admin' ];
+		$author = self::$users['author'];
+		$operator_sessions = WP_Session_Tokens::get_instance( $operator->ID );
+		$author_sessions = WP_Session_Tokens::get_instance( $author->ID );
+
+		wp_set_current_user( $operator->ID );
+		wp_set_auth_cookie( $operator->ID );
+		$kept_token = wp_get_session_token();
+		switch_to_user( $author->ID );
+		$kept_switched_token = wp_get_session_token();
+
+		wp_set_current_user( $operator->ID );
+		wp_set_auth_cookie( $operator->ID );
+		switch_to_user( $author->ID );
+		$other_switched_token = wp_get_session_token();
+
+		$operator_sessions->destroy_others( $kept_token );
+
+		self::assertTrue( $operator_sessions->verify( $kept_token ) );
+		self::assertTrue( $author_sessions->verify( $kept_switched_token ), 'The switched session from the kept session should remain valid.' );
+		self::assertFalse( $author_sessions->verify( $other_switched_token ), 'The switched session from a revoked session should be invalid.' );
+	}
+
+	/**
+	 * @covers \switch_to_user
+	 */
+	public function testNaturalExpiryOfOriginatingSessionDoesNotDestroySwitchedSession(): void {
+		$operator = self::$testers[ is_multisite() ? 'super' : 'admin' ];
+		$author = self::$users['author'];
+		$operator_sessions = WP_Session_Tokens::get_instance( $operator->ID );
+		$author_sessions = WP_Session_Tokens::get_instance( $author->ID );
+		$operator_token = $operator_sessions->create( time() + HOUR_IN_SECONDS );
+
+		wp_set_current_user( $operator->ID );
+		wp_set_auth_cookie( $operator->ID, false, '', $operator_token );
+		switch_to_user( $author->ID );
+		$switched_token = wp_get_session_token();
+
+		$operator_session = $operator_sessions->get( $operator_token );
+		self::assertIsArray( $operator_session );
+
+		// Backdate the original session so WordPress expires it on its next read.
+		$operator_session['expiration'] = time() - 1;
+		$operator_sessions->update( $operator_token, $operator_session );
+
+		// Writing the operator's sessions again prunes the expired one without explicitly destroying it.
+		$operator_sessions->create( time() + HOUR_IN_SECONDS );
+
+		self::assertFalse( $operator_sessions->verify( $operator_token ) );
+		self::assertTrue( $author_sessions->verify( $switched_token ), 'The switched session should remain valid after its originating session expires.' );
+	}
 }
