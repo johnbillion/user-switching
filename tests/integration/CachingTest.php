@@ -3,42 +3,44 @@
 namespace UserSwitching\Tests;
 
 /**
- * These tests run in separate processes because `DONOTCACHEPAGE` is a constant.
- *
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- * @covers \user_switching::action_send_headers
+ * @covers \user_switching::filter_wp_headers
  */
 final class CachingTest extends Test {
 	public function testPageCachingIsPreventedWhenSwitchedOff(): void {
 		wp_set_current_user( self::$testers['admin']->ID );
 		switch_off_user();
 
-		do_action( 'send_headers', $GLOBALS['wp'] );
+		$headers = $this->get_headers();
 
+		self::assertArrayHasKey( 'Cache-Control', $headers );
+		self::assertIsString( $headers['Cache-Control'] );
+		self::assertStringContainsString( 'no-cache', $headers['Cache-Control'] );
+		self::assertStringContainsString( 'max-age=0', $headers['Cache-Control'] );
 		self::assertTrue( defined( 'DONOTCACHEPAGE' ) );
 	}
 
-	public function testPageCachingIsNotPreventedWhenSwitchedToAnotherUser(): void {
+	public function testHeadersAreNotChangedWhenSwitchedToAnotherUser(): void {
 		wp_set_current_user( self::$testers['admin']->ID );
 		switch_to_user( self::$users['editor']->ID );
 
-		do_action( 'send_headers', $GLOBALS['wp'] );
-
-		self::assertFalse( defined( 'DONOTCACHEPAGE' ) );
+		self::assertSame( [], $this->get_headers() );
 	}
 
-	public function testPageCachingIsNotPreventedWhenLoggedOut(): void {
-		do_action( 'send_headers', $GLOBALS['wp'] );
-
-		self::assertFalse( defined( 'DONOTCACHEPAGE' ) );
+	public function testHeadersAreNotChangedWhenLoggedOut(): void {
+		self::assertSame( [], $this->get_headers() );
 	}
 
-	public function testPageCachingIsNotPreventedWithAnInvalidOldUserCookie(): void {
+	public function testHeadersAreNotChangedWithAnInvalidOldUserCookie(): void {
 		$_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] = 'invalid';
 
-		do_action( 'send_headers', $GLOBALS['wp'] );
+		self::assertSame( [], $this->get_headers() );
+	}
 
-		self::assertFalse( defined( 'DONOTCACHEPAGE' ) );
+	/**
+	 * @return array<string, string|false>
+	 */
+	private function get_headers(): array {
+		/** @var array<string, string|false> */
+		return apply_filters( 'wp_headers', [], $GLOBALS['wp'] );
 	}
 }

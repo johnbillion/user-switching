@@ -48,7 +48,7 @@ test.describe( 'Switch Off', () => {
 		userSwitching,
 	} ) => {
 		const loggedOutResponse = await page.goto( '/' );
-		expect( loggedOutResponse?.headers()['cache-control'] ?? '' ).not.toContain( 'no-store' );
+		expect( loggedOutResponse?.headers()['cache-control'] ?? '' ).not.toContain( 'no-cache' );
 
 		// Login as admin
 		await userSwitching.loginViaPage( 'admin', 'password' );
@@ -59,8 +59,8 @@ test.describe( 'Switch Off', () => {
 		await userSwitching.verifyLoggedOut();
 
 		const switchedOffResponse = await page.goto( '/' );
-		expect( switchedOffResponse?.headers()['cache-control'] ).toContain( 'no-store' );
-		expect( switchedOffResponse?.headers()['cache-control'] ).toContain( 'private' );
+		expect( switchedOffResponse?.headers()['cache-control'] ).toContain( 'no-cache' );
+		expect( switchedOffResponse?.headers()['cache-control'] ).toContain( 'max-age=0' );
 	} );
 
 	test( 'Switch off from dashboard and back from login screen', {
