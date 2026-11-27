@@ -37,6 +37,32 @@ test.describe( 'Switch Off', () => {
 		await userSwitching.verifyLoggedInAs( 'admin' );
 	} );
 
+	test( 'Front end is not cached while switched off', {
+		annotation: {
+			type: 'user-story',
+			description: 'As an administrator, I need pages that show my name while switched off to not be stored in a shared page cache'
+		}
+	}, async ( {
+		page,
+		admin,
+		userSwitching,
+	} ) => {
+		const loggedOutResponse = await page.goto( '/' );
+		expect( loggedOutResponse?.headers()['cache-control'] ?? '' ).not.toContain( 'no-cache' );
+
+		// Login as admin
+		await userSwitching.loginViaPage( 'admin', 'password' );
+		await admin.visitAdminPage( '/' );
+
+		// Switch off
+		await userSwitching.switchOff();
+		await userSwitching.verifyLoggedOut();
+
+		const switchedOffResponse = await page.goto( '/' );
+		expect( switchedOffResponse?.headers()['cache-control'] ).toContain( 'no-cache' );
+		expect( switchedOffResponse?.headers()['cache-control'] ).toContain( 'max-age=0' );
+	} );
+
 	test( 'Switch off from dashboard and back from login screen', {
 		annotation: {
 			type: 'user-story',
