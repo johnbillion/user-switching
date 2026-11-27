@@ -238,4 +238,93 @@ final class SessionsTest extends Test {
 		self::assertCount( 1, $admin_manager->get_all() );
 		self::assertNotNull( $admin_manager->get( $admin_token ) );
 	}
+
+	/**
+	 * @covers \user_switching::action_wp_logout
+	 */
+	public function testOriginatingSessionIsDestroyedWhenSwitchedUserLogsOut(): void {
+		$admin = self::$testers['admin'];
+		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$admin_other_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
+
+		wp_set_current_user( $admin->ID );
+		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
+
+		switch_to_user( self::$users['author']->ID );
+		$author_token = wp_get_session_token();
+
+		self::assertNotNull( $admin_manager->get( $admin_token ) );
+
+		wp_logout();
+
+		self::assertNull( $author_manager->get( $author_token ) );
+		self::assertNull( $admin_manager->get( $admin_token ), 'The session that the user switched from should be destroyed' );
+		self::assertNotNull( $admin_manager->get( $admin_other_token ), 'Other sessions for the user should not be affected' );
+	}
+
+	/**
+	 * @covers \user_switching::action_wp_logout
+	 */
+	public function testEverySessionInTheSwitchStackIsDestroyedWhenSwitchedUserLogsOut(): void {
+		$admin = self::$testers['admin'];
+		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
+		$admin_token = $admin_manager->create( time() + DAY_IN_SECONDS );
+		$author_manager = WP_Session_Tokens::get_instance( self::$users['author']->ID );
+		$editor_manager = WP_Session_Tokens::get_instance( self::$users['editor']->ID );
+
+		wp_set_current_user( $admin->ID );
+		wp_set_auth_cookie( $admin->ID, false, '', $admin_token );
+
+		switch_to_user( self::$users['author']->ID );
+		$author_token = wp_get_session_token();
+
+		switch_to_user( self::$users['editor']->ID );
+		$editor_token = wp_get_session_token();
+
+		self::assertNotNull( $admin_manager->get( $admin_token ) );
+		self::assertNotNull( $author_manager->get( $author_token ) );
+
+		wp_logout();
+
+		self::assertNull( $editor_manager->get( $editor_token ) );
+		self::assertNull( $author_manager->get( $author_token ) );
+		self::assertNull( $admin_manager->get( $admin_token ) );
+	}
+
+	/**
+	 * @covers \user_switching::action_wp_logout
+	 */
+	public function testSessionsForOldUserCookiesWithoutASessionTokenAreDestroyedWhenSwitchedUserLogsOut(): void {
+		$admin = self::$testers['admin'];
+		$admin_manager = WP_Session_Tokens::get_instance( $admin->ID );
+
+		// With no current session, each old user cookie gets a new session
+		wp_set_current_user( $admin->ID );
+		switch_to_user( self::$users['author']->ID );
+
+		self::assertNotEmpty( $admin_manager->get_all() );
+
+		wp_logout();
+
+		self::assertSame( [], $admin_manager->get_all() );
+	}
+
+	/**
+	 * @covers \user_switching::action_wp_logout
+	 */
+	public function testSessionIsNotDestroyedByAnInvalidOldUserCookieWhenLoggingOut(): void {
+		$editor = self::$users['editor'];
+		$editor_manager = WP_Session_Tokens::get_instance( $editor->ID );
+		$editor_token = $editor_manager->create( time() + DAY_IN_SECONDS );
+		$forged_cookie = implode( '|', [ $editor->user_login, time() + DAY_IN_SECONDS, $editor_token, 'invalid' ] );
+
+		$_COOKIE[ USER_SWITCHING_COOKIE ] = json_encode( [ $forged_cookie ] );
+		$_COOKIE[ USER_SWITCHING_OLDUSER_COOKIE ] = $forged_cookie;
+
+		wp_logout();
+
+		self::assertNotNull( $editor_manager->get( $editor_token ) );
+	}
 }
