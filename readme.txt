@@ -137,6 +137,8 @@ No. This can be enabled though by installing the [User Switching for Regular Adm
 
 Yes. The `switch_users` meta capability can be explicitly granted to a user or a role to allow them to switch users regardless of whether or not they have the `edit_users` capability. For practical purposes, the user or role will also need the `list_users` capability so they can access the Users menu in the WordPress admin area.
 
+On Multisite, a user who is not a Super Admin cannot switch to a Super Admin, even if they have the `switch_users` capability.
+
 ~~~php
 add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
 	if ( 'switch_to_user' === $args[0] ) {

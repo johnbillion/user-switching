@@ -1427,8 +1427,8 @@ final class user_switching {
 	 *
 	 *  - Add the 'do_not_allow' capability to the list of required capabilities when a Super Admin is trying to switch
 	 *    to themselves.
-	 *
-	 * It affects nothing else as Super Admins can do everything by default.
+	 *  - Add the 'do_not_allow' capability to the list of required capabilities when a user who is not a Super Admin
+	 *    is trying to switch to a Super Admin on the current network.
 	 *
 	 * @param array<int,string> $required_caps Array of required primitive capabilities for the requested capability.
 	 * @param string            $cap           Capability or meta capability being checked.
@@ -1443,6 +1443,8 @@ final class user_switching {
 	public function filter_map_meta_cap( array $required_caps, $cap, $user_id, array $args ): array {
 		if ( 'switch_to_user' === $cap ) {
 			if ( empty( $args[0] ) || $args[0] === $user_id ) {
+				$required_caps[] = 'do_not_allow';
+			} elseif ( is_multisite() && is_numeric( $args[0] ) && is_super_admin( (int) $args[0] ) && ! is_super_admin( $user_id ) ) {
 				$required_caps[] = 'do_not_allow';
 			}
 		}
