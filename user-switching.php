@@ -845,8 +845,9 @@ final class user_switching {
 
 		$message .= '<p class="message" id="user_switching_switch_on">';
 		$message .= self::get_users_icon() . ' ';
+		// The interim login screen opens every link in a new tab, so the link navigates the current window instead.
 		$message .= sprintf(
-			'<a href="%1$s" onclick="window.location.href=\'%1$s\';return false;">%2$s</a>',
+			'<a href="%1$s" onclick="window.location.href=this.href;return false;">%2$s</a>',
 			esc_url( $url ),
 			esc_html( self::switch_back_message( $old_user ) )
 		);
