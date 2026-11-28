@@ -12,6 +12,17 @@ test.describe( 'Switch Off', () => {
 		commentPostId = globalUtils.runWPCLICommand( 'post create --post_title="Leave a Comment" --post_name="leave-a-comment" --post_status=publish --porcelain' );
 	} );
 
+	for ( const rememberMe of [ false, true ] ) {
+		test( `Switching off preserves a ${rememberMe ? 'remembered' : 'browser-only'} login`, async ( { userSwitching } ) => {
+			await userSwitching.loginViaPage( 'admin', 'password', rememberMe );
+			await userSwitching.verifyCookiePersistence( 'wordpress_logged_in_', 1, rememberMe );
+
+			await userSwitching.switchOff();
+			await userSwitching.verifyLoggedOut();
+			await userSwitching.verifyCookiePersistence( 'wordpress_user_sw_', 2, rememberMe );
+		} );
+	}
+
 	test( 'Switch off from dashboard and back from front end', {
 		annotation: {
 			type: 'user-story',

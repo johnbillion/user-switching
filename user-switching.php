@@ -1480,8 +1480,9 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 	 * @param int    $old_user_id The ID of the originating user, usually the current logged in user.
 	 * @param bool   $pop         Optional. Pop the latest user off the auth cookie, instead of appending the new one. Default false.
 	 * @param string $token       Optional. The old user's session token to store for later reuse. Default empty string.
+	 * @param bool   $remember    Optional. Whether to set persistent cookies instead of browser session cookies. Default true.
 	 */
-	function user_switching_set_olduser_cookie( $old_user_id, bool $pop = false, string $token = '' ): void {
+	function user_switching_set_olduser_cookie( $old_user_id, bool $pop = false, string $token = '', bool $remember = true ): void {
 		$secure_auth_cookie = user_switching::secure_auth_cookie();
 		$secure_olduser_cookie = user_switching::secure_olduser_cookie();
 		$expiration = time() + 172800; // 48 hours
@@ -1547,8 +1548,10 @@ if ( ! function_exists( 'user_switching_set_olduser_cookie' ) ) {
 			return;
 		}
 
-		setcookie( $auth_cookie_name, $auth_cookie, $expiration, SITECOOKIEPATH, COOKIE_DOMAIN, $secure_auth_cookie, true );
-		setcookie( USER_SWITCHING_OLDUSER_COOKIE, $olduser_cookie, $expiration, COOKIEPATH, COOKIE_DOMAIN, $secure_olduser_cookie, true );
+		$cookie_expiration = $remember ? $expiration : 0;
+
+		setcookie( $auth_cookie_name, $auth_cookie, $cookie_expiration, SITECOOKIEPATH, COOKIE_DOMAIN, $secure_auth_cookie, true );
+		setcookie( USER_SWITCHING_OLDUSER_COOKIE, $olduser_cookie, $cookie_expiration, COOKIEPATH, COOKIE_DOMAIN, $secure_olduser_cookie, true );
 	}
 }
 
@@ -1594,7 +1597,7 @@ if ( ! function_exists( 'user_switching_clear_olduser_cookie' ) ) {
 				$parts = wp_parse_auth_cookie( $old_cookie, $scheme );
 
 				if ( false !== $parts ) {
-					user_switching_set_olduser_cookie( $old_user_id, true, $parts['token'] );
+					user_switching_set_olduser_cookie( $old_user_id, true, $parts['token'], user_switching::remember() );
 				}
 			}
 		}
@@ -1665,7 +1668,7 @@ if ( ! function_exists( 'switch_to_user' ) ) {
 		if ( $set_old_user && $old_user_id ) {
 			// Switching to another user
 			$new_token = '';
-			user_switching_set_olduser_cookie( $old_user_id, false, $old_token );
+			user_switching_set_olduser_cookie( $old_user_id, false, $old_token, $remember );
 		} else {
 			// Switching back, either after being switched off or after being switched to another user
 			$new_token = $cookie_parts['token'] ?? '';
@@ -1749,7 +1752,7 @@ if ( ! function_exists( 'switch_off_user' ) ) {
 
 		$old_token = wp_get_session_token();
 
-		user_switching_set_olduser_cookie( $old_user_id, false, $old_token );
+		user_switching_set_olduser_cookie( $old_user_id, false, $old_token, user_switching::remember() );
 		wp_clear_auth_cookie();
 		wp_set_current_user( 0 );
 

@@ -8,6 +8,17 @@ test.describe( 'User Switching', () => {
 		globalUtils.runWPCLICommand( 'user create editor editor@example.com --role=editor --display_name="editor" --user_pass=password' );
 	} );
 
+	for ( const rememberMe of [ false, true ] ) {
+		test( `Switching accounts with Remember Me ${rememberMe ? 'checked' : 'unchecked'}`, async ( { userSwitching } ) => {
+			await userSwitching.loginViaPage( 'admin', 'password', rememberMe );
+			await userSwitching.switchToUser( 'editor' );
+			await userSwitching.verifyLoggedInAs( 'editor' );
+
+			await userSwitching.verifyCookiePersistence( 'wordpress_logged_in_', 1, rememberMe );
+			await userSwitching.verifyCookiePersistence( 'wordpress_user_sw_', 2, rememberMe );
+		} );
+	}
+
 	test( 'Switch to editor then back from front end', {
 		annotation: {
 			type: 'user-story',

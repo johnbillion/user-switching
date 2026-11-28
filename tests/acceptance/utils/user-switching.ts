@@ -56,10 +56,11 @@ export class UserSwitchingUtils {
 	/**
 	 * Login via the wp-login.php page
 	 */
-	async loginViaPage( username: string, password: string ) {
+	async loginViaPage( username: string, password: string, rememberMe = false ) {
 		await this.page.goto( '/wp-login.php' );
 		await this.page.fill( 'input[name="log"]', username );
 		await this.page.fill( 'input[name="pwd"]', password );
+		await this.page.locator( '#rememberme' ).setChecked( rememberMe );
 		await this.page.locator( '#wp-submit' ).click();
 
 		// Wait for the redirect to complete before returning, otherwise a subsequent
@@ -68,6 +69,22 @@ export class UserSwitchingUtils {
 
 		// WP returns a 200 for a failed login, so assert on the logged-in state instead.
 		await expect( this.page.locator( '#wpadminbar' ) ).toBeVisible();
+	}
+
+	async verifyCookiePersistence( namePrefix: string, count: number, rememberMe: boolean ) {
+		const expiries = ( await this.page.context().cookies() )
+			.filter( ( { name } ) => name.startsWith( namePrefix ) )
+			.map( ( { expires } ) => expires );
+		expect( expiries, `Expected cookies with prefix ${namePrefix}` ).toHaveLength( count );
+
+		for ( const expiry of expiries ) {
+			if ( rememberMe ) {
+				expect( expiry, `${namePrefix} cookie should persist` ).toBeGreaterThan( Date.now() / 1000 );
+			} else {
+				// Playwright reports -1 for a browser-session cookie.
+				expect( expiry, `${namePrefix} cookie should expire with the browser session` ).toBe( -1 );
+			}
+		}
 	}
 
 	/**
