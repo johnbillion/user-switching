@@ -198,12 +198,25 @@ final class CapabilitiesTest extends Test {
 	}
 
 	/**
+	 * @return array<string, array{string, bool}>
+	 */
+	public function data_multisite_switch_targets(): array {
+		return [
+			'site author' => [ 'author', true ],
+			'network super administrator' => [ 'super', false ],
+		];
+	}
+
+	/**
+	 * @dataProvider data_multisite_switch_targets
 	 * @group multisite
 	 * @group ms-required
 	 */
-	public function testAbilityToSwitchUsersCanBeGrantedToAdministratorRoleOnMultisite(): void {
+	public function testAbilityToSwitchUsersCanBeGrantedToAdministratorRoleOnMultisite( string $target_role, bool $expected ): void {
+		$target_id = self::$users[ $target_role ]->ID;
+
 		# Admins on Multisite cannot switch to other users:
-		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
+		$can_already_switch = user_can( self::$testers['admin']->ID, 'switch_to_user', $target_id );
 
 		/** @var \WP_Role */
 		$role = get_role( 'administrator' );
@@ -211,8 +224,8 @@ final class CapabilitiesTest extends Test {
 		# Grant the ability for this role to switch users:
 		$role->add_cap( 'switch_users' );
 
-		# Ensure the user can switch:
-		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', self::$users['author']->ID );
+		# Check the delegated permission for this target:
+		$can_switch_user = user_can( self::$testers['admin']->ID, 'switch_to_user', $target_id );
 		$can_switch_off = user_can( self::$testers['admin']->ID, 'switch_off' );
 
 		# Revert the cap:
@@ -220,7 +233,7 @@ final class CapabilitiesTest extends Test {
 
 		# Assert:
 		self::assertFalse( $can_already_switch );
-		self::assertTrue( $can_switch_user );
+		self::assertSame( $expected, $can_switch_user );
 		self::assertTrue( $can_switch_off );
 	}
 
