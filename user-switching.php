@@ -67,6 +67,8 @@ final class user_switching {
 		add_action( 'plugins_loaded', [ $this, 'action_plugins_loaded' ], 1 );
 		add_action( 'init', [ $this, 'action_init' ] );
 		add_action( 'all_admin_notices', [ $this, 'action_admin_notices' ], 1 );
+		// This reads the old user cookies so it needs to run before they're cleared:
+		add_action( 'wp_logout', [ $this, 'action_wp_logout' ], 9, 0 );
 		add_action( 'wp_logout', 'user_switching_clear_olduser_cookie', 10, 0 );
 		add_action( 'wp_login', 'user_switching_clear_olduser_cookie', 10, 0 );
 		add_action( 'clear_auth_cookie', [ $this, 'action_clear_auth_cookie' ] );
@@ -134,6 +136,46 @@ final class user_switching {
 	 */
 	public function action_clear_auth_cookie(): void {
 		unset( $_COOKIE[ LOGGED_IN_COOKIE ] );
+	}
+
+	/**
+	 * Destroys the sessions that the old user cookies refer to when the current user logs out.
+	 *
+	 * These are the sessions of the users who switched, which are kept alive so they can switch back. WordPress only
+	 * destroys the current session when a user logs out, so without this they would stay valid until they expire.
+	 */
+	public function action_wp_logout(): void {
+		if ( self::secure_auth_cookie() ) {
+			$scheme = 'secure_auth';
+		} else {
+			$scheme = 'auth';
+		}
+
+		foreach ( user_switching_get_auth_cookie() as $cookie ) {
+			self::destroy_cookie_session( $cookie, $scheme );
+		}
+
+		$olduser_cookie = user_switching_get_olduser_cookie();
+
+		if ( $olduser_cookie ) {
+			self::destroy_cookie_session( $olduser_cookie, 'logged_in' );
+		}
+	}
+
+	/**
+	 * Destroys the session that an authentication cookie refers to, if the cookie is valid.
+	 *
+	 * @param string $cookie The cookie value.
+	 * @param string $scheme The cookie scheme. Values include 'auth', 'secure_auth', or 'logged_in'.
+	 * @phpstan-param 'auth'|'secure_auth'|'logged_in' $scheme
+	 */
+	private static function destroy_cookie_session( string $cookie, string $scheme ): void {
+		$user_id = wp_validate_auth_cookie( $cookie, $scheme );
+		$parts = wp_parse_auth_cookie( $cookie, $scheme );
+
+		if ( $user_id && $parts ) {
+			WP_Session_Tokens::get_instance( $user_id )->destroy( $parts['token'] );
+		}
 	}
 
 	/**
